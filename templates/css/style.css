@@ -1,0 +1,117 @@
+html, body {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0;
+}
+
+body {
+    background-color: #011b33;
+    color: white;
+    font: sans-serif;
+}
+
+nav {
+    box-shadow: none;
+}
+
+.side-nav {
+    background-color: #011b33;
+    color: white;
+    font: sans-serif;
+}
+
+.side-nav a {
+    color: white !important;
+}
+
+header {
+    border-bottom: 1px solid #032442;
+}
+
+@media only screen and (min-width: 601px) {
+    .account {
+        margin-top: 50px;
+    }
+}
+
+@media only screen and (min-width: 601px) {
+    .welcome {
+        margin-top: 120px;
+    }
+}
+
+
+.white-area {
+        background-color: #ffffff;
+        color: #000000;
+}
+
+.book-list {
+    min-height: 100vh;
+    padding-top: 10px;
+}
+
+.book-info {
+    color: black;
+}
+
+.book-detail-cover {
+    max-width: 300px
+}
+
+main {
+    padding-top: 20px;
+}
+
+@media only screen and (min-width: 601px) {
+    .borrowed {
+        border-left: 1px solid #032442;
+        border-right: 1px solid #032442;
+        min-height: 100vh;
+    }
+}
+
+.thumbnail {
+    max-width: 50px;
+}
+
+.img-suggest figure img {
+    max-width: 100px;
+}
+
+.profile-info {
+    border-bottom: 1px solid #032442;
+    padding: 20px 20px !important;
+}
+
+
+.active {
+    border-bottom: 4px solid blue;
+}
+
+nav a:hover {
+    border-width: 100%;
+    border-bottom: 4px solid blue;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.2s ease-out;
+}
+
+
+.action-btn {
+    margin-bottom: 5px;
+}
+
+.loading-wrap {
+    margin: 30px;
+}
+
+.admin-form {
+    background-color: rgb(3, 37, 68);
+    padding: 20px !important;
+    border-radius: 4px;
+}
+
+.admin-form textarea {
+     resize: none;
+}

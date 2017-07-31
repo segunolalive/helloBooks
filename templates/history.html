@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link href="./css/materialize.min.css" rel="stylesheet" type="text/css">
+        <link href="./css/style.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script type="text/javascript" src="./js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="./js/materialize.min.js"></script>
+        <script type="text/javascript" src="./js/app.js"></script>
+
+        <title>Hello Books</title>
+    </head>
+    <body>
+        <header class="">
+          <nav class="transparent">
+            <div class="nav-wrapper">
+              <a href="#!" class="brand-logo left"><i class="material-icons">book</i>Hello Books</a>
+              <ul class="right hide-on-small-and-down">
+                  <li><a href="library.html">Library</a></li>
+                  <li class="active"><a href="#">History</a></li>
+                  <li><a href="profile.html">Profile</a></li>
+              </ul>
+              <ul id="slide-out" class="side-nav">
+                <li><a href="library.html">Library</a></li>
+                <li class="active"><a href="history.html">History</a></li>
+                <li><a href="profile.html">Profile</a></li>
+              </ul>
+            <a href="#" data-activates="slide-out" class="button-collapse hide-on-med-and-up right"><i class="material-icons">more_vert</i></a>
+            </div>
+          </nav>
+        </header>
+        <main class="book-list white-area">
+            <div class="row">
+                <div class="container">
+                    <div class="center">
+                        <h3 class="">Borrowing History</h3>
+                    </div>
+                    <table class="striped responsive-table">
+                        <thead>
+                            <tr>
+                                <th>Cover</th>
+                                <th>Title</th>
+                                <th>Author(s)</th>
+                                <th>Date Borrowed</th>
+                                <th>Due Date</th>
+                                <th>Days Left</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img class="thumbnail" src="./images/eloquentjs_cover.png" alt="eloquent js">
+                                </td>
+                                <td><a href="book-detail.html">Eloquent Javascript</a></td>
+                                <td>Marijn Haverbeke</td>
+                                <td>28/07/2017</td>
+                                <td>10/08/2017</td>
+                                <td>10</td>
+                                <td>Pending</td>
+                                <td>
+                                    <a href="#" class="btn waves-effect action-btn">Read</a>
+                                    <a href="#" class="btn waves-effect  action-btn">Return</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img class="thumbnail" src="./images/smashing_node.jpg" alt="Smashing Node.js">
+                                </td>
+                                <td><a href="#">Smashing Node.js</a></td>
+                                <td>Guillermo Rauch</td>
+                                <td>28/07/2017</td>
+                                <td>10/08/2017</td>
+                                <td>10</td>
+                                <td>Pending</td>
+                                <td>
+                                    <a href="#" class="btn waves-effect action-btn">Read</a>
+                                    <a href="#" class="btn waves-effect  action-btn">Return</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img class="thumbnail" src="./images/nodejs_succintly.png" alt="Node.js Succintly">
+                                </td>
+                                <td><a href="#">Node Succintly</a></td>
+                                <td>Emanuele DelBono</td>
+                                <td>28/07/2017</td>
+                                <td>10/08/2017</td>
+                                <td>0</td>
+                                <td>Returned</td>
+                                <td>
+                                    <a href="#" class="btn waves-effect action-btn disabled">Read</a>
+                                    <a href="#" class="btn waves-effect  action-btn disabled">Return</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img class="thumbnail" src="./images/learn_python_hard_way.jpg" alt="learn python the hard way">
+                                </td>
+                                <td><a href="#">Learn Python The Hard Way</a></td>
+                                <td>Zed Shaw</td>
+                                <td>02/06/2017</td>
+                                <td>10/06/2017</td>
+                                <td>0</td>
+                                <td>Returned</td>
+                                <td>
+                                    <a href="#" class="btn waves-effect action-btn disabled">Read</a>
+                                    <a href="#" class="btn waves-effect  action-btn disabled">Return</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

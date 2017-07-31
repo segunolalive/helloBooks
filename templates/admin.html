@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link href="./css/materialize.min.css" rel="stylesheet" type="text/css">
+        <link href="./css/style.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script type="text/javascript" src="./js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="./js/materialize.min.js"></script>
+        <script type="text/javascript" src="./js/app.js"></script>
+
+        <title>Hello Books</title>
+    </head>
+    <body>
+        <header class="">
+          <nav class="transparent">
+            <div class="nav-wrapper">
+              <a href="#!" class="brand-logo left"><i class="material-icons">book</i>Hello Books</a>
+              <ul class="right hide-on-small-and-down">
+                  <li class="active"><a href="admin.html">Admin</a></li>
+                  <li><a href="library.html">Library</a></li>
+                  <li><a href="history.html">History</a></li>
+                  <li><a href="profile.html">Profile</a></li>
+              </ul>
+              <ul id="slide-out" class="side-nav">
+                <li class="active"><a href="admin.html">Admin</a></li>
+                <li class=""><a href="library.html">Library</a></li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="profile.html">Profile</a></li>
+              </ul>
+            <a href="#" data-activates="slide-out" class="button-collapse hide-on-med-and-up right"><i class="material-icons">more_vert</i></a>
+            </div>
+          </nav>
+        </header>
+        <main>
+            <section>
+                <div class="row">
+                    <div class="container">
+                        <div class="col s12 m6 admin-form center">
+                            <h5>Add Book To Library</h5>
+                            <form class="" action="" method="post" enctype="multipart/form-data">
+                                <div class="input-field">
+                                    <input id="title" type="text" name="" value="" placeholder="">
+                                    <label for="title">Book Title</label>
+                                </div>
+                                <div class="input-field">
+                                    <textarea name="name" rows="20"></textarea>
+                                    <label for="title">Book Description</label>
+                                </div>
+                                <div class="input-field">
+                                    <input id="category" type="text" name="" value="" placeholder="">
+                                    <label for="category">Category</label>
+                                </div>
+                                <div class="input-field">
+                                    <input type="number" name="" value="" min="0">
+                                    <label for="title">Number available</label>
+                                </div>
+                                <div class="">
+                                   <div class="file-field input-field">
+                                      <div class="btn">
+                                         <span>Browse</span>
+                                         <input type="file" accept="image/jpeg image/x-png">
+                                      </div>
+                                      <div class="file-path-wrapper">
+                                         <input class="file-path validate" type="text" placeholder="Upload Book Cover">
+                                      </div>
+                                   </div>
+                                </div>
+                                <div class="">
+                                   <div class="file-field input-field">
+                                      <div class="btn">
+                                         <span>Browse</span>
+                                         <input type="file" accept="application/pdf">
+                                      </div>
+                                      <div class="file-path-wrapper">
+                                         <input class="file-path validate" type="text" placeholder="Upload Book file">
+                                      </div>
+                                   </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

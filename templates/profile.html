@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link href="./css/materialize.min.css" rel="stylesheet" type="text/css">
+        <link href="./css/style.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script type="text/javascript" src="./js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="./js/materialize.min.js"></script>
+        <script type="text/javascript" src="./js/app.js"></script>
+
+        </script>
+        <title>Hello Books</title>
+    </head>
+    <body>
+        <header>
+          <nav class="transparent">
+            <div class="nav-wrapper">
+              <a href="#!" class="brand-logo left"><i class="material-icons">book</i>Hello Books</a>
+              <ul class="right hide-on-small-and-down">
+                  <li><a href="library.html">Library</a></li>
+                  <li><a href="history.html">History</a></li>
+                  <li class="active"><a href="profile.html">Profile</a></li>
+              </ul>
+              <ul id="slide-out" class="side-nav">
+                <li><a href="library.html">Library</a></li>
+                <li><a href="history.html">History</a></li>
+                <li class="active"><a href="profile.html">Profile</a></li>
+              </ul>
+            <a href="#" data-activates="slide-out" class="button-collapse hide-on-med-and-up right"><i class="material-icons">more_vert</i></a>
+            </div>
+          </nav>
+        </header>
+        <main>
+            <div class="row">
+                <div class="">
+                    <div class="col s12 m3 center">
+                        <div class="col s12 profile-info">
+                            <div class="">
+                                <img class="circle profile-img responsive-img" src="./images/profile_image.png" alt="profile image">
+                                <h5>Segun Ola</h5>
+                            </div>
+                        </div>
+                        <div class="col s12 profile-info">
+                            <a class="btn waves-effect" href="#">
+                                <i class="material-icons">edit</i>
+                                Edit Profile
+                            </a>
+                        </div>
+                    </div>
+                    <section class="col s12 m6 borrowed">
+                        <div class="col s12">
+                            <h4 class="center">Recently Borrowed</h4>
+                        </div>
+                        <div class="col s12 book-info">
+                            <div class="card horizontal">
+                              <div class="card-image">
+                                <img src="./images/eloquentjs_cover.png">
+                              </div>
+                              <div class="card-stacked">
+                                <div class="card-content">
+                                  <p>A modern introduction to programming using Javascript.</p>
+                                </div>
+                                <div class="card-action center">
+                                    <a href="#" class="btn waves-effect`">Read Book</a>
+                                </div>
+                                <div class="card-action center">
+                                    <a href="#" class="btn waves-effect">Return</a>
+                                </div>
+                              </div>
+                            </div>
+                         </div>
+                         <div class="col s12 book-info">
+                             <div class="card horizontal">
+                               <div class="card-image">
+                                 <img src="./images/smashing_node.jpg">
+                               </div>
+                               <div class="card-stacked">
+                                 <div class="card-content">
+                                   <p>Learn to make more efficient apps, with just one language!</p>
+                                 </div>
+                                 <div class="card-action center">
+                                     <a href="#" class="btn waves-effect">Read Book</a>
+                                 </div>
+                                 <div class="card-action center">
+                                     <a href="#" class="btn waves-effect">Return</a>
+                                 </div>
+                               </div>
+                             </div>
+                       </div>
+                    </section>
+                    <section class="col m3 suggestions hide-on-small-and-down">
+                        <div class="col s12">
+                            <h4 class="center">Suggestions</h4>
+                            <div class="img-suggest">
+                                <figure>
+                                    <img src="./images/nodejs_succintly.png" class"" alt="nodejs succintly">
+                                    <figcaption>Learn the internals of Node.js</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="./images/python_201.jpg" class"" alt="python 201">
+                                    <figcaption>Intermediate Level Python Programming</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
