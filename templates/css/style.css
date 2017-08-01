@@ -41,6 +41,17 @@ header {
 }
 
 
+.landing {
+  padding-top: 25vh;
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.landing a {
+    margin: 10px;
+}
+
 .white-area {
         background-color: #ffffff;
         color: #000000;
