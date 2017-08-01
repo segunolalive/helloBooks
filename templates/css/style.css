@@ -71,6 +71,13 @@ main {
     }
 }
 
+
+@media only screen and (max-width: 601px) {
+    th {
+        padding-top: 1.5rem;
+    }
+}
+
 .thumbnail {
     max-width: 50px;
 }

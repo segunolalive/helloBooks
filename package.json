@@ -1,0 +1,23 @@
+{
+  "name": "hellobooks",
+  "version": "1.0.0",
+  "description": "A simple library app",
+  "main": "templates/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/segunolalive/helloBooks.git"
+  },
+  "keywords": [
+    "react",
+    "library"
+  ],
+  "author": "segun ola",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/segunolalive/helloBooks/issues"
+  },
+  "homepage": "https://github.com/segunolalive/helloBooks#readme"
+}
