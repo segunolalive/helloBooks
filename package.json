@@ -19,5 +19,23 @@
   "bugs": {
     "url": "https://github.com/segunolalive/helloBooks/issues"
   },
-  "homepage": " https://segunolalive.github.io/helloBooks/templates/"
+  "homepage": " https://segunolalive.github.io/helloBooks/templates/",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "morgan": "^1.8.2",
+    "pg": "^7.0.2",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.4.2"
+  },
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
+    "mocha": "^3.5.0"
+  }
 }
