@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "6"
+env:
+  global:
+    - export NODE_ENV=development
+
+script:
+  - npm test
