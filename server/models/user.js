@@ -11,16 +11,23 @@ module.exports = (sequelize, DataTypes) => {
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        User.hasMany(models.Book, {
-          foreignKey: 'bookId',
-          as: 'books',
-        });
-      }
-    }
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   });
+
+  User.associate = (models) => {
+    User.belongsToMany(models.Book, {
+      through: 'bookUsers',
+      foreignKey: 'userId',
+      otherKey: 'bookId',
+    });
+  };
   return User;
 };
