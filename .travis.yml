@@ -4,6 +4,5 @@ node_js:
 env:
   global:
     - export NODE_ENV=development
-
 script:
   - npm test

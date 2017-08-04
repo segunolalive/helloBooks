@@ -1,12 +1,26 @@
 export default (sequelize, DataTypes) => {
   const Book = sequelize.define('Book', {
-    title: DataTypes.STRING,
-    authors: DataTypes.STRING,
-    total: DataTypes.INTEGER,
-    borrowed: DataTypes.INTEGER
+    title: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    authors: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    description: {
+      type: DataTypes.STRING,
+    },
+    total: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    borrowed: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   });
   Book.associate = (models) => {
-    // Book.belongsT
     Book.belongsToMany(models.User, {
       through: 'bookUsers',
       foreignKey: 'bookId',
