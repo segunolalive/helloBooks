@@ -14,6 +14,10 @@ nav {
     box-shadow: none;
 }
 
+.nav-wrapper {
+    padding-left: 10px;
+}
+
 .side-nav {
     background-color: #011b33;
     color: white;
@@ -63,11 +67,12 @@ header {
 }
 
 .book-info {
+    padding-left: 30px !important;
     color: black;
 }
 
 .book-detail-cover {
-    max-width: 300px
+    max-width: 300px;
 }
 
 main {
