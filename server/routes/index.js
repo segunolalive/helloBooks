@@ -12,4 +12,7 @@ export default (app) => {
   app.use(authenticate);
   app.post('/api/v1/books', bookController.createBook);
   app.put('/api/v1/books/:id', bookController.editBookInfo);
+  // app.post('/api/v1/users/:id/books', userController.borrowBook);
+  // app.put('/api/v1/users/:id/books', userController.returnBook);
+  app.get('/api/v1/users/:id/books', userController.getProfile);
 };

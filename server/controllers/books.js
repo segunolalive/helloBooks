@@ -4,12 +4,7 @@ import { Book } from '../models';
 export default {
   createBook(req, res) {
     return Book
-      .create({
-        title: req.body.title,
-        authors: req.body.authors,
-        total: req.body.total,
-        description: req.body.description,
-      })
+      .create(req.body)
       .then(user => res.status(201).send(user))
       .catch(error => res.status(400).send(error));
   },

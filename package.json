@@ -5,7 +5,7 @@
   "main": "server/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "babel server -d server/dist && nodemon server/dist/bin/www.js"
+    "dev": "rm -rf server/dist && babel server -d server/dist && nodemon server/dist/bin/www.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "body-parser": "^1.17.2",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
+    "jsonwebtoken": "^7.4.2",
     "morgan": "^1.8.2",
     "pg": "^7.0.2",
     "pg-hstore": "^2.3.2",

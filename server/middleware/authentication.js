@@ -33,7 +33,7 @@ const authenticate = (req, res, next) => {
       if (error) {
         return res.status(401).json({ message: 'unauthorized accesss' });
       }
-      req.decoded = decoded;
+      req.user = decoded;
       next();
     });
   } else {

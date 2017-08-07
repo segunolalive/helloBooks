@@ -11,6 +11,12 @@ export default (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING,
     },
+    // cover: {
+    //   type: DataTypes.STRING,
+    // },
+    // bookfile: {
+    //   type: DataTypes.STRING,
+    // },
     total: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
