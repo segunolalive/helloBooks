@@ -3,6 +3,7 @@ export default (sequelize, DataTypes) => {
     title: {
       allowNull: false,
       type: DataTypes.STRING,
+      unique: true,
     },
     authors: {
       allowNull: false,
@@ -11,24 +12,23 @@ export default (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING,
     },
-    // cover: {
-    //   type: DataTypes.STRING,
-    // },
-    // bookfile: {
-    //   type: DataTypes.STRING,
-    // },
-    total: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
+    category: {
+      type: DataTypes.STRING,
     },
-    borrowed: {
+    cover: {
+      type: DataTypes.STRING,
+    },
+    bookfile: {
+      type: DataTypes.STRING,
+    },
+    total: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
   });
   Book.associate = (models) => {
     Book.belongsToMany(models.User, {
-      through: 'bookUsers',
+      through: 'BorrowedBook',
       foreignKey: 'bookId',
       otherKey: 'userId',
     });
