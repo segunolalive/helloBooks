@@ -13,11 +13,11 @@ module.exports = {
     dialect: 'postgres',
   },
   test: {
-    username: process.env.username,
-    password: 'null',
-    database: process.env.database_test,
-    host: process.env.host,
-    dialect: process.env.dialect,
+    username: 'postgres',
+    password: 'root',
+    database: 'hellobooksTest',
+    host: 'localhost',
+    dialect: 'postgres',
   },
   production: {
     username: 'postgres',
