@@ -123,9 +123,8 @@ describe('Book', () => {
         });
     });
   });
-  describe('', () => {
-
-  });
+  // models.Book.destroy({ truncate : true, cascade: true });
+  // models.User.destroy({ truncate : true, cascade: true });
 });
 
 describe('editBookInfo', () => {
@@ -149,4 +148,6 @@ describe('editBookInfo', () => {
         done();
       });
   });
+  // models.Book.destroy({ truncate : true, cascade: true });
+  // models.User.destroy({ truncate : true, cascade: true });
 });
