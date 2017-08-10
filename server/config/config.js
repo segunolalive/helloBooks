@@ -18,8 +18,7 @@ module.exports = {
     dialect: 'postgres',
   },
   production: {
-    url: 'postgres://jmjbrcfp:FvHq4yiSgqDPdzPa0v1NzLITLEgee5NI@pellefant.db.elephantsql.com:5432/jmjbrcfp',
+    use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
-    protocol: 'postgres',
   }
 };
