@@ -25,7 +25,10 @@ export default {
     Book.findById(id)
       .then((book) => {
         if (!book) {
-          res.status(400).send('book does not exist');
+          res.status(404).send({
+            success: false,
+            message: 'book does not exist',
+          });
           return;
         }
         res.status(200).send({
@@ -45,7 +48,10 @@ export default {
           res.send('Library is currently empty. Check back later');
           return;
         }
-        res.send(books);
+        res.status(200).send({
+          success: true,
+          data: books,
+        });
       })
       .catch(error => res.status(400).send({
         success: false,
@@ -95,27 +101,47 @@ export default {
           });
           return;
         }
-        BorrowedBook.findOne({ where: { userId, bookId, returned: false } })
+        BorrowedBook.findOne({ where: { userId, bookId } })
           .then((borrowed) => {
-            if (borrowed) {
+            if (borrowed && borrowed.returned === false) {
               res.status(403).send({
                 success: false,
-                message: 'You currently have this book. Return it before' +
-                         'trying to borrow it again',
+                message: 'You currently have this book. Return it before trying to borrow it again',
+              });
+              return;
+            } else if (borrowed && borrowed.returned === true) {
+              borrowed.returned = false;
+              borrowed.save();
+              book.total -= 1;
+              book.save();
+              res.status(200).send({
+                success: true,
+                message: `You have successfully borrowed ${book.title} again
+                check your profile to read read it`,
               });
               return;
             }
             BorrowedBook.create({
               userId, bookId,
             })
-              .then(() => res.status(201).send({
+              .then(() => {
+                book.total -= 1;
+                book.save();
+              })
+              .then(() => res.status(200).send({
                 success: true,
-                message: 'You have successfully borrowed this book' +
-                         'check your profile to read read it',
-              }));
+                message: `You have successfully borrowed ${book.title}
+                check your profile to read read it`,
+              }))
+              .catch((error) => {
+                res.status(500).send({
+                  success: false,
+                  error
+                });
+              });
           });
       })
-      .catch(error => res.status(500).res.send({
+      .catch(error => res.status(500).send({
         success: false,
         error,
       }));
@@ -131,14 +157,25 @@ export default {
           }, {
             where: { userId, bookId, returned: false }
           }).then(() => {
-            res.status(201).send({
-              success: true,
-              message: 'You have successfully returned book',
-            });
+            Book.findById(bookId)
+              .then((book) => {
+                book.total += 1;
+              })
+              .then(() => {
+                res.status(201).send({
+                  success: true,
+                  message: 'You have successfully returned book',
+                });
+              });
           });
+          return;
         }
+        res.status(400).send({
+          success: false,
+          message: 'This book is currently not on your list. You have either returned it or never borrowed it'
+        });
       })
-      .catch(error => res.status().send({
+      .catch(error => res.status(500).send({
         success: false,
         error,
       }));

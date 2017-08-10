@@ -29,12 +29,15 @@ export default {
         return;
       }
       User.create(req.body)
-        .then(user => hashPassword(user))
-        .then(user => user.save())
-        .then(() => res.status(201).send({
-          success: true,
-          message: 'account created',
-        }))
+        .then((user) => {
+          const token = getJWT(
+            user.id,
+            user.username,
+            user.email,
+            user.isAdmin,
+          );
+          res.status(201).json({ success: true, token });
+        })
         .catch(error => res.status(400).send({
           success: false,
           error
@@ -50,7 +53,7 @@ export default {
     const password = req.body.password;
     return User.findOne({ where: { username } }).then((user) => {
       if (!user) {
-        res.staus(400).send({
+        res.status(400).send({
           success: false,
           message: 'user does not exist',
         });
@@ -63,7 +66,12 @@ export default {
             message: 'wrong username and password combination',
           });
         } else {
-          const token = getJWT(user.id, user.username, user.email);
+          const token = getJWT(
+            user.id,
+            user.username,
+            user.email,
+            user.isAdmin
+          );
           res.status(200).json({ success: true, token });
         }
       });
@@ -72,20 +80,29 @@ export default {
       error,
     }));
   },
-  getProfile(req, res) {
+  getBorrowedBooks(req, res) {
     const id = req.params.id;
     User.findOne({
       where: { id },
       include: [{ model: Book }]
     }).then((user) => {
-      const books = user.Books.filter(
-        book => book.BorrowedBook.returned === true
-      );
+      let books;
+      if (req.query && req.query.returned === 'false') {
+        books = user.Books.filter(
+          book => book.BorrowedBook.returned === false
+        );
+      } else if (req.query && req.query.returned === 'true') {
+        books = user.Books.filter(
+          book => book.BorrowedBook.returned === true
+        );
+      } else {
+        books = user.Books;
+      }
       res.status(200).send(books);
     })
       .catch(error => res.status(500).send({
         success: false,
-        message: 'unable to fetch profile info',
+        message: 'An error occured while fetching borrowing history',
         error,
       }));
   },
