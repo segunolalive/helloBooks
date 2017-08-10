@@ -134,7 +134,6 @@ describe('editBookInfo', () => {
       .post('/api/v1/users/signup')
       .send(mock.newUser)
       .end((err, res) => {
-        console.log('================================', res.body)
         jwtToken = res.body.token;
         done();
       });
