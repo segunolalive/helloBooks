@@ -18,10 +18,8 @@ module.exports = {
     dialect: 'postgres',
   },
   production: {
-    username: 'postgres',
-    password: 'null',
-    database: 'hellobooks',
-    host: '127.0.0.1',
-    dialect: 'postgres'
+    url: 'postgres://jmjbrcfp:FvHq4yiSgqDPdzPa0v1NzLITLEgee5NI@pellefant.db.elephantsql.com:5432/jmjbrcfp',
+    dialect: 'postgres',
+    protocol: 'postgres',
   }
 };
