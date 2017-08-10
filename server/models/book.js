@@ -12,6 +12,10 @@ export default (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING,
     },
+    total: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     category: {
       type: DataTypes.STRING,
     },
@@ -21,16 +25,13 @@ export default (sequelize, DataTypes) => {
     bookfile: {
       type: DataTypes.STRING,
     },
-    total: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-    },
   });
   Book.associate = (models) => {
     Book.belongsToMany(models.User, {
       through: 'BorrowedBook',
       foreignKey: 'bookId',
       otherKey: 'userId',
+      unique: false,
     });
   };
   return Book;
