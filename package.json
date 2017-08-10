@@ -6,8 +6,9 @@
   "scripts": {
     "start": "nodemon server/bin/www --exec babel-node",
     "test": "mocha --watch --compilers js:babel-register server/test/**/*.spec.js",
-    "seed": "babel-node server/seeders/index.js",
-    "seedjoin": "babel-node server/seeders/borrowedBook.js",
+    "seed": "babel-node server/seeders/index.js && exit 1",
+    "seedjoin": "babel-node server/seeders/borrowedBook.js && exit 1",
+    "seedTest": "npm run seed && npm run seedjoin && npm run test",
     "build": "babel server -d server/dist",
     "serve": "node server/dist/bin/www.js"
   },
