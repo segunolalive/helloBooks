@@ -1,9 +1,7 @@
-// import dotenv from 'dotenv';
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-// export default {
 module.exports = {
   development: {
     username: 'postgres',
