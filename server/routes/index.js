@@ -14,5 +14,5 @@ export default (app) => {
   app.put('/api/v1/books/:id', bookController.editBookInfo);
   app.post('/api/v1/users/:id/books', bookController.borrowBook);
   app.put('/api/v1/users/:id/books', bookController.returnBook);
-  app.get('/api/v1/users/:id/books', userController.getProfile);
+  app.get('/api/v1/users/:id/books', userController.getBorrowedBooks);
 };
