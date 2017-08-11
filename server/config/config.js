@@ -15,14 +15,6 @@ module.exports = {
   },
   production: {
     use_env_variable: 'DATABASE_URL',
-    // username: 'bqqcndgg',
-    // password: 'sFziUyi8b-5TV3B3KX8iAVTTn81PWTXJ',
-    // database: 'bqqcndgg',
-    // dialect: 'postgres',
-    // host: 'babar.elephantsql.com'
   }
-  // production: {
-  //   use_env_variable: 'DATABASE_URL',
-  //   dialect: 'postgres',
-  // }
 };
+
