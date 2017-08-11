@@ -22,7 +22,7 @@ export default (sequelize, DataTypes) => {
     cover: {
       type: DataTypes.STRING,
     },
-    bookfile: {
+    bookFile: {
       type: DataTypes.STRING,
     },
   });
