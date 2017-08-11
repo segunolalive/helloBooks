@@ -3,7 +3,7 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/segunolalive/helloBooks/badge.svg?branch=master)](https://coveralls.io/github/segunolalive/helloBooks?branch=master)
 
-[![Code Climate](https://codeclimate.com/github/segunoalive/helloBooks/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
+[![Code Climate](https://codeclimate.com/github/segunoalive/helloBooks/badges/gpa.svg)](https://codeclimate.com/github/segunoalive/helloBooks)
 
 # helloBooks
 
