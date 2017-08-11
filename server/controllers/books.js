@@ -10,7 +10,7 @@ export default {
           success: false,
           user,
         }))
-        .catch(error => res.status(400).send({
+        .catch(error => res.status(500).send({
           success: false,
           error
         }));
@@ -36,7 +36,7 @@ export default {
           data: book,
         });
       })
-      .catch(error => res.status(400).send({
+      .catch(error => res.status(500).send({
         success: false,
         error
       }));
@@ -53,7 +53,7 @@ export default {
           data: books,
         });
       })
-      .catch(error => res.status(400).send({
+      .catch(error => res.status(500).send({
         success: false,
         error
       }));
@@ -71,7 +71,7 @@ export default {
           success: true,
           data: book,
         }))
-        .catch(error => res.status(400).send({
+        .catch(error => res.status(500).send({
           success: false,
           error
         }));

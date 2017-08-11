@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 
 import { User, Book } from '../models';
-import { getJWT, hashPassword } from '../helpers/helpers';
+import { getJWT } from '../helpers/helpers';
 
 dotenv.config();
 
@@ -15,14 +15,14 @@ export default {
       where: { $or: [{ username }, { email }] }
     }).then((existingUser) => {
       if (existingUser && existingUser.username === username) {
-        res.status(400).json({
+        res.status(409).json({
           success: false,
           message: 'username is taken',
         });
         return;
       }
       if (existingUser && existingUser.email === email) {
-        res.status(400).json({
+        res.status(409).json({
           success: false,
           message: 'email is associated with an account',
         });
