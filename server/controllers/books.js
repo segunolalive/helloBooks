@@ -2,6 +2,14 @@ import { Book, BorrowedBook } from '../models';
 
 
 export default {
+  /*
+   * Add new book to library.
+   * @public
+   * @method
+   * @param  {object} req - express http request object
+   * @param  {object} res - express http response object
+   * @return {undefined}
+   */
   createBook(req, res) {
     if (req.user && req.user.isAdmin) {
       return Book
@@ -21,6 +29,14 @@ export default {
       message: 'unauthorized access',
     });
   },
+  /*
+   * Fetch a specific book
+   * @public
+   * @method
+   * @param  {object} req - express http request object
+   * @param  {object} res - express http response object
+   * @return {undefined}
+   */
   getBook(req, res) {
     const id = Number(req.params.id);
     Book.findById(id)
@@ -42,6 +58,14 @@ export default {
         error
       }));
   },
+  /*
+   * Fetch all books present in database
+   * @public
+   * @method
+   * @param  {object} req - express http request object
+   * @param  {object} res - express http response object
+   * @return {undefined}
+   */
   getAllBooks(req, res) {
     Book.findAll()
       .then((books) => {
@@ -63,6 +87,14 @@ export default {
         error
       }));
   },
+  /*
+   * Edit a book's metadata.
+   * @public
+   * @method
+   * @param  {object} req - express http request object
+   * @param  {object} res - express http response object
+   * @return {undefined}
+   */
   editBookInfo(req, res) {
     const id = req.params.id;
     if (req.user && req.user.isAdmin) {
@@ -87,6 +119,15 @@ export default {
       });
     }
   },
+
+  /*
+   * Allow user borrow book.
+   * @public
+   * @method
+   * @param  {object} req - express http request object
+   * @param  {object} res - express http response object
+   * @return {undefined}
+   */
   borrowBook(req, res) {
     const userId = req.params.id;
     const bookId = req.query.id;
@@ -150,6 +191,14 @@ export default {
         error,
       }));
   },
+  /*
+   * Allow user return borrowed book.
+   * @public
+   * @method
+   * @param  {object} req - express http request object
+   * @param  {object} res - express http response object
+   * @return {undefined}
+   */
   returnBook(req, res) {
     const bookId = req.query.id;
     const userId = req.params.id;

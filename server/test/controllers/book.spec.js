@@ -9,8 +9,8 @@ const server = supertest.agent(app);
 let jwtToken;
 
 describe('Book', () => {
-  before(function (done) { // eslint-disable-line
-    this.timeout(5000);
+  before((done) => {
+    // this.timeout(5000);
     server
       .post('/api/v1/users/signin')
       .send(mock.adminUser)
@@ -129,8 +129,8 @@ describe('Book', () => {
 });
 
 describe('editBookInfo', () => {
-  before(function (done) { // eslint-disable-line
-    this.timeout(5000);
+  before((done) => {
+    // this.timeout(5000);
     server
       .post('/api/v1/users/signup')
       .send(mock.newUser)
