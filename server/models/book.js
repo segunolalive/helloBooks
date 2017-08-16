@@ -12,18 +12,18 @@ export default (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING,
     },
+    total: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     category: {
       type: DataTypes.STRING,
     },
     cover: {
       type: DataTypes.STRING,
     },
-    bookfile: {
+    bookFile: {
       type: DataTypes.STRING,
-    },
-    total: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
     },
   });
   Book.associate = (models) => {
@@ -31,6 +31,7 @@ export default (sequelize, DataTypes) => {
       through: 'BorrowedBook',
       foreignKey: 'bookId',
       otherKey: 'userId',
+      unique: false,
     });
   };
   return Book;
