@@ -8,11 +8,12 @@ export const hashPassword = (user) => {
   return user;
 };
 
-export const getJWT = (id, email, username) =>
+export const getJWT = (id, email, username, isAdmin) =>
   jwt.sign({
     id,
     email,
     username,
+    isAdmin,
   }, process.env.SECRET, {
     expiresIn: '24h',
   });

@@ -1,11 +1,11 @@
+import { hashPassword } from '../helpers/helpers';
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     firstName: {
-      allowNull: false,
       type: DataTypes.STRING,
     },
     lastName: {
-      allowNull: false,
       type: DataTypes.STRING,
     },
     email: {
@@ -29,11 +29,14 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
+  User.beforeCreate(user => hashPassword(user), { individualHooks: true });
+
   User.associate = (models) => {
     User.belongsToMany(models.Book, {
       through: 'BorrowedBook',
       foreignKey: 'userId',
       otherKey: 'bookId',
+      unique: false,
     });
   };
   return User;
