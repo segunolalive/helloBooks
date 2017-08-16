@@ -10,7 +10,6 @@ let jwtToken;
 
 describe('Book', () => {
   before((done) => {
-    // this.timeout(5000);
     server
       .post('/api/v1/users/signin')
       .send(mock.adminUser)
@@ -130,7 +129,6 @@ describe('Book', () => {
 
 describe('editBookInfo', () => {
   before((done) => {
-    // this.timeout(5000);
     server
       .post('/api/v1/users/signup')
       .send(mock.newUser)
