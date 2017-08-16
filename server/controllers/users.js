@@ -74,7 +74,10 @@ export default {
           );
           res.status(200).json({ success: true, token });
         }
-      });
+      }).catch(error => res.status(500).send({
+        success: false,
+        error,
+      }));
     }).catch(error => res.status(400).send({
       success: false,
       error,
@@ -98,7 +101,10 @@ export default {
       } else {
         books = user.Books;
       }
-      res.status(200).send(books);
+      res.status(200).send({
+        success: true,
+        data: books
+      });
     })
       .catch(error => res.status(500).send({
         success: false,

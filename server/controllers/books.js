@@ -6,9 +6,10 @@ export default {
     if (req.user && req.user.isAdmin) {
       return Book
         .create(req.body)
-        .then(user => res.status(201).send({
-          success: false,
-          user,
+        .then(book => res.status(201).send({
+          success: true,
+          message: `Successfully added ${book} to Library`,
+          data: book,
         }))
         .catch(error => res.status(500).send({
           success: false,
@@ -45,7 +46,11 @@ export default {
     Book.findAll()
       .then((books) => {
         if (!books.length) {
-          res.send('Library is currently empty. Check back later');
+          res.send({
+            success: true,
+            data: [],
+            message: 'Library is currently empty. Check back later'
+          });
           return;
         }
         res.status(200).send({
@@ -116,8 +121,7 @@ export default {
               book.save();
               res.status(200).send({
                 success: true,
-                message: `You have successfully borrowed ${book.title} again
-                check your profile to read read it`,
+                message: `You have successfully borrowed ${book.title} again check your profile to read read it`,
               });
               return;
             }

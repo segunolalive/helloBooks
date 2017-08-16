@@ -41,7 +41,7 @@ describe('User', () => {
         .post('/api/v1/users/signup')
         .send(mock.existingEmail)
         .end((err, res) => {
-          assert.equal(res.status, 400);
+          assert.equal(res.status, 409);
           assert.equal(res.body.message, 'email is associated with an account');
           done();
         });
@@ -52,7 +52,7 @@ describe('User', () => {
         .post('/api/v1/users/signup')
         .send(mock.existingUsername)
         .end((err, res) => {
-          assert.equal(res.status, 400);
+          assert.equal(res.status, 409);
           assert.equal(res.body.message, 'username is taken');
           done();
         });

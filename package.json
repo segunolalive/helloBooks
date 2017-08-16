@@ -6,10 +6,11 @@
   "scripts": {
     "start": "babel-node server/bin/www.js",
     "start:dev": "nodemon server/bin/www --exec babel-node",
-    "test": "mocha --watch --compilers js:babel-register server/test/**/*.spec.js",
-    "seed": "babel-node server/seeders/index.js && exit 1",
-    "seedjoin": "babel-node server/seeders/borrowedBook.js && exit 1",
-    "seedTest": "npm run seed && npm run seedjoin && npm run test",
+    "test": "cross-env NODE_ENV=test mocha --watch --compilers js:babel-register server/test/**/*.spec.js",
+    "test:dev": "cross-env NODE_ENV=test mocha --compilers js:babel-register server/test/**/*.spec.js",
+    "seed": "cross-env NODE_ENV=test babel-node server/seeders/index.js && exit 0",
+    "seedjoin": "cross-env NODE_ENV=test babel-node server/seeders/borrowedBook.js && exit 0",
+    "seed:test": "cross-env NODE_ENV=test npm run seed & npm run seedjoin & npm run test:dev",
     "build": "babel server -d server/dist",
     "serve": "node server/dist/bin/www.js"
   },
@@ -48,8 +49,10 @@
     "sequelize-cli": "^2.8.0"
   },
   "devDependencies": {
+    "babel-preset-stage-2": "^6.24.1",
     "chai": "^4.1.0",
     "chai-http": "^3.0.0",
+    "cross-env": "^5.0.5",
     "eslint": "^4.3.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",

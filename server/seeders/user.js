@@ -21,5 +21,7 @@ db.User.sync({ force: true })
     ], { individualHooks: true })
       .then(() => {
         process.stdout.write('Test Users created \n');
+      }).then(() => {
+        process.exit();
       });
   });

@@ -9,12 +9,15 @@ const server = supertest.agent(app);
 let jwtToken;
 
 describe('Book', () => {
-  before((done) => {
+  before(function (done) { // eslint-disable-line
+    this.timeout(5000);
     server
       .post('/api/v1/users/signin')
       .send(mock.adminUser)
       .end((err, res) => {
-        jwtToken = res.body.token;
+        if (!err) {
+          jwtToken = res.body.token;
+        }
         done();
       });
   });
@@ -50,16 +53,6 @@ describe('Book', () => {
     });
   });
   describe('borrowBook', () => {
-    it('should allow logged in users borrow book', (done) => {
-      server
-        .post('/api/v1/users/1/books?id=1')
-        .set('X-ACCESS-TOKEN', jwtToken)
-        .expect(200)
-        .end((err, res) => {
-          assert.equal(res.status, 200);
-          done();
-        });
-    });
     it('should send a 404 status code if book does not exist', (done) => {
       server
         .post('/api/v1/users/1/books?id=200')
@@ -108,6 +101,16 @@ describe('Book', () => {
           done();
         });
     });
+    it('should allow logged in users borrow book', (done) => {
+      server
+        .post('/api/v1/users/1/books?id=1')
+        .set('X-ACCESS-TOKEN', jwtToken)
+        .expect(200)
+        .end((err, res) => {
+          assert.equal(res.status, 200);
+          done();
+        });
+    });
   });
   describe('editBookInfo', () => {
     it('should allow admin user modify book info', (done) => {
@@ -123,12 +126,11 @@ describe('Book', () => {
         });
     });
   });
-  // models.Book.destroy({ truncate : true, cascade: true });
-  // models.User.destroy({ truncate : true, cascade: true });
 });
 
 describe('editBookInfo', () => {
-  before((done) => {
+  before(function (done) { // eslint-disable-line
+    this.timeout(5000);
     server
       .post('/api/v1/users/signup')
       .send(mock.newUser)
@@ -148,6 +150,4 @@ describe('editBookInfo', () => {
         done();
       });
   });
-  // models.Book.destroy({ truncate : true, cascade: true });
-  // models.User.destroy({ truncate : true, cascade: true });
 });

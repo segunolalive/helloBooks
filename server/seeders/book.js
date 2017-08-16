@@ -23,5 +23,7 @@ db.Book.sync({ force: true })
     ])
       .then(() => {
         process.stdout.write('Test Books created \n');
+      }).then(() => {
+        process.exit();
       });
   });
