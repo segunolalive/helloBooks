@@ -2,7 +2,7 @@ import { Book, BorrowedBook } from '../models';
 
 
 export default {
-  /*
+  /**
    * Add new book to library.
    * @public
    * @method
@@ -29,7 +29,8 @@ export default {
       message: 'unauthorized access',
     });
   },
-  /*
+
+  /**
    * Fetch a specific book
    * @public
    * @method
@@ -58,7 +59,8 @@ export default {
         error
       }));
   },
-  /*
+
+  /**
    * Fetch all books present in database
    * @public
    * @method
@@ -87,7 +89,8 @@ export default {
         error
       }));
   },
-  /*
+
+  /**
    * Edit a book's metadata.
    * @public
    * @method
@@ -120,7 +123,7 @@ export default {
     }
   },
 
-  /*
+  /**
    * Allow user borrow book.
    * @public
    * @method
@@ -191,7 +194,8 @@ export default {
         error,
       }));
   },
-  /*
+
+  /**
    * Allow user return borrowed book.
    * @public
    * @method

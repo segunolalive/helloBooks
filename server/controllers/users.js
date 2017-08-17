@@ -8,7 +8,7 @@ dotenv.config();
 
 
 export default {
-  /*
+  /**
    * Create new user account.
    * It sends a an object containing a success boolean
    * and a json web token or error
@@ -18,6 +18,7 @@ export default {
    * @param  {object} res - express http response object
    * @return {undefined}
    */
+
   createUser(req, res) {
     const username = req.body.username;
     const email = req.body.email;
@@ -58,7 +59,7 @@ export default {
         error
       }));
   },
-  /*
+  /**
    * Get user data on sign in.
    * It sends a an object containing a success boolean
    * and a json web token or error
@@ -68,6 +69,7 @@ export default {
    * @param  {object} res - express http response object
    * @return {undefined}
    */
+
   getUser(req, res) {
     const username = req.body.username;
     const password = req.body.password;
@@ -103,7 +105,8 @@ export default {
       error,
     }));
   },
-  /*
+
+  /**
    * Get list of books borrowed by specific user
    * It sends a an object containing a success boolean
    * and a data key, an array of borrowed books or an error
