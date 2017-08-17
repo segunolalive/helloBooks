@@ -1,7 +1,6 @@
 import supertest from 'supertest';
 import { assert } from 'chai';
 import app from '../../app';
-import models from '../../models/index';
 import mock from '../mock/mock';
 
 
@@ -10,7 +9,6 @@ let jwtToken;
 
 describe('Book', () => {
   before((done) => {
-    // this.timeout(5000);
     server
       .post('/api/v1/users/signin')
       .send(mock.adminUser)
@@ -53,6 +51,16 @@ describe('Book', () => {
     });
   });
   describe('borrowBook', () => {
+    it('should allow logged in users borrow book', (done) => {
+      server
+        .post('/api/v1/users/1/books?id=2')
+        .set('X-ACCESS-TOKEN', jwtToken)
+        .expect(200)
+        .end((err, res) => {
+          assert.equal(res.status, 200);
+          done();
+        });
+    });
     it('should send a 404 status code if book does not exist', (done) => {
       server
         .post('/api/v1/users/1/books?id=200')
@@ -101,16 +109,6 @@ describe('Book', () => {
           done();
         });
     });
-    it('should allow logged in users borrow book', (done) => {
-      server
-        .post('/api/v1/users/1/books?id=1')
-        .set('X-ACCESS-TOKEN', jwtToken)
-        .expect(200)
-        .end((err, res) => {
-          assert.equal(res.status, 200);
-          done();
-        });
-    });
   });
   describe('editBookInfo', () => {
     it('should allow admin user modify book info', (done) => {
@@ -130,7 +128,6 @@ describe('Book', () => {
 
 describe('editBookInfo', () => {
   before((done) => {
-    // this.timeout(5000);
     server
       .post('/api/v1/users/signup')
       .send(mock.newUser)
