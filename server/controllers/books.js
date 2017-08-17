@@ -16,7 +16,7 @@ export default {
         .create(req.body)
         .then(book => res.status(201).send({
           success: true,
-          message: `Successfully added ${book} to Library`,
+          message: `Successfully added ${book.title} to Library`,
           data: book,
         }))
         .catch(error => res.status(500).send({
@@ -165,7 +165,7 @@ export default {
               book.save();
               res.status(200).send({
                 success: true,
-                message: `You have successfully borrowed ${book.title} again check your profile to read read it`,
+                message: `You have successfully borrowed ${book.title} again. Check your profile to read it`,
               });
               return;
             }
@@ -178,8 +178,7 @@ export default {
               })
               .then(() => res.status(200).send({
                 success: true,
-                message: `You have successfully borrowed ${book.title}
-                check your profile to read read it`,
+                message: `You have successfully borrowed ${book.title}. Check your profile to read it`,
               }))
               .catch((error) => {
                 res.status(500).send({

@@ -52,6 +52,16 @@ describe('Book', () => {
     });
   });
   describe('borrowBook', () => {
+    it('should allow logged in users borrow book', (done) => {
+      server
+        .post('/api/v1/users/1/books?id=2')
+        .set('X-ACCESS-TOKEN', jwtToken)
+        .expect(200)
+        .end((err, res) => {
+          assert.equal(res.status, 200);
+          done();
+        });
+    });
     it('should send a 404 status code if book does not exist', (done) => {
       server
         .post('/api/v1/users/1/books?id=200')
@@ -97,16 +107,6 @@ describe('Book', () => {
         .expect(200)
         .end((err, res) => {
           assert.equal(res.status, 201);
-          done();
-        });
-    });
-    it('should allow logged in users borrow book', (done) => {
-      server
-        .post('/api/v1/users/1/books?id=1')
-        .set('X-ACCESS-TOKEN', jwtToken)
-        .expect(200)
-        .end((err, res) => {
-          assert.equal(res.status, 200);
           done();
         });
     });
