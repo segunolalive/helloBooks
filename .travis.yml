@@ -4,6 +4,5 @@ node_js:
 env:
   global:
     - export NODE_ENV=test
-    - export DATABASE_URL_TEST=postgres://jmjbrcfp:FvHq4yiSgqDPdzPa0v1NzLITLEgee5NI@pellefant.db.elephantsql.com:5432/jmjbrcfp
 script:
   - npm test
