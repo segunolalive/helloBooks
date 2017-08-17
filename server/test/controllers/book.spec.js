@@ -1,7 +1,6 @@
 import supertest from 'supertest';
 import { assert } from 'chai';
 import app from '../../app';
-import models from '../../models/index';
 import mock from '../mock/mock';
 
 
