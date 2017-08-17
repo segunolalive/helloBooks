@@ -1,6 +1,6 @@
 {
   "name": "hellobooks",
-  "version": "8.3.0",
+  "version": "1.0.0",
   "description": "A simple library app",
   "main": "server/app.js",
   "scripts": {
@@ -13,6 +13,10 @@
     "test": "cross-env NODE_ENV=test npm run seed:tables & npm run seed:join & npm run test:travis",
     "build": "babel server -d server/dist",
     "serve": "node server/dist/bin/www.js"
+  },
+  "engines": {
+    "node": 6,
+    "npm": "5.3.0"
   },
   "repository": {
     "type": "git",
