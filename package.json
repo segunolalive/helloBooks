@@ -1,6 +1,6 @@
 {
   "name": "hellobooks",
-  "version": "8.3.0",
+  "version": "1.0.0",
   "description": "A simple library app",
   "main": "server/app.js",
   "scripts": {
@@ -10,9 +10,15 @@
     "seed:join": "cross-env NODE_ENV=test babel-node server/seeders/borrowedBook.js && exit 0",
     "test:travis": "cross-env NODE_ENV=test mocha -t 5000 --compilers js:babel-register server/test/**/*.spec.js",
     "test:dev": "cross-env NODE_ENV=test mocha --watch -t 5000 --compilers js:babel-register server/test/**/*.spec.js",
-    "test": "cross-env NODE_ENV=test npm run seed:tables & npm run seed:join & npm run test:travis",
-    "build": "babel server -d server/dist",
+    "test:build": "cross-env NODE_ENV=test & node dist/server/seeders/index.js & mocha -t 10000 dist/server/test/**/*.spec.js",
+    "pretest": "cross-env NODE_ENV=test npm run seed:tables",
+    "test": "cross-env NODE_ENV=test npm run seed:join & npm run test:travis",
+    "build": "babel server -d dist/server",
     "serve": "node server/dist/bin/www.js"
+  },
+  "engines": {
+    "node": 6,
+    "npm": "5.3.0"
   },
   "repository": {
     "type": "git",
