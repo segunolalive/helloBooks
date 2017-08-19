@@ -1,13 +1,13 @@
 engines:
   duplication:
-  enabled: false
-  config:
-    languages:
-      javascript:
-        mass_threshold: 20
+    enabled: false
+    config:
+      languages:
+        javascript:
+          mass_threshold: 20
 ratings:
   paths:
   - "**.js"
-exclude:
+exclude_paths:
 - "spec"
 - "node_modules/**/*"

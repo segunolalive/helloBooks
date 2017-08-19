@@ -15,10 +15,8 @@ describe('User', () => {
       .send(mock.newUser)
       .expect(201)
       .end((err, res) => {
-        if (!err) {
-          assert.equal(res.status, 201);
-          assert.isNotNull(res.body.token);
-        }
+        assert.equal(res.status, 201);
+        assert.isNotNull(res.body.token);
         done();
       });
   });
@@ -28,10 +26,8 @@ describe('User', () => {
       .send(mock.adminUser)
       .expect(200)
       .end((err, res) => {
-        if (!err) {
-          assert.equal(res.status, 200);
-          assert.isNotNull(res.body.token);
-        }
+        assert.equal(res.status, 200);
+        assert.isNotNull(res.body.token);
         done();
       });
   });

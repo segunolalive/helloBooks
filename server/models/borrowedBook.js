@@ -12,21 +12,6 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-  }
-    // ,{
-    // hooks: {
-    //   afterCreate: (borrowed) => {
-    //     const Book = sequelize.model('Book');
-    //     Book.findById(borrowed.bookId).then((book) => {
-    //       if (book.total > 0) {
-    //         book.update({
-    //           quantity: book.quantity - 1,
-    //         });
-    //       }
-    //     }).catch(error => error);
-    //   }
-    // }
-  // }
-  );
+  });
   return BorrowedBook;
 };

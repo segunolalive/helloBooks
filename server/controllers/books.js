@@ -2,7 +2,7 @@ import { Book, BorrowedBook } from '../models';
 
 
 export default {
-  /*
+  /**
    * Add new book to library.
    * @public
    * @method
@@ -16,7 +16,7 @@ export default {
         .create(req.body)
         .then(book => res.status(201).send({
           success: true,
-          message: `Successfully added ${book} to Library`,
+          message: `Successfully added ${book.title} to Library`,
           data: book,
         }))
         .catch(error => res.status(500).send({
@@ -29,7 +29,8 @@ export default {
       message: 'unauthorized access',
     });
   },
-  /*
+
+  /**
    * Fetch a specific book
    * @public
    * @method
@@ -58,7 +59,8 @@ export default {
         error
       }));
   },
-  /*
+
+  /**
    * Fetch all books present in database
    * @public
    * @method
@@ -87,7 +89,8 @@ export default {
         error
       }));
   },
-  /*
+
+  /**
    * Edit a book's metadata.
    * @public
    * @method
@@ -120,7 +123,7 @@ export default {
     }
   },
 
-  /*
+  /**
    * Allow user borrow book.
    * @public
    * @method
@@ -162,7 +165,7 @@ export default {
               book.save();
               res.status(200).send({
                 success: true,
-                message: `You have successfully borrowed ${book.title} again check your profile to read read it`,
+                message: `You have successfully borrowed ${book.title} again. Check your profile to read it`,
               });
               return;
             }
@@ -175,8 +178,7 @@ export default {
               })
               .then(() => res.status(200).send({
                 success: true,
-                message: `You have successfully borrowed ${book.title}
-                check your profile to read read it`,
+                message: `You have successfully borrowed ${book.title}. Check your profile to read it`,
               }))
               .catch((error) => {
                 res.status(500).send({
@@ -191,7 +193,8 @@ export default {
         error,
       }));
   },
-  /*
+
+  /**
    * Allow user return borrowed book.
    * @public
    * @method
