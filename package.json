@@ -6,14 +6,14 @@
   "scripts": {
     "start": "babel-node server/bin/www.js",
     "start:dev": "nodemon server/bin/www --exec babel-node",
-    "seed:tables": "cross-env NODE_ENV=test babel-node server/seeders/index.js && exit 0",
-    "seed:join": "cross-env NODE_ENV=test babel-node server/seeders/borrowedBook.js && exit 0",
     "test:travis": "cross-env NODE_ENV=test nyc mocha -t 5000 --compilers js:babel-register server/test/**/*.spec.js",
     "test:dev": "cross-env NODE_ENV=test mocha --watch -t 5000 --compilers js:babel-register server/test/**/*.spec.js",
     "test:build": "cross-env NODE_ENV=test & node dist/server/seeders/index.js & mocha -t 10000 dist/server/test/**/*.spec.js",
     "pretest": "cross-env NODE_ENV=test npm run seed:tables",
     "test": "cross-env NODE_ENV=test npm run seed:join & npm run test:travis",
     "coverage": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls",
+    "seed:tables": "cross-env NODE_ENV=test babel-node server/seeders/user.js & babel-node server/seeders/book.js",
+    "seed:join": "cross-env NODE_ENV=test babel-node server/seeders/borrowedBook.js",
     "build": "babel server -d dist/server",
     "serve": "node server/dist/bin/www.js"
   },

@@ -21,9 +21,9 @@ const getToken = (req) => {
 * @public
 * @param {object} req - express http request object
 * @param {object} res - express http response object
-* @param {object} next - function that calls the next function
+* @param {function} next - function that calls the next function
 * in the middleware stack
-* @return {object} return an http response or calls the next middleware
+* @return {undefined} sends an http response or calls the next middleware
 * function
 */
 const authenticate = (req, res, next) => {

@@ -13,9 +13,7 @@ describe('Book', () => {
       .post('/api/v1/users/signin')
       .send(mock.adminUser)
       .end((err, res) => {
-        if (!err) {
-          jwtToken = res.body.token;
-        }
+        jwtToken = res.body.token;
         done();
       });
   });
@@ -130,7 +128,7 @@ describe('editBookInfo', () => {
   before((done) => {
     server
       .post('/api/v1/users/signup')
-      .send(mock.newUser)
+      .send(mock.newUser2)
       .end((err, res) => {
         jwtToken = res.body.token;
         done();
