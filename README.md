@@ -1,9 +1,6 @@
-
-[![Build Status](https://travis-ci.org/segunolalive/helloBooks.svg?branch=development)](https://travis-ci.org/segunolalive/helloBooks)
-
-[![Coverage Status](https://coveralls.io/repos/github/segunolalive/helloBooks/badge.svg?branch=development)](https://coveralls.io/github/segunolalive/helloBooks?branch=development)
-
-[![Code Climate](https://codeclimate.com/github/segunoalive/helloBooks/badges/gpa.svg?branch=development)](https://codeclimate.com/github/segunolalive/helloBooks?branch=development)
+[![Build Status](https://travis-ci.org/segunolalive/helloBooks.svg?branch=master)](https://travis-ci.org/segunolalive/helloBooks)
+[![Coverage Status](https://coveralls.io/repos/github/segunolalive/helloBooks/badge.svg?branch=master)](https://coveralls.io/github/segunolalive/helloBooks?branch=master)
+[![Code Climate](https://codeclimate.com/github/segunolalive/helloBooks/badges/gpa.svg)](https://codeclimate.com/github/segunolalive/helloBooks?branch=master)
 
 # helloBooks
 
@@ -27,49 +24,40 @@ framework on the nodejs platform. Authentication of users is done via
 
 #### API Routes
 - sign up route:
-'/api/v1/users/signup'
+**POST** /api/v1/users/signup
 parameters - username, password, email
 optional parameters - firstName, lastName
-http verb - POST
+
 
 - login route:
-'/api/v1/users/signin'
+**POST** /api/v1/users/signin
 parameters - username, password
-http verb - POST
 
 - get books (view library):
-'/api/v1/books'
-parameters - none
-http verb - GET
+**GET** /api/v1/books'
 
 - get book (view a book's metadata):
-'/api/v1/books/:id'
+**GET** /api/v1/books/:id
 parameters - bookId (number)
-http verb - GET
 
 - add a new book to library:
-'/api/v1/books'
+**POST** /api/v1/books
 request body - authors, title, description, cover, bookfile, total
-http verb - POST
 
 - modify book information:
-'/api/v1/books/:id'
+**PUT** /api/v1/books/
 request body - authors, title, description, cover, bookfile, total (any)
 query parameters - book id (number)
-http verb - PUT
 
 - borrow book:
-'/api/v1/users/:id/books'
+**POST** /api/v1/users/:id/books
 parameters - user id
 query parameters - book id (number)
-http verb - POST
 
 - return book:
-'/api/v1/users/:id/books'
+**PUT** /api/v1/users/:id/books
 parameters - user id
 query parameters - book id (number)
-http verb - PUT
 
 - get borrowed books:
-'/api/v1/users/:id/books'
-http verb - GET
+**GET** /api/v1/users/:id/books
