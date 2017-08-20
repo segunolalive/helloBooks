@@ -6,3 +6,5 @@ env:
     - export NODE_ENV=test
 script:
   - npm test
+after_success:
+  - npm run coverage
