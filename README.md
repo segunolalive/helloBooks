@@ -1,9 +1,7 @@
 
-[![Build Status](https://travis-ci.org/segunolalive/helloBooks.svg?branch=development)](https://travis-ci.org/segunolalive/helloBooks)
-
-[![Coverage Status](https://coveralls.io/repos/github/segunolalive/helloBooks/badge.svg?branch=development)](https://coveralls.io/github/segunolalive/helloBooks?branch=development)
-
-[![Code Climate](https://codeclimate.com/github/segunoalive/helloBooks/badges/gpa.svg?branch=development)](https://codeclimate.com/github/segunolalive/helloBooks?branch=development)
+[![Build Status](https://travis-ci.org/segunolalive/helloBooks.svg?branch=master)](https://travis-ci.org/segunolalive/helloBooks)
+[![Coverage Status](https://coveralls.io/repos/github/segunolalive/helloBooks/badge.svg?branch=master)](https://coveralls.io/github/segunolalive/helloBooks?branch=master)
+[![Code Climate](https://codeclimate.com/github/segunolalive/helloBooks/badges/gpa.svg)](https://codeclimate.com/github/segunolalive/helloBooks?branch=master)
 
 # helloBooks
 
