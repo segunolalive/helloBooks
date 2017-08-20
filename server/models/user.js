@@ -1,26 +1,43 @@
-export default (sequelize, DataTypes) => {
+import { hashPassword } from '../helpers/helpers';
+
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     lastName: {
       type: DataTypes.STRING,
+    },
+    email: {
       allowNull: false,
-    }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        User.hasMany(models.Book, {
-          foreignKey: 'bookId',
-          as: 'books',
-        });
-      }
-    }
+      type: DataTypes.STRING,
+      unique: true,
+      validate: { isEmail: true, }
+    },
+    username: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true,
+    },
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
+
+  User.beforeCreate(user => hashPassword(user), { individualHooks: true });
+
+  User.associate = (models) => {
+    User.belongsToMany(models.Book, {
+      through: 'BorrowedBook',
+      foreignKey: 'userId',
+      otherKey: 'bookId',
+      unique: false,
+    });
+  };
   return User;
 };
