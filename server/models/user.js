@@ -27,6 +27,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    membershipType: {
+      allowNull: false,
+      type: DataTypes.ENUM,
+      values: ['bronze', 'silver', 'gold'],
+      defaultValue: 'bronze',
+    },
   });
 
   User.beforeCreate(user => hashPassword(user), { individualHooks: true });

@@ -31,6 +31,13 @@ const data = {
     email: faker.internet.email(),
     password: 'password',
   },
+  newUserBookCategory: {
+    username: faker.internet.userName(),
+    firstname: faker.name.firstName(),
+    lastname: faker.name.lastName(),
+    email: faker.internet.email(),
+    password: 'password',
+  },
   existingEmail: {
     username: 'baba',
     firstname: faker.name.firstName(),

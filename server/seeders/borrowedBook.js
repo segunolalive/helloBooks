@@ -1,6 +1,6 @@
 import db from '../models';
 
-db.BorrowedBook.sync({ force: true })
+db.BorrowedBook.sync()
   .then(() => {
     db.BorrowedBook.bulkCreate([{
       userId: 1,

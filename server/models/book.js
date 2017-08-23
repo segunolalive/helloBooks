@@ -16,9 +16,6 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
-    category: {
-      type: DataTypes.STRING,
-    },
     cover: {
       type: DataTypes.STRING,
     },
@@ -32,6 +29,12 @@ export default (sequelize, DataTypes) => {
       foreignKey: 'bookId',
       otherKey: 'userId',
       unique: false,
+    });
+  };
+  Book.associate = (models) => {
+    Book.belongsTo(models.BookCategory, {
+      as: 'bookCategory',
+      foreignKey: 'BookCategoryId',
     });
   };
   return Book;
