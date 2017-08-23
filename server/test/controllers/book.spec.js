@@ -28,6 +28,17 @@ describe('Book', () => {
         });
     });
   });
+  describe('filterBooksByCategory', () => {
+    it('should be allow users to view all books under a category', (done) => {
+      server
+        .get('/api/v1/books?category=javascript')
+        .expect(200)
+        .end((err, res) => {
+          assert.equal(res.status, 200);
+          done();
+        });
+    });
+  });
   describe('getBook', () => {
     it('should allow users to view a book\'s information', (done) => {
       server
@@ -51,8 +62,9 @@ describe('Book', () => {
   describe('borrowBook', () => {
     it('should allow logged in users borrow book', (done) => {
       server
-        .post('/api/v1/users/1/books?id=2')
+        .post('/api/v1/users/1/books')
         .set('X-ACCESS-TOKEN', jwtToken)
+        .send({ id: 2 })
         .expect(200)
         .end((err, res) => {
           assert.equal(res.status, 200);
@@ -61,8 +73,9 @@ describe('Book', () => {
     });
     it('should send a 404 status code if book does not exist', (done) => {
       server
-        .post('/api/v1/users/1/books?id=200')
+        .post('/api/v1/users/1/books')
         .set('X-ACCESS-TOKEN', jwtToken)
+        .send({ id: 200 })
         .expect(404)
         .end((err, res) => {
           assert.equal(res.status, 404);
@@ -72,8 +85,9 @@ describe('Book', () => {
     });
     it('should send message if there are no available copies', (done) => {
       server
-        .post('/api/v1/users/1/books?id=3')
+        .post('/api/v1/users/1/books')
         .set('X-ACCESS-TOKEN', jwtToken)
+        .send({ id: 3 })
         .expect(404)
         .end((err, res) => {
           assert.equal(res.status, 404);
@@ -84,8 +98,9 @@ describe('Book', () => {
     it('should prevent user from borrowing book multiple times unless previously returned',
       (done) => {
         server
-          .post('/api/v1/users/1/books?id=1')
+          .post('/api/v1/users/1/books')
           .set('X-ACCESS-TOKEN', jwtToken)
+          .send({ id: 1 })
           .expect(200)
           .end((err, res) => {
             assert.equal(res.status, 403);
@@ -99,8 +114,9 @@ describe('Book', () => {
   describe('returnBook', () => {
     it('should allow logged in users return borrowed book', (done) => {
       server
-        .put('/api/v1/users/1/books?id=1')
+        .put('/api/v1/users/1/books')
         .set('X-ACCESS-TOKEN', jwtToken)
+        .send({ id: 1 })
         .expect(200)
         .end((err, res) => {
           assert.equal(res.status, 201);
@@ -122,9 +138,22 @@ describe('Book', () => {
         });
     });
   });
+  describe('deleteBook', () => {
+    it('should allow admin user delete book', (done) => {
+      server
+        .delete('/api/v1/books/3')
+        .set('X-ACCESS-TOKEN', jwtToken)
+        .expect(200)
+        .end((err, res) => {
+          assert.equal(res.status, 200);
+          assert.equal(res.body.message, 'Successfully deleted book from database');
+          done();
+        });
+    });
+  });
 });
 
-describe('editBookInfo', () => {
+describe('non-admin access', () => {
   before((done) => {
     server
       .post('/api/v1/users/signup')
@@ -134,15 +163,30 @@ describe('editBookInfo', () => {
         done();
       });
   });
-  it('should prevent non-admin users from modifying book info', (done) => {
-    server
-      .put('/api/v1/books/1')
-      .set('X-ACCESS-TOKEN', jwtToken)
-      .send({ title: 'Learn Rust' })
-      .expect(401)
-      .end((err, res) => {
-        assert.equal(res.status, 401);
-        done();
-      });
+  describe('editBookInfo', () => {
+    it('should prevent non-admin users from modifying book info', (done) => {
+      server
+        .put('/api/v1/books/1')
+        .set('X-ACCESS-TOKEN', jwtToken)
+        .send({ title: 'Learn Rust' })
+        .expect(401)
+        .end((err, res) => {
+          assert.equal(res.status, 401);
+          done();
+        });
+    });
+  });
+  describe('deleteBook', () => {
+    it('should prevent non-admin user from delete book', (done) => {
+      server
+        .delete('/api/v1/books/3')
+        .set('X-ACCESS-TOKEN', jwtToken)
+        .expect(401)
+        .end((err, res) => {
+          assert.equal(res.status, 401);
+          assert.equal(res.body.message, 'unauthorized access');
+          done();
+        });
+    });
   });
 });

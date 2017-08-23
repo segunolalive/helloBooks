@@ -1,35 +1,40 @@
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('Books', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      firstName: {
-        type: Sequelize.STRING,
-      },
-      lastName: {
-        type: Sequelize.STRING,
-      },
-      email: {
+      title: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true,
+        unique: true
       },
-      username: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        unique: true,
-      },
-      password: {
+      authors: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      isAdmin: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+      description: {
+        type: Sequelize.STRING,
+      },
+      total: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
+      cover: {
+        type: Sequelize.STRING,
+      },
+      bookFile: {
+        type: Sequelize.STRING,
+      },
+      BookCategoryId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'BookCategories',
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,
@@ -42,6 +47,6 @@ module.exports = {
     });
   },
   down(queryInterface /* , Sequelize */) {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('Books');
   }
 };

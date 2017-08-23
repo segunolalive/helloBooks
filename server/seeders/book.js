@@ -1,6 +1,6 @@
 import db from '../models';
 
-db.Book.sync({ force: true })
+db.Book.sync()
   .then(() => {
     db.Book.bulkCreate([{
       title: 'eloquent javascript',

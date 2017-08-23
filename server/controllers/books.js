@@ -1,7 +1,80 @@
-import { Book, BorrowedBook } from '../models';
+import { Book, BorrowedBook, BookCategory } from '../models';
+
+/**
+ * Fetch all books that match a catagory from database
+ * @private
+ * @method
+ * @param  {object} req - express http request object
+ * @param  {object} res - express http response object
+ * @return {undefined}
+ */
+const filterBooksByCategory = (req, res) => {
+  const category = req.query.category;
+  BookCategory.findAll({ where: { category } })
+    .then((books) => {
+      const message = books.length ? '' : 'No books in match the requested category';
+      res.status(200).send({
+        success: true,
+        data: books,
+        message,
+      });
+    })
+    .catch(error => res.status(500).send({
+      success: false,
+      error
+    }));
+};
 
 
 export default {
+  /**
+   * Add new book category to library.
+   * @public
+   * @method
+   * @param  {object} req - express http request object
+   * @param  {object} res - express http response object
+   * @return {undefined}
+   */
+  addCategory(req, res) {
+    if (req.user && req.user.isAdmin) {
+      return BookCategory
+        .create(req.body)
+        .then(category => res.status(201).send({
+          success: true,
+          message: `Successfully added new category, ${category.category}, to Library`,
+        }))
+        .catch(error => res.status(500).send({
+          success: false,
+          error
+        }));
+    }
+    res.status(401).send({
+      success: false,
+      message: 'unauthorized access',
+    });
+  },
+  /**
+   * Fetch Bppk Categories.
+   * @public
+   * @method
+   * @param  {object} req - express http request object
+   * @param  {object} res - express http response object
+   * @return {undefined}
+   */
+  getBookCategories(req, res) {
+    BookCategory.findAll()
+      .then((categories) => {
+        res.status(200).send({
+          success: true,
+          data: categories,
+        });
+      })
+      .catch(error => res.status(500).send({
+        success: false,
+        error
+      }));
+  },
+
   /**
    * Add new book to library.
    * @public
@@ -69,10 +142,13 @@ export default {
    * @return {undefined}
    */
   getAllBooks(req, res) {
+    if (req.query.category) {
+      return filterBooksByCategory(req, res);
+    }
     Book.findAll()
       .then((books) => {
         if (!books.length) {
-          res.send({
+          res.status(200).send({
             success: true,
             data: [],
             message: 'Library is currently empty. Check back later'
@@ -113,7 +189,35 @@ export default {
         }))
         .catch(error => res.status(500).send({
           success: false,
-          error
+          error,
+        }));
+    } else {
+      res.status(401).send({
+        success: false,
+        message: 'unauthorized access',
+      });
+    }
+  },
+
+  /**
+   * Delete a book from database.
+   * @public
+   * @method
+   * @param  {object} req - express http request object
+   * @param  {object} res - express http response object
+   * @return {undefined}
+   */
+  deleteBook(req, res) {
+    const id = req.params.id;
+    if (req.user && req.user.isAdmin) {
+      Book.destroy({ where: { id } })
+        .then(() => res.status(200).send({
+          success: true,
+          message: 'Successfully deleted book from database',
+        }))
+        .catch(error => res.status(500).send({
+          success: false,
+          error,
         }));
     } else {
       res.status(401).send({
@@ -133,7 +237,7 @@ export default {
    */
   borrowBook(req, res) {
     const userId = req.params.id;
-    const bookId = req.query.id;
+    const bookId = req.body.id;
     Book.findById(bookId)
       .then((book) => {
         if (!book) {
@@ -203,7 +307,7 @@ export default {
    * @return {undefined}
    */
   returnBook(req, res) {
-    const bookId = req.query.id;
+    const bookId = req.body.id;
     const userId = req.params.id;
     BorrowedBook.findOne({ where: { userId, bookId, returned: false } })
       .then((borrowedBook) => {
@@ -237,4 +341,3 @@ export default {
       }));
   }
 };
-
