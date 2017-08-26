@@ -1,10 +1,15 @@
 {
   "root": true,
-  "extends": "airbnb-base",
+  "extends": ["airbnb-base", "plugin:react/recommended"],
   "env": {
+    "browser": true,
     "node": true,
     "es6": true,
     "mocha": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": { "jsx": true }
   },
   "rules": {
     "one-var": 0,
@@ -16,6 +21,8 @@
     "curly": ["error", "multi-line"],
     "import/no-unresolved": [2, { "commonjs": true }],
     "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     "valid-jsdoc": ["error", {
       "requireReturn": true,
       "requireReturnType": true,
