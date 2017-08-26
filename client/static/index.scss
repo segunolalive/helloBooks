@@ -1,0 +1,94 @@
+$coolBlue: #032442;
+
+$coolBlueBorder: 1px solid $coolBlue;
+
+
+html, body {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0;
+}
+
+body {
+  background-color: #011b33;
+  color: white;
+  font: sans-serif;
+}
+
+nav {
+  box-shadow: none;
+}
+
+.nav-wrapper {
+  padding-left: 20px;
+
+  li.active {
+    border-bottom: 4px solid blue;
+  }
+
+  a:hover {
+    border-width: 100%;
+    border-bottom: 4px solid blue;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.2s ease-out;
+  }
+}
+
+header {
+  border-bottom: $coolBlueBorder;
+}
+
+main {
+    padding-top: 20px;
+}
+
+.landing {
+  padding-top: 25vh;
+  margin: 0;
+  width: 100%;
+  height: auto;
+
+  a {
+    margin: 10px;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .welcome {
+    margin-top: 120px;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .account {
+    margin-top: 50px;
+  }
+}
+
+.white-area {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.library {
+    min-height: 100vh;
+    padding-top: 10px;
+}
+
+.loading-wrapper {
+  margin: 30px;
+}
+
+.profile-info {
+  border-bottom: $coolBlueBorder;
+  padding: 20px 20px !important;
+}
+
+@media only screen and (min-width: 601px) {
+  .borrowed {
+    border-left: $coolBlueBorder;
+    border-right: $coolBlueBorder;
+    min-height: 100vh;
+  }
+}
