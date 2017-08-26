@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, Icon, Row } from 'react-materialize';
+import { Button, Col } from 'react-materialize';
 
 
 const Borrowed = (props) => {
@@ -8,17 +8,27 @@ const Borrowed = (props) => {
     <Col key={book.title} s={12} className="book-info">
       <div className="card horizontal">
         <div className="card-image">
-          <img src={book.cover || "N/A"} />
+          <img src={book.cover || 'N/A'} />
         </div>
         <div className="card-stacked">
           <div className="card-content">
             <p>A modern introduction to programming using Javascript.</p>
           </div>
           <div className="card-action center">
-            <a href="#" className="btn waves-effect`">Read Book</a>
+            <Button
+              waves='light'
+              onClick={props.onClick}
+            >
+              Read Book
+            </Button>
           </div>
           <div className="card-action center">
-            <a href="#" className="btn waves-effect">Return</a>
+            <Button
+              waves='light'
+              onClick={props.onClick}
+            >
+              Return Book
+            </Button>
           </div>
         </div>
       </div>
@@ -33,6 +43,12 @@ const Borrowed = (props) => {
       {books}
     </section>
   );
+};
+
+
+Borrowed.propTypes = {
+  borrowedBooks: PropTypes.array,
+  onClick: PropTypes.func,
 };
 
 
