@@ -35,6 +35,21 @@ nav {
   }
 }
 
+.brand-logo {
+  margin-left: 15px;
+}
+
+.side-nav {
+    background-color: #011b33;
+    color: white;
+    font: sans-serif;
+
+  a {
+    color: white !important;
+  }
+}
+
+
 header {
   border-bottom: $coolBlueBorder;
 }
