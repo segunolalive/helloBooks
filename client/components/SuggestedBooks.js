@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Col, Icon, Row } from 'react-materialize';
+import { Col } from 'react-materialize';
 
 
 const SuggestedBooks = (props) => {
   const books = props.suggestedBooks ? props.suggestedBooks.map(book =>
-      <figure key={book.title}>
-        <img src=".{book.cover || 'N/A'}" alt={book.title || 'book cover'} />
-        <figcaption>{book.title || ''}</figcaption>
-      </figure>
+    <figure key={book.title}>
+      <img src={book.cover || 'N/A'} alt={book.title || 'book cover'} />
+      <figcaption>{book.title || ''}</figcaption>
+    </figure>
   )
     : <h5 className="center">Nothing here</h5>;
   return (
@@ -23,8 +23,10 @@ const SuggestedBooks = (props) => {
   );
 };
 
+
 SuggestedBooks.propTypes = {
   suggestedBooks: PropTypes.array,
-}
+};
+
 
 export default SuggestedBooks;
