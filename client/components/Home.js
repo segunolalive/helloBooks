@@ -13,7 +13,7 @@ const Home = () => (
         <div className="container">
           <section className="center landing">
             <div>
-              <h1>Welcome to Hello Books</h1>
+              <h2 style={ { fontWeight: 'bold' } }>Welcome To Hello Books</h2>
             </div>
             <div>
               <Link to="/login" className="btn">login</Link>

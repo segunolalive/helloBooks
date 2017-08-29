@@ -84,12 +84,9 @@ main {
 .white-area {
   background-color: #ffffff;
   color: #000000;
+  min-height: 100vh;
 }
 
-.library {
-    min-height: 100vh;
-    padding-top: 10px;
-}
 
 .loading-wrapper {
   margin: 30px;
@@ -105,5 +102,20 @@ main {
     border-left: $coolBlueBorder;
     border-right: $coolBlueBorder;
     min-height: 100vh;
+  }
+}
+
+// admin page styles
+.admin-form {
+  background-color: rgb(3, 37, 68);
+  padding: 20px !important;
+  border-radius: 4px;
+
+  textarea {
+    resize: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid white;
   }
 }
