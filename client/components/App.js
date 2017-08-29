@@ -6,8 +6,9 @@ import Home from './Home';
 import Admin from './Admin';
 import SignUp from './SignUp';
 import Login from './Login';
-import Library from './Library';
+import Library from './library/Library';
 import Dashboard from './dashboard/Dashboard';
+import Logout from './Logout';
 
 import mock from './mock';
 
@@ -30,16 +31,15 @@ class App extends Component {
             <Route path='/' exact component={Home} />
             <Route path='/dashboard' component={Dashboard} />
             <Route path='/login' component={Login} />
+            <Route path='/logout' component={Logout} />
             <Route path='/signup' component={SignUp} />
             <Route path='/library' component={Library} />
             <Route path='/admin' component={Admin} />
-            <Route render={() => {
-              return (
-                <div className="center landing">
-                  <h2>Not Found</h2>
-                </div>
-              );
-            }} />
+            <Route render={() => (
+              <div className="center landing">
+                <h2>Not Found</h2>
+              </div>
+            )} />
           </Switch>
         </div>
       </BrowserRouter>
