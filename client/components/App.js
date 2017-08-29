@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Row } from 'react-materialize';
-import Header from './Header';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+
 import Home from './Home';
+import Admin from './Admin';
 import SignUp from './SignUp';
 import Login from './Login';
 import Library from './Library';
-import ProfileInfo from './ProfileInfo';
-import Dashboard from './Dashboard';
+import Dashboard from './dashboard/Dashboard';
 
 import mock from './mock';
 
@@ -23,14 +24,25 @@ class App extends Component {
   }
   render() {
     return (
-      <div className='App'>
-        <Header />
-        <main className=''>
-          <Row>
-            <Dashboard />
-          </Row>
-        </main>
-      </div>
+      <BrowserRouter>
+        <div className='App'>
+          <Switch>
+            <Route path='/' exact component={Home} />
+            <Route path='/dashboard' component={Dashboard} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={SignUp} />
+            <Route path='/library' component={Library} />
+            <Route path='/admin' component={Admin} />
+            <Route render={() => {
+              return (
+                <div className="center landing">
+                  <h2>Not Found</h2>
+                </div>
+              );
+            }} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }
