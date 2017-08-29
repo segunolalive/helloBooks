@@ -12,7 +12,8 @@ module.exports = {
   entry: './client/index.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist/client')
+    path: path.resolve(__dirname, 'dist/client'),
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -51,6 +52,9 @@ module.exports = {
         loader: 'url-loader?limit=250000'
       }
     ]
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   plugins: [HtmlWebpackPluginConfig],
 };
