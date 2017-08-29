@@ -12,7 +12,7 @@ class Dashboard extends Component {
     return (
       <div>
         <Header
-          navLinks={['dashboard', 'history', 'library']}
+          navLinks={['dashboard', 'history', 'library', 'logout']}
           activeLink='dashboard'
         />
         <main>
