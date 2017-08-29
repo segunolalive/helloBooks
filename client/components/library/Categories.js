@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input, Row, Col } from 'react-materialize';
+import { Input, Col } from 'react-materialize';
 
 
 /**
- * 
+ *
  */
 const Categories = (props) => {
   const options = props.categories.map(category => (
@@ -37,4 +37,3 @@ Categories.propTypes = {
 };
 
 export default Categories;
-

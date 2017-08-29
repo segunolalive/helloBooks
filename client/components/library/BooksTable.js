@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Table } from 'react-materialize';
 
 /**
- * 
+ *
  */
 const BooksTable = (props) => {
   const books = props.books.map(book =>
