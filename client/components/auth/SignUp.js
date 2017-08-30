@@ -1,12 +1,41 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Row } from 'react-materialize';
-import Header from './header/Header';
+import { connect } from 'react-redux';
+
+import Header from '../header/Header';
 
 /**
  *
  */
 class SignUp extends Component {
+  constructor () {
+    super();
+    this.state = {
+      surname: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      username: '',
+      password: '',
+      confirmPassword: '',
+    }
+    this.handleSignUp = this.handleSignUp.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleSignUp(event) {
+    event.preventDefault();
+  }
+
+  handleChange(event) {
+    event.preventDefault();
+    const formField = event.target.name;
+    const user = Object.assign({}, this.state);
+    user[formField] = event.target.value;
+    this.setState(() => user);
+  }
+
   render() {
     return (
       <div>
@@ -23,33 +52,80 @@ class SignUp extends Component {
                     <h6>Welcome home avid reader</h6>
                   </div>
                   <div className="col m6 s12">
-                    <form className="" action="/signup" method="post">
+                    <form onSubmit={this.handleSignUp}>
                       <div className="col s12">
                         <h5>Sign Up</h5>
                       </div>
                       <div className="col s12">
                         <div className="container">
                           <div className="input-field">
-                            <input type="text" name="surname" placeholder="Surname" />
+                            <input
+                              className="validate"
+                              type="text"
+                              name="surname"
+                              placeholder="Surname"
+                              onChange={this.handleChange}
+                            />
                           </div>
                           <div className="input-field">
-                            <input type="text" name="firstname" placeholder="First Name" />
+                            <input
+                              className="validate"
+                              type="text"
+                              name="firstname"
+                              placeholder="First Name"
+                              onChange={this.handleChange}
+                            />
                           </div>
                           <div className="input-field">
-                            <input type="email" name="email" placeholder="Email" />
+                            <input
+                              className="validate"
+                              type="email"
+                              name="email"
+                              required
+                              title="email is required"
+                              placeholder="Email"
+                              onChange={this.handleChange}
+                            />
                           </div>
                           <div className="input-field">
-                            <input type="text" name="username" placeholder="Username" />
+                            <input
+                              className="validate"
+                              type="text"
+                              name="username"
+                              placeholder="Username"
+                              required
+                              title="username is required"
+                              onChange={this.handleChange}
+                            />
                           </div>
                           <div className="input-field">
-                            <input type="password" name="password" placeholder="password" />
+                            <input
+                              className="validate"
+                              type="password"
+                              name="password"
+                              placeholder="password"
+                              required
+                              title="password is required"
+                              onChange={this.handleChange}
+                            />
                           </div>
                           <div className="input-field">
-                            <input type="password" name="confirmPassword"
-                              placeholder="retype password" />
+                            <input
+                              className="validate"
+                              type="password"
+                              name="confirmPassword"
+                              placeholder="retype password"
+                              required
+                              title="password confirmation is required"
+                              onChange={this.handleChange}
+                            />
                           </div>
                           <div className="input-field">
-                            <input type="submit" name="submit" value="Sign Up" className="btn" />
+                            <input type="submit"
+                              name="submit"
+                              value="Sign Up"
+                              className="btn"
+                            />
                           </div>
                           <div className="">
                             <p>Already have an account?
@@ -70,4 +146,9 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
