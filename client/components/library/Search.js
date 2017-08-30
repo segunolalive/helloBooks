@@ -8,7 +8,7 @@ import { Col, Input, Icon } from 'react-materialize';
  */
 const Search = props =>
   (
-    <Col s={10} m={6}>
+    <Col s={12} m={6}>
       <Input s={12} className="icon-prefix"
         type='search'
         label={'Search Books'}

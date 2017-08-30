@@ -41,6 +41,7 @@
   },
   "homepage": " https://segunolalive.github.io/helloBooks/templates/",
   "dependencies": {
+    "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
@@ -51,6 +52,7 @@
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
     "css-loader": "^0.28.5",
+    "deepclonejs": "^1.0.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "faker": "^4.1.0",
@@ -66,6 +68,7 @@
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.0",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "sequelize": "^4.4.2",
     "sequelize-cli": "^2.8.0",
     "style-loader": "^0.18.2"
