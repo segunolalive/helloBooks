@@ -28,9 +28,9 @@ const Library = props => (
           <Categories categories={mock.categories} /> {/** FIXME: */}
           <Search />
           <BooksTable
-            // books={props.books}
-            books={mock.books}
-            headers={[
+            // bookList={props.books}
+            bookList={mock.books}
+            tableHeaders={[
               'Cover',
               'Title',
               'Author(s)',
@@ -44,7 +44,6 @@ const Library = props => (
     </main>
   </div>
 );
-
 
 
 export default Library;

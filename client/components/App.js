@@ -3,12 +3,13 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 
 import Home from './Home';
+import notFound from './404';
 import Admin from './Admin';
-import SignUp from './SignUp';
-import Login from './Login';
+import Login from './auth/Login';
+import SignUp from './auth/SignUp';
 import Library from './library/Library';
 import Dashboard from './dashboard/Dashboard';
-import Logout from './Logout';
+import Logout from './auth/Logout';
 
 import mock from './mock';
 
@@ -35,11 +36,7 @@ class App extends Component {
             <Route path='/signup' component={SignUp} />
             <Route path='/library' component={Library} />
             <Route path='/admin' component={Admin} />
-            <Route render={() => (
-              <div className="center landing">
-                <h2>Not Found</h2>
-              </div>
-            )} />
+            <Route component={notFound} />
           </Switch>
         </div>
       </BrowserRouter>

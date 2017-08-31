@@ -2,29 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Table } from 'react-materialize';
 
+import BookRow from './Bookrow';
+
+
 /**
  *
  */
-const BooksTable = (props) => {
-  const books = props.books.map(book =>
+const BooksTable = ({ bookList, tableHeaders }) => {
+  const books = bookList.map(book =>
     (
-      <tr key={book.id}>
-        <td>{book.cover || 'N/A'}</td>
-        <td>{book.title}</td>
-        <td>{book.authors}</td>
-        <td>{book.total}</td>
-        <td>
-          <Button
-            disabled={!book.total}
-            waves='light'
-          >
-            Borrow
-          </Button>
-        </td>
-      </tr>
+      <BookRow
+        key={book.id}
+        {...book}
+      />
     )
   );
-  const headers = props.headers.map(header =>
+  const headers = tableHeaders.map(header =>
     <th key={header}>{header}</th>
   );
   return (
@@ -45,8 +38,8 @@ const BooksTable = (props) => {
 
 
 BooksTable.propTypes = {
-  books: PropTypes.array.isRequired,
-  headers: PropTypes.array.isRequired,
+  bookList: PropTypes.array.isRequired,
+  tableHeaders: PropTypes.array.isRequired,
 };
 
 export default BooksTable;
