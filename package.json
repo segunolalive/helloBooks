@@ -4,7 +4,7 @@
   "description": "A simple library app",
   "main": "server/app.js",
   "scripts": {
-    "start": "babel-node server/bin/www.js",
+    "serve": "babel-node server/bin/www.js",
     "start:client": "webpack-dev-server --hot",
     "start:dev": "nodemon server/bin/www --exec babel-node",
     "test:travis": "cross-env NODE_ENV=test nyc mocha -t 5000 --compilers js:babel-register server/test/**/*.spec.js",
@@ -15,7 +15,7 @@
     "seed:join": "cross-env NODE_ENV=test babel-node server/seeders/borrowedBook.js",
     "build": "babel server -d dist/server",
     "heroku-postbuild": "npm run build",
-    "serve": "node dist/server/bin/www.js"
+    "start": "node dist/server/bin/www.js"
   },
   "nyc": {
     "exclude": [
