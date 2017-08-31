@@ -12,7 +12,7 @@ const Borrowed = (props) => {
         </div>
         <div className="card-stacked">
           <div className="card-content">
-            <p>A modern introduction to programming using Javascript.</p>
+            <p>{book.description || null }</p>
           </div>
           <div className="card-action center">
             <Button
