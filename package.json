@@ -14,7 +14,8 @@
     "seed:tables": "cross-env NODE_ENV=test babel-node server/seeders/user.js && babel-node server/seeders/bookCategory.js && babel-node server/seeders/book.js",
     "seed:join": "cross-env NODE_ENV=test babel-node server/seeders/borrowedBook.js",
     "build": "babel server -d dist/server",
-    "serve": "node server/dist/bin/www.js"
+    "heroku-postbuild": "npm run build",
+    "serve": "node dist/server/bin/www.js"
   },
   "nyc": {
     "exclude": [
