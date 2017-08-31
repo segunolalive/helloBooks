@@ -10,7 +10,6 @@ export default (app) => {
   app.get('/api/v1/books/category', bookController.getBookCategories);
   app.get('/api/v1/books/:id', bookController.getBook);
   app.get('/api/v1/books', bookController.getAllBooks);
-  // app.use(authenticate);
   app.post('/api/v1/books/category', authenticate, bookController.addCategory);
   app.post('/api/v1/books', authenticate, bookController.createBook);
   app.delete('/api/v1/books/:id', authenticate, bookController.deleteBook);
