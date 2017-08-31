@@ -8,7 +8,10 @@ export const loginUser = (user => ({
 }));
 
 // export const API = 'https://segunolalive-hellobooks.herokuapp.com/api/v1';
-const API = 'https://hellobooks.herokuapp.com/api/v1';
+let API = 'https://hellobooks.herokuapp.com/api/v1';
+if (process.env === 'development') {
+  API = 'localhost:3000/api/v1';
+}
 
 export /**
  * @param {any} data - user data

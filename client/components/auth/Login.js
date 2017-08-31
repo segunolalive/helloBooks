@@ -23,6 +23,7 @@ class Login extends Component {
 
   handleLogin(event) {
     event.preventDefault();
+    console.log(this.props.login);
     console.log(this.props.login(this.state));
   }
 
