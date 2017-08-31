@@ -23,8 +23,8 @@ class Login extends Component {
 
   handleLogin(event) {
     event.preventDefault();
-    console.log(this.props.login);
-    console.log(this.props.login(this.state));
+    console.log(this.props);
+    console.log(login(this.state));
   }
 
   handleChange(event) {
@@ -112,4 +112,4 @@ Login.propTypes = {
 // const mapDispatchToProps = dispatch => ({});
 // export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
-export default connect(null, login)(Login);
+export default connect()(Login);

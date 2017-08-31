@@ -8,10 +8,9 @@ export const loginUser = (user => ({
 }));
 
 // export const API = 'https://segunolalive-hellobooks.herokuapp.com/api/v1';
-let API = 'https://hellobooks.herokuapp.com/api/v1';
-if (process.env === 'development') {
-  API = 'localhost:3000/api/v1';
-}
+// let API = 'https://hellobooks.herokuapp.com/api/v1';
+
+let API = 'http://localhost:3000/api/v1';
 
 export /**
  * @param {any} data - user data
@@ -24,11 +23,19 @@ export /**
 //     console.log(response.data);
 //   }).catch(error => console.log(error));
 
-const login = data => dispatch => axios.post(`${API}/login`, data)
+
+
+// const login = data => dispatch => axios.post(`${API}/login`, data)
+//   .then((response) => {
+//     sessionStorage.setItem('token', response.data.token);
+//     console.log(response);
+//     dispatch(loginUser(response.data));
+//   }, (err) => {
+//     console.log(err);
+//   })
+
+const login = data => axios.post(`${API}/login`, data)
   .then((response) => {
     sessionStorage.setItem('token', response.data.token);
     console.log(response);
-    dispatch(loginUser(response.data));
-  }, (err) => {
-    console.log(err);
-  })
+  }).catch(e => console.log(e));
