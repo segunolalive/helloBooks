@@ -123,3 +123,16 @@ main {
     border-bottom: 1px solid white;
   }
 }
+
+#toast-container {
+    top: auto !important;
+    right: auto !important;
+    top: 10% !important;
+    // left:7% !important;
+}
+
+@media only screen and (max-width: 601px) {
+  #toast-container {
+    top: 3rem !important;
+  }
+}
