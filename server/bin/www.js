@@ -3,7 +3,7 @@ import app from '../app';
 
 const port = parseInt(process.env.PORT, 10) || 8000;
 
-const server = http.createServer(app, () => {
-  process.stdout(`server running on port: ${port}`);
+const server = http.createServer(app);
+server.listen(port, () => {
+  process.stdout.write(`server running on port: ${port}\n`);
 });
-server.listen(port);
