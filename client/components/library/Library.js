@@ -5,7 +5,7 @@ import Header from '../header/Header';
 import BooksTable from './BooksTable';
 import Categories from './Categories';
 import Search from './Search';
-import BookLoader from './BookLoader';
+import Loading from '../Loading';
 
 import mock from '../mock'; // FIXME: Load this over the wire in lifecycle hooks
 
@@ -38,7 +38,7 @@ const Library = props => (
               'Action'
             ]}
           />
-          <BookLoader />
+          <Loading text="fetching more awesome books . . ." />
         </div>
       </Row>
     </main>

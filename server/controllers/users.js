@@ -45,7 +45,7 @@ export default {
             user.id,
             user.username,
             user.email,
-            user.isAdmin,
+            user.isAdmin
           );
           res.status(201).json({ success: true, token });
         })

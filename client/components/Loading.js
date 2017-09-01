@@ -1,15 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Col, ProgressBar, Row } from 'react-materialize';
 
-const BookLoader = () => (
+const Loading = props => (
   <section className="loading-wrapper center">
     <Row>
       <Col s={12}>
-        <strong>Fetching more awesome books . . .</strong>
+        <strong>{props.text}</strong>
         <ProgressBar />
       </Col>
     </Row>
   </section>
 );
 
-export default BookLoader;
+Loading.propTypes = {
+  text: PropTypes.string,
+};
+
+export default Loading;

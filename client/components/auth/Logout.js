@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-
+/**
+ * [className description]
+ * @type {String}
+ */
 class Logout extends Component {
-  componentDidMount(){
+  /**
+   * [componentDidMount description]
+   * @return {[type]} [description]
+   */
+  componentDidMount() {
+    sessionStorage.removeItem('token');
+    Materialize.toast('Successfully logged out', 4000, 'green');
     this.props.history.push('/');
   }
 
@@ -17,7 +26,7 @@ class Logout extends Component {
 }
 
 Logout.propTypes = {
-  router: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired
 };
 
 export default Logout;
