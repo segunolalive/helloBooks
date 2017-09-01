@@ -76,6 +76,7 @@
     "style-loader": "^0.18.2"
   },
   "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "chai": "^4.1.0",
     "coveralls": "^2.13.1",
     "cross-env": "^5.0.5",
