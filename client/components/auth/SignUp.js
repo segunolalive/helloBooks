@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Row } from 'react-materialize';
 import { connect } from 'react-redux';
 
 import Header from '../header/Header';
+import { signUp } from '../../actions/signup';
 
-/**
- *
+/*
+ eslint-disable
  */
 class SignUp extends Component {
+  /**
+   * [constructor description]
+   * @return {[type]} [description]
+   */
   constructor () {
     super();
     this.state = {
@@ -26,6 +31,14 @@ class SignUp extends Component {
 
   handleSignUp(event) {
     event.preventDefault();
+    this.props.login(this.state)
+    .then(
+      () => this.setState({ shouldRedirect: true }),
+      (error) => Materialize.toast(error.response.data.message, 4000, 'red')
+    )
+    .catch((err) => {
+        this.setState({ isLoading: false });
+      });
   }
 
   handleChange(event) {
@@ -38,6 +51,8 @@ class SignUp extends Component {
 
   render() {
     return (
+      this.state.shouldRedirect ?
+      <Redirect to='/dashboard' /> :
       <div>
         <Header
           navLinks={['login', 'sign up', 'library']}
@@ -82,6 +97,7 @@ class SignUp extends Component {
                               type="email"
                               name="email"
                               required
+                              data-wrong="enter a valid email"
                               title="email is required"
                               placeholder="Email"
                               onChange={this.handleChange}
@@ -124,7 +140,7 @@ class SignUp extends Component {
                             <input type="submit"
                               name="submit"
                               value="Sign Up"
-                              className="btn"
+                              className="btn waves-effect waves-light"
                             />
                           </div>
                           <div className="">
@@ -146,9 +162,5 @@ class SignUp extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
 
-const mapDispatchToProps = dispatch => ({});
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(null, { signUp })(SignUp);

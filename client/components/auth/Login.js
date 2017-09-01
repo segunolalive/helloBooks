@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Row } from 'react-materialize';
 
 import Header from '../header/Header';
-import { login, loginUser } from '../../actions/login';
+import { login } from '../../actions/login';
 
-/**
- *
+/*
+  eslint-disable
  */
 class Login extends Component {
   constructor(props) {
@@ -17,14 +17,20 @@ class Login extends Component {
       username: '',
       password: '',
     };
-    this.handleSignUp = this.handleLogin.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleLogin(event) {
     event.preventDefault();
-    console.log(this.props);
-    console.log(login(this.state));
+    this.props.login(this.state)
+    .then(
+      () => this.setState({ shouldRedirect: true }),
+      (error) => Materialize.toast(error.response.data.message, 4000, 'red')
+    )
+    .catch((err) => {
+        this.setState({ isLoading: false });
+      });
   }
 
   handleChange(event) {
@@ -37,6 +43,8 @@ class Login extends Component {
 
   render() {
     return (
+      this.state.shouldRedirect ?
+      <Redirect to='/dashboard'/> :
       <div>
         <Header
           navLinks={['login', 'sign up', 'library']}
@@ -51,7 +59,7 @@ class Login extends Component {
                     <h6>Welcome home avid reader</h6>
                   </div>
                   <div className="col m6 s12">
-                    <form onSubmit={this.handleSignUp}>
+                    <form onSubmit={this.handleLogin}>
                       <div className="col s12">
                         <h5>Login</h5>
                       </div>
@@ -82,8 +90,8 @@ class Login extends Component {
                               type="submit"
                               name="submit"
                               value="LOGIN"
-                              className="btn
-                              waves-light" />
+                              className="btn waves-effect waves-light"
+                            />
                           </div>
                           <div className="">
                             <p>Don&apos;t have an account?
@@ -105,11 +113,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  login: PropTypes.func,
+  login: PropTypes.func.isRequired,
 };
 
-// const mapStateToProps = state => ({});
-// const mapDispatchToProps = dispatch => ({});
-// export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
-export default connect()(Login);
+export default connect(null, { login })(Login);
