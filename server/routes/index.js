@@ -17,4 +17,8 @@ export default (app) => {
   app.post('/api/v1/users/:id/books', authenticate, bookController.borrowBook);
   app.put('/api/v1/users/:id/books', authenticate, bookController.returnBook);
   app.get('/api/v1/users/:id/books', authenticate, userController.getBorrowedBooks);
+  // Setup a default catch-all route that sends back a welcome message in JSON format.
+  app.get('/api*', (req, res) => res.status(200).send({
+    message: 'Seems like you might be lost.',
+  }));
 };
