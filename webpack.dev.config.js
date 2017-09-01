@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -9,6 +10,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 
 module.exports = {
+  devtool: 'eval',
   entry: './client/index.js',
   output: {
     filename: 'bundle.js',
@@ -56,5 +58,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
-  plugins: [HtmlWebpackPluginConfig],
+  plugins: [
+    HtmlWebpackPluginConfig,
+  ],
 };
