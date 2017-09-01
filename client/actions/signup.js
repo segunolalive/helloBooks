@@ -16,7 +16,7 @@ export const signUpUser = (user => ({
  * @param {any} data - user data
  * @returns {any} - dispatches login user action
  */
-export const login = data => dispatch => (
+export const signUp = data => dispatch => (
   axios.post(`${API}/users/signup`, data)
     .then((response) => {
       sessionStorage.setItem('token', response.data.token);

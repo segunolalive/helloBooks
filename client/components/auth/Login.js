@@ -6,6 +6,7 @@ import { Row } from 'react-materialize';
 
 import Header from '../header/Header';
 import { login } from '../../actions/login';
+import Loading from '../Loading';
 
 /*
   eslint-disable
@@ -23,10 +24,17 @@ class Login extends Component {
 
   handleLogin(event) {
     event.preventDefault();
+    this.setState({ isLoading: true });
     this.props.login(this.state)
     .then(
-      () => this.setState({ shouldRedirect: true }),
-      (error) => Materialize.toast(error.response.data.message, 4000, 'red')
+      (response) => {
+        Materialize.toast('Welcome Reader', 4000, 'green');
+        this.setState({ shouldRedirect: true, isLoading: true })
+        },
+      (error) => {
+        Materialize.toast(error.response.data.message, 4000, 'red');
+        this.setState({ isLoading: false });
+      }
     )
     .catch((err) => {
         this.setState({ isLoading: false });
@@ -42,6 +50,8 @@ class Login extends Component {
   }
 
   render() {
+    const loadingState = this.state.isLoading ?
+      <Loading text='logging in' /> : null
     return (
       this.state.shouldRedirect ?
       <Redirect to='/dashboard'/> :
@@ -85,6 +95,7 @@ class Login extends Component {
                               onChange={this.handleChange}
                             />
                           </div>
+                          {loadingState}
                           <div className="input-field">
                             <input
                               type="submit"
