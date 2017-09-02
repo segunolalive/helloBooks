@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Navigation from './Navigation';
 import Logo from './Logo';
 
-/**
- *
+/*
+ esline-disable
  */
 const Header = props => (
   <header className='header'>

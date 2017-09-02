@@ -29,7 +29,7 @@ class Login extends Component {
     .then(
       (response) => {
         Materialize.toast('Welcome Reader', 4000, 'green');
-        this.setState({ shouldRedirect: true, isLoading: true })
+        this.setState({ shouldRedirect: true, isLoading: false });
         },
       (error) => {
         Materialize.toast(error.response.data.message, 4000, 'red');
@@ -45,7 +45,9 @@ class Login extends Component {
     event.preventDefault();
     const formField = event.target.name;
     const user = Object.assign({}, this.state);
-    user[formField] = event.target.value;
+    if (!!event.target.value.trim()) {
+      user[formField] = event.target.value.trim();
+    }
     this.setState(() => user);
   }
 

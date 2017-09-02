@@ -6,7 +6,9 @@ import Borrowed from './Borrowed';
 import ProfileInfo from './ProfileInfo';
 import SuggestedBooks from './SuggestedBooks';
 
-
+/*
+ eslint-disable
+ */
 class Dashboard extends Component {
   render() {
     return (

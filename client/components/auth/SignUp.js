@@ -35,7 +35,10 @@ class SignUp extends Component {
     this.setState({ isLoading: true });
     this.props.signUp(this.state)
     .then(
-      () => this.setState({ shouldRedirect: true }),
+      () => {
+        Materialize.toast('Welcome To Hello Books', 4000, 'green');
+        this.setState({ shouldRedirect: true, isLoading: false });
+      },
       (error) => {
         Materialize.toast(error.response.data.message, 4000, 'red');
         this.setState({ isLoading: false });
