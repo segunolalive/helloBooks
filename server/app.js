@@ -26,9 +26,12 @@ app.use(express.static(path.join(__dirname, 'client/static')));
 
 routes(app);
 
+app.get('/bundle.js', (req, res) => res.sendFile(
+  path.join(path.dirname(__dirname), 'client/bundle.js')
+));
+app.get('/*', (req, res) => res.sendFile(
+  path.join(path.dirname(__dirname), 'client/index.html'))
+);
 
-app.get('/bundle.js', (req, res) => res.sendFile(path.join(path.dirname(__dirname), 'client/bundle.js')));
-app.get('/init.js', (req, res) => res.sendFile(path.join(path.dirname(__dirname), 'client/static/init.js')));
-app.get('/*', (req, res) => res.sendFile(path.join(path.dirname(__dirname), 'client/index.html')));
 
 export default app;

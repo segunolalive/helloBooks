@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Table } from 'react-materialize';
+import { Table } from 'react-materialize';
 
-import BookRow from './Bookrow';
+import BookRow from './BookRow';
 
 
 /**
