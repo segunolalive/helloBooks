@@ -1,6 +1,9 @@
+/*
+ eslint-disable
+ */
 $(document).ready(function () {
-  $(".button-collapse").sideNav({ edge: 'right' });
-  $('select').material_select();
+    $(".button-collapse").sideNav({ edge: 'right' });
+    $('select').material_select();
 
   $(function() {
 

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-/**
- *
+/*
+ eslint-disable
  */
 const Navigation = (props) => {
   const links = props.navLinks.map(link =>
@@ -19,13 +19,17 @@ const Navigation = (props) => {
     )
   );
   return (
-    <ul className={props.className}>
+    <ul
+      id={props.id}
+      className={props.className}
+    >
       {links}
     </ul>
   );
 };
 
 Navigation.propTypes = {
+  id: PropTypes.string,
   activeLink: PropTypes.string,
   className: PropTypes.string,
   navLinks: PropTypes.array,
