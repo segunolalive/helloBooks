@@ -19,13 +19,17 @@ const Navigation = (props) => {
     )
   );
   return (
-    <ul className={props.className}>
+    <ul
+      id={props.id}
+      className={props.className}
+    >
       {links}
     </ul>
   );
 };
 
 Navigation.propTypes = {
+  id: PropTypes.string,
   activeLink: PropTypes.string,
   className: PropTypes.string,
   navLinks: PropTypes.array,
