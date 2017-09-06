@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -9,12 +10,15 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'inline-source-map',
   entry: './client/index.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist/client'),
     publicPath: '/',
+  },
+  devServer: {
+    historyApiFallback: true,
+    contentBase: path.resolve(__dirname, 'client'),
   },
   module: {
     rules: [
@@ -54,10 +58,8 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    historyApiFallback: true,
-  },
   plugins: [
     HtmlWebpackPluginConfig,
+    new webpack.HotModuleReplacementPlugin(),
   ],
 };

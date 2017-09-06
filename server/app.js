@@ -11,7 +11,7 @@ const app = express();
 // Log requests to the console.
 app.use(logger('dev'));
 
-// Parse incoming requests data
+// Parse incoming request data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -22,16 +22,17 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, 'client/static')));
-
-routes(app);
-
-app.get('/bundle.js', (req, res) => res.sendFile(
-  path.join(path.dirname(__dirname), 'client/bundle.js')
-));
-app.get('/*', (req, res) => res.sendFile(
-  path.join(path.dirname(__dirname), 'client/index.html'))
-);
-
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/static')));
+  routes(app);
+  app.get('/bundle.js', (req, res) => res.sendFile(
+    path.join(path.dirname(__dirname), 'client/bundle.js')
+  ));
+  app.get('/*', (req, res) => res.sendFile(
+    path.join(path.dirname(__dirname), 'client/index.html'))
+  );
+} else {
+  routes(app);
+}
 
 export default app;
