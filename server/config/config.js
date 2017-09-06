@@ -4,8 +4,8 @@ dotenv.config();
 
 module.exports = {
   development: {
-    username: 'postgres',
-    password: 'root',
+    username: 'segunolalive',
+    password: '',
     database: 'hellobooks',
     host: 'localhost',
     dialect: 'postgres',
