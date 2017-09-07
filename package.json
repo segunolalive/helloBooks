@@ -5,6 +5,7 @@
   "main": "dist/server/app.js",
   "scripts": {
     "serve": "babel-node server/bin/www.js",
+    "start": "node dist/server/bin/www.js",
     "start:client": "webpack-dev-server --hot --config ./webpack.dev.config.js",
     "start:dev": "nodemon server/bin/www --exec babel-node",
     "start:server": "nodemon server/server --exec babel-node",
@@ -15,7 +16,6 @@
     "seed:tables": "cross-env NODE_ENV=test babel-node server/seeders/user.js && babel-node server/seeders/bookCategory.js && babel-node server/seeders/book.js",
     "seed:join": "cross-env NODE_ENV=test babel-node server/seeders/borrowedBook.js",
     "build": "rm -rf dist && babel server -d dist/server && webpack --config ./webpack.prod.config.js --progress --colors",
-    "start": "node dist/server/bin/www.js",
     "heroku-postbuild": "npm run build"
   },
   "nyc": {

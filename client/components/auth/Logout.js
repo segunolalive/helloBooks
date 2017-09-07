@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Row } from 'react-materialize';
+
+import { logout } from '../../actions/logout';
 
 /**
  * [className description]
@@ -11,22 +15,26 @@ class Logout extends Component {
    * @return {[type]} [description]
    */
   componentDidMount() {
-    sessionStorage.removeItem('token');
     Materialize.toast('Successfully logged out', 4000, 'green');
+    this.props.logout();
     this.props.history.push('/');
   }
 
   render() {
     return (
-      <h1 className="center landing">
-        Logging out...
-      </h1>
+      <Row className="center landing">
+        <h1 className="">
+          Logging out...
+        </h1>
+      </Row>
     );
   }
 }
 
 Logout.propTypes = {
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
-export default Logout;
+
+export default connect(null, { logout })(Logout);

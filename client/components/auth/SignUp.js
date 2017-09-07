@@ -35,9 +35,12 @@ class SignUp extends Component {
     this.setState({ isLoading: true });
     this.props.signUp(this.state)
     .then(
-      () => {
-        Materialize.toast('Welcome To Hello Books', 4000, 'green');
-        this.setState({ shouldRedirect: true, isLoading: false });
+      (response) => {
+        Materialize.toast(
+          'Welcome To Hello Books. This is you dashboard',
+          4000,
+          'green'
+        );
       },
       (error) => {
         Materialize.toast(error.response.data.message, 4000, 'red');
@@ -45,7 +48,8 @@ class SignUp extends Component {
       }
     )
     .catch((err) => {
-        this.setState({ isLoading: false });
+      Materialize.toast(err.response.data.message, 4000, 'red');
+      this.setState({ isLoading: false });
       });
   }
 
@@ -53,7 +57,9 @@ class SignUp extends Component {
     event.preventDefault();
     const formField = event.target.name;
     const user = Object.assign({}, this.state);
-    user[formField] = event.target.value;
+    if (!!event.target.value.trim()) {
+      user[formField] = event.target.value.trim();
+    }
     this.setState(() => user);
   }
 
@@ -61,7 +67,7 @@ class SignUp extends Component {
     const loadingState = this.state.isLoading ?
       <Loading text='Creating your account' /> : null
     return (
-      this.state.shouldRedirect ?
+      this.props.isLoggedIn === true ?
       <Redirect to='/dashboard' /> :
       <div>
         <Header
@@ -173,5 +179,6 @@ class SignUp extends Component {
   }
 }
 
+const mapStateToProps = ({ authReducer }) => ({ isLoggedIn: authReducer.isLoggedIn });
 
-export default connect(null, { signUp })(SignUp);
+export default connect(mapStateToProps, { signUp })(SignUp);

@@ -2,14 +2,25 @@ import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
 
+
 /**
  * @param {any} user - user
  * @returns {Object} - Object containing action type and user
  */
-export const loginUser = (user => ({
+export const loginUser = user => ({
   type: actionTypes.LOGIN,
   user,
-}));
+});
+
+
+/**
+ * @param {Boolean} status - status
+ * @returns {Object} - Object containing action type and login status
+ */
+export const setLoginStatus = status => ({
+  type: actionTypes.SET_LOGIN_STATUS,
+  isLoggedIn: status,
+});
 
 
 /**
@@ -21,5 +32,6 @@ export const login = data => dispatch => (
     .then((response) => {
       sessionStorage.setItem('token', response.data.token);
       dispatch(loginUser(response.data));
+      dispatch(setLoginStatus(true));
     })
 );

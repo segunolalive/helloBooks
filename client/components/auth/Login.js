@@ -29,14 +29,14 @@ class Login extends Component {
     .then(
       (response) => {
         Materialize.toast('Welcome Reader', 4000, 'green');
-        this.setState({ shouldRedirect: true, isLoading: false });
-        },
+      },
       (error) => {
         Materialize.toast(error.response.data.message, 4000, 'red');
         this.setState({ isLoading: false });
       }
     )
     .catch((err) => {
+      Materialize.toast(err.response.data.message, 4000, 'red');
         this.setState({ isLoading: false });
       });
   }
@@ -55,7 +55,7 @@ class Login extends Component {
     const loadingState = this.state.isLoading ?
       <Loading text='logging in' /> : null
     return (
-      this.state.shouldRedirect ?
+      this.props.isLoggedIn === true ?
       <Redirect to='/dashboard'/> :
       <div>
         <Header
@@ -129,5 +129,7 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = ({ authReducer }) => ({ isLoggedIn: authReducer.isLoggedIn });
 
-export default connect(null, { login })(Login);
+
+export default connect(mapStateToProps, { login })(Login);
