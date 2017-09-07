@@ -3,6 +3,8 @@ import keyMirror from './keyMirror';
 const actionList = [
   'SIGN_UP',
   'LOGIN',
+  'LOGOUT',
+  'SET_LOGIN_STATUS',
   'UPDATE_PROFILE',
   'GET_BOOK',
   'GET_BOOKS',

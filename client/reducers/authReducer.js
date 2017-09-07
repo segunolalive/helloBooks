@@ -1,13 +1,15 @@
 import actionTypes from '../actions/actionTypes';
 
-export default (state = {}, action) => {
+export default (state = {}, action = {}) => {
   switch (action.type) {
     case actionTypes.LOGIN:
-      return action.user;
+      return { ...state, user: action.user };
     case actionTypes.SIGN_UP:
-      return action.user;
-    case actionTypes.UPDATE_PROFILE:
-      return action.user;
+      return { ...state, user: action.user };
+    case actionTypes.SET_LOGIN_STATUS:
+      return { ...state, isLoggedIn: action.isLoggedIn };
+    case actionTypes.LOGOUT:
+      return {};
     default:
       return state;
   }
