@@ -1,6 +1,7 @@
 import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
+import { setLoginStatus } from './login';
 
 /**
  * @param {any} user - user
@@ -21,5 +22,6 @@ export const signUp = data => dispatch => (
     .then((response) => {
       sessionStorage.setItem('token', response.data.token);
       dispatch(signUpUser(response.data));
+      dispatch(setLoginStatus(true));
     })
 );
