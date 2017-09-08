@@ -12,7 +12,7 @@ const ProfileInfo = props => (
           src={props.image || imageFallback}
           alt="profile image"
         />
-        <h6>{props.name || 'Your Name Here'}</h6>
+        <h6>{props.name || 'Update your profile info'}</h6>
       </div>
     </Col>
     <Col s={12} className="profile-info">
