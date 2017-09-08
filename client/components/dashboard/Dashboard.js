@@ -17,8 +17,10 @@ class Dashboard extends Component {
     return (<Redirect to='/login'/>)
   }
   render() {
+    const fullname = this.props.user ?
+    `${this.props.user.firstName} ${this.props.user.lastName}`: null
     return (
-      this.props.isLoggedIn !==true ?
+      this.props.isLoggedIn !== true ?
       this.handleRedirect() :
       <div>
         <Header
@@ -28,7 +30,7 @@ class Dashboard extends Component {
         <main>
           <Row>
             <Col s={12}>
-              <ProfileInfo />
+              <ProfileInfo name={fullname}/>
               <Borrowed />
               <SuggestedBooks />
             </Col>
@@ -39,6 +41,9 @@ class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = ({ authReducer }) => ({ isLoggedIn: authReducer.isLoggedIn })
+const mapStateToProps = ({ authReducer }) => ({
+  isLoggedIn: authReducer.isLoggedIn,
+  user: authReducer.user,
+});
 
 export default connect(mapStateToProps, null)(Dashboard);

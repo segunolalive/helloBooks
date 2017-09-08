@@ -93,8 +93,8 @@ class SignUp extends Component {
                             <input
                               className="validate"
                               type="text"
-                              name="surname"
-                              placeholder="Surname"
+                              name="lastName"
+                              placeholder="Last Name"
                               onChange={this.handleChange}
                             />
                           </div>
@@ -102,7 +102,7 @@ class SignUp extends Component {
                             <input
                               className="validate"
                               type="text"
-                              name="firstname"
+                              name="firstName"
                               placeholder="First Name"
                               onChange={this.handleChange}
                             />

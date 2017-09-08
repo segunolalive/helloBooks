@@ -47,7 +47,8 @@ export default {
             user.email,
             user.isAdmin
           );
-          res.status(201).json({ success: true, token });
+          const { firstName, lastName } = user;
+          res.status(201).json({ success: true, token, firstName, lastName });
         })
         .catch(error => res.status(400).send({
           success: false,
@@ -94,7 +95,8 @@ export default {
             user.email,
             user.isAdmin
           );
-          res.status(200).json({ success: true, token });
+          const { firstName, lastName } = user;
+          res.status(200).json({ success: true, token, firstName, lastName });
         }
       }).catch(error => res.status(500).send({
         success: false,
