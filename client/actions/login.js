@@ -1,10 +1,11 @@
 import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
+import setAuthorizationToken from '../utils/setAuthorizationToken';
 import API from './api';
 
 
 /**
- * @param {any} user - user
+ * @param {Object} user - user data
  * @returns {Object} - Object containing action type and user
  */
 export const loginUser = user => ({
@@ -24,13 +25,15 @@ export const setLoginStatus = status => ({
 
 
 /**
- * @param {any} data - user data
+ * @param {object} data - user data
  * @returns {any} - dispatches login user action
  */
 export const login = data => dispatch => (
   axios.post(`${API}/users/signin`, data)
     .then((response) => {
-      sessionStorage.setItem('token', response.data.token);
+      const token = response.data.token;
+      sessionStorage.setItem('token', token);
+      setAuthorizationToken(token);
       dispatch(loginUser(response.data));
       dispatch(setLoginStatus(true));
     })

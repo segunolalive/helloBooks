@@ -8,6 +8,7 @@ const actionList = [
   'UPDATE_PROFILE',
   'GET_BOOK',
   'GET_BOOKS',
+  'GET_BORROWED_BOOKS',
   'BORROW_BOOK',
   'RETURN_BOOK',
   'CREATE_BOOK',

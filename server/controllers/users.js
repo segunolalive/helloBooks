@@ -47,8 +47,10 @@ export default {
             user.email,
             user.isAdmin
           );
-          const { firstName, lastName } = user;
-          res.status(201).json({ success: true, token, firstName, lastName });
+          const { id, firstName, lastName, isAdmin } = user;
+          res.status(201).json({
+            success: true, token, id, firstName, lastName, isAdmin
+          });
         })
         .catch(error => res.status(400).send({
           success: false,
@@ -60,6 +62,7 @@ export default {
         error
       }));
   },
+
   /**
    * Get user data on sign in.
    * It sends a an object containing a success boolean
@@ -95,8 +98,10 @@ export default {
             user.email,
             user.isAdmin
           );
-          const { firstName, lastName } = user;
-          res.status(200).json({ success: true, token, firstName, lastName });
+          const { id, firstName, lastName, isAdmin } = user;
+          res.status(200).json({
+            success: true, token, id, firstName, lastName, isAdmin
+          });
         }
       }).catch(error => res.status(500).send({
         success: false,
