@@ -8,16 +8,36 @@ import Borrowed from './Borrowed';
 import ProfileInfo from './ProfileInfo';
 import SuggestedBooks from './SuggestedBooks';
 
+import { fetchBorrowedBooks } from '../../actions/borrowedBooks';
+
 /*
  eslint-disable
  */
 class Dashboard extends Component {
+  constructor (props) {
+    super(props);
+    this.handleFetchBorrowedBooks = this.handleFetchBorrowedBooks.bind(this);
+  }
+
+  componentDidMount () {
+    if (this.props.user) {
+    this.handleFetchBorrowedBooks();
+    }
+  }
+
+  handleFetchBorrowedBooks () {
+    this.props.fetchBorrowedBooks(this.props.user.id);
+  }
+
   handleRedirect () {
     Materialize.toast('Login to proceed', 3000, 'red');
     return (<Redirect to='/login'/>)
   }
+
   render() {
-    const fullname = this.props.user ?
+    const fullname = this.props.user && (
+      this.props.user.firstName || this.props.user.lasstName
+    ) ?
     `${this.props.user.firstName} ${this.props.user.lastName}`: null
     return (
       this.props.isLoggedIn !== true ?
@@ -31,7 +51,7 @@ class Dashboard extends Component {
           <Row>
             <Col s={12}>
               <ProfileInfo name={fullname}/>
-              <Borrowed />
+              <Borrowed borrowedBooks={this.props.borrowedBooks}/>
               <SuggestedBooks />
             </Col>
           </Row>
@@ -41,9 +61,13 @@ class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = ({ authReducer }) => ({
+const mapStateToProps = ({ authReducer}) => ({
   isLoggedIn: authReducer.isLoggedIn,
   user: authReducer.user,
+  // borrowedBooks: bookReducer.borrowedBooks,
 });
 
-export default connect(mapStateToProps, null)(Dashboard);
+export default connect(
+  mapStateToProps,
+  { fetchBorrowedBooks }
+)(Dashboard);
