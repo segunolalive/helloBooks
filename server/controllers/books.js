@@ -320,11 +320,12 @@ export default {
             Book.findById(bookId)
               .then((book) => {
                 book.total += 1;
+                return book;
               })
-              .then(() => {
+              .then((book) => {
                 res.status(201).send({
                   success: true,
-                  message: 'You have successfully returned book',
+                  message: `You have successfully returned ${book.title}`,
                 });
               });
           });
