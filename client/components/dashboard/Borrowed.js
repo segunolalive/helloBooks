@@ -4,36 +4,40 @@ import { Button, Col } from 'react-materialize';
 
 
 const Borrowed = (props) => {
-  const books = props.borrowedBooks ? props.borrowedBooks.map(book =>
-    <Col key={book.title} s={12} className="book-info">
-      <div className="card horizontal">
-        <div className="card-image">
-          <img src={book.cover || 'N/A'} />
+  const books = props.borrowedBooks && props.borrowedBooks.length ?
+    props.borrowedBooks.map(book =>
+      <Col key={book.title} s={12} className="book-info grey-text">
+        <div className="card horizontal">
+          <div className="card-image">
+            <img src={book.cover || 'N/A'} alt={book.title || 'N/A'} />
+          </div>
+          <div className="card-stacked">
+            <div className="card-content">
+              <h6 className="bold-text black-text">
+                {book.title.toUpperCase() || null}
+              </h6>
+              <p>{book.description || null}</p>
+            </div>
+            <div className="card-action center">
+              <Button
+                waves='light'
+                onClick={() => props.readBook(book.id)}
+              >
+                Read Book
+              </Button>
+            </div>
+            <div className="card-action center">
+              <Button
+                waves='light'
+                onClick={() => props.returnBook(book.id)}
+              >
+                Return Book
+              </Button>
+            </div>
+          </div>
         </div>
-        <div className="card-stacked">
-          <div className="card-content">
-            <p>{book.description || null }</p>
-          </div>
-          <div className="card-action center">
-            <Button
-              waves='light'
-              onClick={props.onClick}
-            >
-              Read Book
-            </Button>
-          </div>
-          <div className="card-action center">
-            <Button
-              waves='light'
-              onClick={props.onClick}
-            >
-              Return Book
-            </Button>
-          </div>
-        </div>
-      </div>
-    </Col>
-  )
+      </Col>
+    )
     : <h5 className="center">Nothing here</h5>;
   return (
     <section className="col s12 m6 borrowed">
@@ -48,7 +52,8 @@ const Borrowed = (props) => {
 
 Borrowed.propTypes = {
   borrowedBooks: PropTypes.array,
-  onClick: PropTypes.func,
+  readBook: PropTypes.func,
+  returnBook: PropTypes.func,
 };
 
 

@@ -106,8 +106,8 @@ class Login extends Component {
                               className="btn waves-effect waves-light"
                             />
                           </div>
-                          <div className="">
-                            <p>Don&apos;t have an account?
+                          <div>
+                            <p className="center">Don't have an account?
                               <Link to="/signup"> Sign up</Link>
                             </p>
                           </div>
