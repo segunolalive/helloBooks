@@ -60,6 +60,7 @@ export default {
         error
       }));
   },
+
   /**
    * Get user data on sign in.
    * It sends a an object containing a success boolean
