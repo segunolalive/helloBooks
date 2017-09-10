@@ -5,18 +5,19 @@ import { Table } from 'react-materialize';
 import BookRow from './BookRow';
 
 
-/**
+/*
  *
  */
-const BooksTable = ({ bookList, tableHeaders }) => {
-  const books = bookList.map(book =>
+const BooksTable = ({ bookList, tableHeaders, borrowBook }) => {
+  const books = bookList ? bookList.map(book =>
     (
       <BookRow
         key={book.id}
         {...book}
+        onClick={borrowBook}
       />
     )
-  );
+  ) : null;
   const headers = tableHeaders.map(header =>
     <th key={header}>{header}</th>
   );
@@ -38,7 +39,8 @@ const BooksTable = ({ bookList, tableHeaders }) => {
 
 
 BooksTable.propTypes = {
-  bookList: PropTypes.array.isRequired,
+  borrowBook: PropTypes.func,
+  bookList: PropTypes.array,
   tableHeaders: PropTypes.array.isRequired,
 };
 

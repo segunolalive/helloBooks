@@ -282,7 +282,7 @@ export default {
               })
               .then(() => res.status(200).send({
                 success: true,
-                message: `You have successfully borrowed ${book.title}. Check your profile to read it`,
+                message: `You have successfully borrowed ${book.title}. Check your dashboard to read it`,
               }))
               .catch((error) => {
                 res.status(500).send({
@@ -320,6 +320,7 @@ export default {
             Book.findById(bookId)
               .then((book) => {
                 book.total += 1;
+                book.save();
                 return book;
               })
               .then((book) => {

@@ -38,17 +38,17 @@ class SignUp extends Component {
       (response) => {
         Materialize.toast(
           'Welcome To Hello Books. This is you dashboard',
-          4000,
+          2500,
           'green'
         );
       },
       (error) => {
-        Materialize.toast(error.response.data.message, 4000, 'red');
+        Materialize.toast(error.response.data.message, 2500, 'red');
         this.setState({ isLoading: false });
       }
     )
     .catch((err) => {
-      Materialize.toast(err.response.data.message, 4000, 'red');
+      Materialize.toast(err.response.data.message, 2500, 'red');
       this.setState({ isLoading: false });
       });
   }

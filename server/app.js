@@ -34,6 +34,14 @@ app.get('/bundle.js', (req, res) => res.sendFile(
   path.join(path.dirname(__dirname), 'client/bundle.js')
 ));
 
+app.get('/manifest.json', (req, res) => res.sendFile(
+  path.join(path.dirname(__dirname), 'client/manifest.json')
+));
+
+app.get('/sw.js', (req, res) => res.sendFile(
+  path.join(path.dirname(__dirname), 'client/sw.js')
+));
+
 app.get('/*', (req, res) => res.sendFile(
   path.join(path.dirname(__dirname), 'client/index.html'))
 );

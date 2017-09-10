@@ -28,15 +28,15 @@ class Login extends Component {
     this.props.login(this.state)
     .then(
       (response) => {
-        Materialize.toast('Welcome Reader', 4000, 'green');
+        Materialize.toast('Welcome Reader', 2500, 'green');
       },
       (error) => {
-        Materialize.toast(error.response.data.message, 4000, 'red');
+        Materialize.toast(error.response.data.message, 2500, 'red');
         this.setState({ isLoading: false });
       }
     )
     .catch((err) => {
-      Materialize.toast(err.response.data.message, 4000, 'red');
+      Materialize.toast(err.response.data.message, 2500, 'red');
         this.setState({ isLoading: false });
       });
   }

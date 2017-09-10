@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-materialize';
 
 
-const BookRow = ({ cover, title, authors, total }) => (
+const BookRow = ({ id, cover, title, authors, total, onClick }) => (
   <tr>
     <td>{cover || 'N/A'}</td>
     <td>{title}</td>
@@ -13,6 +13,7 @@ const BookRow = ({ cover, title, authors, total }) => (
       <Button
         disabled={!total}
         waves='light'
+        onClick={() => onClick(id)}
       >
         Borrow
       </Button>
@@ -22,10 +23,12 @@ const BookRow = ({ cover, title, authors, total }) => (
 
 
 BookRow.propTypes = {
+  id: PropTypes.number,
   authors: PropTypes.string,
   cover: PropTypes.string,
   title: PropTypes.string,
   total: PropTypes.number,
+  onClick: PropTypes.func,
 };
 
 export default BookRow;

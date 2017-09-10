@@ -2,10 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Table } from 'react-materialize';
 
+/*
+  eslint-disable
+*/
+
 /**
  *
  */
-const Hostory = (props) => {
+const History = (props) => {
   const books = props.books.map(book =>
     (
       <tr key={book.id}>
@@ -44,8 +48,8 @@ const Hostory = (props) => {
 };
 
 
-Hostory.propTypes = {
+History.propTypes = {
   books: PropTypes.array.isRequired,
 };
 
-export default Hostory;
+export default History;
