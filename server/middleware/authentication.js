@@ -39,7 +39,7 @@ const authenticate = (req, res, next) => {
   } else {
     res.status(400).send({
       success: false,
-      message: 'No token provided',
+      message: 'Login to proceed',
     });
   }
 };
