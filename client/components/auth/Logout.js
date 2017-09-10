@@ -15,7 +15,7 @@ class Logout extends Component {
    * @return {[type]} [description]
    */
   componentDidMount() {
-    Materialize.toast('Successfully logged out', 4000, 'green');
+    Materialize.toast('Successfully logged out', 2500, 'green');
     this.props.logout();
     this.props.history.push('/');
   }
