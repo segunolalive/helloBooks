@@ -39,16 +39,16 @@ class SignUp extends Component {
         Materialize.toast(
           'Welcome To Hello Books. This is you dashboard',
           2500,
-          'green'
+          'teal darken-4'
         );
       },
       (error) => {
-        Materialize.toast(error.response.data.message, 2500, 'red');
+        Materialize.toast(error.response.data.message, 2500, 'red darken-3');
         this.setState({ isLoading: false });
       }
     )
     .catch((err) => {
-      Materialize.toast(err.response.data.message, 2500, 'red');
+      Materialize.toast('Something terrible happened. We\'ll fix that', 2500, 'red darken-3');
       this.setState({ isLoading: false });
       });
   }

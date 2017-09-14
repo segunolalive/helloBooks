@@ -23,5 +23,6 @@ export const signUp = data => dispatch => (
       sessionStorage.setItem('token', response.data.token);
       dispatch(signUpUser(response.data));
       dispatch(setLoginStatus(true));
+      return response.data;
     })
 );
