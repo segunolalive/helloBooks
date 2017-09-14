@@ -50,7 +50,7 @@ export default {
     }
     res.status(401).send({
       success: false,
-      message: 'unauthorized access',
+      message: 'Unauthorized access',
     });
   },
   /**
@@ -62,7 +62,7 @@ export default {
    * @return {undefined}
    */
   getBookCategories(req, res) {
-    BookCategory.findAll()
+    BookCategory.findAll({ attributes: ['id', 'category'] })
       .then((categories) => {
         res.status(200).send({
           success: true,
@@ -99,7 +99,7 @@ export default {
     }
     res.status(401).send({
       success: false,
-      message: 'unauthorized access',
+      message: 'Unauthorized access',
     });
   },
 
@@ -118,7 +118,7 @@ export default {
         if (!book) {
           res.status(404).send({
             success: false,
-            message: 'book does not exist',
+            message: 'Book does not exist',
           });
           return;
         }
@@ -185,7 +185,8 @@ export default {
         })
         .then(book => res.status(200).send({
           success: true,
-          data: book,
+          book: book[1],
+          message: `${book[1].title} was successfully updated`
         }))
         .catch(error => res.status(500).send({
           success: false,
@@ -194,7 +195,7 @@ export default {
     } else {
       res.status(401).send({
         success: false,
-        message: 'unauthorized access',
+        message: 'Unauthorized access',
       });
     }
   },
@@ -222,7 +223,7 @@ export default {
     } else {
       res.status(401).send({
         success: false,
-        message: 'unauthorized access',
+        message: 'Unauthorized access',
       });
     }
   },
@@ -269,7 +270,7 @@ export default {
               book.save();
               res.status(200).send({
                 success: true,
-                message: `You have successfully borrowed ${book.title} again. Check your profile to read it`,
+                message: `You have successfully borrowed ${book.title} again. Check your dashboard to read it`,
               });
               return;
             }

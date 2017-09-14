@@ -1,38 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input, Col } from 'react-materialize';
+import { Input } from 'react-materialize';
 
 
-/**
+/*
  *
  */
 const Categories = (props) => {
-  const options = props.categories.map(category => (
+  const options = props.categories && props.categories.map(category => (
     category ?
       <option
         key={category.id}
-        value={category.id}
+        value={category.category}
       >
         {category.category}
       </option>
       : null
   ));
   return (
-    <Col s={12} m={6}>
+    <div className={props.className}>
       <Input s={12}
         type='select'
-        defaultValue=""
-        onChange={e => props.onChange(e)}
+        defaultValue=''
+        onChange={event => props.onChange(event)}
       >
-        <option value='' disabled>Filter By Category</option>
+        <option value='' disabled>{props.text}</option>
         {options}
       </Input>
-    </Col>
+    </div>
   );
 };
 
 Categories.propTypes = {
-  categories: PropTypes.array.isRequired,
+  className: PropTypes.string,
+  text: PropTypes.string,
+  categories: PropTypes.array,
   onChange: PropTypes.func,
 };
 
