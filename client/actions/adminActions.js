@@ -22,12 +22,12 @@ export const editBookAction = book => ({
 export const editBook = (id, data) => dispatch => (
   axios.put(`${API}/books/${id}`, data)
     .then((response) => {
-      Materialize.toast(response.data.message, 2500, 'teal darken-3');
+      Materialize.toast(response.data.message, 2500, 'teal darken-4');
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red');
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
     })
     .catch((error) => {
-      Materialize.toast(error, 2500, 'red');
+      Materialize.toast(error, 2500, 'red darken-4');
     })
 );
 
@@ -50,12 +50,12 @@ export const addBookAction = book => ({
 export const addBook = data => dispatch => (
   axios.post(`${API}/books`, data)
     .then((response) => {
-      Materialize.toast(response.data.message, 2500, 'teal darken-3');
+      Materialize.toast(response.data.message, 2500, 'teal darken-4');
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red');
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
     })
     .catch((error) => {
-      Materialize.toast(error, 2500, 'red');
+      Materialize.toast(error, 2500, 'red darken-4');
     })
 );
 
@@ -77,12 +77,12 @@ export const addBookCategoryAction = category => ({
 export const addBookCategory = category => dispatch => (
   axios.post(`${API}/books`, category)
     .then((response) => {
-      Materialize.toast(response.data.message, 2500, 'teal darken-3');
+      Materialize.toast(response.data.message, 2500, 'teal darken-4');
       dispatch(addBookCategoryAction(category));
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red');
+      Materialize.toast(error.response.data.message, 2500, ' darken-4');
     })
     .catch((error) => {
-      Materialize.toast(error, 2500, 'red');
+      Materialize.toast(error, 2500, ' darken-4');
     })
 );

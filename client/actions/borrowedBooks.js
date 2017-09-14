@@ -56,13 +56,13 @@ export const returnBook = (userId, bookId) => dispatch => (
     .then(
       (response) => {
         dispatch(returnBookAction(bookId));
-        Materialize.toast(response.data.message, 2500, 'green');
+        Materialize.toast(response.data.message, 2500, 'teal darken-4');
       },
       (error) => {
-        Materialize.toast(error.response.data.message, 2500, 'red');
+        Materialize.toast(error.response.data.message, 2500, 'red darken-4');
       }
     )
     .catch((err) => {
-      Materialize.toast(err.response.data.message, 2500, 'red');
+      Materialize.toast(err.response.data.message, 2500, 'red darken-4');
     })
 );

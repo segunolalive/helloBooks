@@ -31,10 +31,10 @@ class BookDetail extends React.Component {
         Materialize.toast(response.data.message, 2500, 'teal darken-4');
         this.setState({ deleteRedirect: true });
       }, (error) => {
-        Materialize.toast(error.response.data.message, 2500, 'red');
+        Materialize.toast(error.response.data.message, 2500, 'red darken-4');
       })
       .catch((error) => {
-        Materialize.toast(error, 2500, 'red');
+        Materialize.toast(error, 2500, 'red darken-4');
       })
   }
 

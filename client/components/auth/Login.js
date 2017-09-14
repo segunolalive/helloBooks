@@ -28,16 +28,16 @@ class Login extends Component {
     this.props.login(this.state)
     .then(
       (data) => {
-        Materialize.toast(`Welcome Back, ${data.firstName || 'Reader'}`, 2500, 'teal darken-3');
+        Materialize.toast(`Welcome Back, ${data.firstName || 'Reader'}`, 2500, 'teal darken-4');
       },
       (error) => {
-        Materialize.toast(error.response.data.message, 2500, 'red darken-3');
+        Materialize.toast(error.response.data.message, 2500, 'red darken-4');
         this.setState({ isLoading: false });
       }
     )
     .catch((err) => {
       console.log(err);
-      Materialize.toast('Ouch! Something went awry. It\'s probably our fault', 2500, 'red darken-3');
+      Materialize.toast('Ouch! Something went awry. It\'s probably our fault', 2500, 'red darken-4');
         this.setState({ isLoading: false });
       });
   }

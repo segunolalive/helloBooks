@@ -24,10 +24,10 @@ export const fetchBooks = () => dispatch => (
     .then((response) => {
       dispatch(getBooks(response.data.data));
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red');
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
     })
     .catch((error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red');
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
     })
 );
 
@@ -52,12 +52,12 @@ export const borrowBook = (userId, bookId) => dispatch => (
   axios.post(`${API}/users/${userId}/books`, { id: bookId })
     .then((response) => {
       dispatch(borrowBookAction(bookId));
-      Materialize.toast(response.data.message, 2500, 'green');
+      Materialize.toast(response.data.message, 2500, 'teal darken-4');
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red');
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
     })
     .catch((error) => {
-      Materialize.toast(error, 2500, 'red');
+      Materialize.toast(error, 2500, 'red darken-4');
     })
 );
 
@@ -82,12 +82,12 @@ export const editBook = bookId => dispatch => (
   axios.put(`${API}/books/${bookId}`, { id: bookId })
     .then((response) => {
       dispatch(editBookAction(bookId));
-      Materialize.toast(response.data.message, 2500, 'green');
+      Materialize.toast(response.data.message, 2500, 'teal darken-4');
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red');
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
     })
     .catch((error) => {
-      Materialize.toast(error, 2500, 'red');
+      Materialize.toast(error, 2500, 'red darken-4');
     })
 );
 

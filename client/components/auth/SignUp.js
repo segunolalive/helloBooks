@@ -43,12 +43,12 @@ class SignUp extends Component {
         );
       },
       (error) => {
-        Materialize.toast(error.response.data.message, 2500, 'red darken-3');
+        Materialize.toast(error.response.data.message, 2500, 'red darken-4');
         this.setState({ isLoading: false });
       }
     )
     .catch((err) => {
-      Materialize.toast('Something terrible happened. We\'ll fix that', 2500, 'red darken-3');
+      Materialize.toast('Something terrible happened. We\'ll fix that', 2500, 'red darken-4');
       this.setState({ isLoading: false });
       });
   }
