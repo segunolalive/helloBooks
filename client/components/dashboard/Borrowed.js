@@ -9,7 +9,10 @@ const Borrowed = (props) => {
       <Col key={book.title} s={12} className="book-info grey-text">
         <div className="card horizontal">
           <div className="card-image">
-            <img src={book.cover || 'N/A'} alt={book.title || 'N/A'} />
+            <img
+              src={book.cover || 'https://segunolalive.github.io/helloBooks/templates/images/eloquentjs_cover.png'}
+              alt={book.title || 'N/A'}
+            />
           </div>
           <div className="card-stacked">
             <div className="card-content">
