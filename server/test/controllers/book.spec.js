@@ -133,7 +133,7 @@ describe('Book', () => {
         .expect(200)
         .end((err, res) => {
           assert.equal(res.status, 200);
-          assert.equal(res.body.data[1].title, 'Learn Rust');
+          assert.equal(res.body.book.title, 'Learn Rust');
           done();
         });
     });
@@ -184,7 +184,7 @@ describe('non-admin access', () => {
         .expect(401)
         .end((err, res) => {
           assert.equal(res.status, 401);
-          assert.equal(res.body.message, 'unauthorized access');
+          assert.equal(res.body.message, 'Unauthorized access');
           done();
         });
     });
