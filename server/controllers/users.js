@@ -16,7 +16,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {Undefined}
    */
 
   createUser(req, res) {
