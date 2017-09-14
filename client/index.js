@@ -6,6 +6,11 @@ import App from './components/App';
 import './static/index.scss';
 // import registerServiceWorker from './registerServiceWorker';
 
+import setAuthorizationToken from './utils/setAuthorizationToken';
+
+if (sessionStorage.token) {
+  setAuthorizationToken(sessionStorage.token);
+}
 ReactDOM.render(
   <Provider store={store}>
     <App />
