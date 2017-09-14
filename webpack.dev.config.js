@@ -13,7 +13,7 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: [
     // reload the page if hot module reloading fails.
-    'webpack-hot-middleware/client?reload=true',
+    // 'webpack-hot-middleware/client?reload=true',
     path.resolve(__dirname, 'client/index.js')
   ],
   output: {

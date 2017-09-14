@@ -8,13 +8,14 @@ import BookRow from './BookRow';
 /*
  *
  */
-const BooksTable = ({ bookList, tableHeaders, borrowBook }) => {
+const BooksTable = ({ bookList, tableHeaders, borrowBook, viewBookDetails }) => {
   const books = bookList ? bookList.map(book =>
     (
       <BookRow
         key={book.id}
         {...book}
-        onClick={borrowBook}
+        onTitleClick={viewBookDetails}
+        onButtonClick={borrowBook}
       />
     )
   ) : null;
@@ -40,6 +41,7 @@ const BooksTable = ({ bookList, tableHeaders, borrowBook }) => {
 
 BooksTable.propTypes = {
   borrowBook: PropTypes.func,
+  viewBookDetails: PropTypes.func,
   bookList: PropTypes.array,
   tableHeaders: PropTypes.array.isRequired,
 };

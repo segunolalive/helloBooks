@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, Input, Icon } from 'react-materialize';
+import { Input, Icon } from 'react-materialize';
 
 
 /**
@@ -8,17 +8,18 @@ import { Col, Input, Icon } from 'react-materialize';
  */
 const Search = props =>
   (
-    <Col s={12} m={6}>
+    <div className={props.className}>
       <Input s={12} className="icon-prefix"
         type='search'
         label={'Search Books'}
         onChange={e => props.onChange(e)}
       >
       </Input>
-    </Col>
+    </div>
   );
 
 Search.propTypes = {
+  className: PropTypes.string,
   onChange: PropTypes.func,
 };
 

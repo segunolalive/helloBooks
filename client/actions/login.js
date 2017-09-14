@@ -36,5 +36,6 @@ export const login = data => dispatch => (
       setAuthorizationToken(token);
       dispatch(loginUser(response.data));
       dispatch(setLoginStatus(true));
+      return response.data;
     })
 );

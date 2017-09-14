@@ -32,7 +32,7 @@ class Dashboard extends Component {
   }
 
   handleRedirect () {
-    Materialize.toast('Login to proceed', 3000, 'red');
+    Materialize.toast('Login to proceed', 3000, 'red darken-4');
     return (<Redirect to='/login'/>)
   }
 
