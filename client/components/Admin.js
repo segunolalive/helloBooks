@@ -1,22 +1,64 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Row } from 'react-materialize';
 
+import { addBook, editBook } from '../actions/adminActions';
+import { getBookCategories } from '../actions/library';
+
 import Header from './header/Header';
+import BookForm from './BookForm';
 
+// import jQuerySelect from '../static/jquery/select';
 
-/**
- *
+/*
+eslint-disable
  */
 class AddBook extends Component {
-  constructor() {
-    super();
-    this.onSubmit = this.onSubmit.bind(this);
+  constructor(props) {
+    super(props);
+    this.path = this.props.location.pathname;
+    this.state = this.path.match(/^\/admin\/edit/) && this.props.book;
+    this.handleFormSubmission = this.handleFormSubmission.bind(this);
+    this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.handleSelectCategory = this.handleSelectCategory.bind(this);
   }
-  onSubmit(event) {
+  componentDidMount () {
+    this.props.getBookCategories();
+  }
+
+  handleFormSubmission (event) {
     event.preventDefault();
+    this.path.match(/^\/admin\/add/) ?
+    this.props.addBook(this.state) :
+    this.props.editBook(this.props.book.id, this.state)
+      .then(() => this.props.history.push('/library'));
+  }
+
+  handleFieldChange (event) {
+    const formField = event.target.name;
+    const data = Object.assign({}, this.state);
+    if (!!event.target.value.trim()) {
+      data[formField] = event.target.value.trim();
+    }
+    this.setState(() => data);
+  }
+  handleChange (event) {
+    event.preventDefault();
+    const formField = event.target.name;
+    const user = Object.assign({}, this.state);
+    if (!!event.target.value.trim()) {
+      user[formField] = event.target.value.trim();
+    }
+    this.setState(() => user);
+  }
+
+  handleSelectCategory (event) {
+    console.log(event.target.value);
+    console.log('category selected');
   }
 
   render() {
+    const text = this.path.match(/^\/admin\/add/) ? 'Add Book To Library' : 'Edit Book Information';
     return (
       <div>
         <Header
@@ -26,58 +68,17 @@ class AddBook extends Component {
           <Row>
             <div className="container">
               <div className="col s12 m6 admin-form center">
-                <h5>Add Book To Library</h5>
-                <form className="" action=""
-                  method="post"
-                  encType="multipart/form-data"
-                >
-                  <div className="input-field">
-                    <input id="title" type="text" name="title" value="" placeholder="Book Title" />
-                  </div>
-                  <div className="input-field">
-                    <textarea name="description" rows="20" placeholder="Book Description" />
-                  </div>
-                  <div className="input-field">
-                    <input id="" type="text" name="category" value="" placeholder="Category" />
-                  </div>
-                  <div className="input-field">
-                    <input type="number" name="total" min="0" placeholder="Number available" />
-                  </div>
-                  <div className="">
-                    <div className="file-field input-field">
-                      <div className="btn">
-                        <span>Browse</span>
-                        <input type="file" name="bookCover" accept="image/jpeg image/x-png" />
-                      </div>
-                      <div className="file-path-wrapper">
-                        <input className="file-path validate" name="bookFile"
-                          type="text" placeholder="Upload Book Cover"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="">
-                    <div className="file-field input-field">
-                      <div className="btn">
-                        <span>Browse</span>
-                        <input type="file" accept="application/pdf" />
-                      </div>
-                      <div className="file-path-wrapper">
-                        <input className="file-path validate"
-                          type="text" placeholder="Upload Book file"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div style={ { paddingTop: '10px' } }>
-                    <input
-                      type="submit"
-                      className="btn center"
-                      onClick={this.onSubmit}
-                    >
-                    </input>
-                  </div>
-                </form>
+                <BookForm
+                  heading={text}
+                  book={this.state}
+                  categories={this.props.categories}
+                  onSelectCategory={this.handleSelectCategory}
+                  onChange={this.handleFieldChange}
+                  onSubmit={this.handleFormSubmission}
+                />
+              </div>
+              <div className="col s12 m6 center">
+                <h5 className="">Create New Book Category</h5>
               </div>
             </div>
           </Row>
@@ -85,6 +86,14 @@ class AddBook extends Component {
       </div>
     );
   }
-}
+};
 
-export default AddBook;
+const mapStateToProps = ({ bookReducer }) => ({
+  book: bookReducer.currentBook,
+  categories: bookReducer.categories,
+});
+
+export default connect(
+  mapStateToProps,
+  { addBook, editBook, getBookCategories }
+)(AddBook);

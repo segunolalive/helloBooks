@@ -8,11 +8,15 @@ import Admin from './Admin';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
 import Library from './library/Library';
+import BookDetail from './library/BookDetail';
 import Dashboard from './dashboard/Dashboard';
 import Logout from './auth/Logout';
 
 import mock from './mock';
 
+/*
+ eslint-disable
+ */
 
 /**
  * @public
@@ -34,8 +38,11 @@ class App extends Component {
             <Route path='/login' component={Login} />
             <Route path='/logout' component={Logout} />
             <Route path='/signup' component={SignUp} />
-            <Route path='/library' component={Library} />
+            <Route path='/library' exact component={Library} />
+            <Route path='/library/book' component={BookDetail} />
             <Route path='/admin' component={Admin} />
+            <Route path='/admin/edit' component={Admin} />
+            <Route path='/admin/add' component={Admin} />
             <Route component={notFound} />
           </Switch>
         </div>
