@@ -46,7 +46,7 @@ class Dashboard extends Component {
 
   render() {
     const fullname = this.props.user && (
-      this.props.user.firstName || this.props.user.lasstName
+      this.props.user.firstName || this.props.user.lastName
     ) ?
     `${this.props.user.firstName} ${this.props.user.lastName}`: null
     return (
@@ -54,7 +54,6 @@ class Dashboard extends Component {
       this.handleRedirect() :
       <div>
         <Header
-          navLinks={['dashboard', 'history', 'library', 'logout']}
           activeLink='dashboard'
         />
         <main>

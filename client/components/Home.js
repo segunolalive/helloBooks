@@ -31,7 +31,7 @@ const Home = props => (
 );
 
 Home.propTypes = {
-  isLoggedIn: PropTypes.boolean,
+  isLoggedIn: PropTypes.bool,
 };
 
 const mapStateToProps = ({ authReducer }) => ({

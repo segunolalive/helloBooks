@@ -52,7 +52,6 @@ class Library extends Component {
     return (
       <div>
         <Header
-          navLinks={['dashboard', 'history', 'library']}
           activeLink='library'
         />
         <main className="white-area">
