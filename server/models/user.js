@@ -36,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.beforeCreate(user => hashPassword(user), { individualHooks: true });
+  User.beforeUpdate((user) => {
+    if (user.changed('password')) {
+      user = hashPassword(user);
+    }
+  });
 
   User.associate = (models) => {
     User.belongsToMany(models.Book, {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Navigation from './Navigation';
 import Logo from './Logo';
@@ -15,6 +16,15 @@ class Header extends Component {
     toggleSidebar();
   }
   render() {
+    let navLinks = ['library'];
+    this.props.isLoggedIn ?
+      navLinks = ['dashboard', ...navLinks, 'history', 'logout'] :
+      navLinks = ['login', 'sign up', ...navLinks]
+
+    if (this.props.user && this.props.user.isAdmin) {
+      navLinks = ['admin' ,...navLinks]
+    }
+
     return (
       <header className="header">
         <nav className="transparent">
@@ -23,13 +33,14 @@ class Header extends Component {
             <Navigation
               activeLink={this.props.activeLink}
               className="right hide-on-small-and-down"
-              navLinks={this.props.navLinks}
+              navLinks={navLinks}
             />
             <Navigation
               id="slide-out"
               activeLink={this.props.activeLink}
+
               className="side-nav right-aligned"
-              navLinks={this.props.navLinks}
+              navLinks={navLinks}
             />
             <a href="#" data-activates="slide-out"
               className="button-collapse hide-on-med-and-up right">
@@ -44,7 +55,11 @@ class Header extends Component {
 
 Header.propTypes = {
   activeLink: PropTypes.string,
-  navLinks: PropTypes.array.isRequired,
 };
 
-export default Header;
+const mapStateToProps = ({ authReducer }) => ({
+  isLoggedIn: authReducer.isLoggedIn,
+  user: authReducer.user,
+});
+
+export default connect(mapStateToProps, null)(Header);

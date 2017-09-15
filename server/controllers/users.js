@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 
 import { User, Book } from '../models';
-import { getJWT } from '../helpers/helpers';
+import { getJWT, hashPassword } from '../helpers/helpers';
 
 dotenv.config();
 
@@ -60,6 +60,35 @@ export default {
       .catch(error => res.status(500).send({
         success: false,
         error
+      }));
+  },
+
+  /**
+   * Edit user Information
+   * @public
+   * @method
+   * @param  {object} req - express http request object
+   * @param  {object} res - express http response object
+   * @return {undefined}
+   */
+  updateUserInfo(req, res) {
+    User.findById(req.user.id)
+      .then((user) => {
+        user.update(req.body, { returning: true, plain: true })
+          .then(() => res.status(200).send({
+            success: true,
+            user,
+            message: 'Your information was successfully updated',
+          }), (error) => {
+            res.status(500).send({
+              success: false,
+              error,
+            });
+          });
+      })
+      .catch(error => res.status(500).send({
+        success: false,
+        error,
       }));
   },
 

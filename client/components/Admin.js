@@ -61,9 +61,7 @@ class AddBook extends Component {
     const text = this.path.match(/^\/admin\/add/) ? 'Add Book To Library' : 'Edit Book Information';
     return (
       <div>
-        <Header
-          navLinks={['library']}
-        />
+        <Header />
         <main>
           <Row>
             <div className="container">
