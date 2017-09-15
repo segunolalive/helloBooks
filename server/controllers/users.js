@@ -72,22 +72,19 @@ export default {
    * @return {undefined}
    */
   updateUserInfo(req, res) {
-    req.body = req.body.password ?
-      hashPassword(req.body) : req.body;
-    User.update(
-      req.body,
-      { where: { id: req.user.id, },
-        returning: true,
-        plain: true,
-        // individualHooks: true,
-      })
-      .then(user => res.status(200).send({
-        success: true,
-        user: user[1],
-        message: 'Your information was successfully updated',
-      }), (err) => {
-        // console.log(err);
-        return;
+    User.findById(req.user.id)
+      .then((user) => {
+        user.update(req.body, { returning: true, plain: true })
+          .then(() => res.status(200).send({
+            success: true,
+            user,
+            message: 'Your information was successfully updated',
+          }), (error) => {
+            res.status(500).send({
+              success: false,
+              error,
+            });
+          });
       })
       .catch(error => res.status(500).send({
         success: false,
