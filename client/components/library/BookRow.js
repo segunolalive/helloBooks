@@ -4,21 +4,21 @@ import { Button } from 'react-materialize';
 import { Link } from 'react-router-dom';
 
 
-const BookRow = ({ id, cover, title, authors, total, onTitleClick, onButtonClick }) => (
+const BookRow = props => (
   <tr>
-    <td>{cover || 'N/A'}</td>
-    <td onClick={() => onTitleClick(id)}>
+    <td>{props.cover || 'N/A'}</td>
+    <td onClick={() => props.onTitleClick(props.id)}>
       <Link to='/library/book'>
-        {title}
+        {props.title}
       </Link>
     </td>
-    <td>{authors}</td>
-    <td>{total}</td>
+    <td>{props.authors}</td>
+    <td>{props.total}</td>
     <td>
       <Button
-        disabled={!total}
+        disabled={!props.total}
         waves='light'
-        onClick={() => onButtonClick(id)}
+        onClick={() => props.onButtonClick(props.id)}
       >
         Borrow
       </Button>

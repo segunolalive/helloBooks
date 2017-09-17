@@ -6,9 +6,11 @@ import BookRow from './BookRow';
 
 
 /*
- *
+
  */
-const BooksTable = ({ bookList, tableHeaders, borrowBook, viewBookDetails }) => {
+const BooksTable = (
+  { bookList, tableHeaders, borrowBook, viewBookDetails }
+) => {
   const books = bookList ? bookList.map(book =>
     (
       <BookRow

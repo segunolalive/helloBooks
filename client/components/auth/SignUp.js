@@ -37,7 +37,7 @@ class SignUp extends Component {
     .then(
       (response) => {
         Materialize.toast(
-          'Welcome To Hello Books. This is you dashboard',
+          'Welcome To Hello Books. This is your dashboard',
           2500,
           'teal darken-4'
         );
@@ -48,7 +48,11 @@ class SignUp extends Component {
       }
     )
     .catch((err) => {
-      Materialize.toast('Something terrible happened. We\'ll fix that', 2500, 'red darken-4');
+      Materialize.toast(
+        'Something terrible happened. We\'ll fix that',
+        2500,
+        'red darken-4'
+      );
       this.setState({ isLoading: false });
       });
   }
@@ -179,6 +183,8 @@ class SignUp extends Component {
   }
 }
 
-const mapStateToProps = ({ authReducer }) => ({ isLoggedIn: authReducer.isLoggedIn });
+const mapStateToProps = ({ authReducer }) => (
+  { isLoggedIn: authReducer.isLoggedIn }
+);
 
 export default connect(mapStateToProps, { signUp })(SignUp);

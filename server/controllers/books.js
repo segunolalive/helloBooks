@@ -1,4 +1,5 @@
 import { Book, BorrowedBook, BookCategory } from '../models';
+import notifyAdmin from '../helpers/notifyAdmin';
 
 /**
  * Fetch all books that match a catagory from database
@@ -12,7 +13,8 @@ const filterBooksByCategory = (req, res) => {
   const category = req.query.category;
   BookCategory.findAll({ where: { category } })
     .then((books) => {
-      const message = books.length ? '' : 'No books in match the requested category';
+      const message = books.length ? '' :
+        'No books in match the requested category';
       res.status(200).send({
         success: true,
         data: books,
@@ -36,22 +38,17 @@ export default {
    * @return {undefined}
    */
   addCategory(req, res) {
-    if (req.user && req.user.isAdmin) {
-      return BookCategory
-        .create(req.body)
-        .then(category => res.status(201).send({
-          success: true,
-          message: `Successfully added new category, ${category.category}, to Library`,
-        }))
-        .catch(error => res.status(500).send({
-          success: false,
-          error
-        }));
-    }
-    res.status(401).send({
-      success: false,
-      message: 'Unauthorized access',
-    });
+    return BookCategory
+      .create(req.body)
+      .then(category => res.status(201).send({
+        success: true,
+        message: `Successfully added new category, ${category.category},
+          to Library`,
+      }))
+      .catch(error => res.status(500).send({
+        success: false,
+        error
+      }));
   },
   /**
    * Fetch Bppk Categories.
@@ -84,23 +81,17 @@ export default {
    * @return {undefined}
    */
   createBook(req, res) {
-    if (req.user && req.user.isAdmin) {
-      return Book
-        .create(req.body)
-        .then(book => res.status(201).send({
-          success: true,
-          message: `Successfully added ${book.title} to Library`,
-          data: book,
-        }))
-        .catch(error => res.status(500).send({
-          success: false,
-          error
-        }));
-    }
-    res.status(401).send({
-      success: false,
-      message: 'Unauthorized access',
-    });
+    return Book
+      .create(req.body)
+      .then(book => res.status(201).send({
+        success: true,
+        message: `Successfully added ${book.title} to Library`,
+        data: book,
+      }))
+      .catch(error => res.status(500).send({
+        success: false,
+        error
+      }));
   },
 
   /**
@@ -176,28 +167,21 @@ export default {
    */
   editBookInfo(req, res) {
     const id = req.params.id;
-    if (req.user && req.user.isAdmin) {
-      Book.update(
-        req.body,
-        { where: { id },
-          returning: true,
-          plain: true,
-        })
-        .then(book => res.status(200).send({
-          success: true,
-          book: book[1],
-          message: `${book[1].title} was successfully updated`
-        }))
-        .catch(error => res.status(500).send({
-          success: false,
-          error,
-        }));
-    } else {
-      res.status(401).send({
+    Book.update(
+      req.body,
+      { where: { id },
+        returning: true,
+        plain: true,
+      })
+      .then(book => res.status(200).send({
+        success: true,
+        book: book[1],
+        message: `${book[1].title} was successfully updated`
+      }))
+      .catch(error => res.status(500).send({
         success: false,
-        message: 'Unauthorized access',
-      });
-    }
+        error,
+      }));
   },
 
   /**
@@ -210,22 +194,15 @@ export default {
    */
   deleteBook(req, res) {
     const id = req.params.id;
-    if (req.user && req.user.isAdmin) {
-      Book.destroy({ where: { id } })
-        .then(() => res.status(200).send({
-          success: true,
-          message: 'Successfully deleted book from database',
-        }))
-        .catch(error => res.status(500).send({
-          success: false,
-          error,
-        }));
-    } else {
-      res.status(401).send({
+    Book.destroy({ where: { id } })
+      .then(() => res.status(200).send({
+        success: true,
+        message: 'Successfully deleted book from database',
+      }))
+      .catch(error => res.status(500).send({
         success: false,
-        message: 'Unauthorized access',
-      });
-    }
+        error,
+      }));
   },
 
   /**
@@ -260,7 +237,8 @@ export default {
             if (borrowed && borrowed.returned === false) {
               res.status(403).send({
                 success: false,
-                message: 'You currently have this book. Return it before trying to borrow it again',
+                message: `You currently have this book.
+                  Return it before trying to borrow it again`,
               });
               return;
             } else if (borrowed && borrowed.returned === true) {
@@ -268,9 +246,11 @@ export default {
               borrowed.save();
               book.total -= 1;
               book.save();
+              notifyAdmin('borrow', book.title, req.user.username);
               res.status(200).send({
                 success: true,
-                message: `You have successfully borrowed ${book.title} again. Check your dashboard to read it`,
+                message: `You have successfully borrowed ${book.title} again.
+                  Check your dashboard to read it`,
               });
               return;
             }
@@ -281,10 +261,14 @@ export default {
                 book.total -= 1;
                 book.save();
               })
-              .then(() => res.status(200).send({
-                success: true,
-                message: `You have successfully borrowed ${book.title}. Check your dashboard to read it`,
-              }))
+              .then(() => {
+                notifyAdmin('borrow', book.title, req.user.username);
+                res.status(200).send({
+                  success: true,
+                  message: `You have successfully borrowed ${book.title}.
+                    Check your dashboard to read it`,
+                });
+              })
               .catch((error) => {
                 res.status(500).send({
                   success: false,
@@ -325,6 +309,7 @@ export default {
                 return book;
               })
               .then((book) => {
+                notifyAdmin('return', book.title, req.user.username);
                 res.status(201).send({
                   success: true,
                   message: `You have successfully returned ${book.title}`,
@@ -335,7 +320,8 @@ export default {
         }
         res.status(400).send({
           success: false,
-          message: 'This book is currently not on your list. You have either returned it or never borrowed it'
+          message: `This book is currently not on your list.
+            You have either returned it or never borrowed it`
         });
       })
       .catch(error => res.status(500).send({

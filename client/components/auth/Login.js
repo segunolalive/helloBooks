@@ -28,7 +28,11 @@ class Login extends Component {
     this.props.login(this.state)
     .then(
       (data) => {
-        Materialize.toast(`Welcome Back, ${data.firstName || 'Reader'}`, 2500, 'teal darken-4');
+        Materialize.toast(
+          `Welcome Back, ${data.firstName || 'Reader'}`,
+          2500,
+          'teal darken-4'
+        );
       },
       (error) => {
         Materialize.toast(error.response.data.message, 2500, 'red darken-4');
@@ -37,7 +41,11 @@ class Login extends Component {
     )
     .catch((err) => {
       console.log(err);
-      Materialize.toast('Ouch! Something went awry. It\'s probably our fault', 2500, 'red darken-4');
+      Materialize.toast(
+        'Ouch! Something went awry. It\'s probably our fault',
+        2500,
+        'red darken-4'
+      );
         this.setState({ isLoading: false });
       });
   }
@@ -108,7 +116,7 @@ class Login extends Component {
                             />
                           </div>
                           <div>
-                            <p className="center">Don't have an account?
+                            <p className="center">Don&apos;t have an account?
                               <Link to="/signup"> Sign up</Link>
                             </p>
                           </div>
@@ -130,7 +138,9 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ authReducer }) => ({ isLoggedIn: authReducer.isLoggedIn });
+const mapStateToProps = ({ authReducer }) => (
+  { isLoggedIn: authReducer.isLoggedIn }
+);
 
 
 export default connect(mapStateToProps, { login })(Login);
