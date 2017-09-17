@@ -1,6 +1,10 @@
-$coolBlue: #032442;
-
-$coolBlueBorder: 1px solid $coolBlue;
+$white: #ffffff;
+$transparent: rgba(0,0,0,0.0);
+$theme-blue: #011b33;
+$admin-form-blue: rgb(3, 37, 68);
+$cool-Blue: #032442;
+$cool-Blue-Border: 1px solid $cool-Blue;
+$faint-blue-border: 1px solid #012d4c;
 
 
 html, body {
@@ -10,13 +14,13 @@ html, body {
 }
 
 body {
-  background-color: #011b33;
-  color: white;
+  background-color: $theme-blue;
+  color: $white;
   font: sans-serif;
 }
 
 #sidenav-overlay {
-   background-color: rgba(0,0,0,0.0);
+   background-color: $transparent;
 }
 
 nav {
@@ -48,23 +52,23 @@ nav {
 }
 
 .side-nav {
-    background-color: #011b33;
-    color: white;
+    background-color: $theme-blue;
+    color: $white;
     font: sans-serif;
     width: calc(100vw - 40%);
 
   a {
-    color: white !important;
+    color: $white !important;
   }
 }
 
 
 header {
-  border-bottom: $coolBlueBorder;
+  border-bottom: $cool-Blue-Border;
 }
 
 main {
-    padding-top: 20px;
+    padding: 20px 0;
 }
 
 .landing {
@@ -91,7 +95,7 @@ main {
 }
 
 .white-area {
-  background-color: #ffffff;
+  background-color: $white;
   color: #000000;
   min-height: 100vh;
 }
@@ -102,44 +106,59 @@ main {
 }
 
 .profile-info {
-  border-bottom: $coolBlueBorder;
+  border-bottom: $cool-Blue-Border;
   padding: 20px 20px !important;
 }
 
 @media only screen and (min-width: 601px) {
   .borrowed {
-    border-left: $coolBlueBorder;
-    border-right: $coolBlueBorder;
+    border-left: $cool-Blue-Border;
+    border-right: $cool-Blue-Border;
     min-height: 100vh;
   }
 }
 
 // admin page styles
 .admin-form {
-  background-color: rgb(3, 37, 68);
+  background-color: $admin-form-blue;
   padding: 20px !important;
   border-radius: 4px;
+  margin-bottom: 30px;
 
   textarea {
+    border-bottom: 1px solid $white;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
     resize: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid white;
+  }
+  .caret {
+    color: $white !important;
+  }
+}
+
+.admin-notification {
+  border-bottom: $faint-blue-border;
+  font-variant: small-caps;
+  font-weight: 300;
+}
+
+@media only screen and (min-width: 993px) {
+  .admin-container {
+    width: 80%;
   }
 }
 
 #toast-container {
-    top: auto !important;
-    right: auto !important;
-    top: 10% !important;
-    left: 35px;
+  left: 35px;
+  right: auto !important;
+  top: 10% !important;
 }
 
 @media only screen and (max-width: 601px) {
   #toast-container {
     top: 3rem !important;
-    left: 0px;
+    left: 0;
   }
 }
 
