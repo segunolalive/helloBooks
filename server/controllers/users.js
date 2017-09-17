@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 
 import { User, Book } from '../models';
-import { getJWT, hashPassword } from '../helpers/helpers';
+import { getJWT } from '../helpers/helpers';
 
 dotenv.config();
 
@@ -43,8 +43,8 @@ export default {
         .then((user) => {
           const token = getJWT(
             user.id,
-            user.username,
             user.email,
+            user.username,
             user.isAdmin
           );
           const { id, firstName, lastName, isAdmin } = user;
@@ -123,8 +123,8 @@ export default {
         } else {
           const token = getJWT(
             user.id,
-            user.username,
             user.email,
+            user.username,
             user.isAdmin
           );
           const { id, firstName, lastName, isAdmin } = user;
