@@ -9,7 +9,6 @@ const actionList = [
   'GET_BOOK',
   'GET_BOOKS',
   'GET_BORROWED_BOOKS',
-  'ADD_BOOK_CATEGORIES',
   'GET_BOOK_CATEGORIES',
   'BORROW_BOOK',
   'RETURN_BOOK',
@@ -20,7 +19,8 @@ const actionList = [
   'UPLOAD_BOOK_FILE',
   'UPLOAD_BOOK_COVER',
   'SAVE_STATE',
-  'GET_SAVED_STATE'
+  'GET_SAVED_STATE',
+  'GET_ADMIN_NOTIFICATIONS',
 ];
 
 
