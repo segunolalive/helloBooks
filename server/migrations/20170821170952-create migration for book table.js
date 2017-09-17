@@ -29,11 +29,11 @@ module.exports = {
       bookFile: {
         type: Sequelize.STRING,
       },
-      BookCategoryId: {
-        type: Sequelize.INTEGER,
+      BookCategory: {
+        type: Sequelize.STRING,
         references: {
           model: 'BookCategories',
-          key: 'id',
+          key: 'category',
         },
       },
       createdAt: {

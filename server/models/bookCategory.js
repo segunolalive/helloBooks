@@ -8,7 +8,7 @@ export default (sequelize, DataTypes) => {
   });
   BookCategory.associate = (models) => {
     BookCategory.hasMany(models.Book, {
-      foreignKey: 'BookCategoryId',
+      foreignKey: 'BookCategory',
       as: 'books',
     });
   };
