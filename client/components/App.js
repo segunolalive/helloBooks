@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Home from './Home';
 import notFound from './404';
-import Admin from './Admin';
+import Admin from './admin/Admin';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
 import Library from './library/Library';
@@ -38,11 +38,11 @@ class App extends Component {
             <Route path='/login' component={Login} />
             <Route path='/logout' component={Logout} />
             <Route path='/signup' component={SignUp} />
-            <Route path='/library' exact component={Library} />
             <Route path='/library/book' component={BookDetail} />
-            <Route path='/admin' component={Admin} />
+            <Route path='/library' exact component={Library} />
             <Route path='/admin/edit' component={Admin} />
             <Route path='/admin/add' component={Admin} />
+            <Route path='/admin' component={Admin} />
             <Route component={notFound} />
           </Switch>
         </div>

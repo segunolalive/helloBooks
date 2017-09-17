@@ -19,11 +19,11 @@ const getToken = (req) => {
 /**
 * authenticates a json web token from the http request object
 * @public
-* @param {object} req - express http request object
-* @param {object} res - express http response object
-* @param {function} next - function that calls the next function
+* @param {Object} req - express http request object
+* @param {Object} res - express http response object
+* @param {Function} next - function that calls the next function
 * in the middleware stack
-* @return {undefined} sends an http response or calls the next middleware
+* @return {Undefined} sends an http response or calls the next middleware
 * function
 */
 const authenticate = (req, res, next) => {
