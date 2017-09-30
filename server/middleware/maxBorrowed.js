@@ -1,4 +1,5 @@
 import { User, Book } from '../models';
+import { maximumBorrrow } from '../helpers/borrowingLimits';
 
 /**
  * check if user should be allowed to borrow a new book
@@ -20,13 +21,13 @@ const shouldBorrow = (req, res, next) => {
       let canBorrow;
       switch (user.membershipType) {
         case 'bronze':
-          canBorrow = unreturnedBooks.length <= 5;
+          canBorrow = unreturnedBooks.length <= maximumBorrrow.bronze;
           break;
         case 'silver':
-          canBorrow = unreturnedBooks.length <= 10;
+          canBorrow = unreturnedBooks.length <= maximumBorrrow.silver;
           break;
         case 'gold':
-          canBorrow = unreturnedBooks.length <= 15;
+          canBorrow = unreturnedBooks.length <= maximumBorrrow.gold;
           break;
         default:
           canBorrow = false;
