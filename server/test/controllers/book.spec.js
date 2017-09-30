@@ -105,8 +105,7 @@ describe('Book', () => {
           .end((err, res) => {
             assert.equal(res.status, 403);
             assert.equal(res.body.message,
-              `You currently have this book.
-              Return it before trying to borrow it again`
+              'You currently have this book. Return it before trying to borrow it again',
             );
             done();
           });
