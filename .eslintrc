@@ -32,6 +32,7 @@
       "requireParamDescription": false,
       "requireReturnDescription": true
     }],
+    "class-methods-use-this": 0,
     "require-jsdoc": ["error", {
         "require": {
             "FunctionDeclaration": true,
