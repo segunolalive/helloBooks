@@ -9,8 +9,14 @@ const bookReducer = (state = {}, action = {}) => {
         book.id !== action.id
       );
       return { ...state, borrowedBooks };
+    case actionTypes.GET_ALL_BORROWED:
+      return { ...state, allBorrowed: action.books };
     case actionTypes.GET_BORROWED_BOOKS:
       return { ...state, borrowedBooks: action.borrowedBooks };
+    case actionTypes.GET_TRANSACTION_HISTORY:
+      return { ...state, transactions: action.transactions };
+    case actionTypes.SET_BOOK_ID:
+      return { ...state, currentId: action.id };
     case actionTypes.GET_BOOK:
       return { ...state, currentBook: action.book };
     case actionTypes.GET_BOOKS:
