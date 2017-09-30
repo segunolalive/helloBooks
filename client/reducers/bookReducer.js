@@ -26,9 +26,6 @@ const bookReducer = (state = {}, action = {}) => {
       return { ...state, books };
     case actionTypes.GET_BOOK_CATEGORIES:
       return { ...state, categories: action.categories };
-    case actionTypes.ADD_BOOK_CATEGORY:
-      return { ...state, categories: [...state.categories, action.categories] };
-
     case actionTypes.SEARCH_BOOKS:
       return { ...state, books: action.books };
     case actionTypes.FILTER_BOOKS_CATEGORY:

@@ -8,7 +8,12 @@ import Categories from './Categories';
 import Search from './Search';
 import Loading from '../Loading';
 
-import { borrowBook, fetchBooks, getBookCategories, filterBooksByCategory } from '../../actions/library';
+import {
+  borrowBook,
+  fetchBooks,
+  getBookCategories,
+  filterBooksByCategory
+} from '../../actions/library';
 import { viewBookDetails } from '../../actions/viewBook';
 
 /*
@@ -41,7 +46,6 @@ class Library extends Component {
   }
 
   render () {
-    console.log('view Book Details\n', this.props.viewBookDetails(1));
     const categories = this.props.categories ?
     <Categories
       text="Filter By Category"

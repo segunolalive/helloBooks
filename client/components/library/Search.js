@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input, Icon } from 'react-materialize';
+import { Input } from 'react-materialize';
 
 
-/**
- *
+/*
+ * displays a search Input
+ * @param {object} props - react props
  */
 const Search = props =>
   (

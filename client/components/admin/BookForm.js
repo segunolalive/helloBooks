@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Categories from './library/Categories';
+import Categories from '../library/Categories';
 
 
 const BookForm = (props) => {

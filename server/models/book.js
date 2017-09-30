@@ -34,7 +34,7 @@ export default (sequelize, DataTypes) => {
   Book.associate = (models) => {
     Book.belongsTo(models.BookCategory, {
       as: 'bookCategory',
-      foreignKey: 'BookCategoryId',
+      foreignKey: 'BookCategory',
     });
   };
   return Book;

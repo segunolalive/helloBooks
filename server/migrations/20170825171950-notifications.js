@@ -1,40 +1,23 @@
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable('Books', {
+    return queryInterface.createTable('Notifications', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      title: {
+      type: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      bookTitle: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      username: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true
-      },
-      authors: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      description: {
-        type: Sequelize.STRING,
-      },
-      total: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-      },
-      cover: {
-        type: Sequelize.STRING,
-      },
-      bookFile: {
-        type: Sequelize.STRING,
-      },
-      BookCategory: {
-        type: Sequelize.STRING,
-        references: {
-          model: 'BookCategories',
-          key: 'category',
-        },
       },
       createdAt: {
         allowNull: false,
@@ -47,6 +30,6 @@ module.exports = {
     });
   },
   down(queryInterface /* , Sequelize */) {
-    return queryInterface.dropTable('Books');
+    return queryInterface.dropTable('Notifications');
   }
 };

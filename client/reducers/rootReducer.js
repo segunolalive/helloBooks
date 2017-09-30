@@ -2,11 +2,12 @@ import { combineReducers } from 'redux';
 
 import authReducer from './authReducer';
 import bookReducer from './bookReducer';
+import notifications from './notificationReducer';
 import actionTypes from '../actions/actionTypes';
 
 
 const appReducer = combineReducers(
-  { authReducer, bookReducer }
+  { authReducer, bookReducer, notifications }
 );
 
 

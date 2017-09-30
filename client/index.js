@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import App from './components/App';
 import './static/index.scss';
-// import registerServiceWorker from './registerServiceWorker';
+
 
 import setAuthorizationToken from './utils/setAuthorizationToken';
 
@@ -17,4 +17,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-// registerServiceWorker();
