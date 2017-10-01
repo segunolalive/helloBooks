@@ -3,6 +3,8 @@ import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
 
+const Materialize = window.Materialize;
+
 
 /**
  * action creator for getting books

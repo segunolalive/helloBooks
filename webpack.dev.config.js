@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/index.html',
   filename: 'index.html',
@@ -12,8 +13,6 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 module.exports = {
   devtool: 'inline-source-map',
   entry: [
-    // reload the page if hot module reloading fails.
-    // 'webpack-hot-middleware/client?reload=true',
     path.resolve(__dirname, 'client/index.js')
   ],
   output: {
@@ -65,5 +64,12 @@ module.exports = {
   plugins: [
     HtmlWebpackPluginConfig,
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('development')
+      },
+      GOOGLE_CLIENT_SECRET: JSON.stringify('VenazYqo1V-41a8pAocf7a9H'),
+      GOOGLE_CLIENT_ID: JSON.stringify('701806023399-vgqondt26qh10vcuei77r7nsbcd8oa8k.apps.googleusercontent.com')
+    })
   ],
 };

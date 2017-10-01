@@ -7,6 +7,9 @@ import Header from '../header/Header';
 import { signUp } from '../../actions/signup';
 import Loading from '../Loading';
 
+const Materialize = window.Materialize;
+
+
 /*
  eslint-disable
  */
@@ -162,6 +165,7 @@ class SignUp extends Component {
                               name="submit"
                               value="Sign Up"
                               className="btn waves-effect waves-light"
+                              style={{ width: '100%' }}
                             />
                           </div>
                           <div className="">

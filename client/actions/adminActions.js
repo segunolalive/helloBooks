@@ -2,6 +2,8 @@ import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
 
+const Materialize = window.Materialize;
+
 
 /**
  * @param {Object} book - book
@@ -71,7 +73,7 @@ export const addBookCategory = category => dispatch => (
       Materialize.toast(response.data.message, 2500, 'teal darken-4');
     })
     .catch(() => {
-      Materialize.toast(`Something went wrong. Ensure you\'re not adding
+      Materialize.toast(`Something went wrong. Ensure you're not adding
         an existing category`, 2500, 'red darken-4'
       );
     })

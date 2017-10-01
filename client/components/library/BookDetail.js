@@ -8,6 +8,8 @@ import Header from '../header/Header';
 import { borrowBook, deleteBook } from '../../actions/library';
 import { viewBookDetails } from '../../actions/viewBook';
 
+const Materialize = window.Materialize;
+
 
 /*
 eslint-disable
@@ -20,9 +22,9 @@ class BookDetail extends React.Component {
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
+
   componentDidMount() {
-    this.props.viewBookDetails(this.props.match.params.id)
-      .catch(err => Materialize.toast())
+    this.props.viewBookDetails(this.props.match.params.id);
   }
 
   handleBorrow() {

@@ -16,7 +16,7 @@ html, body {
 body {
   background-color: $theme-blue;
   color: $white;
-  font: sans-serif;
+  font: 1rem sans-serif;
 }
 
 #sidenav-overlay {
@@ -173,4 +173,8 @@ main {
 
 .action-btn {
   margin: 5px;
+}
+
+.borrowed-list {
+  font: small-caps 1.3rem sans-serif;
 }

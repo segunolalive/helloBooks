@@ -16,7 +16,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {Undefined}
+   * @return {mixed}      - sends an http response
    */
 
   createUser(req, res) {
@@ -69,7 +69,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {mixed}      - sends an http response
    */
   updateUserInfo(req, res) {
     User.findById(req.user.id)
@@ -100,7 +100,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {mixed}      - sends an http response
    */
 
   getUser(req, res) {
@@ -151,7 +151,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {mixed}      - sends an http rresponse
    */
   getBorrowedBooks(req, res) {
     const id = req.params.id;

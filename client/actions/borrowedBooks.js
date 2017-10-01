@@ -2,6 +2,8 @@ import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
 
+const Materialize = window.Materialize;
+
 
 /**
  * @param {Array} borrowedBooks - array of books borrowed by user
