@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 const BookRow = props => (
   <tr>
     <td>{props.cover || 'N/A'}</td>
-    <td onClick={() => props.onTitleClick(props.id)}>
-      <Link to='/library/book'>
+    <td>
+      <Link to={`/library/book/${props.id}`}>
         {props.title}
       </Link>
     </td>
@@ -33,7 +33,6 @@ BookRow.propTypes = {
   cover: PropTypes.string,
   title: PropTypes.string,
   total: PropTypes.number,
-  onTitleClick: PropTypes.func,
   onButtonClick: PropTypes.func,
 };
 
