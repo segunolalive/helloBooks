@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 
 import Header from '../header/Header';
 import { borrowBook, deleteBook } from '../../actions/library';
+import { viewBookDetails } from '../../actions/viewBook';
 
 
 /*
@@ -19,6 +20,11 @@ class BookDetail extends React.Component {
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
+  componentDidMount() {
+    this.props.viewBookDetails(this.props.match.params.id)
+      .catch(err => Materialize.toast())
+  }
+
   handleBorrow() {
     this.props.borrowBook(this.props.userId, this.props.book.id)
   }
@@ -81,19 +87,23 @@ class BookDetail extends React.Component {
             <div className="col s12 m4 book-info">
               <div className="card">
                 <div className="card-image">
-                  <img src={this.props.book.cover || 'https://segunolalive.github.io/helloBooks/templates/images/eloquentjs_cover.png'} />
+                  <img src={
+                    this.props.book && this.props.book.cover ||
+                    'https://segunolalive.github.io/helloBooks/templates/images/eloquentjs_cover.png'
+                    }
+                  />
                 </div>
                 {actionButtons}
               </div>
             </div>
             <div className="col s12 m6 offset-m1">
               <div className="center">
-                <h4>{this.props.book.title || ''}</h4>
-                <h6>{this.props.book.shortDescription || ''}</h6>
+                <h4>{this.props.book && this.props.book.title || ''}</h4>
+                <h6>{this.props.book && this.props.book.shortDescription || ''}</h6>
               </div>
               <div className="">
                 <p>
-                  {this.props.book.description || ''}
+                  {this.props.book && this.props.book.description || ''}
                 </p>
               </div>
             </div>
@@ -114,8 +124,13 @@ const mapStateToProps = ({ authReducer, bookReducer }) => ({
   userId: authReducer.user && authReducer.user.id,
   isAdmin: authReducer.user && authReducer.user.isAdmin,
   book: bookReducer.currentBook,
+  currentId: bookReducer.currentId,
 });
 
-// const mapDispatchToProps = dispatch => bindActionCreators({ borrowBook }, dispatch);
 
-export default connect(mapStateToProps, { borrowBook, deleteBook })(BookDetail);
+export default connect(
+  mapStateToProps, {
+  borrowBook,
+  deleteBook,
+  viewBookDetails,
+})(BookDetail);

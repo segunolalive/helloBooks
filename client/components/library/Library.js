@@ -14,7 +14,7 @@ import {
   getBookCategories,
   filterBooksByCategory
 } from '../../actions/library';
-import { viewBookDetails } from '../../actions/viewBook';
+
 
 /*
   eslint-disable
@@ -23,7 +23,6 @@ class Library extends Component {
   constructor (props) {
     super(props);
     this.handleBorrowBook = this.handleBorrowBook.bind(this);
-    this.handleViewBookDetail = this.handleViewBookDetail.bind(this);
     this.handleSelectCategory = this.handleSelectCategory.bind(this);
   }
 
@@ -34,10 +33,6 @@ class Library extends Component {
 
   handleBorrowBook (bookId) {
     this.props.borrowBook(this.props.userId, bookId);
-  }
-
-  handleViewBookDetail (bookId) {
-    this.props.viewBookDetails(bookId);
   }
 
   handleSelectCategory (event) {
@@ -70,7 +65,6 @@ class Library extends Component {
                 className="col s12 m8 offset-m2 l6"
               />
               <BooksTable
-                viewBookDetails={this.handleViewBookDetail}
                 borrowBook={this.handleBorrowBook}
                 bookList={this.props.books}
                 tableHeaders={[
@@ -106,7 +100,6 @@ export default connect(
   {
     borrowBook,
     fetchBooks,
-    viewBookDetails,
     getBookCategories,
     filterBooksByCategory,
   }
