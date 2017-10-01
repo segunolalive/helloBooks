@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Row } from 'react-materialize';
+import GoogleLogin from 'react-google-login';
+import FaGoogle from 'react-icons/lib/fa/google';
 
 import Header from '../header/Header';
 import { login } from '../../actions/login';
 import Loading from '../Loading';
+
+
+const Materialize = window.Materialize;
 
 /*
   eslint-disable
@@ -20,6 +25,12 @@ class Login extends Component {
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.responseGoogle = this.responseGoogle.bind(this);
+  }
+
+  responseGoogle(response) {
+    // const loginProfile = response.getBasicProfile();
+    console.log(response);
   }
 
   handleLogin(event) {
@@ -40,9 +51,8 @@ class Login extends Component {
       }
     )
     .catch((err) => {
-      console.log(err);
       Materialize.toast(
-        'Ouch! Something went awry. It\'s probably our fault',
+        `Ouch! Something went awry. It's probably our fault`,
         2500,
         'red darken-4'
       );
@@ -113,11 +123,34 @@ class Login extends Component {
                               name="submit"
                               value="LOGIN"
                               className="btn waves-effect waves-light"
+                              style={{ width: '100%' }}
                             />
+                          </div>
+                          <div className="input-field">
+                            <GoogleLogin
+                              clientId={GOOGLE_CLIENT_ID}
+                              onSuccess={this.responseGoogle}
+                              onFailure={this.responseGoogle}
+                              className="btn red darken-4"
+                              style={{ width: '100%' }}
+                            >
+                              <FaGoogle
+                                style={{
+                                  color: '#032442',
+                                  fontSize: '2rem',
+                                }}
+                              />
+                              <span> Login with Google</span>
+                            </GoogleLogin>
                           </div>
                           <div>
                             <p className="center">Don&apos;t have an account?
                               <Link to="/signup"> Sign up</Link>
+                            </p>
+                          </div>
+                          <div>
+                            <p className="center">Forgot password? &nbsp; &nbsp;
+                              <Link to="/forgot-password"> Click here</Link>
                             </p>
                           </div>
                         </div>

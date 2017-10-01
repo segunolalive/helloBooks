@@ -10,6 +10,8 @@ import SuggestedBooks from './SuggestedBooks';
 
 import { fetchBorrowedBooks, returnBook } from '../../actions/borrowedBooks';
 
+const Materialize = window.Materialize;
+
 /*
  eslint-disable
  */
@@ -23,7 +25,7 @@ class Dashboard extends Component {
 
   componentDidMount () {
     if (this.props.user) {
-    this.handleFetchBorrowedBooks();
+      this.handleFetchBorrowedBooks();
     }
   }
 
@@ -41,7 +43,7 @@ class Dashboard extends Component {
   }
 
   readBook (id) {
-
+    // TODO: implement readBook
   }
 
   render() {
@@ -59,7 +61,9 @@ class Dashboard extends Component {
         <main>
           <Row>
             <Col s={12}>
-              <ProfileInfo name={fullname}/>
+              <ProfileInfo
+                name={fullname}
+              />
               <Borrowed
                 borrowedBooks={this.props.borrowedBooks}
                 readBook={this.readBook}

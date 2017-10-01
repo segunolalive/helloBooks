@@ -2,6 +2,7 @@ import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
 
+const Materialize = window.Materialize;
 
 /**
  * @param {Object} book - book

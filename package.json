@@ -15,7 +15,7 @@
     "coverage": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls",
     "seed:tables": "cross-env NODE_ENV=test babel-node server/seeders/user.js && babel-node server/seeders/bookCategory.js && babel-node server/seeders/book.js",
     "seed:join": "cross-env NODE_ENV=test babel-node server/seeders/borrowedBook.js",
-    "build": "rm -rf dist && babel server -d dist/server && webpack --config ./webpack.prod.config.js --progress --colors",
+    "build": "rm -rf dist && babel server -d dist/server && webpack --config ./webpack.prod.config.js --progress --colors && cp client/sw.js dist/client",
     "heroku-postbuild": "npm run build"
   },
   "nyc": {
