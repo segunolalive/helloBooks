@@ -12,7 +12,7 @@ import Library from './library/Library';
 import BookDetail from './library/BookDetail';
 import Dashboard from './dashboard/Dashboard';
 import Logout from './auth/Logout';
-import ForgotPassword from './forgotPassword';
+// import ForgotPassword from './forgotPassword';
 
 import UpdateProfile from './dashboard/UpdateProfile';
 
