@@ -46,7 +46,7 @@ class App extends Component {
             <Route path='/library/book/:id' component={BookDetail} />
             <Route path='/library' exact component={Library} />
             <Route path='/history' component={History} />
-            <Route path='/admin/edit' component={Admin} />
+            <Route path='/admin/edit:id' component={Admin} />
             <Route path='/admin/add' component={Admin} />
             <Route path='/admin' component={Admin} />
             <Route path='/forgot-password' component={ForgotPassword} />
