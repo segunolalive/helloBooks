@@ -1,0 +1,27 @@
+{
+  "name": "helloBooks",
+  "scripts": {},
+  "env": {
+    "DATABASE_URL": {
+      "required": true
+    },
+    "NODE_ENV": {
+      "required": true
+    },
+    "NODE_MODULES_CACHE": {
+      "required": true
+    },
+    "SECRET": {
+      "required": true
+    }
+  },
+  "formation": {},
+  "addons": [
+    "papertrail"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
