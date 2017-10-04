@@ -127,7 +127,7 @@ class Login extends Component {
                             />
                           </div>
                           <div className="input-field">
-                            <GoogleLogin
+                            {/* <GoogleLogin
                               clientId={GOOGLE_CLIENT_ID}
                               onSuccess={this.responseGoogle}
                               onFailure={this.responseGoogle}
@@ -141,7 +141,7 @@ class Login extends Component {
                                 }}
                               />
                               <span> Login with Google</span>
-                            </GoogleLogin>
+                            </GoogleLogin> */}
                           </div>
                           <div>
                             <p className="center">Don&apos;t have an account?
