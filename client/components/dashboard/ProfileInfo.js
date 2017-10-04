@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Col, Icon } from 'react-materialize';
 import imageFallback from '../../static/profile_image.png';
 
@@ -16,13 +17,12 @@ const ProfileInfo = props => (
       </div>
     </Col>
     <Col s={12} className="profile-info">
-      <a className="btn waves-effect"
-        href="#"
-        onClick={props.onClick}
+      <Link className="btn waves-effect"
+        to="/update-profile"
       >
         <Icon>edit</Icon>
         Edit Profile
-      </a>
+      </Link>
     </Col>
   </Col>
 );
