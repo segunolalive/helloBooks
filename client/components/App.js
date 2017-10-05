@@ -49,7 +49,7 @@ class App extends Component {
             <Route path='/admin/edit:id' component={Admin} />
             <Route path='/admin/add' component={Admin} />
             <Route path='/admin' component={Admin} />
-            <Route path='/forgot-password' component={ForgotPassword} />
+            {/* <Route path='/forgot-password' component={ForgotPassword} /> */}
             <Route component={notFound} />
           </Switch>
         </div>
