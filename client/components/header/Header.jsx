@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Navigation from './Navigation';
-import Logo from './Logo';
+import Navigation from './Navigation.jsx';
+import Logo from './Logo.jsx';
 import toggleSidebar from './toggleSidebar';
 
 /**
