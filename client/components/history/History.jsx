@@ -9,19 +9,31 @@ import AllBorrowed from './AllBorrowed';
 import { fetchHistory, fetchTransactionHistory } from '../../actions/history';
 
 
-/*
-eslint-disable
+/**
+ * component for borrowing hisstory
+ * @class History
+ * @extends {Component}
  */
 class History extends Component {
-  componentDidMount () {
+  /**
+   * lifecycle hook called when component mounts
+   * @memberof History
+   * @return {Undefined} - makes api calls to fetch a user's borrowed books
+   * and borrowing history
+   */
+  componentDidMount() {
     this.props.fetchHistory(this.props.id);
     this.props.fetchTransactionHistory(this.props.id);
   }
+  /**
+   * renders  component to DOM
+   * @return {JSX} JSX
+   */
   render() {
     const historyDisplay =
       this.props.location.pathname === '/history/transactions' ?
-      <TransactionHistory transactions={this.props.transactions}/> :
-      <AllBorrowed books={this.props.books}/>
+        <TransactionHistory transactions={this.props.transactions}/> :
+        <AllBorrowed books={this.props.books}/>;
 
     return (
       <div>
@@ -33,12 +45,17 @@ class History extends Component {
         </main>
       </div>
     );
-  };
+  }
 }
 
 
 History.propTypes = {
+  id: PropTypes.number.isRequired,
+  location: PropTypes.object.isRequired,
   books: PropTypes.array.isRequired,
+  fetchHistory: PropTypes.func.isRequired,
+  transactions: PropTypes.array.isRequired,
+  fetchTransactionHistory: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ authReducer, bookReducer }) => ({
