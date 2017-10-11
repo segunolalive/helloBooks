@@ -6,14 +6,15 @@ import { Book, BorrowedBook, BookCategory } from '../models';
  * @method
  * @param  {object} req - express http request object
  * @param  {object} res - express http response object
- * @return {undefined}
+ * @return {object}     - express http response object
  */
 const filterBooksByCategory = (req, res) => {
   const category = req.query.category;
   BookCategory.findAll({ where: { category } })
     .then((books) => {
-      const message = books.length ? '' : 'No books in match the requested category';
-      res.status(200).send({
+      const message = books.length ? '' :
+        'No books match the requested category';
+      return res.status(200).send({
         success: true,
         data: books,
         message,
@@ -33,16 +34,17 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {Object}     - express http response object
    */
   addCategory(req, res) {
     if (req.user && req.user.isAdmin) {
       return BookCategory
         .create(req.body)
-        .then(category => res.status(201).send({
+        .then(category => (res.status(201).send({
           success: true,
-          message: `Successfully added new category, ${category.category}, to Library`,
-        }))
+          message:
+            `Successfully added new category, ${category.category}, to Library`,
+        })))
         .catch(error => res.status(500).send({
           success: false,
           error
@@ -59,16 +61,16 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {Object}     - express http response object
    */
   getBookCategories(req, res) {
     BookCategory.findAll({ attributes: ['id', 'category'] })
-      .then((categories) => {
+      .then(categories => (
         res.status(200).send({
           success: true,
           data: categories,
-        });
-      })
+        })
+      ))
       .catch(error => res.status(500).send({
         success: false,
         error
@@ -81,7 +83,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {Object}     - express http response object
    */
   createBook(req, res) {
     if (req.user && req.user.isAdmin) {
@@ -109,18 +111,17 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {Object}     - express http response object
    */
   getBook(req, res) {
     const id = Number(req.params.id);
     Book.findById(id)
       .then((book) => {
         if (!book) {
-          res.status(404).send({
+          return res.status(404).send({
             success: false,
             message: 'Book does not exist',
           });
-          return;
         }
         res.status(200).send({
           success: true,
@@ -139,7 +140,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {Object}     - express http response object
    */
   getAllBooks(req, res) {
     if (req.query.category) {
@@ -148,12 +149,11 @@ export default {
     Book.findAll()
       .then((books) => {
         if (!books.length) {
-          res.status(200).send({
+          return res.status(200).send({
             success: true,
             data: [],
             message: 'Library is currently empty. Check back later'
           });
-          return;
         }
         res.status(200).send({
           success: true,
@@ -172,7 +172,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {Object}     - express http response object
    */
   editBookInfo(req, res) {
     const id = req.params.id;
@@ -193,7 +193,7 @@ export default {
           error,
         }));
     } else {
-      res.status(401).send({
+      return res.status(401).send({
         success: false,
         message: 'Unauthorized access',
       });
@@ -206,7 +206,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {Object}     - express http response object
    */
   deleteBook(req, res) {
     const id = req.params.id;
@@ -234,7 +234,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {Object}     - express http response object
    */
   borrowBook(req, res) {
     const userId = req.params.id;
@@ -242,55 +242,54 @@ export default {
     Book.findById(bookId)
       .then((book) => {
         if (!book) {
-          res.status(404).send({
+          return res.status(404).send({
             success: false,
             message: 'Book not found',
           });
-          return;
         }
         if (book.total <= 0) {
-          res.status(404).send({
+          return res.status(404).send({
             success: false,
             message: 'There are no available copies of this book at this time',
           });
-          return;
         }
         BorrowedBook.findOne({ where: { userId, bookId } })
           .then((borrowed) => {
             if (borrowed && borrowed.returned === false) {
-              res.status(403).send({
+              return res.status(403).send({
                 success: false,
-                message: 'You currently have this book. Return it before trying to borrow it again',
+                message: 'You currently have this book.' +
+                ' Return it before trying to borrow it again',
               });
-              return;
             } else if (borrowed && borrowed.returned === true) {
               borrowed.returned = false;
               borrowed.save();
               book.total -= 1;
               book.save();
-              res.status(200).send({
+              return res.status(200).send({
                 success: true,
-                message: `You have successfully borrowed ${book.title} again. Check your dashboard to read it`,
+                message: `You have successfully borrowed ${book.title}` +
+                'again. Check your dashboard to read it',
               });
-              return;
             }
             BorrowedBook.create({
               userId, bookId,
             })
               .then(() => {
                 book.total -= 1;
-                book.save();
+                book.save(); // wait till book is saved before sending response
               })
               .then(() => res.status(200).send({
                 success: true,
-                message: `You have successfully borrowed ${book.title}. Check your dashboard to read it`,
+                message: `You have successfully borrowed ${book.title}` +
+                'again. Check your dashboard to read it',
               }))
-              .catch((error) => {
+              .catch(error => (
                 res.status(500).send({
                   success: false,
                   error
-                });
-              });
+                })
+              ));
           });
       })
       .catch(error => res.status(500).send({
@@ -305,7 +304,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {undefined}
+   * @return {Object}     - express http response object
    */
   returnBook(req, res) {
     const bookId = req.body.id;
@@ -324,18 +323,19 @@ export default {
                 book.save();
                 return book;
               })
-              .then((book) => {
+              .then(book => (
                 res.status(201).send({
                   success: true,
                   message: `You have successfully returned ${book.title}`,
-                });
-              });
+                })
+              ));
           });
           return;
         }
-        res.status(400).send({
+        return res.status(400).send({
           success: false,
-          message: 'This book is currently not on your list. You have either returned it or never borrowed it'
+          message: 'This book is currently not on your list.' +
+          ' You have either returned it or never borrowed it'
         });
       })
       .catch(error => res.status(500).send({
