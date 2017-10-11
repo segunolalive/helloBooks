@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { Col, Icon } from 'react-materialize';
 import imageFallback from '../../static/profile_image.png';
 
-
+/**
+ * user profile data
+ * @param {Object} props Object containing user data
+ * @returns {JSX}        JSX representation of user profile
+ */
 const ProfileInfo = props => (
   <Col s={12} m={3} className="center">
     <Col s={12} className="profile-info">

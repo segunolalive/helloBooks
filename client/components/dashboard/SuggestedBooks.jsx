@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Col } from 'react-materialize';
 
-
+/**
+ * book Suggestions
+ * @param {Object} props Object containing array of suggestions
+ * @returns {JSX}        JSX representation of component
+ */
 const SuggestedBooks = (props) => {
   const books = props.suggestedBooks ? props.suggestedBooks.map(book =>
     <figure key={book.title}>
