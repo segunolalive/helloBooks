@@ -3,7 +3,6 @@ import { Book, BorrowedBook, BookCategory } from '../models';
 /**
  * Fetch all books that match a catagory from database
  * @private
- * @method
  * @param  {object} req - express http request object
  * @param  {object} res - express http response object
  * @return {object}     - express http response object
@@ -56,7 +55,7 @@ export default {
     });
   },
   /**
-   * Fetch Bppk Categories.
+   * Fetch Book Categories.
    * @public
    * @method
    * @param  {object} req - express http request object
