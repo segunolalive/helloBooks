@@ -2,7 +2,7 @@ import express from 'express';
 
 import userController from '../controllers/users';
 import bookController from '../controllers/books';
-import transactons from '../controllers/fetchAdminNotifications';
+import transactons from '../controllers/Transactions';
 
 import authenticate from '../middleware/authentication';
 import shouldBorrow from '../middleware/maxBorrowed';
@@ -45,7 +45,7 @@ router.get('/api/v1', (req, res) => res.status(200).send({
   .get(
     '/api/v1/users/:id/transactions',
     authenticate,
-    transactons.userTransactions
+    (req, res) => transactons(req, res, true)
   )
   // Admin-specific routes
   .post(
@@ -76,7 +76,7 @@ router.get('/api/v1', (req, res) => res.status(200).send({
     '/api/v1/admin-notifications',
     authenticate,
     ensureIsAdmin,
-    transactons.adminTransactionNotification
+    transactons
   )
   // Send a message if route does not exist
   .get('/api*', (req, res) => res.status(404).send({
