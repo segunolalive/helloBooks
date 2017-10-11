@@ -13,10 +13,17 @@ import Loading from '../Loading';
 
 const Materialize = window.Materialize;
 
-/*
-  eslint-disable
+/**
+ * login component
+ * @class Login
+ * @extends {Component}
  */
 class Login extends Component {
+  /**
+   * Creates an instance of Login.
+   * @param {any} props
+   * @memberof Login
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -28,147 +35,172 @@ class Login extends Component {
     this.responseGoogle = this.responseGoogle.bind(this);
   }
 
+  /**
+   * handler for google sign in
+   * @param {any} response
+   * @memberof Login
+   * @returns {Undefined}  redirects to dashboard
+   */
   responseGoogle(response) {
     // const loginProfile = response.getBasicProfile();
     console.log(response);
   }
 
+  /**
+   * login handler
+   * @param {any} event
+   * @memberof Login
+   * @returns {Undefined} redirects to dashboard
+   */
   handleLogin(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
     this.props.login(this.state)
-    .then(
-      (data) => {
+      .then(
+        (data) => {
+          Materialize.toast(
+            `Welcome Back, ${data.firstName || 'Reader'}`,
+            2500,
+            'teal darken-4'
+          );
+        },
+        (error) => {
+          Materialize.toast(error.response.data.message, 2500, 'red darken-4');
+          this.setState({ isLoading: false });
+        }
+      )
+      .catch(() => {
         Materialize.toast(
-          `Welcome Back, ${data.firstName || 'Reader'}`,
+          `Ouch! Something went awry. It's probably our fault`,
           2500,
-          'teal darken-4'
+          'red darken-4'
         );
-      },
-      (error) => {
-        Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-        this.setState({ isLoading: false });
-      }
-    )
-    .catch((err) => {
-      Materialize.toast(
-        `Ouch! Something went awry. It's probably our fault`,
-        2500,
-        'red darken-4'
-      );
         this.setState({ isLoading: false });
       });
   }
 
+  /**
+   * input field change event handler
+   *
+   * @param {any} event
+   * @memberof Login
+   * @returns {Undefined} sets user input in component state
+   */
   handleChange(event) {
     event.preventDefault();
     const formField = event.target.name;
     const user = Object.assign({}, this.state);
-    if (!!event.target.value.trim()) {
+    if (event.target.value.trim()) {
       user[formField] = event.target.value.trim();
     }
     this.setState(() => user);
   }
 
+  /**
+   * renders component to DOM
+   *
+   * @returns {JSX} JSX representation of component
+   * @memberof Login
+   */
   render() {
+    console.log('GOOGLE CLIENT ID', GOOGLE_CLIENT_ID);
     const loadingState = this.state.isLoading ?
       <Loading text='logging in' /> : null
     return (
       this.props.isLoggedIn === true ?
-      <Redirect to='/dashboard'/> :
-      <div>
-        <Header
-          navLinks={['login', 'sign up', 'library']}
-        />
-        <main>
-          <section className="account">
-            <Row>
-              <div className="container">
-                <div className="center">
-                  <div className="col m6 s12 welcome">
-                    <h2>Hello Reader</h2>
-                    <h6>Welcome home avid reader</h6>
-                  </div>
-                  <div className="col m6 s12">
-                    <form onSubmit={this.handleLogin}>
-                      <div className="col s12">
-                        <h5>Login</h5>
-                      </div>
-                      <div className="col s12">
-                        <div className="container">
-                          <div className="input-field">
-                            <input type="text"
-                              name="username"
-                              placeholder="Username"
-                              className="validate"
-                              required
-                              title="username is required for login"
-                              onChange={this.handleChange}
-                            />
-                          </div>
-                          <div className="input-field">
-                            <input type="password"
-                              name="password"
-                              placeholder="password"
-                              className="validate"
-                              required
-                              title="password is required for login"
-                              onChange={this.handleChange}
-                            />
-                          </div>
-                          {loadingState}
-                          <div className="input-field">
-                            <input
-                              type="submit"
-                              name="submit"
-                              value="LOGIN"
-                              className="btn waves-effect waves-light"
-                              style={{ width: '100%' }}
-                            />
-                          </div>
-                          <div className="input-field">
-                            <GoogleLogin
-                              clientId={GOOGLE_CLIENT_ID}
-                              onSuccess={this.responseGoogle}
-                              onFailure={this.responseGoogle}
-                              className="btn red darken-4"
-                              style={{ width: '100%' }}
-                            >
-                              <FaGoogle
-                                style={{
-                                  color: '#032442',
-                                  fontSize: '2rem',
-                                }}
+        <Redirect to='/dashboard'/> :
+        <div>
+          <Header />
+          <main>
+            <section className="account">
+              <Row>
+                <div className="container">
+                  <div className="center">
+                    <div className="col m6 s12 welcome">
+                      <h2>Hello Reader</h2>
+                      <h6>Welcome home avid reader</h6>
+                    </div>
+                    <div className="col m6 s12">
+                      <form onSubmit={this.handleLogin}>
+                        <div className="col s12">
+                          <h5>Login</h5>
+                        </div>
+                        <div className="col s12">
+                          <div className="container">
+                            <div className="input-field">
+                              <input type="text"
+                                name="username"
+                                placeholder="Username"
+                                className="validate"
+                                required
+                                title="username is required for login"
+                                onChange={this.handleChange}
                               />
-                              <span> Login with Google</span>
-                            </GoogleLogin>
-                          </div>
-                          <div>
-                            <p className="center">Don&apos;t have an account?
-                              <Link to="/signup"> Sign up</Link>
-                            </p>
-                          </div>
-                          <div>
-                            <p className="center">Forgot password? &nbsp; &nbsp;
-                              <Link to="/forgot-password"> Click here</Link>
-                            </p>
+                            </div>
+                            <div className="input-field">
+                              <input type="password"
+                                name="password"
+                                placeholder="password"
+                                className="validate"
+                                required
+                                title="password is required for login"
+                                onChange={this.handleChange}
+                              />
+                            </div>
+                            {loadingState}
+                            <div className="input-field">
+                              <input
+                                type="submit"
+                                name="submit"
+                                value="LOGIN"
+                                className="btn waves-effect waves-light"
+                                style={{ width: '100%' }}
+                              />
+                            </div>
+                            <div className="input-field">
+                              <GoogleLogin
+                                clientId={GOOGLE_CLIENT_ID}
+                                onSuccess={this.responseGoogle}
+                                onFailure={this.responseGoogle}
+                                className="btn red darken-4"
+                                style={{ width: '100%' }}
+                              >
+                                <FaGoogle
+                                  style={{
+                                    color: '#032442',
+                                    fontSize: '2rem',
+                                  }}
+                                />
+                                <span> Login with Google</span>
+                              </GoogleLogin>
+                            </div>
+                            <div>
+                              <p className="center">Don&apos;t have an account?
+                                <Link to="/signup"> Sign up</Link>
+                              </p>
+                            </div>
+                            <div>
+                              <p className="center">Forgot password? &nbsp; &nbsp;
+                                <Link to="/forgot-password"> Click here</Link>
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </form>
+                      </form>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Row>
-          </section>
-        </main>
-      </div>
+              </Row>
+            </section>
+          </main>
+        </div>
     );
   }
 }
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool,
 };
 
 const mapStateToProps = ({ authReducer }) => (

@@ -113,7 +113,7 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   borrowedBooks: PropTypes.array,
   user: PropTypes.object.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool,
   fetchBorrowedBooks: PropTypes.func.isRequired,
   returnBook: PropTypes.func.isRequired,
 };
