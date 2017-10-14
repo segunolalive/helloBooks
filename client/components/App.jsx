@@ -18,20 +18,30 @@ import Logout from './auth/Logout';
 
 import mock from './mock';
 
-/*
- eslint-disable
- */
 
 /**
  * @public
+ * @class App
  * @description React Component encapsulating application user interface
+ * @extends {Component}
  */
 class App extends Component {
+  /**
+   * Creates an instance of App.
+   * @param {Object} props 
+   * @memberof App
+   */
   constructor(props) {
     super(props);
     this.categories = mock.categories;
     this.books = mock.books;
   }
+  /**
+   * renders app to DOM
+   * 
+   * @returns {JSX} JSX representation of component
+   * @memberof App
+   */
   render() {
     return (
       <BrowserRouter>
