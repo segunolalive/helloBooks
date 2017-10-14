@@ -96,9 +96,9 @@ class AddBook extends Component {
    */
   handleAddCategory(event) {
     event.preventDefault();
-    if (!!event.target.category.value) {
+    if (event.target.category.value) {
       this.props.addBookCategory(event.target.category.value);
-      event.target.category.value ='';
+      event.target.category.value = '';
     }
   }
 
@@ -161,6 +161,8 @@ AddBook.propTypes = {
   getBookCategories: PropTypes.func.isRequired,
   fetchNotifications: PropTypes.func.isRequired,
   addBookCategory: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 
