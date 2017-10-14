@@ -31,6 +31,7 @@ class Header extends Component {
 
   /**
    * renders JSX representation of component
+   * @memberof Header
    * @return {JSX} JSX reoprresentation of header and navigation
    */
   render() {

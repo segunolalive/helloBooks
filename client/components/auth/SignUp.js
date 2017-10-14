@@ -37,7 +37,7 @@ class SignUp extends Component {
 
   /**
    * sign up handler
-   * @param {any} event 
+   * @param {any} event
    * @memberof SignUp
    * @returns {Undefined} redirects to dashboard
    */
@@ -70,8 +70,8 @@ class SignUp extends Component {
 
   /**
    * form input change event handler
-   * 
-   * @param {any} event 
+   *
+   * @param {any} event
    * @memberof SignUp
    * @returns {Undefined} sets form input values in the component state
    */
@@ -79,7 +79,7 @@ class SignUp extends Component {
     event.preventDefault();
     const formField = event.target.name;
     const user = Object.assign({}, this.state);
-    if (!!event.target.value.trim()) {
+    if (event.target.value.trim()) {
       user[formField] = event.target.value.trim();
     }
     this.setState(() => user);
@@ -87,7 +87,7 @@ class SignUp extends Component {
 
   /**
    * renders component to DOM
-   * 
+   *
    * @returns {JSX} JSX representation of component
    * @memberof SignUp
    */

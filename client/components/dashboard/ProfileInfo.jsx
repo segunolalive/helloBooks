@@ -25,7 +25,7 @@ const ProfileInfo = props => (
         onClick={props.onClick}
       >
         <Icon>edit</Icon>
-        Edit Profile
+        Edit Profile 
       </a>
     </Col>
   </Col>

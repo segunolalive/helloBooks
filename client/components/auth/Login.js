@@ -10,7 +10,6 @@ import Header from '../header/Header';
 import { login } from '../../actions/login';
 import Loading from '../Loading';
 
-
 const Materialize = window.Materialize;
 
 /**
@@ -71,7 +70,7 @@ class Login extends Component {
       )
       .catch(() => {
         Materialize.toast(
-          `Ouch! Something went awry. It's probably our fault`,
+          'Ouch! Something went awry. It\'s probably our fault',
           2500,
           'red darken-4'
         );
@@ -103,9 +102,8 @@ class Login extends Component {
    * @memberof Login
    */
   render() {
-    console.log('GOOGLE CLIENT ID', GOOGLE_CLIENT_ID);
     const loadingState = this.state.isLoading ?
-      <Loading text='logging in' /> : null
+      <Loading text='logging in' /> : null;
     return (
       this.props.isLoggedIn === true ?
         <Redirect to='/dashboard'/> :
@@ -180,7 +178,8 @@ class Login extends Component {
                               </p>
                             </div>
                             <div>
-                              <p className="center">Forgot password? &nbsp; &nbsp;
+                              <p className="center">Forgot password?
+                                &nbsp;&nbsp;
                                 <Link to="/forgot-password"> Click here</Link>
                               </p>
                             </div>
