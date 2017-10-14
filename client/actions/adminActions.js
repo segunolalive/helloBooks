@@ -16,7 +16,7 @@ export const editBookAction = book => ({
 
 
 /**
- * het book Detail
+ * edit book Detail
  * @param  {Integer} id book Id
  * @param  {Object} data book data with with to update database
  * @return {Object}      dispatches an action to the redux store
@@ -36,12 +36,38 @@ export const editBook = (id, data) => dispatch => (
 
 /**
  * @param {Object} book - book
- * @returns {Object} - Object containing action type and user
+ * @returns {Object} - Object containing action type and book
  */
 export const addBookAction = book => ({
   type: actionTypes.ADD_BOOK,
   book,
 });
+
+
+/**
+ * @param {Object} book - book
+ * @returns {Object} - Object containing action type and book
+ */
+export const setBookToEdit = book => ({
+  type: actionTypes.SET_BOOK_TO_EDIT,
+  book,
+});
+
+
+/**
+ * get the book to edit
+ * @param  {Number} id book id
+ * @return {Object}    redux action
+ */
+export const bookToEdit = id => dispatch => (
+  axios.get(`${API}/books/${id}`)
+    .then((response) => {
+      dispatch(setBookToEdit(response.data.data));
+    })
+    .catch((error) => {
+      Materialize.toast(error, 2500, 'red darken-4');
+    })
+);
 
 
 /**
