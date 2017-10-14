@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Col, Row } from 'react-materialize';
 
 import { addBook, addBookCategory, editBook } from '../../actions/adminActions';
@@ -18,7 +19,7 @@ import AddCategoryForm from './CategoryForm';
  * @class AddBook
  * @extends {Component}
  */
-class AddBook extends Component {
+class Admin extends Component {
   /**
    * Creates an instance of AddBook.
    * @param {any} props
@@ -26,8 +27,24 @@ class AddBook extends Component {
    */
   constructor(props) {
     super(props);
-    this.path = this.props.location.pathname;
-    this.state = this.path.match(/^\/admin\/edit/) && this.props.book;
+    this.shouldEdit = this.props.location.pathname.match(/^\/admin\/edit/);
+    this.state = this.shouldEdit ? {
+      title: this.props.book.title || '',
+      authors: this.props.book.authors || '',
+      description: this.props.book.description || '',
+      category: this.props.book.category || '',
+      total: this.props.book.total || '',
+      cover: this.props.book.cover || '',
+      bookFile: this.props.book.bookFile || '',
+    } : {
+      title: '',
+      authors: '',
+      description: '',
+      category: '',
+      total: '',
+      cover: '',
+      bookFile: '',
+    };
     this.handleFormSubmission = this.handleFormSubmission.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleSelectCategory = this.handleSelectCategory.bind(this);
@@ -53,10 +70,18 @@ class AddBook extends Component {
    */
   handleFormSubmission(event) {
     event.preventDefault();
-    return this.path.match(/^\/admin\/add/) ?
-      this.props.addBook(this.state) :
-      this.props.editBook(this.props.book.id, this.state)
-        .then(() => this.props.history.push('/library'));
+    this.shouldEdit ?
+    this.props.editBook(this.props.book.id, this.state)
+      .then(() => this.props.history.push('/library')) :
+    this.props.addBook(this.state);
+    this.setState(() => ({
+      title: '',
+      description: '',
+      category: '',
+      total: '',
+      cover: '',
+      bookFile: '',
+    }));
   }
 
   /**
@@ -84,7 +109,7 @@ class AddBook extends Component {
    * @returns {Undefined} calls setState
    */
   handleSelectCategory(event) {
-    console.log(event.target.value);
+    this.setState(() => ({ category: event.target.value }));
   }
 
   /**
@@ -96,10 +121,12 @@ class AddBook extends Component {
    */
   handleAddCategory(event) {
     event.preventDefault();
-    if (event.target.category.value) {
-      this.props.addBookCategory(event.target.category.value);
+    const category = event.target.category.value.trim();
+    if (category) {
+      this.props.addBookCategory(category);
       event.target.category.value = '';
     }
+    this.props.getBookCategories();
   }
 
   /**
@@ -109,10 +136,10 @@ class AddBook extends Component {
    * @memberof AddBook
    */
   render() {
-    const text = this.path.match(/^\/admin\/edit/) ?
+    const text = this.shouldEdit ?
       'Edit Book Information' :
       'Add Book To Library';
-    return (
+    return (this.props.user && this.props.user.isAdmin ?
       <div>
         <Header />
         <main>
@@ -141,18 +168,16 @@ class AddBook extends Component {
                   <Notifications notifications={this.props.notifications}/>
                 </div>
               </Row>
-              <Row>
-
-              </Row>
             </div>
           </Row>
         </main>
-      </div>
+      </div> : <Redirect to='/dashboard' />
     );
   }
 }
 
-AddBook.propTypes = {
+Admin.propTypes = {
+  user: PropTypes.object.isRequired,
   book: PropTypes.object,
   categories: PropTypes.array.isRequired,
   notifications: PropTypes.array.isRequired,
@@ -166,7 +191,8 @@ AddBook.propTypes = {
 };
 
 
-const mapStateToProps = ({ bookReducer, notifications }) => ({
+const mapStateToProps = ({ authReducer, bookReducer, notifications }) => ({
+  user: authReducer.user,
   book: bookReducer.currentBook,
   categories: bookReducer.categories,
   notifications,
@@ -175,4 +201,4 @@ const mapStateToProps = ({ bookReducer, notifications }) => ({
 export default connect(
   mapStateToProps,
   { addBook, addBookCategory, editBook, getBookCategories, fetchNotifications }
-)(AddBook);
+)(Admin);
