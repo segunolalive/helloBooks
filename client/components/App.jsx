@@ -12,9 +12,9 @@ import Library from './library/Library';
 import BookDetail from './library/BookDetail';
 import Dashboard from './dashboard/Dashboard';
 import Logout from './auth/Logout';
-import ForgotPassword from './forgotPassword';
-
-import UpdateProfile from './dashboard/UpdateProfile';
+// import ForgotPassword from './forgotPassword';
+//
+// import UpdateProfile from './dashboard/UpdateProfile';
 
 import mock from './mock';
 
@@ -39,7 +39,7 @@ class App extends Component {
           <Switch>
             <Route path='/' exact component={Home} />
             <Route path='/dashboard' component={Dashboard} />
-            <Route path='/update-profile'component={UpdateProfile} />
+            {/* <Route path='/update-profile'component={UpdateProfile} /> */}
             <Route path='/login' component={Login} />
             <Route path='/logout' component={Logout} />
             <Route path='/signup' component={SignUp} />
@@ -49,7 +49,7 @@ class App extends Component {
             <Route path='/admin/edit' component={Admin} />
             <Route path='/admin/add' component={Admin} />
             <Route path='/admin' component={Admin} />
-            <Route path='/forgot-password' component={ForgotPassword} />
+            {/* <Route path='/forgot-password' component={ForgotPassword} /> */}
             <Route component={notFound} />
           </Switch>
         </div>
