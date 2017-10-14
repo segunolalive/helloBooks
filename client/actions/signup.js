@@ -20,7 +20,7 @@ export const signUpUser = (user => ({
 export const signUp = data => dispatch => (
   axios.post(`${API}/users/signup`, data)
     .then((response) => {
-      sessionStorage.setItem('token', response.data.token);
+      localStorage.setItem('token', response.data.token);
       dispatch(signUpUser(response.data));
       dispatch(setLoginStatus(true));
       return response.data;

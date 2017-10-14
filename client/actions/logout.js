@@ -8,6 +8,6 @@ export const logoutUser = () => ({ type: actionTypes.LOGOUT });
  * @returns {Object} Object containing action type
  */
 export const logout = () => (dispatch) => {
-  sessionStorage.removeItem('token');
+  localStorage.removeItem('token');
   dispatch(logoutUser());
 };
