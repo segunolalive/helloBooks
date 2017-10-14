@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 
 import Categories from '../library/Categories';
 
-
+/**
+ * for for adding or editing books
+ * @param {object} props
+ * @returns {JSX} JSX representation of component
+ */
 const BookForm = (props) => {
   const categories = props.categories ?
     <Categories
