@@ -1,6 +1,6 @@
 import { hashPassword } from '../helpers/helpers';
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     firstName: {
       type: DataTypes.STRING,

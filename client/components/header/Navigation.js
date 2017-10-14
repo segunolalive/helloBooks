@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-/**
- * navigation links
- * @param {Object} props properties that define the navigation links
- * @returns {JSX}        JSX representation of navigation  
+/*
+ eslint-disable
  */
 const Navigation = (props) => {
   const links = props.navLinks.map(link =>

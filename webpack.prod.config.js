@@ -17,9 +17,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist/client'),
     publicPath: '/',
   },
-  resolve: {
-    extensions: ['.js', '.jsx']
-  },
   module: {
     rules: [
       {
@@ -27,7 +24,7 @@ module.exports = {
         exclude: ['node_modules', 'server', 'test', 'dist'],
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'env'],
+          presets: ['react', 'es2015'],
         },
       },
       {

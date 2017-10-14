@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import { Button, Input } from 'react-materialize';
 
 
-/**
- * displays form for adding new book category
- * @param {Object} props
- * @returns {JSX} JSX representation of component
+/*
+ *
  */
 const AddCategoryForm = props => (
   <div className={props.className}>

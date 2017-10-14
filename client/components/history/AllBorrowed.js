@@ -5,11 +5,7 @@ import { Row } from 'react-materialize';
 
 import BorrowedTable from './BorrowedTable';
 
-/**
- * shows all books borrowed by user
- * @param {Object} props - props object
- * @returns {JSX}        - JSX representation of all books borrowed by user
- */
+
 const AllBorrowed = props => (
   <Row>
     <div

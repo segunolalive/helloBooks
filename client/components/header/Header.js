@@ -1,47 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Navigation from './Navigation.jsx';
-import Logo from './Logo.jsx';
+import Navigation from './Navigation';
+import Logo from './Logo';
 import toggleSidebar from './toggleSidebar';
 
-/**
- * Component for header and navigation
- * @class Header
- * @extends {Component}
+/*
+  eslint-disable
  */
 class Header extends Component {
-  /**
-   * component lifecycle hook
-   * @memberof Header
-   * @return {Undefined} - initializes DOM manipulation utility(toggleSidebar)
-   */
   componentDidMount() {
     toggleSidebar();
   }
-
-  /**
-   * component lifecycle hook
-   * @memberof Header
-   * @return {Undefined} - cleans up DOM manipulation utility(toggleSidebar)
-   */
   componentWillUnMount() {
     toggleSidebar();
   }
-
-  /**
-   * renders JSX representation of component
-   * @memberof Header
-   * @return {JSX} JSX reoprresentation of header and navigation
-   */
   render() {
     let navLinks = ['library'];
-    navLinks = this.props.isLoggedIn ?
-      ['dashboard', ...navLinks, 'history', 'logout'] :
-      ['login', 'sign up', ...navLinks];
+    this.props.isLoggedIn ?
+      navLinks = ['dashboard', ...navLinks, 'history', 'logout'] :
+      navLinks = ['login', 'sign up', ...navLinks]
 
     if (this.props.user && this.props.user.isAdmin) {
-      navLinks = ['admin', ...navLinks];
+      navLinks = ['admin' ,...navLinks]
     }
 
     return (
@@ -70,12 +51,10 @@ class Header extends Component {
       </header>
     );
   }
-}
+};
 
 Header.propTypes = {
   activeLink: PropTypes.string,
-  isLoggedIn: PropTypes.bool,
-  user: PropTypes.object,
 };
 
 const mapStateToProps = ({ authReducer }) => ({

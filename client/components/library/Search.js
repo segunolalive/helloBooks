@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { Input } from 'react-materialize';
 
 
-/**
+/*
  * displays a search Input
- * @param {Object} props react props
- * @returns {JSX} JSX element (search form)
+ * @param {object} props - react props
  */
 const Search = props =>
   (

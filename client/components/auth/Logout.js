@@ -5,17 +5,13 @@ import { Row } from 'react-materialize';
 
 import { logout } from '../../actions/logout';
 
-const Materialize = window.Materialize;
-
 /**
- * handles logging a user out
- * @class Logout
- * @extends {Component}
+ * [className description]
+ * @type {String}
  */
 class Logout extends Component {
   /**
    * [componentDidMount description]
-   * @memberof Logout
    * @return {[type]} [description]
    */
   componentDidMount() {
@@ -23,11 +19,7 @@ class Logout extends Component {
     this.props.logout();
     this.props.history.push('/');
   }
-  /**
-   * renders component to DOM
-   * @memberof Logout
-   * @return {JSX} JSX reprresentation of DOM
-   */
+
   render() {
     return (
       <Row className="center landing">

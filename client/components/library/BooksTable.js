@@ -4,12 +4,9 @@ import { Table } from 'react-materialize';
 
 import BookRow from './BookRow';
 
-/**
- * displays a table of books
- * @param {array} bookList        Array of books
- * @param {array} tableHeaders    array of table headers
- * @param {Function} borrowBook   callback function to borrow a book
- * @return {JSX}                  JSX representation of component
+
+/*
+
  */
 const BooksTable = (
   { bookList, tableHeaders, borrowBook }

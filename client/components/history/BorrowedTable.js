@@ -3,12 +3,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Button } from 'react-materialize';
 
-
-/**
- * Table of borrowed books
- * @param {Object} props props object containing books
- * @returns {JSX}        JSX representation of Books table
- */
 const BorrowedTable = (props) => {
   const rows = props.books && props.books.length ? props.books.map((book) => {
     const returned = book.BorrowedBook.returned;
@@ -22,18 +16,18 @@ const BorrowedTable = (props) => {
         <td>
           <Button
             style={{ margin: '10px' }}
-            disabled={returned}
+            disabled={returned }
             waves='light'
             onClick={() => props.returnBook(book.id)}
           >
-            Return
+          Return
           </Button>
           <Button
-            disabled={returned}
+            disabled={returned }
             waves='light'
             onClick={() => props.readBook(book.id)}
           >
-            Read
+          Read
           </Button>
         </td>
       </tr>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Col, Row } from 'react-materialize';
@@ -13,18 +12,10 @@ import BookForm from './BookForm';
 import Notifications from './Notifications';
 import AddCategoryForm from './CategoryForm';
 
-/**
- * adds or edits book
- *
- * @class AddBook
- * @extends {Component}
+/*
+eslint-disable
  */
 class Admin extends Component {
-  /**
-   * Creates an instance of AddBook.
-   * @param {any} props
-   * @memberof AddBook
-   */
   constructor(props) {
     super(props);
     this.shouldEdit = this.props.location.pathname.match(/^\/admin\/edit/);
@@ -50,25 +41,12 @@ class Admin extends Component {
     this.handleSelectCategory = this.handleSelectCategory.bind(this);
     this.handleAddCategory = this.handleAddCategory.bind(this);
   }
-
-  /**
-   * lifecycle methods called after component mounts the DOM
-   * @memberof AddBook
-   * @returns {Undefined} fetches book categories and admin notifications
-   */
-  componentDidMount() {
+  componentDidMount () {
     this.props.getBookCategories();
     this.props.fetchNotifications();
   }
 
-  /**
-   * form submission handler
-   *
-   * @param {any} event
-   * @memberof AddBook
-   * @returns {Undefined} submits form
-   */
-  handleFormSubmission(event) {
+  handleFormSubmission (event) {
     event.preventDefault();
     this.shouldEdit ?
     this.props.editBook(this.props.book.id, this.state)
@@ -84,62 +62,35 @@ class Admin extends Component {
     }));
   }
 
-  /**
-   * updates component state when form values (except select field) change
-   *
-   * @param {any} event
-   * @memberof AddBook
-   * @returns {Undefined} calls setState
-   */
-  handleFieldChange(event) {
+  handleFieldChange (event) {
     event.preventDefault();
     const formField = event.target.name;
     const data = Object.assign({}, this.state);
-    if (event.target.value.trim()) {
+    if (!!event.target.value.trim()) {
       data[formField] = event.target.value.trim();
     }
     this.setState(() => data);
   }
 
-  /**
-   * handles selection of book category
-   *
-   * @param {any} event
-   * @memberof AddBook
-   * @returns {Undefined} calls setState
-   */
-  handleSelectCategory(event) {
-    this.setState(() => ({ category: event.target.value }));
+  handleSelectCategory (event) {
+    this.setState(() => { category: event.target.value });
   }
 
-  /**
-   * handles adding a new category
-   *
-   * @param {any} event
-   * @memberof AddBook
-   * @returns {Undefined} updatea list of categories
-   */
-  handleAddCategory(event) {
+  handleAddCategory (event) {
     event.preventDefault();
-    const category = event.target.category.value.trim();
-    if (category) {
+    const category = event.target.category.value.trim()
+    if (!!category) {
       this.props.addBookCategory(category);
-      event.target.category.value = '';
+      event.target.category.value ='';
     }
     this.props.getBookCategories();
   }
 
-  /**
-   * renders component to DOM
-   *
-   * @returns {JSX} JSX representation of component
-   * @memberof AddBook
-   */
   render() {
     const text = this.shouldEdit ?
       'Edit Book Information' :
       'Add Book To Library';
-    return (this.props.user && this.props.user.isAdmin ?
+    return ( this.props.user && this.props.user.isAdmin ?
       <div>
         <Header />
         <main>
@@ -174,22 +125,7 @@ class Admin extends Component {
       </div> : <Redirect to='/dashboard' />
     );
   }
-}
-
-Admin.propTypes = {
-  user: PropTypes.object.isRequired,
-  book: PropTypes.object,
-  categories: PropTypes.array.isRequired,
-  notifications: PropTypes.array.isRequired,
-  addBook: PropTypes.func.isRequired,
-  editBook: PropTypes.func.isRequired,
-  getBookCategories: PropTypes.func.isRequired,
-  fetchNotifications: PropTypes.func.isRequired,
-  addBookCategory: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
 };
-
 
 const mapStateToProps = ({ authReducer, bookReducer, notifications }) => ({
   user: authReducer.user,

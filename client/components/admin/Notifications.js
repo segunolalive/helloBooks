@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-materialize';
 
-/**
- * displays admin notifications
- * @param {Object} props
- * @returns {JSX} JSX representation of component
- */
+
 const Notifications = (props) => {
   const notifications = props.notifications && props.notifications.map(
     notification => (
