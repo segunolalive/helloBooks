@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col } from 'react-materialize';
 
-
+/**
+ * component for borrowed Books
+ * @param {Object} props Object containing array of borrowed Books
+ * @return {JSX}         JSX representation of component
+ */
 const Borrowed = (props) => {
   const books = props.borrowedBooks && props.borrowedBooks.length ?
     props.borrowedBooks.map(book =>
@@ -10,7 +14,8 @@ const Borrowed = (props) => {
         <div className="card horizontal">
           <div className="card-image">
             <img
-              src={book.cover || 'https://segunolalive.github.io/helloBooks/templates/images/eloquentjs_cover.png'}
+              src={book.cover || 'https://segunolalive.github.io/helloBooks/' +
+              'templates/images/eloquentjs_cover.png'}
               alt={book.title || 'N/A'}
             />
           </div>
