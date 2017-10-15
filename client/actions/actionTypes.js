@@ -1,4 +1,4 @@
-import keyMirror from './KeyMirror';
+import keyMirror from './keyMirror';
 /**
  * array of action types
  * @type {Array}
@@ -31,7 +31,7 @@ const actionList = [
 
 /**
  * action types object
- * @type {Array}
+ * @type {Object}
  */
 const actionTypes = keyMirror(actionList);
 
