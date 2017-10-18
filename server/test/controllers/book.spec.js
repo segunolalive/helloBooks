@@ -177,7 +177,7 @@ describe('non-admin access', () => {
     });
   });
   describe('deleteBook', () => {
-    it('should prevent non-admin user from delete book', (done) => {
+    it('should prevent non-admin user from deleting book', (done) => {
       server
         .delete('/api/v1/books/3')
         .set('X-ACCESS-TOKEN', jwtToken)
