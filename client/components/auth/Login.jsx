@@ -10,7 +10,6 @@ import Header from '../header/Header';
 import { login } from '../../actions/login';
 import Loading from '../Loading';
 
-const Materialize = window.Materialize;
 
 /**
  * login component
@@ -54,28 +53,7 @@ class Login extends Component {
   handleLogin(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
-    this.props.login(this.state)
-      .then(
-        (data) => {
-          Materialize.toast(
-            `Welcome Back, ${data.firstName || 'Reader'}`,
-            2500,
-            'teal darken-4'
-          );
-        },
-        (error) => {
-          Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-          this.setState({ isLoading: false });
-        }
-      )
-      .catch(() => {
-        Materialize.toast(
-          'Ouch! Something went awry. It\'s probably our fault',
-          2500,
-          'red darken-4'
-        );
-        this.setState({ isLoading: false });
-      });
+    this.props.login(this.state);
   }
 
   /**
@@ -102,7 +80,7 @@ class Login extends Component {
    * @memberof Login
    */
   render() {
-    const loadingState = this.state.isLoading ?
+    const loadingState = this.props.isLoading ?
       <Loading text='logging in' /> : null;
     return (
       this.props.isLoggedIn === true ?
@@ -114,16 +92,16 @@ class Login extends Component {
               <Row>
                 <div className="container">
                   <div className="center">
-                    <div className="col m6 s12 welcome">
+                    <div className="col l6 m4 s12 welcome">
                       <h2>Hello Reader</h2>
                       <h6>Welcome home avid reader</h6>
                     </div>
-                    <div className="col m6 s12">
+                    <div className="col l6 m8 s12">
                       <form onSubmit={this.handleLogin}>
                         <div className="col s12">
                           <h5>Login</h5>
                         </div>
-                        <div className="col s12">
+                        <div className="">
                           <div className="container">
                             <div className="input-field">
                               <input type="text"
@@ -200,11 +178,11 @@ class Login extends Component {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 const mapStateToProps = ({ authReducer }) => (
-  { isLoggedIn: authReducer.isLoggedIn }
+  { isLoggedIn: authReducer.isLoggedIn, isLoading: authReducer.authLoading }
 );
-
 
 export default connect(mapStateToProps, { login })(Login);

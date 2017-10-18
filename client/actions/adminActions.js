@@ -63,6 +63,8 @@ export const bookToEdit = id => dispatch => (
   axios.get(`${API}/books/${id}`)
     .then((response) => {
       dispatch(setBookToEdit(response.data.data));
+    }, (error) => {
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
     })
     .catch((error) => {
       Materialize.toast(error, 2500, 'red darken-4');
@@ -97,6 +99,8 @@ export const addBookCategory = category => dispatch => (
   axios.post(`${API}/books/category`, { category })
     .then((response) => {
       Materialize.toast(response.data.message, 2500, 'teal darken-4');
+    }, (error) => {
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
     })
     .catch(() => {
       Materialize.toast(`Something went wrong. Ensure you're not adding

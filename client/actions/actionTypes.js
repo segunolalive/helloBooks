@@ -4,6 +4,7 @@ import keyMirror from './keyMirror';
  * @type {Array}
  */
 const actionList = [
+  'AUTH_LOADING',
   'SIGN_UP',
   'LOGIN',
   'LOGOUT',
