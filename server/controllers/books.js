@@ -335,7 +335,7 @@ export default {
                   username: req.user.username,
                 });
                 notification.save();
-                res.status(201).send({
+                res.status(200).send({
                   success: true,
                   message: `You have successfully returned ${book.title}`,
                 });

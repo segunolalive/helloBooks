@@ -119,7 +119,7 @@ describe('Book', () => {
         .send({ id: 1 })
         .expect(200)
         .end((err, res) => {
-          assert.equal(res.status, 201);
+          assert.equal(res.status, 200);
           done();
         });
     });
