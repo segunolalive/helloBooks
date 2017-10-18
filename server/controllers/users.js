@@ -16,7 +16,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {mixed}      - sends an http response
+   * @return {Object}     - returns an http response object
    */
 
   createUser(req, res) {
@@ -26,16 +26,14 @@ export default {
       where: { $or: [{ username }, { email }] }
     }).then((existingUser) => {
       if (existingUser && existingUser.username === username) {
-        res.status(409).json({
+        return res.status(409).json({
           message: 'username is taken',
         });
-        return;
       }
       if (existingUser && existingUser.email === email) {
-        res.status(409).json({
+        return res.status(409).json({
           message: 'email is associated with an account',
         });
-        return;
       }
       User.create(req.body)
         .then((user) => {
@@ -46,7 +44,7 @@ export default {
             user.isAdmin
           );
           const { id, firstName, lastName, isAdmin } = user;
-          res.status(201).json({
+          return res.status(201).json({
             token, id, firstName, lastName, isAdmin
           });
         })
@@ -65,10 +63,10 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {mixed}      - sends an http response
+   * @return {Object}     - returns an http response object
    */
   updateUserInfo(req, res) {
-    User.findById(req.user.id)
+    return User.findById(req.user.id)
       .then((user) => {
         user.update(req.body, { returning: true, plain: true })
           .then(() => res.status(200).send({
@@ -93,7 +91,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {mixed}      - sends an http response
+   * @return {Object}     - returns an http response object
    */
 
   getUser(req, res) {
@@ -101,28 +99,26 @@ export default {
     const password = req.body.password;
     return User.findOne({ where: { username } }).then((user) => {
       if (!user) {
-        res.status(400).send({
+        return res.status(400).send({
           message: 'user does not exist',
         });
-        return;
       }
       bcrypt.compare(password, user.password).then((result) => {
         if (!result) {
-          res.status(400).send({
+          return res.status(400).send({
             message: 'wrong username and password combination',
           });
-        } else {
-          const token = getJWT(
-            user.id,
-            user.email,
-            user.username,
-            user.isAdmin
-          );
-          const { id, firstName, lastName, isAdmin } = user;
-          res.status(200).json({
-            token, id, firstName, lastName, isAdmin
-          });
         }
+        const token = getJWT(
+          user.id,
+          user.email,
+          user.username,
+          user.isAdmin
+        );
+        const { id, firstName, lastName, isAdmin } = user;
+        return res.status(200).json({
+          token, id, firstName, lastName, isAdmin
+        });
       }).catch(error => res.status(500).send({
         error,
       }));
@@ -140,7 +136,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {mixed}      - sends an http rresponse
+   * @return {Object}     - returns an http rresponse object
    */
   getBorrowedBooks(req, res) {
     const id = req.params.id;
@@ -160,7 +156,7 @@ export default {
       } else {
         books = user.Books;
       }
-      res.status(200).send({
+      return res.status(200).send({
         data: books
       });
     })
