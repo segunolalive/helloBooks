@@ -76,7 +76,7 @@ router.get('/api/v1', (req, res) => res.status(200).send({
     '/api/v1/admin-notifications',
     authenticate,
     ensureIsAdmin,
-    transactionController
+    (req, res) => transactionController(req, res, false, true)
   )
   // Send a message if route does not exist
   .get('/api*', (req, res) => res.status(404).send({
