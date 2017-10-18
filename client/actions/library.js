@@ -115,6 +115,8 @@ export const deleteBook = bookId => dispatch => (
     .then((response) => {
       dispatch(deleteBookAction(bookId));
       return response;
+    }, (error) => {
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
     })
 );
 
@@ -135,7 +137,9 @@ export const getBookCategories = () => (dispatch) => {
   axios.get(`${API}/books/category`)
     .then(categories => (
       dispatch(getBookCategoriesAction(categories.data.data))
-    ));
+    ), (error) => {
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
+    });
 };
 
 

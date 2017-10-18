@@ -3,6 +3,8 @@ import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
 
+const Materialize = window.Materialize;
+
 /**
  * Action creator for getting list of all books a userr has ever borrowed
  * @param  {Array} books  array of books
@@ -22,7 +24,9 @@ export const fetchHistory = id => dispatch => (
   axios.get(`${API}/users/${id}/books`)
     .then(response => (
       dispatch(fetchHistoryAction(response.data.data))
-    ))
+    ), (error) => {
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
+    })
 );
 
 /**
@@ -39,5 +43,7 @@ export const fetchTransactionHistory = id => dispatch => (
   axios.get(`${API}/users/${id}/transactions`)
     .then(response => (
       dispatch(getTransactionHistory(response.data.notifications))
-    ))
+    ), (error) => {
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
+    })
 );
