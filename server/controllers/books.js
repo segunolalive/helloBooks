@@ -1,4 +1,4 @@
-import { Book, BorrowedBook, BookCategory } from '../models';
+import { Book, BorrowedBook, BookCategory, Notification } from '../models';
 
 /**
  * Fetch all books that match a catagory from database
@@ -265,9 +265,15 @@ export default {
               borrowed.save();
               book.total -= 1;
               book.save();
+              const notification = new Notification({
+                type: 'borrow',
+                bookTitle: book.title,
+                username: req.user.username,
+              });
+              notification.save();
               return res.status(200).send({
                 success: true,
-                message: `You have successfully borrowed ${book.title}` +
+                message: `You have successfully borrowed ${book.title} ` +
                 'again. Check your dashboard to read it',
               });
             }
@@ -311,7 +317,7 @@ export default {
     BorrowedBook.findOne({ where: { userId, bookId, returned: false } })
       .then((borrowedBook) => {
         if (borrowedBook) {
-          BorrowedBook.update({
+          return BorrowedBook.update({
             returned: true,
           }, {
             where: { userId, bookId, returned: false }
@@ -322,14 +328,19 @@ export default {
                 book.save();
                 return book;
               })
-              .then(book => (
+              .then((book) => {
+                const notification = new Notification({
+                  type: 'return',
+                  bookTitle: book.title,
+                  username: req.user.username,
+                });
+                notification.save();
                 res.status(201).send({
                   success: true,
                   message: `You have successfully returned ${book.title}`,
-                })
-              ));
+                });
+              });
           });
-          return;
         }
         return res.status(400).send({
           success: false,
