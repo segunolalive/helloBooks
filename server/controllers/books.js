@@ -14,13 +14,11 @@ const filterBooksByCategory = (req, res) => {
       const message = books.length ? '' :
         'No books match the requested category';
       return res.status(200).send({
-        success: true,
         data: books,
         message,
       });
     })
     .catch(error => res.status(500).send({
-      success: false,
       error
     }));
 };
@@ -40,17 +38,14 @@ export default {
       return BookCategory
         .create(req.body)
         .then(category => (res.status(201).send({
-          success: true,
           message:
             `Successfully added new category, ${category.category}, to Library`,
         })))
         .catch(error => res.status(500).send({
-          success: false,
           error
         }));
     }
     res.status(401).send({
-      success: false,
       message: 'Unauthorized access',
     });
   },
@@ -66,12 +61,10 @@ export default {
     BookCategory.findAll({ attributes: ['id', 'category'] })
       .then(categories => (
         res.status(200).send({
-          success: true,
           data: categories,
         })
       ))
       .catch(error => res.status(500).send({
-        success: false,
         error
       }));
   },
@@ -89,17 +82,14 @@ export default {
       return Book
         .create(req.body)
         .then(book => res.status(201).send({
-          success: true,
           message: `Successfully added ${book.title} to Library`,
           data: book,
         }))
         .catch(error => res.status(500).send({
-          success: false,
           error
         }));
     }
     res.status(401).send({
-      success: false,
       message: 'Unauthorized access',
     });
   },
@@ -118,17 +108,14 @@ export default {
       .then((book) => {
         if (!book) {
           return res.status(404).send({
-            success: false,
             message: 'Book does not exist',
           });
         }
         res.status(200).send({
-          success: true,
           data: book,
         });
       })
       .catch(error => res.status(500).send({
-        success: false,
         error
       }));
   },
@@ -149,18 +136,15 @@ export default {
       .then((books) => {
         if (!books.length) {
           return res.status(200).send({
-            success: true,
             data: [],
             message: 'Library is currently empty. Check back later'
           });
         }
         res.status(200).send({
-          success: true,
           data: books,
         });
       })
       .catch(error => res.status(500).send({
-        success: false,
         error
       }));
   },
@@ -183,17 +167,14 @@ export default {
           plain: true,
         })
         .then(book => res.status(200).send({
-          success: true,
           book: book[1],
           message: `${book[1].title} was successfully updated`
         }))
         .catch(error => res.status(500).send({
-          success: false,
           error,
         }));
     } else {
       return res.status(401).send({
-        success: false,
         message: 'Unauthorized access',
       });
     }
@@ -212,16 +193,13 @@ export default {
     if (req.user && req.user.isAdmin) {
       Book.destroy({ where: { id } })
         .then(() => res.status(200).send({
-          success: true,
           message: 'Successfully deleted book from database',
         }))
         .catch(error => res.status(500).send({
-          success: false,
           error,
         }));
     } else {
       res.status(401).send({
-        success: false,
         message: 'Unauthorized access',
       });
     }
@@ -242,13 +220,11 @@ export default {
       .then((book) => {
         if (!book) {
           return res.status(404).send({
-            success: false,
             message: 'Book not found',
           });
         }
         if (book.total <= 0) {
           return res.status(404).send({
-            success: false,
             message: 'There are no available copies of this book at this time',
           });
         }
@@ -256,7 +232,6 @@ export default {
           .then((borrowed) => {
             if (borrowed && borrowed.returned === false) {
               return res.status(403).send({
-                success: false,
                 message: 'You currently have this book.' +
                 ' Return it before trying to borrow it again',
               });
@@ -272,7 +247,6 @@ export default {
               });
               notification.save();
               return res.status(200).send({
-                success: true,
                 message: `You have successfully borrowed ${book.title} ` +
                 'again. Check your dashboard to read it',
               });
@@ -285,20 +259,17 @@ export default {
                 book.save(); // wait till book is saved before sending response
               })
               .then(() => res.status(200).send({
-                success: true,
                 message: `You have successfully borrowed ${book.title}` +
                 'again. Check your dashboard to read it',
               }))
               .catch(error => (
                 res.status(500).send({
-                  success: false,
                   error
                 })
               ));
           });
       })
       .catch(error => res.status(500).send({
-        success: false,
         error,
       }));
   },
@@ -336,20 +307,17 @@ export default {
                 });
                 notification.save();
                 res.status(201).send({
-                  success: true,
                   message: `You have successfully returned ${book.title}`,
                 });
               });
           });
         }
         return res.status(400).send({
-          success: false,
           message: 'This book is currently not on your list.' +
           ' You have either returned it or never borrowed it'
         });
       })
       .catch(error => res.status(500).send({
-        success: false,
         error,
       }));
   }

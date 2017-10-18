@@ -27,14 +27,12 @@ export default {
     }).then((existingUser) => {
       if (existingUser && existingUser.username === username) {
         res.status(409).json({
-          success: false,
           message: 'username is taken',
         });
         return;
       }
       if (existingUser && existingUser.email === email) {
         res.status(409).json({
-          success: false,
           message: 'email is associated with an account',
         });
         return;
@@ -49,16 +47,14 @@ export default {
           );
           const { id, firstName, lastName, isAdmin } = user;
           res.status(201).json({
-            success: true, token, id, firstName, lastName, isAdmin
+            token, id, firstName, lastName, isAdmin
           });
         })
         .catch(error => res.status(400).send({
-          success: false,
           error
         }));
     })
       .catch(error => res.status(500).send({
-        success: false,
         error
       }));
   },
@@ -76,18 +72,15 @@ export default {
       .then((user) => {
         user.update(req.body, { returning: true, plain: true })
           .then(() => res.status(200).send({
-            success: true,
             user,
             message: 'Your information was successfully updated',
           }), (error) => {
             res.status(500).send({
-              success: false,
               error,
             });
           });
       })
       .catch(error => res.status(500).send({
-        success: false,
         error,
       }));
   },
@@ -109,7 +102,6 @@ export default {
     return User.findOne({ where: { username } }).then((user) => {
       if (!user) {
         res.status(400).send({
-          success: false,
           message: 'user does not exist',
         });
         return;
@@ -117,7 +109,6 @@ export default {
       bcrypt.compare(password, user.password).then((result) => {
         if (!result) {
           res.status(400).send({
-            success: false,
             message: 'wrong username and password combination',
           });
         } else {
@@ -129,15 +120,13 @@ export default {
           );
           const { id, firstName, lastName, isAdmin } = user;
           res.status(200).json({
-            success: true, token, id, firstName, lastName, isAdmin
+            token, id, firstName, lastName, isAdmin
           });
         }
       }).catch(error => res.status(500).send({
-        success: false,
         error,
       }));
     }).catch(error => res.status(400).send({
-      success: false,
       error,
     }));
   },
@@ -172,12 +161,10 @@ export default {
         books = user.Books;
       }
       res.status(200).send({
-        success: true,
         data: books
       });
     })
       .catch(error => res.status(500).send({
-        success: false,
         message: 'An error occured while fetching borrowing history',
         error,
       }));

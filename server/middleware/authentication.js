@@ -45,7 +45,6 @@ const authenticate = (req, res, next) => {
     });
   } else {
     res.status(400).send({
-      success: false,
       message: 'Login to proceed',
     });
   }
