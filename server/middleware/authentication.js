@@ -11,7 +11,7 @@ dotenv.config();
 */
 const getToken = (req) => {
   const token = req.body.token || req.headers['x-access-token'] ||
-    req.headers.Authorization;
+    req.headers.Authorization.slice(7);
   return token;
 };
 
@@ -31,7 +31,14 @@ const authenticate = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.SECRET, (error, decoded) => {
       if (error) {
-        return res.status(401).json({ message: 'unauthorized accesss' });
+        if (error.name === 'TokenExpiredError') {
+          return res.status(401).json({
+            message: 'Your session has expired. Please reauthenticate'
+          });
+        }
+        return res.status(401).json({
+          message: 'unauthorized accesss. Login to continue'
+        });
       }
       req.user = decoded;
       next();
