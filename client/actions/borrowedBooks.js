@@ -23,6 +23,8 @@ export const fetchBorrowedBooks = id => (dispatch) => {
   axios.get(`${API}/users/${id}/books?returned=false`)
     .then((response) => {
       dispatch(getBorrowedBooksAction(response.data.data));
+    }, (error) => {
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
     });
 };
 
@@ -35,6 +37,8 @@ export const fetchBorrowingHistory = id => (dispatch) => {
   axios.get(`${API}/users/${id}/books`)
     .then((response) => {
       dispatch(getBorrowedBooksAction(response.data.data));
+    }, (error) => {
+      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
     });
 };
 

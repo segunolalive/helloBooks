@@ -16,13 +16,11 @@ export default (req, res, history) => {
   Notification.findAll(options)
     .then(notifications => (
       res.status(200).send({
-        success: true,
         notifications
       })
     ))
     .catch(error => (
       res.status(500).send({
-        success: false,
         error,
       })
     ));
