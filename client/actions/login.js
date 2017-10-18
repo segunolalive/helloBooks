@@ -32,7 +32,7 @@ export const login = data => dispatch => (
   axios.post(`${API}/users/signin`, data)
     .then((response) => {
       const token = response.data.token;
-      sessionStorage.setItem('token', token);
+      localStorage.setItem('token', token);
       setAuthorizationToken(token);
       dispatch(loginUser(response.data));
       dispatch(setLoginStatus(true));

@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 
 import Categories from '../library/Categories';
 
-
+/**
+ * for for adding or editing books
+ * @param {object} props
+ * @returns {JSX} JSX representation of component
+ */
 const BookForm = (props) => {
   const categories = props.categories ?
     <Categories
@@ -23,8 +27,17 @@ const BookForm = (props) => {
             id="title"
             type="text"
             name="title"
-            value={props.book ? props.book.title : ''}
+            defaultValue={props.book ? props.book.title : ''}
             placeholder="Book Title"
+            onChange={event => props.onChange(event)}
+          />
+        </div>
+        <div className="input-field">
+          <input
+            type="text"
+            name="authors"
+            defaultValue={props.book ? props.book.authors : ''}
+            placeholder="Authors (comma separated for multiple)"
             onChange={event => props.onChange(event)}
           />
         </div>
@@ -54,7 +67,7 @@ const BookForm = (props) => {
               <span>Browse</span>
               <input
                 type="file"
-                name="bookCover"
+                name="cvover"
                 accept="image/jpeg image/x-png"
               />
             </div>

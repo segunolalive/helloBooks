@@ -20,13 +20,13 @@ describe('BookCategory', () => {
     });
   });
   describe('addBookCategory', () => {
-    it('should prevent non loogged in users from adding books', (done) => {
+    it('should prevent logged out users from adding book categories', (done) => {
       server
         .post('/api/v1/books/category')
         .send({ category: 'Romance' })
-        .expect(400)
+        .expect(401)
         .end((err, res) => {
-          assert.equal(res.status, 400);
+          assert.equal(res.status, 401);
           done();
         });
     });
