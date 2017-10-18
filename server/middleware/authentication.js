@@ -23,7 +23,7 @@ const getToken = (req) => {
 * @param {Object} res - express http response object
 * @param {Function} next - function that calls the next function
 * in the middleware stack
-* @return {Undefined} sends an http response or calls the next middleware
+* @return {mixed} sends an http response or calls the next middleware
 * function
 */
 const authenticate = (req, res, next) => {
@@ -44,7 +44,7 @@ const authenticate = (req, res, next) => {
       next();
     });
   } else {
-    res.status(400).send({
+    return res.status(401).send({
       message: 'Login to proceed',
     });
   }
