@@ -17,11 +17,16 @@ class UpdateProfile extends Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+
   }
   /**
    * handles form submission
    * @param {Object} event DOM onSubmit event
-   * @return {mixed} sends a network request
+   * @return {Undefined}   sends a network request
    */
   handleSubmit(event) {
     event.preventDefault();
