@@ -23,6 +23,9 @@ module.exports = {
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, 'client'),
   },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   module: {
     rules: [
       {
@@ -30,7 +33,7 @@ module.exports = {
         exclude: ['node_modules', 'server', 'test', 'dist'],
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015'],
+          presets: ['react', 'env'],
         },
       },
       {

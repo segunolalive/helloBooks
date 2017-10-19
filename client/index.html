@@ -10,20 +10,37 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="shortcut icon" href="/favicon.ico">
     <title>Hello Books</title>
+    <style media="screen">
+      #still-loading {
+        padding-top: 30vh;
+        text-align: center;
+        font-size: 70px;
+        font-weight: bold;
+        -webkit-animation: beat 1s ease-in infinite;
+        -moz-animation: beat 1s ease-in infinite;
+        animation: beat 1s ease-in infinite;
+        animation-direction: alternate;
+      }
+      @-webkit-keyframes beat {
+        0% {color: #ffffff;}
+        100% {color: #011b33;}
+      }
+      @keyframes beat {
+        0% {color: #ffffff;}
+        100% {color: #011b33;}
+      }
+    </style>
   </head>
   <body>
-
     <div id="root">
-        <div style="padding-top: 35vh; text-align: center; color: #011b33;">
-            <h2 style="font-weight: bold;">
-                Welcome To Hello Books
-            </h2>
-            <noscript>
-              <h5 style="font-weight: bold;">
-                  You need to enable JavaScript to run this app.
-              </h5>
-            </noscript>
+        <div id="still-loading">
+          <p>Hello Books</p>
         </div>
+        <noscript>
+          <h5 class="center" style="font-weight: bold;">
+              You need to enable JavaScript to run this app.
+          </h5>
+        </noscript>
     </div>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>

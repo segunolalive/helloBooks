@@ -1,15 +1,24 @@
+/**
+ * saves application state to disk
+ * @param  {Object} state application state
+ * @return {undefined}    wites to disk
+ */
 export const saveState = (state) => {
   try {
     const serializedState = JSON.stringify(state);
-    sessionStorage.setItem('state', serializedState);
+    localStorage.setItem('state', serializedState);
   } catch (e) {
     console.log(e);
   }
 };
 
+/**
+ * loads state from disk
+ * @return {Object} State Object
+ */
 export const loadState = () => {
   try {
-    const serializedState = sessionStorage.getItem('state');
+    const serializedState = localStorage.getItem('state');
     if (serializedState === null) {
       return undefined;
     }

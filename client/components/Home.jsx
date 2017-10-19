@@ -6,6 +6,11 @@ import { connect } from 'react-redux';
 import Header from './header/Header';
 
 
+/**
+ * Landing page
+ * @param {Object} props Object containing isLoggedIn key
+ * @returns {JSX}        JSX representation of the the landing page
+ */
 const Home = props => (
   props.isLoggedIn ? <Redirect to='/dashboard' /> :
     <div>

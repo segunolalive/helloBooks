@@ -4,6 +4,11 @@ import { Button } from 'react-materialize';
 import { Link } from 'react-router-dom';
 
 
+/**
+ * displays a table row of books
+ * @param {object} props
+ * @return {JSX} JSX element (table row)
+ */
 const BookRow = props => (
   <tr>
     <td>{props.cover || 'N/A'}</td>
