@@ -35,7 +35,6 @@ const shouldBorrow = (req, res, next) => {
       if (canBorrow) next();
       else {
         res.status(403).send({
-          success: false,
           message: `You have reached your borrowing limit.
             Return some books or upgrade your account type to borrow more`,
         });

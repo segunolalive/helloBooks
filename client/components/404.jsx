@@ -3,9 +3,7 @@ import Header from './header/Header';
 
 const notFound = () => (
   <div>
-    <Header
-      navLinks={['dashboard', 'history', 'library']}
-    />
+    <Header />
     <div className="center landing">
       <h1 style={{ fontWeight: 'bold' }}>404</h1>
       <h2>Not Found</h2>

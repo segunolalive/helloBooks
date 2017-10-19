@@ -1,6 +1,10 @@
 import keyMirror from './keyMirror';
-
+/**
+ * array of action types
+ * @type {Array}
+ */
 const actionList = [
+  'AUTH_LOADING',
   'SIGN_UP',
   'LOGIN',
   'LOGOUT',
@@ -26,7 +30,10 @@ const actionList = [
   'GET_ADMIN_NOTIFICATIONS',
 ];
 
-
+/**
+ * action types object
+ * @type {Object}
+ */
 const actionTypes = keyMirror(actionList);
 
 export default actionTypes;
