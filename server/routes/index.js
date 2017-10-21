@@ -4,7 +4,7 @@ import userController from '../controllers/users';
 import bookController from '../controllers/books';
 import transactionController from '../controllers/transactionController';
 
-import authenticate from '../middleware/authentication';
+import authenticate from '../middleware/authenticate';
 import shouldBorrow from '../middleware/maxBorrowed';
 import ensureIsAdmin from '../middleware/ensureIsAdmin';
 
