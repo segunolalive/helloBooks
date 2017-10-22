@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Col, Row } from 'react-materialize';
+import { Redirect } from 'react-router-dom';
 
 import Header from '../header/Header';
+import { updateProfile } from '../../actions/updateProfile';
 
 /**
  * Component to update user profile
@@ -12,16 +14,34 @@ import Header from '../header/Header';
 class UpdateProfile extends Component {
   /**
    * constructs instance of Component
+   * @param {Object} props
    * @return {Object} JSX component
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstName: this.props.user.firstName,
+      lastName: this.props.user.lastName,
+      password: '',
+      newPassword: '',
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
+  /**
+   * updates component state with changes in the form fields
+   * @param  {any} event    DOM change event
+   * @return {Undefined }   updates component state
+   */
   handleChange(event) {
-
+    event.preventDefault();
+    const formField = event.target.name;
+    const user = { ...this.state };
+    if (event.target.value.trim()) {
+      user[formField] = event.target.value.trim();
+      this.setState(() => user);
+    }
   }
   /**
    * handles form submission
@@ -30,6 +50,8 @@ class UpdateProfile extends Component {
    */
   handleSubmit(event) {
     event.preventDefault();
+    this.props.updateProfile(this.state);
+    this.setState(() => ({ redirect: true }));
   }
 
   /**
@@ -37,7 +59,8 @@ class UpdateProfile extends Component {
    * @return {Object} JSX element
    */
   render() {
-    return (
+    return (this.state.redirect === true ?
+      <Redirect to='/dashboard' /> :
       <div>
         <Header
           activeLink='dashboard'
@@ -55,15 +78,17 @@ class UpdateProfile extends Component {
                 <div className="input-field">
                   <h6>First Name:</h6>
                   <input
-                    id="firstName"
-                    defaultValue={this.props.user.firstName || ''}
+                    onChange={this.handleChange}
+                    name="firstName"
+                    defaultValue={this.state.firstName || ''}
                   />
                 </div>
                 <div className="input-field">
                   <h6>Last Name:</h6>
                   <input
-                    id="lastName"
-                    defaultValue={this.props.user.lastName || ''}
+                    onChange={this.handleChange}
+                    name="lastName"
+                    defaultValue={this.state.lastName || ''}
                   />
                 </div>
                 <h6 className="red-text darken-4" >
@@ -73,17 +98,19 @@ class UpdateProfile extends Component {
                 <div className="input-field">
                   <h6>Current Password:</h6>
                   <input
-                    id=""
+                    onChange={this.handleChange}
+                    name="password"
                     type="password"
-                    defaultValue=""
+                    defaultValue={this.state.currentPassword}
                   />
                 </div>
                 <div className="input-field">
                   <h6>New Password:</h6>
                   <input
+                    onChange={this.handleChange}
                     type="password"
-                    id="newPassword"
-                    defaultValue=""
+                    name="newPassword"
+                    defaultValue={this.state.newPassword}
                   />
                 </div>
                 <div className="input-field">
@@ -105,10 +132,11 @@ class UpdateProfile extends Component {
 
 UpdateProfile.propTypes = {
   user: PropTypes.object.isRequired,
+  updateProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ authReducer }) => ({
   user: authReducer.user,
 });
 
-export default connect(mapStateToProps)(UpdateProfile);
+export default connect(mapStateToProps, { updateProfile })(UpdateProfile);
