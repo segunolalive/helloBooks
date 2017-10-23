@@ -6,7 +6,7 @@ import { transporter, mailOptions } from './config/mail';
 const Op = sequelize.Op;
 const timeLimit = borrowingDuration * 1000 * 60 * 60 * 24;
 
-const defaulters = () => {
+const defaulters = () => (
   BorrowedBook.findAll({
     where: {
       returned: false,
@@ -18,7 +18,7 @@ const defaulters = () => {
   })
     .then((borrowedBooks) => {
       const ids = borrowedBooks.map(book => book.userId);
-      User.findAll({
+      return User.findAll({
         where: {
           id: { [Op.in]: ids }
         },
@@ -33,11 +33,15 @@ const defaulters = () => {
            'exceeded the borrowing duration for one of our books and would' +
            'start getting billed for the book.</h3>';
           transporter.sendMail(mailOptions(to, bcc, subject, html));
-        }, error => process.stdout.write(error.stack));
+          process.exit(0);
+        }, (error) => {
+          process.stdout.write(error.stack);
+          process.exit(0);
+        });
     }).catch((error) => {
       process.stdout.write(error.stack);
       process.exit(0);
-    });
-};
+    })
+);
 
 defaulters();
