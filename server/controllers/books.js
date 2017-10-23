@@ -257,6 +257,12 @@ export default {
               .then(() => {
                 book.total -= 1;
                 book.save(); // wait till book is saved before sending response
+                const notification = new Notification({
+                  type: 'borrow',
+                  bookTitle: book.title,
+                  username: req.user.username,
+                });
+                notification.save();
               })
               .then(() => res.status(200).send({
                 message: `You have successfully borrowed ${book.title}` +

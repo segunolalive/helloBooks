@@ -13,8 +13,7 @@ import BookDetail from './library/BookDetail';
 import Dashboard from './dashboard/Dashboard';
 import Logout from './auth/Logout';
 // import ForgotPassword from './forgotPassword';
-//
-// import UpdateProfile from './dashboard/UpdateProfile';
+import UpdateProfile from './dashboard/UpdateProfile';
 
 import mock from './mock';
 
@@ -28,7 +27,7 @@ import mock from './mock';
 class App extends Component {
   /**
    * Creates an instance of App.
-   * @param {Object} props 
+   * @param {Object} props
    * @memberof App
    */
   constructor(props) {
@@ -38,7 +37,7 @@ class App extends Component {
   }
   /**
    * renders app to DOM
-   * 
+   *
    * @returns {JSX} JSX representation of component
    * @memberof App
    */
@@ -49,7 +48,7 @@ class App extends Component {
           <Switch>
             <Route path='/' exact component={Home} />
             <Route path='/dashboard' component={Dashboard} />
-            {/* <Route path='/update-profile'component={UpdateProfile} /> */}
+            <Route path='/update-profile'component={UpdateProfile} />
             <Route path='/login' component={Login} />
             <Route path='/logout' component={Logout} />
             <Route path='/signup' component={SignUp} />

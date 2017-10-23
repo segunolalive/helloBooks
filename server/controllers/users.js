@@ -69,10 +69,23 @@ export default {
     return User.findById(req.user.id)
       .then((user) => {
         user.update(req.body, { returning: true, plain: true })
-          .then(() => res.status(200).send({
-            user,
-            message: 'Your information was successfully updated',
-          }), (error) => {
+          .then(() => {
+            const token = getJWT(
+              user.id,
+              user.email,
+              user.username,
+              user.isAdmin
+            );
+            const { id, firstName, lastName, isAdmin } = user;
+            return res.status(200).json({
+              token,
+              id,
+              firstName,
+              lastName,
+              isAdmin,
+              message: 'Your information was successfully updated',
+            });
+          }, (error) => {
             res.status(500).send({
               error,
             });
