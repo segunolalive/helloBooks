@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-materialize';
+import moment from 'moment';
 
 /**
  * displays admin notifications
@@ -16,7 +17,7 @@ const Notifications = (props) => {
       >
         <p>
           {notification.bookTitle} {notification.type}ed
-          by {notification.username}
+          by {notification.username} {moment(notification.createdAt).fromNow()}
         </p>
       </Col>
     )

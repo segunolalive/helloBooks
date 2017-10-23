@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Col, Row } from 'react-materialize';
 
-import Header from '../header/Header';
+import Header from '../Header';
 import Borrowed from './Borrowed';
 import ProfileInfo from './ProfileInfo';
 import SuggestedBooks from './SuggestedBooks';
@@ -55,9 +55,9 @@ class Dashboard extends Component {
   /**
    * handler for returning book
    *
-   * @param {Integer}     bookId book id
+   * @param {Integer} bookId book id
    * @memberof Dashboard
-   * @returns {Undefined} calls return book api
+   * @returns {Undefined}    calls return book api
    */
   handleReturnBook(bookId) {
     this.props.returnBook(this.props.user.id, bookId);

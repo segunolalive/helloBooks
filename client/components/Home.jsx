@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Row } from 'react-materialize';
 import { connect } from 'react-redux';
-import Header from './header/Header';
+import Header from './Header';
 
 
 /**

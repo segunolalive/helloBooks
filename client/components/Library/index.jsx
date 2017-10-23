@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Col, Row } from 'react-materialize';
 
-import Header from '../header/Header';
+import Header from '../Header';
 import BooksTable from './BooksTable';
 import Categories from './Categories';
 import Search from './Search';

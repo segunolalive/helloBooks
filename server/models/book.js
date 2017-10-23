@@ -22,6 +22,9 @@ export default (sequelize, DataTypes) => {
     bookFile: {
       type: DataTypes.STRING,
     },
+    categoryId: {
+      type: DataTypes.INTEGER,
+    }
   });
   Book.associate = (models) => {
     Book.belongsToMany(models.User, {
@@ -34,7 +37,7 @@ export default (sequelize, DataTypes) => {
   Book.associate = (models) => {
     Book.belongsTo(models.BookCategory, {
       as: 'bookCategory',
-      foreignKey: 'BookCategory',
+      foreignKey: 'id',
     });
   };
   return Book;

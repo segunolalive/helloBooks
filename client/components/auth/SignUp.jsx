@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { Row } from 'react-materialize';
 import { connect } from 'react-redux';
+import GoogleLogin from 'react-google-login';
+import FaGoogle from 'react-icons/lib/fa/google';
 
-import Header from '../header/Header';
+import Header from '../Header';
 import { signUp } from '../../actions/signup';
 import Loading from '../Loading';
 
-const Materialize = window.Materialize;
 
 /**
  * Sign up component
@@ -33,7 +34,25 @@ class SignUp extends Component {
     };
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleGoogleSignUp = this.handleGoogleSignUp.bind(this);
   }
+
+  /**
+   * handler for google sign in
+   * @param {any} response
+   * @memberof Login
+   * @returns {Undefined}  redirects to dashboard
+   */
+  responseGoogle(response) {
+    const googleProfile = response.getBasicProfile();
+    const email = googleProfile.getEmail();
+    const id = googleProfile.getId();
+    const username = email.slice(0, email.indexOf('@'));
+    const firstName = googleProfile.getGivenName();
+    const lastName = googleProfile.getFamilyName();
+    console.log(username, firstName, lastName, email);
+  }
+
 
   /**
    * sign up handler
@@ -43,29 +62,17 @@ class SignUp extends Component {
    */
   handleSignUp(event) {
     event.preventDefault();
-    this.setState({ isLoading: true });
-    this.props.signUp(this.state)
-      .then(
-        () => {
-          Materialize.toast(
-            'Welcome To Hello Books. This is your dashboard',
-            2500,
-            'teal darken-4'
-          );
-        },
-        (error) => {
-          Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-          this.setState({ isLoading: false });
-        }
-      )
-      .catch(() => {
-        Materialize.toast(
-          'Something terrible happened. We\'ll fix that',
-          2500,
-          'red darken-4'
-        );
-        this.setState({ isLoading: false });
-      });
+    this.props.signUp(this.state);
+  }
+
+  /**
+   * google login handler
+   * @param  {Object} response google auth Object
+   * @return {Undefined}       dispatches signup action action
+   */
+  handleGoogleSignUp(response) {
+    const googleProfile = response.profileObj;
+    this.props.signUp(googleProfile);
   }
 
   /**
@@ -92,30 +99,28 @@ class SignUp extends Component {
    * @memberof SignUp
    */
   render() {
-    const loadingState = this.state.isLoading ?
+    const loadingState = this.props.isLoading ?
       <Loading text='Creating your account' /> : null;
     return (
       this.props.isLoggedIn === true ?
         <Redirect to='/dashboard' /> :
         <div>
-          <Header
-            navLinks={['login', 'sign up', 'library']}
-          />
+          <Header />
           <main>
             <section className="account">
               <Row>
                 <div className="container">
                   <div className="center">
-                    <div className="col m6 s12 welcome">
+                    <div className="col l6 m4 s12 welcome">
                       <h2>Hello Reader</h2>
                       <h6>Welcome home avid reader</h6>
                     </div>
-                    <div className="col m6 s12">
+                    <div className="col l6 m8 s12">
                       <form onSubmit={this.handleSignUp}>
                         <div className="col s12">
                           <h5>Sign Up</h5>
                         </div>
-                        <div className="col s12">
+                        <div className="">
                           <div className="container">
                             <div className="input-field">
                               <input
@@ -189,6 +194,23 @@ class SignUp extends Component {
                                 style={{ width: '100%' }}
                               />
                             </div>
+                            <div className="input-field">
+                              <GoogleLogin
+                                clientId={GOOGLE_CLIENT_ID}
+                                onSuccess={this.handleGoogleSignUp}
+                                onFailure={this.handleGoogleSignUp}
+                                className="btn red darken-4"
+                                style={{ width: '100%' }}
+                              >
+                                <FaGoogle
+                                  style={{
+                                    color: '#032442',
+                                    fontSize: '2rem',
+                                  }}
+                                />
+                                <span> Sign Up with Google</span>
+                              </GoogleLogin>
+                            </div>
                             <div className="">
                               <p>Already have an account?
                                 <Link to="/login"> Login</Link>
@@ -211,10 +233,11 @@ class SignUp extends Component {
 SignUp.propTypes = {
   isLoggedIn: PropTypes.bool,
   signUp: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 const mapStateToProps = ({ authReducer }) => (
-  { isLoggedIn: authReducer.isLoggedIn }
+  { isLoggedIn: authReducer.isLoggedIn, isLoading: authReducer.authLoading }
 );
 
 export default connect(mapStateToProps, { signUp })(SignUp);

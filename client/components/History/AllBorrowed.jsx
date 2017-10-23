@@ -12,20 +12,22 @@ import BorrowedTable from './BorrowedTable';
  */
 const AllBorrowed = props => (
   <Row>
-    <div
-      className="col s12"
-      style={{ marginRight: '10px' }}>
-      <Link
-        to="/history/transactions"
-        className="btn blue darken-4 right"
-      >
-        View Transaction history
-      </Link>
+    <div className="">
+      <div
+        className="col s12"
+        style={{ marginRight: '10px' }}>
+        <Link
+          to="/history/transactions"
+          className="btn blue darken-4 right"
+        >
+          View Transaction history
+        </Link>
+      </div>
+      <div className="col s12 center">
+        <h4 className="bold-text">Your Borrowed Books</h4>
+      </div>
+      <BorrowedTable books={props.books} />
     </div>
-    <div className="col s12 center">
-      <h4 className="">Your Borrowed Books</h4>
-    </div>
-    <BorrowedTable books={props.books} />
   </Row>
 );
 
