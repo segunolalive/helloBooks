@@ -55,9 +55,9 @@ class Dashboard extends Component {
   /**
    * handler for returning book
    *
-   * @param {Integer}     bookId book id
+   * @param {Integer} bookId book id
    * @memberof Dashboard
-   * @returns {Undefined} calls return book api
+   * @returns {Undefined}    calls return book api
    */
   handleReturnBook(bookId) {
     this.props.returnBook(this.props.user.id, bookId);

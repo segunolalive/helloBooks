@@ -5,7 +5,11 @@ import { loginUser } from './login';
 
 const Materialize = window.Materialize;
 
-
+/**
+ * action creator for updating user information
+ * @param  {Object} profile profile data
+ * @return {Thunk}          function that dispatches an action
+ */
 export const updateProfile = profile => (dispatch) => {
   axios.put(`${API}/users`, profile)
     .then((response) => {
@@ -18,7 +22,7 @@ export const updateProfile = profile => (dispatch) => {
       );
     }, (error) => {
       Materialize.toast(
-        error,
+        error.response.data.message,
         2500,
         'red darken 4'
       );
