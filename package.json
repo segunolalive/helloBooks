@@ -87,7 +87,7 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",
-    "sequelize": "^4.4.2",
+    "sequelize": "^4.16.0",
     "sequelize-cli": "^2.8.0",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
