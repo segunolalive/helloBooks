@@ -4,9 +4,10 @@ import userController from '../controllers/users';
 import bookController from '../controllers/books';
 import transactionController from '../controllers/transactionController';
 
-import authenticate from '../middleware/authentication';
+import authenticate from '../middleware/authenticate';
 import shouldBorrow from '../middleware/maxBorrowed';
 import ensureIsAdmin from '../middleware/ensureIsAdmin';
+import validateInput from '../middleware/validateInput';
 
 
 const router = express.Router();
@@ -24,6 +25,7 @@ router.get('/api/v1', (req, res) => res.status(200).send({
   .put(
     '/api/v1/users',
     authenticate,
+    validateInput.updateUser, 
     userController.updateUserInfo
   )
   .post(

@@ -9,7 +9,7 @@ const Materialize = window.Materialize;
 
 /**
  * @param {Object} user - user data
- * @returns {Object} - Object containing action type and user
+ * @returns {Object}    - Object containing action type and user
  */
 export const loginUser = user => ({
   type: actionTypes.LOGIN,

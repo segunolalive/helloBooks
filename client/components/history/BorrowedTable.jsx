@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Button } from 'react-materialize';
 
 
 /**
@@ -18,43 +17,36 @@ const BorrowedTable = (props) => {
         <td>{book.title || 'N/A'}</td>
         <td>{book.authors || 'N/A'}</td>
         <td>{moment(book.createdAt).format('LLLL') || 'N/A'}</td>
-        <td>{returned ? 'Returned' : 'Pending'}</td>
-        <td>
-          <Button
-            style={{ margin: '10px' }}
-            disabled={returned}
-            waves='light'
-            onClick={() => props.returnBook(book.id)}
-          >
-            Return
-          </Button>
-          <Button
-            disabled={returned}
-            waves='light'
-            onClick={() => props.readBook(book.id)}
-          >
-            Read
-          </Button>
-        </td>
+        <td>{returned ? 'Returned' : 'Unreturned'}</td>
       </tr>
     );
   }) : null;
   return (rows ?
-    <table className="centered bordered" style={{ margin: '30px' }}>
-      <thead>
-        <tr>
-          <th>Cover</th>
-          <th>Title</th>
-          <th>Authors</th>
-          <th>Date Borrowed</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows}
-      </tbody>
-    </table> : null
+    <div className="row">
+      <div className="center" style={{ width: '95%', margin: 'auto' }}>
+        <table className="centered bordered history-table">
+          <thead>
+            <tr>
+              <th>Cover</th>
+              <th>Title</th>
+              <th>Authors</th>
+              <th>Date Borrowed</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows}
+          </tbody>
+        </table>
+      </div>
+    </div> :
+    <div className="row">
+      <div className="container">
+        <h3 className="center bold-text" style={{ color: '#aaa' }}>
+          You have no borrowing history. Head over to the library to get started
+        </h3>
+      </div>
+    </div>
   );
 };
 
