@@ -18,6 +18,7 @@ router.get('/api/v1', (req, res) => res.status(200).send({
   // Unprotected routes
   .post('/api/v1/users/signup', userController.createUser)
   .post('/api/v1/users/signin', userController.getUser)
+  .post('/api/v1/users/forgot-password', userController.passwordResetmail)
   .get('/api/v1/books/category', bookController.getBookCategories)
   .get('/api/v1/books/:id', bookController.getBook)
   .get('/api/v1/books', bookController.getAllBooks)
@@ -25,7 +26,7 @@ router.get('/api/v1', (req, res) => res.status(200).send({
   .put(
     '/api/v1/users',
     authenticate,
-    validateInput.updateUser, 
+    validateInput.updateUser,
     userController.updateUserInfo
   )
   .post(

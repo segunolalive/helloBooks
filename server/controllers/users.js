@@ -178,4 +178,18 @@ export default {
         error,
       }));
   },
+
+  passwordResetmail(req, res) {
+    User.count({ where: { email: req.body.email } })
+      .then((count) => {
+        if (!count) {
+          return res.status(404).send({
+            message: 'Email does not match any account in our records',
+          });
+        }
+        res.status(200).send({
+          message: 'An password reset link has been sent to your email',
+        });
+      });
+  }
 };
