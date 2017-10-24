@@ -33,14 +33,14 @@ export const fetchBorrowedBooks = id => (dispatch) => {
 * @param {object} id - user id
 * @returns {any} - dispatches action with all books ever borrowed by user
 */
-export const fetchBorrowingHistory = id => (dispatch) => {
+export const fetchBorrowingHistory = id => dispatch => (
   axios.get(`${API}/users/${id}/books`)
     .then((response) => {
       dispatch(getBorrowedBooksAction(response.data.data));
     }, (error) => {
       Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-    });
-};
+    })
+);
 
 /**
  * @param  {integer} id book id

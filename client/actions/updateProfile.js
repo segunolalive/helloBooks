@@ -10,7 +10,7 @@ const Materialize = window.Materialize;
  * @param  {Object} profile profile data
  * @return {Thunk}          function that dispatches an action
  */
-export const updateProfile = profile => (dispatch) => {
+export const updateProfile = profile => dispatch => (
   axios.put(`${API}/users`, profile)
     .then((response) => {
       const token = response.data.token;
@@ -33,5 +33,5 @@ export const updateProfile = profile => (dispatch) => {
         2500,
         'red darken 4'
       );
-    });
-};
+    })
+);

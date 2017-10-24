@@ -21,7 +21,7 @@ export const editBookAction = book => ({
  * @param  {Object} data book data with with to update database
  * @return {Object}      dispatches an action to the redux store
  */
-export const editBook = (id, data) => dispatch => (
+export const editBook = (id, data) => () => (
   axios.put(`${API}/books/${id}`, data)
     .then((response) => {
       Materialize.toast(response.data.message, 2500, 'teal darken-4');
@@ -75,9 +75,9 @@ export const bookToEdit = id => dispatch => (
 /**
  * add new book to database
  * @param  {Object} data book data
- * @return {Object}      dispatches an action to the redux store
+ * @return {Object}      sends nextwork request
  */
-export const addBook = data => dispatch => (
+export const addBook = data => () => (
   axios.post(`${API}/books`, data)
     .then((response) => {
       Materialize.toast(response.data.message, 2500, 'teal darken-4');
@@ -93,9 +93,9 @@ export const addBook = data => dispatch => (
 /**
  * het book Detail
  * @param  {Object} category new book category
- * @return {Object}          dispatches an action to the redux store
+ * @return {Object}          sends nextwork request
  */
-export const addBookCategory = category => dispatch => (
+export const addBookCategory = category => () => (
   axios.post(`${API}/books/category`, { category })
     .then((response) => {
       Materialize.toast(response.data.message, 2500, 'teal darken-4');

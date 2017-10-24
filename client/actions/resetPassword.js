@@ -9,7 +9,7 @@ const Materialize = window.Materialize;
  * @param {String} email  user email
  * @returns {Undefined}   sends an http request
  */
-const resetPassword = email => dispatch => (
+const resetPassword = email => () => (
   axios.post(`${API}/users/forgot-password`, { email })
     .then(
       (response) => {
