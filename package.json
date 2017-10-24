@@ -4,6 +4,8 @@
   "description": "A simple library app",
   "main": "dist/server/app.js",
   "scripts": {
+    "job": "babel-node server/cronjob",
+    "cron": "node dist/server/cronjob",
     "serve": "babel-node server/bin/www.js",
     "start": "node dist/server/bin/www.js",
     "start:client": "webpack-dev-server --hot --config ./webpack.dev.config.js",
