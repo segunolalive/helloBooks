@@ -21,6 +21,11 @@ import resetPassword from '../../actions/resetPassword';
  * @extends {Component}
  */
 class Auth extends Component {
+  /**
+   * Creates an instance of Auth.
+   * @param {any} props 
+   * @memberof Auth
+   */
   constructor(props) {
     super(props);
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
