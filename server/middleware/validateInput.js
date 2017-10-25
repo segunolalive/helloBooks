@@ -1,4 +1,4 @@
-import { check } from 'express-validator/check';
+import { check, validationResult } from 'express-validator/check';
 import { sanitize } from 'express-validator/filter';
 import bcrypt from 'bcrypt';
 
@@ -74,5 +74,14 @@ export default {
       delete req.body.password;
       next();
     }
+  },
+  requestPasswordReset(req, res, next) {
+    trimFields(req.body);
+    deleteEmptyFields(req.body);
+    if (!req.body.email) {
+      return res.status(400).send({ message: 'Email cannot be empty' });
+    }
+    check('email', 'Provide a valid email').isEmail().normalizeEmail();
+    next();
   }
 };

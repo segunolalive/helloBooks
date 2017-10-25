@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 
 import { User, Book } from '../models';
 import { getJWT } from '../helpers/helpers';
+import { transporter, mailOptions } from '../config/mail';
+import { PORT } from '../bin/www';
 
 dotenv.config();
 
@@ -41,7 +43,8 @@ export default {
             user.id,
             user.email,
             user.username,
-            user.isAdmin
+            user.isAdmin,
+            user.membershipType
           );
           const { id, firstName, lastName, isAdmin } = user;
           return res.status(201).json({
@@ -74,7 +77,8 @@ export default {
               user.id,
               user.email,
               user.username,
-              user.isAdmin
+              user.isAdmin,
+              user.membershipType
             );
             const { id, firstName, lastName, isAdmin } = user;
             return res.status(200).json({
@@ -126,7 +130,8 @@ export default {
           user.id,
           user.email,
           user.username,
-          user.isAdmin
+          user.isAdmin,
+          user.membershipType
         );
         const { id, firstName, lastName, isAdmin } = user;
         return res.status(200).json({
@@ -180,16 +185,39 @@ export default {
   },
 
   passwordResetmail(req, res) {
-    User.count({ where: { email: req.body.email } })
-      .then((count) => {
-        if (!count) {
+    return User.findOne({
+      where: { email: req.body.email },
+      attributes: ['id', 'email'],
+      plain: true,
+    })
+      .then((user) => {
+        if (!user) {
           return res.status(404).send({
             message: 'Email does not match any account in our records',
           });
         }
-        res.status(200).send({
-          message: 'An password reset link has been sent to your email',
-        });
-      });
+        const BASE_URL = process.env.NODE_ENV === 'development' ?
+          `http://localhost:${PORT}` : 'https://segunolalive-hellobooks.com';
+        const token = getJWT(user.id, null, null, null, null, '1h');
+        const to = user.email;
+        const bcc = null;
+        const subject = 'no-reply: Password reset link';
+        const html = `<h3>Use this link to reset your password.</h3>
+          ${BASE_URL}/reset-password/${token}`;
+        transporter.sendMail(mailOptions(to, bcc, subject, html),
+          (err) => {
+            if (err) {
+              return res.status(500).send({
+                message: 'An error occured while sending you a link. Try again',
+              });
+            }
+            return res.status(200).send({
+              message: 'An password reset link has been sent to your email',
+            });
+          });
+      })
+      .catch(() => res.status(500).send({
+        message: 'An error occured while sending you a link. Try again',
+      }));
   }
 };
