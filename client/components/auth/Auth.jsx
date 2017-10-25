@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Row } from 'react-materialize';
-import GoogleLogin from 'react-google-login';
-import FaGoogle from 'react-icons/lib/fa/google';
+// import { Redirect } from 'react-router-dom';
 
-import Header from '../header/Header';
-import ForgotPassword from './ForgotPassword';
-
-import { login } from '../../actions/login';
-import Loading from '../Loading';
-
-import resetPassword from '../../actions/resetPassword';
+import requestResetPassword from '../../actions/requestResetPassword';
+import ForgotPasswordForm from './ForgotPasswordForm';
 
 
 /**
@@ -23,11 +15,12 @@ import resetPassword from '../../actions/resetPassword';
 class Auth extends Component {
   /**
    * Creates an instance of Auth.
-   * @param {any} props 
+   * @param {any} props
    * @memberof Auth
    */
   constructor(props) {
     super(props);
+    this.state = { loading: false };
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
   }
   /**
@@ -40,7 +33,9 @@ class Auth extends Component {
   handleForgotPassword(event) {
     event.preventDefault();
     const email = event.target.email.value;
-    this.props.resetPassword(email);
+    this.setState(() => ({ loading: true }));
+    this.props.requestResetPassword(email)
+      .then(() => this.setState(() => ({ loading: false })));
   }
   /**
    * renders component to DOM
@@ -50,14 +45,18 @@ class Auth extends Component {
   render() {
     return (
       <div>
-        <ForgotPassword handleSubmit={this.handleForgotPassword} />
+        <ForgotPasswordForm
+          handleSubmit={this.handleForgotPassword}
+          loading={this.state.loading}
+          buttonText={this.state.loading ? 'sending your link' : 'send'}
+        />
       </div>
     );
   }
 }
 
 Auth.propTypes = {
-  resetPassword: PropTypes.func.isRequired,
+  requestResetPassword: PropTypes.func.isRequired,
 };
 
-export default connect(null, { resetPassword })(Auth);
+export default connect(null, { requestResetPassword })(Auth);
