@@ -70,18 +70,23 @@ class Admin extends Component {
    */
   handleFormSubmission(event) {
     event.preventDefault();
-    this.shouldEdit ?
-    this.props.editBook(this.props.book.id, this.state)
-      .then(() => this.props.history.push('/library')) :
-    this.props.addBook(this.state);
-    this.setState(() => ({
-      title: '',
-      description: '',
-      category: '',
-      total: '',
-      cover: '',
-      bookFile: '',
-    }));
+    if (this.shouldEdit) {
+      this.props.editBook(this.props.book.id, this.state)
+        .then(() => this.props.history.push('/library'));
+    } else {
+      this.props.addBook(this.state)
+        .then(() => (
+          this.setState(() => ({
+            title: '',
+            authors: '',
+            description: '',
+            category: '',
+            total: '',
+            cover: '',
+            bookFile: '',
+          }))
+        ));
+    }
   }
 
   /**
@@ -94,7 +99,7 @@ class Admin extends Component {
   handleFieldChange(event) {
     event.preventDefault();
     const formField = event.target.name;
-    const data = Object.assign({}, this.state);
+    const data = { ...this.state };
     if (event.target.value.trim()) {
       data[formField] = event.target.value.trim();
     }
