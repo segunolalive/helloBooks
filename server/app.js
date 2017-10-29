@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.static(path.join(__dirname, 'client/static')));
 
-app.use(routes);
+app.use('/api/v1', routes);
 
 app.get('/bundle.js', (req, res) => res.sendFile(
   path.join(path.dirname(__dirname), 'client/bundle.js')
