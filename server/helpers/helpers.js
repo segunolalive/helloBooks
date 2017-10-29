@@ -24,12 +24,5 @@ export const hashPassword = (user) => {
  * @param  {Boolean} - isAdmin
  * @return {String}
  */
-export const getJWT = (id, email, username, isAdmin) =>
-  jwt.sign({
-    id,
-    email,
-    username,
-    isAdmin,
-  }, process.env.SECRET, {
-    expiresIn: '24h',
-  });
+export const getJWT = (options, expiresIn = '24h') =>
+  jwt.sign({ ...options }, process.env.SECRET, { expiresIn });

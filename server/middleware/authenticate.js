@@ -11,7 +11,8 @@ dotenv.config();
 */
 const getToken = (req) => {
   const token = req.body.token || req.headers['x-access-token'] ||
-    (req.headers.Authorization && req.headers.Authorization.slice(7));
+    (req.headers.Authorization && req.headers.Authorization.slice(7)) ||
+    req.params.token;
   return token;
 };
 

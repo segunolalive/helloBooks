@@ -39,13 +39,14 @@ export default {
       }
       User.create(req.body)
         .then((user) => {
-          const token = getJWT(
-            user.id,
-            user.email,
-            user.username,
-            user.isAdmin,
-            user.membershipType
-          );
+          const jwtOptions = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            isAdmin: user.isAdmin,
+            membershipType: user.membershipType
+          };
+          const token = getJWT(jwtOptions);
           const { id, firstName, lastName, isAdmin } = user;
           return res.status(201).json({
             token, id, firstName, lastName, isAdmin
@@ -73,13 +74,14 @@ export default {
       .then((user) => {
         user.update(req.body, { returning: true, plain: true })
           .then(() => {
-            const token = getJWT(
-              user.id,
-              user.email,
-              user.username,
-              user.isAdmin,
-              user.membershipType
-            );
+            const jwtOptions = {
+              id: user.id,
+              email: user.email,
+              username: user.username,
+              isAdmin: user.isAdmin,
+              membershipType: user.membershipType
+            };
+            const token = getJWT(jwtOptions);
             const { id, firstName, lastName, isAdmin } = user;
             return res.status(200).json({
               token,
@@ -126,13 +128,14 @@ export default {
             message: 'wrong username and password combination',
           });
         }
-        const token = getJWT(
-          user.id,
-          user.email,
-          user.username,
-          user.isAdmin,
-          user.membershipType
-        );
+        const jwtOptions = {
+          id: user.id,
+          email: user.email,
+          username: user.username,
+          isAdmin: user.isAdmin,
+          membershipType: user.membershipType
+        };
+        const token = getJWT(jwtOptions);
         const { id, firstName, lastName, isAdmin } = user;
         return res.status(200).json({
           token, id, firstName, lastName, isAdmin
@@ -184,7 +187,7 @@ export default {
       }));
   },
 
-  passwordResetmail(req, res) {
+  passwordResetMail(req, res) {
     return User.findOne({
       where: { email: req.body.email },
       attributes: ['id', 'email'],
@@ -197,8 +200,9 @@ export default {
           });
         }
         const BASE_URL = process.env.NODE_ENV === 'development' ?
-          `http://localhost:${PORT}` : 'https://segunolalive-hellobooks.com';
-        const token = getJWT(user.id, null, null, null, null, '1h');
+          `http://localhost:${PORT}/api/v1/users` :
+          'https://segunolalive-hellobooks.com/api/v1/users';
+        const token = getJWT({ id: user.id }, '2h');
         const to = user.email;
         const bcc = null;
         const subject = 'no-reply: Password reset link';
@@ -216,8 +220,10 @@ export default {
             });
           });
       })
-      .catch(() => res.status(500).send({
-        message: 'An error occured while sending you a link. Try again',
-      }));
+      .catch(() => (
+        res.status(500).send({
+          message: 'An error occured while sending you a link. Try again',
+        })
+      ));
   }
 };
