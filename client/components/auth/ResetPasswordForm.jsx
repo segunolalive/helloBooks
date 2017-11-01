@@ -29,9 +29,11 @@ const ResetPasswordForm = props => (
               />
               {
                 props.errors &&
+                <div style={{ padding: '20px' }}>
                   <span style={{ color: 'red' }}>
                     {props.errors.password}
                   </span>
+                </div>
               }
               {props.loading && <Loading />}
               <input

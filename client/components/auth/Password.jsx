@@ -39,7 +39,9 @@ class Password extends Component {
     const email = event.target.email.value.trim();
     this.setState(() => ({ loading: true }));
     this.props.requestResetPassword(email)
-      .then(() => this.setState(() => ({ loading: false })));
+      .then(() =>
+        this.setState(() => ({ loading: false }))
+      );
   }
   /**
    * handler for password ResetPasswordForm
@@ -55,8 +57,7 @@ class Password extends Component {
       const token = this.props.location.search.slice(7);
       return this.props.resetPassword(password, token)
         .then(() => {
-          this.setState(() => ({ loading: false }));
-          return <Redirect to='/' />;
+          this.setState(() => ({ loading: false, redirect: true }));
         });
     }
     this.setState(() => ({ errors: { password: 'passwords don\'t match' } }));
@@ -70,14 +71,15 @@ class Password extends Component {
     switch (this.props.match.url) {
       case '/reset-password':
         return (
-          <div>
-            <ResetPasswordForm
-              onSubmit={this.handleResetPassword}
-              loading={this.state.loading}
-              errors={this.state.errors}
-              buttonText={this.state.loading ? 'resetting password' : 'send'}
-            />
-          </div>
+          this.state.redirect ? <Redirect to='/login' /> :
+            <div>
+              <ResetPasswordForm
+                onSubmit={this.handleResetPassword}
+                loading={this.state.loading}
+                errors={this.state.errors}
+                buttonText={this.state.loading ? 'resetting password' : 'send'}
+              />
+            </div>
         );
       case '/forgot-password':
         return (
