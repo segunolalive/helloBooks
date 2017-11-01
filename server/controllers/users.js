@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import { User, Book } from '../models';
 import { getJWT } from '../helpers/helpers';
 import { transporter, mailOptions } from '../config/mail';
-import { PORT } from '../bin/www';
 
 dotenv.config();
 
@@ -200,14 +199,15 @@ export default {
           });
         }
         const BASE_URL = process.env.NODE_ENV === 'development' ?
-          `http://localhost:${PORT}/api/v1/users` :
-          'https://segunolalive-hellobooks.com/api/v1/users';
-        const token = getJWT({ id: user.id }, '2h');
+          'http://localhost:8080' :
+          'https://segunolalive-hellobooks.com';
+        const token = getJWT({ id: user.id }, '1h');
         const to = user.email;
         const bcc = null;
         const subject = 'no-reply: Password reset link';
         const html = `<h3>Use this link to reset your password.</h3>
-          ${BASE_URL}/reset-password/${token}`;
+          ${BASE_URL}/reset-password?token=${token}}
+          <p>This link is valid only for an hour</p>`;
         transporter.sendMail(mailOptions(to, bcc, subject, html),
           (err) => {
             if (err) {
