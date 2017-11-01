@@ -24,6 +24,12 @@ router.get('/', (req, res) => res.status(200).send({
   .get('/books', bookController.getAllBooks)
   // Protected routes
   .put(
+    '/users/reset-password/:token',
+    authenticate,
+    validateInput.updateUser,
+    userController.updateUserInfo
+  )
+  .put(
     '/users',
     authenticate,
     validateInput.updateUser,

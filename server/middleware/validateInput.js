@@ -3,6 +3,7 @@ import { sanitize } from 'express-validator/filter';
 import bcrypt from 'bcrypt';
 
 import { User } from '../models';
+import { isReset } from './authenticate';
 
 /**
  * deletes empty fields in object
@@ -44,6 +45,12 @@ const passwordIsCorrect = (id, password) => (
 );
 
 
+const unusedToken = (id, token) => {
+  User.findById(id)
+    .then(user => user.token === token);
+};
+
+
 export default {
   /**
    * validates fields on request to update user data
@@ -70,11 +77,19 @@ export default {
         }).catch(() => res.status(500).send({
           message: 'an error occured while trying to update your information'
         }));
+    } else if (isReset(req)) {
+      if (unusedToken(req.user.id, req.params.token)) {
+        return res.status(422).send({
+          message: 'This link has been used already',
+        });
+      }
+      next();
     } else {
       delete req.body.password;
       next();
     }
   },
+
   requestPasswordReset(req, res, next) {
     trimFields(req.body);
     deleteEmptyFields(req.body);
