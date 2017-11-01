@@ -4,15 +4,14 @@ import PropTypes from 'prop-types';
 import Header from '../header/Header';
 import Loading from '../Loading';
 
-const ForgotPasswordForm = (props) => {
-  const showLoading = props.loading ? <Loading /> : null;
-  return (
-    <div>
-      <Header />
-      <main>
-        <div className="row">
-          <div className="container center">
-            <form onSubmit={props.handleSubmit}>
+const ForgotPasswordForm = props => (
+  <div>
+    <Header />
+    <main>
+      <div className="container center">
+        <div className="row top-30">
+          <div className="col s12 m8 offset-m2">
+            <form onSubmit={props.onSubmit}>
               <h6>
                 Enter your email address and we&apos;ll send you a link
                 to reset your password
@@ -23,12 +22,12 @@ const ForgotPasswordForm = (props) => {
                 <input
                   type="email"
                   name="email"
-                  placeholder="your email here"
                   required="true"
+                  placeholder="your email here"
                   title="input is not a valid email"
                 />
               </div>
-              {showLoading}
+              {props.loading && <Loading />}
               <div
                 className="input-field"
               >
@@ -42,13 +41,13 @@ const ForgotPasswordForm = (props) => {
             </form>
           </div>
         </div>
-      </main>
-    </div>
-  );
-};
+      </div>
+    </main>
+  </div>
+);
 
 ForgotPasswordForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   buttonText: PropTypes.string.isRequired,
 };
