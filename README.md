@@ -1,63 +1,80 @@
-[![Build Status](https://travis-ci.org/segunolalive/helloBooks.svg?branch=master)](https://travis-ci.org/segunolalive/helloBooks)
-[![Coverage Status](https://coveralls.io/repos/github/segunolalive/helloBooks/badge.svg?branch=master)](https://coveralls.io/github/segunolalive/helloBooks?branch=master)
-[![Code Climate](https://codeclimate.com/github/segunolalive/helloBooks/badges/gpa.svg)](https://codeclimate.com/github/segunolalive/helloBooks?branch=master)
+[![Build Status](https://travis-ci.org/segunolalive/helloBooks.svg?branch=development)](https://travis-ci.org/segunolalive/helloBooks)
+[![Coverage Status](https://coveralls.io/repos/github/segunolalive/helloBooks/badge.svg?branch=development)](https://coveralls.io/github/segunolalive/helloBooks?branch=development)
+[![Code Climate](https://codeclimate.com/github/segunolalive/helloBooks/badges/gpa.svg)](https://codeclimate.com/github/segunolalive/helloBooks?branch=development)
 
 # helloBooks
 
 ### A Library app
 Hello books is an application that provides users with access to books from wherever they are.
-Beeing a virtual library, users can borrow and read their favorite books using any device.
+Being a virtual library, users can borrow and read their favorite books using any device.
 HelloBooks exposes RESTful API endpoints such that anyone customize the method of consuming
 the resources.
 
-### Development
-This is a javascript application built with [**Express**](http://expressjs.com/)
-framework on the nodejs platform. Authentication of users is done via
-[**JSON Web Tokens**](https://jwt.io/) .
+#### Built With
+* [NodeJS](https://nodejs.org/en/) - is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.
+* [PostgreSQL](https://www.postgresql.org/) - A powerful, open source object-relational database system.
+* [Sequelize](http://docs.sequelizejs.com/) - is a promise-based ORM for Node.js v4 and up. It supports the dialects PostgreSQL, MySQL, SQLite and MSSQL and features solid transaction support, relations, read replication and more.
+* [ExpressJS](http://expressjs.com/) - Fast, unopinionated, minimalist web framework for Node.js.
+* [Reactjs](https://reactjs.org/)A declarative component-based JavaScript library for building user interfaces
+
+
+#### Getting Started
+```
+# Clone your fork of this repository
+
+# Ensure NodeJS, PostgreSQL are globally installed
+
+# Switch to project directory
+cd helloBooks
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+Follow the template in example.environment
+
+# Run database migrations
+sequelize db:migrate:all (if sequelize is globally installed)
+
+# Start the app
+- In development mode, run the following from two separate terminal windows/tabs
+npm run start:client
+npm run start:dev
+
+navigate to http://localhost:8080 in your browser
+
+- For production build, run:
+npm run building
+then
+npm run start
+```
 
 #### Features
+- Authentication is via [**JSON Web Tokens**](https://jwt.io/)
 - Login/Sign up to gain access to routes
 - A library of books from different categories
 - Ability to borrow books repeatedly
 - Track your reading/borrowing history
-- Admin access to modify book details
+- Admin access to add and modify book details
 
-#### API Routes
-- sign up route:
-**POST** /api/v1/users/signup
-parameters - username, password, email
-optional parameters - firstName, lastName
+#### API Documentation
+- https://some-made-up-link
 
 
-- login route:
-**POST** /api/v1/users/signin
-parameters - username, password
+#### Testing
+Run `npm test`
 
-- get books (view library):
-**GET** /api/v1/books'
+#### Contributing
+Hello books is open source and contributions are highly welcomed.
 
-- get book (view a book's metadata):
-**GET** /api/v1/books/:id
-parameters - bookId (number)
+If you would like to contribute, follow the instructions below.
 
-- add a new book to library:
-**POST** /api/v1/books
-request body - authors, title, description, cover, bookfile, total
+- Fork this project.
+- Checkout a new branch
+- Make your changes and commit.
+- Keep commit messages atomic.
+- Raise a pull request against development.
 
-- modify book information:
-**PUT** /api/v1/books/
-request body - authors, title, description, cover, bookfile, total (any)
-query parameters - book id (number)
+**NB:** All Pull requests must be made against development branch. PRs against master would be rejected.
 
-- borrow book:
-**POST** /api/v1/users/:id/books
-parameters - user id
-query parameters - book id (number)
-
-- return book:
-**PUT** /api/v1/users/:id/books
-parameters - user id
-query parameters - book id (number)
-
-- get borrowed books:
-**GET** /api/v1/users/:id/books
+See project wiki for coding style guide, commit message, pull request and branch naming conventions.
