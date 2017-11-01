@@ -12,7 +12,7 @@ import Library from './library/Library';
 import BookDetail from './library/BookDetail';
 import Dashboard from './dashboard/Dashboard';
 import Logout from './auth/Logout';
-import Auth from './auth/Auth';
+import Password from './auth/Password';
 import UpdateProfile from './dashboard/UpdateProfile';
 
 import mock from './mock';
@@ -58,7 +58,8 @@ class App extends Component {
             <Route path='/admin/edit:id' component={Admin} />
             <Route path='/admin/add' component={Admin} />
             <Route path='/admin' component={Admin} />
-            <Route path='/forgot-password' component={Auth} />
+            <Route path='/forgot-password' component={Password} />
+            <Route path='/reset-password' component={Password} />
             <Route component={notFound} />
           </Switch>
         </div>
