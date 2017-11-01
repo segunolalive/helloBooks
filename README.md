@@ -22,7 +22,7 @@ the resources.
 ```
 # Clone your fork of this repository
 
-# Ensure NodeJS, PostgreSQL are globally installed
+# Ensure NodeJS, PostgreSQL and Sequelize cli are globally installed
 
 # Switch to project directory
 cd helloBooks
@@ -34,7 +34,7 @@ npm install
 Follow the template in example.environment
 
 # Run database migrations
-sequelize db:migrate:all (if sequelize is globally installed)
+sequelize db:migrate:all
 
 # Start the app
 - In development mode, run the following from two separate terminal windows/tabs
@@ -58,7 +58,7 @@ npm run start
 - Admin access to add and modify book details
 
 #### API Documentation
-- https://some-made-up-link
+- https://www.segunolalive-hellobooks.com/api/docs
 
 
 #### Testing
@@ -78,3 +78,8 @@ If you would like to contribute, follow the instructions below.
 **NB:** All Pull requests must be made against development branch. PRs against master would be rejected.
 
 See project wiki for coding style guide, commit message, pull request and branch naming conventions.
+
+
+#### Acknowledgments
+
+* Andela Fellowship (https://andela.com/)
