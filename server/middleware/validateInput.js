@@ -1,4 +1,5 @@
 import { check, validationResult } from 'express-validator/check';
+import deepClone from 'deepclonejs';
 import { sanitize } from 'express-validator/filter';
 import bcrypt from 'bcrypt';
 
@@ -7,30 +8,32 @@ import { isReset } from './authenticate';
 
 /**
  * deletes empty fields in object
- * @param  {Object} data
+ * @param  {Object} object
  * @return {Object}      Object with empty fields stripped out
  */
-const deleteEmptyFields = (data) => {
-  const fields = Object.keys(data);
+const deleteEmptyFields = (object) => {
+  const clonedObject = deepClone(object);
+  const fields = Object.keys(clonedObject);
   fields.forEach((field) => {
-    if (!data[field]) delete data[field];
+    if (!clonedObject[field]) delete clonedObject[field];
   });
-  return data;
+  return clonedObject;
 };
 
 /**
  * trims string values in object
- * @param  {Object} data
+ * @param  {Object} object
  * @return {Object}      Object with strings trimmed
  */
-const trimFields = (data) => {
-  const fields = Object.keys(data);
+const trimFields = (object) => {
+  const clonedObject = deepClone(object);
+  const fields = Object.keys(clonedObject);
   fields.forEach((field) => {
-    if (typeof data[field] === 'string') {
-      data[field] = data[field].trim();
+    if (typeof clonedObject[field] === 'string') {
+      clonedObject[field] = clonedObject[field].trim();
     }
   });
-  return data;
+  return clonedObject;
 };
 
 /**
@@ -60,8 +63,7 @@ export default {
    * @return {Object|Function} express http object or call next
    */
   updateUser(req, res, next) {
-    trimFields(req.body);
-    deleteEmptyFields(req.body);
+    req.body = deleteEmptyFields(trimFields(req.body));
     check(['firstName', 'lastName'], 'must contain alphabets only').isAlpha();
     sanitize(['firstName', 'lastName', 'password']).escape();
     if (req.body.password && req.body.newPassword) {
@@ -91,8 +93,7 @@ export default {
   },
 
   requestPasswordReset(req, res, next) {
-    trimFields(req.body);
-    deleteEmptyFields(req.body);
+    req.body = deleteEmptyFields(trimFields(req.body));
     if (!req.body.email) {
       return res.status(400).send({ message: 'Email cannot be empty' });
     }
