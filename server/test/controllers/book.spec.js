@@ -31,7 +31,7 @@ describe('Book', () => {
   describe('filterBooksByCategory', () => {
     it('should be allow users to view all books under a category', (done) => {
       server
-        .get('/api/v1/books?category=javascript')
+        .get('/api/v1/books?category=1')
         .expect(200)
         .end((err, res) => {
           assert.equal(res.status, 200);

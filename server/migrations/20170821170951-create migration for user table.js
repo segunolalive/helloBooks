@@ -36,6 +36,12 @@ module.exports = {
         type: Sequelize.ENUM('bronze', 'silver', 'gold'),
         defaultValue: 'bronze',
       },
+      passwordResetToken: {
+        type: Sequelize.STRING,
+      },
+      authId: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

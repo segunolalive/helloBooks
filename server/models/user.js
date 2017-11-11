@@ -33,6 +33,12 @@ export default (sequelize, DataTypes) => {
       values: ['bronze', 'silver', 'gold'],
       defaultValue: 'bronze',
     },
+    passwordResetToken: {
+      type: DataTypes.STRING,
+    },
+    authId: {
+      type: DataTypes.STRING,
+    }
   });
 
   User.beforeCreate(user => hashPassword(user), { individualHooks: true });
