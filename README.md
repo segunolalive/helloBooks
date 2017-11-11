@@ -79,7 +79,12 @@ If you would like to contribute, follow the instructions below.
 
 See project wiki for coding style guide, commit message, pull request and branch naming conventions.
 
+---
 
 #### Acknowledgments
 
 * Andela Fellowship (https://andela.com/)
+
+---
+#### License
+MIT License
