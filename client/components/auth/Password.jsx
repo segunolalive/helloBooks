@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import requestResetPassword from '../../actions/requestResetPassword';
+import resetPassword from '../../actions/resetPassword';
+
 import ForgotPasswordForm from './ForgotPasswordForm';
 import ResetPasswordForm from './ResetPasswordForm';
-import resetPassword from '../..//actions/resetPassword';
 
 
 /**

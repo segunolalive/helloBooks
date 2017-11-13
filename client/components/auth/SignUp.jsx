@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Row } from 'react-materialize';
 import { connect } from 'react-redux';
 
-import Header from '../header/Header';
+import Header from '../Header';
 import { signUp } from '../../actions/signup';
 import Loading from '../Loading';
 
@@ -75,9 +75,7 @@ class SignUp extends Component {
       this.props.isLoggedIn === true ?
         <Redirect to='/dashboard' /> :
         <div>
-          <Header
-            navLinks={['login', 'sign up', 'library']}
-          />
+          <Header />
           <main>
             <section className="account">
               <Row>

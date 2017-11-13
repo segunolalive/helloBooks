@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-materialize';
 
-import Header from '../header/Header';
+import Header from '../Header';
 import Loading from '../Loading';
 
 

@@ -24,7 +24,6 @@ const Borrowed = (props) => {
               <h6 className="bold-text black-text">
                 {book.title.toUpperCase() || null}
               </h6>
-              <p>{book.description || null}</p>
             </div>
             <div className="card-action center">
               <Button

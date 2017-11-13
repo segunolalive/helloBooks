@@ -8,7 +8,7 @@ import { addBook, addBookCategory, editBook } from '../../actions/adminActions';
 import { fetchNotifications } from '../../actions/notifications';
 import { getBookCategories } from '../../actions/library';
 
-import Header from '../header/Header';
+import Header from '../Header';
 import BookForm from './BookForm';
 import Notifications from './Notifications';
 import AddCategoryForm from './CategoryForm';
@@ -16,7 +16,7 @@ import AddCategoryForm from './CategoryForm';
 /**
  * adds or edits book
  *
- * @class AddBook
+ * @class Admin
  * @extends {Component}
  */
 class Admin extends Component {
@@ -32,7 +32,7 @@ class Admin extends Component {
       title: this.props.book.title || '',
       authors: this.props.book.authors || '',
       description: this.props.book.description || '',
-      category: this.props.book.category || '',
+      categoryId: this.props.book.categoryId || '',
       total: this.props.book.total || '',
       cover: this.props.book.cover || '',
       bookFile: this.props.book.bookFile || '',
@@ -40,7 +40,7 @@ class Admin extends Component {
       title: '',
       authors: '',
       description: '',
-      category: '',
+      categoryId: '',
       total: '',
       cover: '',
       bookFile: '',
@@ -80,7 +80,7 @@ class Admin extends Component {
             title: '',
             authors: '',
             description: '',
-            category: '',
+            categoryId: '',
             total: '',
             cover: '',
             bookFile: '',
@@ -114,7 +114,7 @@ class Admin extends Component {
    * @returns {Undefined} calls setState
    */
   handleSelectCategory(event) {
-    this.setState(() => ({ category: event.target.value }));
+    this.setState(() => ({ categoryId: event.target.value }));
   }
 
   /**
@@ -146,7 +146,7 @@ class Admin extends Component {
       'Add Book To Library';
     return (this.props.user && this.props.user.isAdmin ?
       <div>
-        <Header />
+        <Header activeLink='admin' />
         <main>
           <Row>
             <div className="container admin-container">

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row } from 'react-materialize';
 
-import Header from '../header/Header';
+import Header from '../Header';
 import TransactionHistory from './TransactionHistory';
 import AllBorrowed from './AllBorrowed';
 import { fetchHistory, fetchTransactionHistory } from '../../actions/history';

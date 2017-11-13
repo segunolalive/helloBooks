@@ -3,7 +3,7 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
 
-import routes from './routes/index';
+import routes from './routes';
 
 // Set up the express app
 const app = express();
@@ -15,7 +15,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-if (process.env.NODE_ENV === 'development') {
+if (
+  process.env.NODE_ENV === 'development' ||
+  process.env.NODE_ENV === 'test'
+) {
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
