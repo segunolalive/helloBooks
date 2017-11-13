@@ -2,8 +2,7 @@ import axios from 'axios';
 
 import actionTypes from '../actions/actionTypes';
 import API from './api';
-
-const Materialize = window.Materialize;
+import notify from './notify';
 
 
 /**
@@ -23,14 +22,11 @@ export const getBooks = books => ({
  */
 export const fetchBooks = () => dispatch => (
   axios.get(`${API}/books`)
-    .then((response) => {
-      dispatch(getBooks(response.data.data));
-    }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-    })
-    .catch((error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-    })
+    .then(
+      response => dispatch(getBooks(response.data.books)),
+      error => notify.error(error.response.data.message)
+    )
+    .catch(error => notify.error(error.response.data.message))
 );
 
 /**
@@ -53,72 +49,12 @@ const borrowBookAction = id => ({
 export const borrowBook = (userId, bookId) => dispatch => (
   axios.post(`${API}/users/${userId}/books`, { id: bookId })
     .then((response) => {
-      dispatch(borrowBookAction(bookId));
-      Materialize.toast(response.data.message, 2500, 'teal darken-4');
-    }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-    })
-    .catch((error) => {
-      Materialize.toast(error, 2500, 'red darken-4');
-    })
+      notify.success(response.data.message);
+      return dispatch(borrowBookAction(bookId));
+    }, error => notify.error(error.response.data.message))
+    .catch(error => notify.error(error))
 );
 
-
-/**
- * action creator for borrowing books
- * @param  {Integer} id book id
- * @return {Object}    action object
- */
-const editBookAction = id => ({
-  type: actionTypes.EDIT_BOOK,
-  id,
-});
-
-
-/**
- * send request to borrow a book from library
- * @param  {integer} bookId book id
- * @return {any}    dispatches an action to store
- */
-export const editBook = bookId => dispatch => (
-  axios.put(`${API}/books/${bookId}`, { id: bookId })
-    .then((response) => {
-      dispatch(editBookAction(bookId));
-      Materialize.toast(response.data.message, 2500, 'teal darken-4');
-    }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-    })
-    .catch((error) => {
-      Materialize.toast(error, 2500, 'red darken-4');
-    })
-);
-
-
-/**
- * action creator for borrowing books
- * @param  {Integer} id book id
- * @return {Object}    action object
- */
-const deleteBookAction = id => ({
-  type: actionTypes.DELETE_BOOK,
-  id,
-});
-
-
-/**
- * send request to borrow a book from library
- * @param  {integer} bookId book id
- * @return {any}    dispatches an action to store
- */
-export const deleteBook = bookId => dispatch => (
-  axios.delete(`${API}/books/${bookId}`, { id: bookId })
-    .then((response) => {
-      dispatch(deleteBookAction(bookId));
-      return response;
-    }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-    })
-);
 
 /**
  * @param  {Array} categories book categories
@@ -133,14 +69,16 @@ const getBookCategoriesAction = categories => ({
  * get book cattegories
  * @return {any} dispatches an action to the redux store
  */
-export const getBookCategories = () => (dispatch) => {
+export const getBookCategories = () => dispatch => (
   axios.get(`${API}/books/category`)
-    .then(categories => (
-      dispatch(getBookCategoriesAction(categories.data.data))
-    ), (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-    });
-};
+    .then(response => (
+      dispatch(getBookCategoriesAction(response.data.categories))
+    ), error => notify.error(error.response.data.message))
+);
 
 
-export const filterBooksByCategory = category => (dispatch) => {};
+export const filterBooksByCategory = category => dispatch => (
+  axios.get(`${API}/books?category=${category}`)
+    .then(response => dispatch(getBooks(response.data.books)))
+    .catch(error => notify.error(error.response.data.message))
+);

@@ -3,8 +3,7 @@ import actionTypes from '../actions/actionTypes';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { authLoading } from './signup';
 import API from './api';
-
-const Materialize = window.Materialize;
+import notify from './notify';
 
 
 /**
@@ -41,17 +40,14 @@ export const login = data => (dispatch) => {
       dispatch(loginUser(response.data));
       dispatch(setLoginStatus(true));
       dispatch(authLoading(false));
+      notify.success(`Welcome back, ${response.data.firstName}`);
       return response.data;
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-      dispatch(authLoading(false));
+      notify.error(error.response.data.message);
+      return dispatch(authLoading(false));
     })
     .catch(() => {
-      Materialize.toast(
-        'Something terrible happened. We\'ll fix that',
-        2500,
-        'red darken-4'
-      );
-      dispatch(authLoading(false));
+      notify.error('Something terrible happened. We\'ll fix that');
+      return dispatch(authLoading(false));
     });
 };

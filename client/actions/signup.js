@@ -2,8 +2,7 @@ import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
 import { setLoginStatus } from './login';
-
-const Materialize = window.Materialize;
+import notify from './notify';
 
 /**
  * @param {any} user - user
@@ -38,15 +37,11 @@ export const signUp = data => (dispatch) => {
       dispatch(authLoading(false));
       return response.data;
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-      dispatch(authLoading(false));
+      notify.error(error.response.data.message);
+      return dispatch(authLoading(false));
     })
     .catch(() => {
-      Materialize.toast(
-        'Something terrible happened. We\'ll fix that',
-        2500,
-        'red darken-4'
-      );
-      dispatch(authLoading(false));
+      notify.error('Something terrible happened. We\'ll fix that');
+      return dispatch(authLoading(false));
     });
 };

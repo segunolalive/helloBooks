@@ -1,8 +1,7 @@
 import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
-
-const Materialize = window.Materialize;
+import notify from './notify';
 
 
 /**
@@ -19,14 +18,13 @@ export const getBorrowedBooksAction = borrowedBooks => ({
 * @param {object} id - user id
 * @returns {any} - dispatches action with books user has not returned
 */
-export const fetchBorrowedBooks = id => (dispatch) => {
+export const fetchBorrowedBooks = id => dispatch => (
   axios.get(`${API}/users/${id}/books?returned=false`)
-    .then((response) => {
-      dispatch(getBorrowedBooksAction(response.data.data));
-    }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-    });
-};
+    .then(response => (
+      dispatch(getBorrowedBooksAction(response.data.books))
+    ), error => notify.error(error.response.data.message))
+    .catch(error => notify.error(error))
+);
 
 
 /**
@@ -37,9 +35,8 @@ export const fetchBorrowingHistory = id => dispatch => (
   axios.get(`${API}/users/${id}/books`)
     .then((response) => {
       dispatch(getBorrowedBooksAction(response.data.data));
-    }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-    })
+    }, error => notify.error(error.response.data.message))
+    .catch(error => notify.error(error))
 );
 
 /**
@@ -61,14 +58,10 @@ export const returnBook = (userId, bookId) => dispatch => (
   axios.put(`${API}/users/${userId}/books`, { id: bookId })
     .then(
       (response) => {
-        dispatch(returnBookAction(bookId));
-        Materialize.toast(response.data.message, 2500, 'teal darken-4');
+        notify.success(response.data.message);
+        return dispatch(returnBookAction(bookId));
       },
-      (error) => {
-        Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-      }
+      error => notify.error(error.response.data.message)
     )
-    .catch((err) => {
-      Materialize.toast(err.response.data.message, 2500, 'red darken-4');
-    })
+    .catch(error => notify.error(error.response.data.message))
 );

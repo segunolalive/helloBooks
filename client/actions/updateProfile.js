@@ -2,8 +2,7 @@ import axios from 'axios';
 import API from './api';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { loginUser } from './login';
-
-const Materialize = window.Materialize;
+import notify from './notify';
 
 /**
  * action creator for updating user information
@@ -16,22 +15,8 @@ export const updateProfile = profile => dispatch => (
       const token = response.data.token;
       localStorage.setItem('token', token);
       setAuthorizationToken(token);
-      dispatch(loginUser(response.data));
-      Materialize.toast(
-        response.data.message, 2500, 'teal darken-4'
-      );
-    }, (error) => {
-      Materialize.toast(
-        error.response.data.message,
-        2500,
-        'red darken 4'
-      );
-    })
-    .catch((error) => {
-      Materialize.toast(
-        error,
-        2500,
-        'red darken 4'
-      );
-    })
+      notify.success(response.data.message);
+      return dispatch(loginUser(response.data));
+    }, error => notify.error(error.response.data.message))
+    .catch(error => notify.error(error))
 );

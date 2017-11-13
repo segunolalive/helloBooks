@@ -1,7 +1,6 @@
 import axios from 'axios';
 import API from './api';
-
-const Materialize = window.Materialize;
+import notify from './notify';
 
 /**
 * send request to reset password
@@ -11,14 +10,9 @@ const Materialize = window.Materialize;
 */
 const resetPassword = (password, token) => () => (
   axios.put(`${API}/users/reset-password/${token}`, { password })
-    .then(
-      response =>
-        Materialize.toast(response.data.message, 2500, 'teal darken-4'),
-      error =>
-        Materialize.toast(error.response.data.message, 2500, 'red darken-4')
-    ).catch(err =>
-      Materialize.toast(err.response.data.message, 2500, 'red darken-4')
-    )
+    .then(response => notify.success(response.data.message),
+      error => notify.error(error.response.data.message)
+    ).catch(err => notify.error(err.response.data.message))
 );
 
 export default resetPassword;
