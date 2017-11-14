@@ -66,12 +66,12 @@ module.exports = {
         warnings: false
       }
     }),
-    // new webpack.DefinePlugin({
-    //   'process.env': {
-    //     NODE_ENV: JSON.stringify('production')
-    //   },
-    //   GOOGLE_CLIENT_SECRET: JSON.stringify('VenazYqo1V-41a8pAocf7a9H'),
-    //   GOOGLE_CLIENT_ID: JSON.stringify('701806023399-vgqondt26qh10vcuei77r7nsbcd8oa8k.apps.googleusercontent.com')
-    // })
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      },
+      GOOGLE_CLIENT_ID: JSON.stringify('701806023399-vgqondt26qh10vcuei77r7' +
+      'nsbcd8oa8k.apps.googleusercontent.com')
+    })
   ],
 };
