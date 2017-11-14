@@ -38,23 +38,6 @@ class SignUp extends Component {
   }
 
   /**
-   * handler for google sign in
-   * @param {any} response
-   * @memberof Login
-   * @returns {Undefined}  redirects to dashboard
-   */
-  responseGoogle(response) {
-    const googleProfile = response.getBasicProfile();
-    const email = googleProfile.getEmail();
-    const id = googleProfile.getId();
-    const username = email.slice(0, email.indexOf('@'));
-    const firstName = googleProfile.getGivenName();
-    const lastName = googleProfile.getFamilyName();
-    console.log(username, firstName, lastName, email);
-  }
-
-
-  /**
    * sign up handler
    * @param {any} event
    * @memberof SignUp

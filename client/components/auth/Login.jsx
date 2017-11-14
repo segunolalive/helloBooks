@@ -30,7 +30,7 @@ class Login extends Component {
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.responseGoogle = this.responseGoogle.bind(this);
+    this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
   }
 
   /**
@@ -39,7 +39,7 @@ class Login extends Component {
    * @memberof Login
    * @returns {Undefined}  redirects to dashboard
    */
-  responseGoogle(response) {
+  handleGoogleLogin(response) {
     const googleProfile = response.profileObj;
     this.props.login(googleProfile);
   }
@@ -136,8 +136,8 @@ class Login extends Component {
                             <div className="input-field">
                               <GoogleLogin
                                 clientId={GOOGLE_CLIENT_ID}
-                                onSuccess={this.responseGoogle}
-                                onFailure={this.responseGoogle}
+                                onSuccess={this.handleGoogleLogin}
+                                onFailure={this.handleGoogleLogin}
                                 className="btn red darken-4"
                                 style={{ width: '100%' }}
                               >
