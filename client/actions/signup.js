@@ -3,6 +3,7 @@ import actionTypes from '../actions/actionTypes';
 import API from './api';
 import { setLoginStatus } from './login';
 import notify from './notify';
+import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 /**
  * @param {any} user - user
@@ -31,10 +32,13 @@ export const signUp = data => (dispatch) => {
   dispatch(authLoading(true));
   return axios.post(`${API}/users/signup`, data)
     .then((response) => {
-      localStorage.setItem('token', response.data.token);
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      setAuthorizationToken(token);
       dispatch(signUpUser(response.data));
       dispatch(setLoginStatus(true));
       dispatch(authLoading(false));
+      notify.success(response.data.message);
       return response.data;
     }, (error) => {
       notify.error(error.response.data.message);

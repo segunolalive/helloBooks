@@ -40,7 +40,7 @@ export const login = data => (dispatch) => {
       dispatch(loginUser(response.data));
       dispatch(setLoginStatus(true));
       dispatch(authLoading(false));
-      notify.success(`Welcome back, ${response.data.firstName}`);
+      notify.success(response.data.message);
       return response.data;
     }, (error) => {
       notify.error(error.response.data.message);

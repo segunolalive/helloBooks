@@ -9,6 +9,7 @@ import authenticate from '../middleware/authenticate';
 import shouldBorrow from '../middleware/maxBorrowed';
 import ensureIsAdmin from '../middleware/ensureIsAdmin';
 import validateInput from '../middleware/validateInput';
+import prepareGoogleAuth from '../middleware/prepareGoogleAuth';
 
 
 const router = express.Router();
@@ -17,8 +18,8 @@ router.get('/', (req, res) => res.status(200).send({
   message: 'Welcome to the Hello Books API!'
 }))
   // Unprotected routes
-  .post('/users/signup', userController.createUser)
-  .post('/users/signin', userController.getUser)
+  .post('/users/signup', prepareGoogleAuth, userController.createUser)
+  .post('/users/signin', prepareGoogleAuth, userController.getUser)
   .post('/users/forgot-password', userController.passwordResetMail)
   .get('/books/category', bookController.getBookCategories)
   .get('/books/:id', bookController.getBook)
@@ -85,6 +86,7 @@ router.get('/', (req, res) => res.status(200).send({
     '/books/:id',
     authenticate,
     ensureIsAdmin,
+    validateInput.updateBook,
     bookController.editBookInfo
   )
   .get(

@@ -38,17 +38,21 @@ export default {
       }
       User.create(req.body)
         .then((user) => {
-          const jwtOptions = {
-            id: user.id,
-            email: user.email,
-            username: user.username,
-            isAdmin: user.isAdmin,
-            membershipType: user.membershipType
-          };
+          const {
+            id,
+            isAdmin,
+            membershipType,
+          } = user;
+          const jwtOptions = { id, email, username, isAdmin, membershipType };
           const token = getJWT(jwtOptions);
-          const { id, firstName, lastName, isAdmin } = user;
+          const { firstName, lastName } = user;
           return res.status(201).json({
-            token, id, firstName, lastName, isAdmin
+            token,
+            id,
+            firstName,
+            lastName,
+            isAdmin,
+            message: `Welcome ${firstName}. This is your dashboard`,
           });
         })
         .catch(error => res.status(400).send({
@@ -69,19 +73,22 @@ export default {
    * @return {Object}     - returns an http response object
    */
   updateUserInfo(req, res) {
+    const updateData = req.body;
+    updateData.passwordResetToken = null;
     return User.findById(req.user.id)
       .then((user) => {
-        user.update(req.body, { returning: true, plain: true })
+        user.update(updateData, { returning: true, plain: true })
           .then(() => {
-            const jwtOptions = {
-              id: user.id,
-              email: user.email,
-              username: user.username,
-              isAdmin: user.isAdmin,
-              membershipType: user.membershipType
-            };
+            const {
+              id,
+              email,
+              username,
+              isAdmin,
+              membershipType,
+            } = user;
+            const jwtOptions = { id, email, username, isAdmin, membershipType };
             const token = getJWT(jwtOptions);
-            const { id, firstName, lastName, isAdmin } = user;
+            const { firstName, lastName } = user;
             return res.status(200).json({
               token,
               id,
@@ -117,27 +124,32 @@ export default {
     const password = req.body.password;
     return User.findOne({ where: { username } }).then((user) => {
       if (!user) {
-        return res.status(400).send({
+        return res.status(403).send({
           message: 'user does not exist',
         });
       }
       bcrypt.compare(password, user.password).then((result) => {
         if (!result) {
-          return res.status(400).send({
+          return res.status(403).send({
             message: 'wrong username and password combination',
           });
         }
-        const jwtOptions = {
-          id: user.id,
-          email: user.email,
-          username: user.username,
-          isAdmin: user.isAdmin,
-          membershipType: user.membershipType
-        };
+        const {
+          id,
+          email,
+          isAdmin,
+          membershipType,
+        } = user;
+        const jwtOptions = { id, email, username, isAdmin, membershipType };
         const token = getJWT(jwtOptions);
-        const { id, firstName, lastName, isAdmin } = user;
+        const { firstName, lastName } = user;
         return res.status(200).json({
-          token, id, firstName, lastName, isAdmin
+          token,
+          id,
+          firstName,
+          lastName,
+          isAdmin,
+          message: `Welcome back ${firstName}`,
         });
       }).catch(error => res.status(500).send({
         error,
@@ -177,7 +189,7 @@ export default {
         books = user.Books;
       }
       return res.status(200).send({
-        data: books
+        books
       });
     })
       .catch(error => res.status(500).send({
@@ -202,6 +214,8 @@ export default {
           'http://localhost:8080' :
           'https://segunolalive-hellobooks.com';
         const token = getJWT({ id: user.id }, '1h');
+        user.passwordResetToken = token;
+        user.save();
         const to = user.email;
         const bcc = null;
         const subject = 'no-reply: Password reset link';

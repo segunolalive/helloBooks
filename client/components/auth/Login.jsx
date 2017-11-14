@@ -6,7 +6,7 @@ import { Row } from 'react-materialize';
 import GoogleLogin from 'react-google-login';
 import FaGoogle from 'react-icons/lib/fa/google';
 
-import Header from '../header/Header';
+import Header from '../Header';
 import { login } from '../../actions/login';
 import Loading from '../Loading';
 
@@ -40,8 +40,8 @@ class Login extends Component {
    * @returns {Undefined}  redirects to dashboard
    */
   responseGoogle(response) {
-    // const loginProfile = response.getBasicProfile();
-    console.log(response);
+    const googleProfile = response.profileObj;
+    this.props.login(googleProfile);
   }
 
   /**
@@ -177,8 +177,8 @@ class Login extends Component {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 const mapStateToProps = ({ authReducer }) => (

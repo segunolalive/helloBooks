@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { Row } from 'react-materialize';
 import { connect } from 'react-redux';
+import GoogleLogin from 'react-google-login';
+import FaGoogle from 'react-icons/lib/fa/google';
 
 import Header from '../Header';
 import { signUp } from '../../actions/signup';
@@ -32,6 +34,7 @@ class SignUp extends Component {
     };
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleGoogleSignUp = this.handleGoogleSignUp.bind(this);
   }
 
   /**
@@ -43,6 +46,16 @@ class SignUp extends Component {
   handleSignUp(event) {
     event.preventDefault();
     this.props.signUp(this.state);
+  }
+
+  /**
+   * google login handler
+   * @param  {Object} response google auth Object
+   * @return {Undefined}       dispatches signup action action
+   */
+  handleGoogleSignUp(response) {
+    const googleProfile = response.profileObj;
+    this.props.signUp(googleProfile);
   }
 
   /**
@@ -163,6 +176,23 @@ class SignUp extends Component {
                                 className="btn waves-effect waves-light"
                                 style={{ width: '100%' }}
                               />
+                            </div>
+                            <div className="input-field">
+                              <GoogleLogin
+                                clientId={GOOGLE_CLIENT_ID}
+                                onSuccess={this.handleGoogleSignUp}
+                                onFailure={this.handleGoogleSignUp}
+                                className="btn red darken-4"
+                                style={{ width: '100%' }}
+                              >
+                                <FaGoogle
+                                  style={{
+                                    color: '#032442',
+                                    fontSize: '2rem',
+                                  }}
+                                />
+                                <span> Sign Up with Google</span>
+                              </GoogleLogin>
                             </div>
                             <div className="">
                               <p>Already have an account?
