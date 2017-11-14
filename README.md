@@ -34,7 +34,7 @@ npm install
 Follow the template in example.environment
 
 # Run database migrations
-sequelize db:migrate:all
+npm run migrate:dev
 
 # Start the app
 - In development mode, run the following from two separate terminal windows/tabs

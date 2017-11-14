@@ -8,13 +8,13 @@ import { Book, BorrowedBook, BookCategory, Notification } from '../models';
  * @return {object}     - express http response object
  */
 const filterBooksByCategory = (req, res) => {
-  const category = req.query.category;
-  BookCategory.findAll({ where: { category } })
+  const categoryId = req.query.category;
+  Book.findAll({ where: { categoryId } })
     .then((books) => {
       const message = books.length ? '' :
         'No books match the requested category';
       return res.status(200).send({
-        data: books,
+        books,
         message,
       });
     })
@@ -61,7 +61,7 @@ export default {
     BookCategory.findAll({ attributes: ['id', 'category'] })
       .then(categories => (
         res.status(200).send({
-          data: categories,
+          categories,
         })
       ))
       .catch(error => res.status(500).send({
@@ -83,7 +83,7 @@ export default {
         .create(req.body)
         .then(book => res.status(201).send({
           message: `Successfully added ${book.title} to Library`,
-          data: book,
+          book,
         }))
         .catch(error => res.status(500).send({
           error
@@ -112,7 +112,7 @@ export default {
           });
         }
         res.status(200).send({
-          data: book,
+          book,
         });
       })
       .catch(error => res.status(500).send({
@@ -136,17 +136,15 @@ export default {
       .then((books) => {
         if (!books.length) {
           return res.status(200).send({
-            data: [],
+            books: [],
             message: 'Library is currently empty. Check back later'
           });
         }
         res.status(200).send({
-          data: books,
+          books,
         });
       })
-      .catch(error => res.status(500).send({
-        error
-      }));
+      .catch(error => res.status(500).send({ error }));
   },
 
   /**
