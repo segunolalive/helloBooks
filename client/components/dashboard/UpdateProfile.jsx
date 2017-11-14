@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Col, Row } from 'react-materialize';
 import { Redirect } from 'react-router-dom';
 
-import Header from '../header/Header';
+import Header from '../Header';
 import { updateProfile } from '../../actions/updateProfile';
 
 /**

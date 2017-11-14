@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 import { User, Book } from '../models';
 import { getJWT } from '../helpers/helpers';
+import { transporter, mailOptions } from '../config/mail';
 
 dotenv.config();
 
@@ -37,15 +38,21 @@ export default {
       }
       User.create(req.body)
         .then((user) => {
-          const token = getJWT(
-            user.id,
-            user.email,
-            user.username,
-            user.isAdmin
-          );
-          const { id, firstName, lastName, isAdmin } = user;
+          const {
+            id,
+            isAdmin,
+            membershipType,
+          } = user;
+          const jwtOptions = { id, email, username, isAdmin, membershipType };
+          const token = getJWT(jwtOptions);
+          const { firstName, lastName } = user;
           return res.status(201).json({
-            token, id, firstName, lastName, isAdmin
+            token,
+            id,
+            firstName,
+            lastName,
+            isAdmin,
+            message: `Welcome ${firstName}. This is your dashboard`,
           });
         })
         .catch(error => res.status(400).send({
@@ -66,17 +73,22 @@ export default {
    * @return {Object}     - returns an http response object
    */
   updateUserInfo(req, res) {
+    const updateData = req.body;
+    updateData.passwordResetToken = null;
     return User.findById(req.user.id)
       .then((user) => {
-        user.update(req.body, { returning: true, plain: true })
+        user.update(updateData, { returning: true, plain: true })
           .then(() => {
-            const token = getJWT(
-              user.id,
-              user.email,
-              user.username,
-              user.isAdmin
-            );
-            const { id, firstName, lastName, isAdmin } = user;
+            const {
+              id,
+              email,
+              username,
+              isAdmin,
+              membershipType,
+            } = user;
+            const jwtOptions = { id, email, username, isAdmin, membershipType };
+            const token = getJWT(jwtOptions);
+            const { firstName, lastName } = user;
             return res.status(200).json({
               token,
               id,
@@ -112,25 +124,32 @@ export default {
     const password = req.body.password;
     return User.findOne({ where: { username } }).then((user) => {
       if (!user) {
-        return res.status(400).send({
+        return res.status(403).send({
           message: 'user does not exist',
         });
       }
       bcrypt.compare(password, user.password).then((result) => {
         if (!result) {
-          return res.status(400).send({
+          return res.status(403).send({
             message: 'wrong username and password combination',
           });
         }
-        const token = getJWT(
-          user.id,
-          user.email,
-          user.username,
-          user.isAdmin
-        );
-        const { id, firstName, lastName, isAdmin } = user;
+        const {
+          id,
+          email,
+          isAdmin,
+          membershipType,
+        } = user;
+        const jwtOptions = { id, email, username, isAdmin, membershipType };
+        const token = getJWT(jwtOptions);
+        const { firstName, lastName } = user;
         return res.status(200).json({
-          token, id, firstName, lastName, isAdmin
+          token,
+          id,
+          firstName,
+          lastName,
+          isAdmin,
+          message: `Welcome back ${firstName}`,
         });
       }).catch(error => res.status(500).send({
         error,
@@ -170,7 +189,7 @@ export default {
         books = user.Books;
       }
       return res.status(200).send({
-        data: books
+        books
       });
     })
       .catch(error => res.status(500).send({
@@ -178,4 +197,47 @@ export default {
         error,
       }));
   },
+
+  passwordResetMail(req, res) {
+    return User.findOne({
+      where: { email: req.body.email },
+      attributes: ['id', 'email'],
+      plain: true,
+    })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).send({
+            message: 'Email does not match any account in our records',
+          });
+        }
+        const BASE_URL = process.env.NODE_ENV === 'development' ?
+          'http://localhost:8080' :
+          'https://segunolalive-hellobooks.com';
+        const token = getJWT({ id: user.id }, '1h');
+        user.passwordResetToken = token;
+        user.save();
+        const to = user.email;
+        const bcc = null;
+        const subject = 'no-reply: Password reset link';
+        const html = `<h3>Use this link to reset your password.</h3>
+          ${BASE_URL}/reset-password?token=${token}}
+          <p>This link is valid only for an hour</p>`;
+        transporter.sendMail(mailOptions(to, bcc, subject, html),
+          (err) => {
+            if (err) {
+              return res.status(500).send({
+                message: 'An error occured while sending you a link. Try again',
+              });
+            }
+            return res.status(200).send({
+              message: 'An password reset link has been sent to your email',
+            });
+          });
+      })
+      .catch(() => (
+        res.status(500).send({
+          message: 'An error occured while sending you a link. Try again',
+        })
+      ));
+  }
 };

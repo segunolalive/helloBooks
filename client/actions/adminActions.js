@@ -1,8 +1,7 @@
 import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
-
-const Materialize = window.Materialize;
+import notify from './notify';
 
 
 /**
@@ -21,27 +20,17 @@ export const editBookAction = book => ({
  * @param  {Object} data book data with with to update database
  * @return {Object}      dispatches an action to the redux store
  */
-export const editBook = (id, data) => dispatch => (
+export const editBook = (id, data) => () => (
   axios.put(`${API}/books/${id}`, data)
     .then((response) => {
-      Materialize.toast(response.data.message, 2500, 'teal darken-4');
+      notify.success(response.data.message);
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
+      notify.error(error.response.data.message);
     })
     .catch((error) => {
-      Materialize.toast(error, 2500, 'red darken-4');
+      notify.error(error);
     })
 );
-
-
-/**
- * @param {Object} book - book
- * @returns {Object} - Object containing action type and book
- */
-export const addBookAction = book => ({
-  type: actionTypes.ADD_BOOK,
-  book,
-});
 
 
 /**
@@ -62,30 +51,67 @@ export const setBookToEdit = book => ({
 export const bookToEdit = id => dispatch => (
   axios.get(`${API}/books/${id}`)
     .then((response) => {
-      dispatch(setBookToEdit(response.data.data));
+      dispatch(setBookToEdit(response.data.book));
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
+      notify.error(error.response.data.message);
     })
     .catch((error) => {
-      Materialize.toast(error, 2500, 'red darken-4');
+      notify.error(error);
     })
 );
 
 
 /**
+ * @param {Object} book - book
+ * @returns {Object} - Object containing action type and book
+ */
+export const addBookAction = book => ({
+  type: actionTypes.ADD_BOOK,
+  book,
+});
+
+
+/**
  * add new book to database
  * @param  {Object} data book data
- * @return {Object}      dispatches an action to the redux store
+ * @return {Object}      sends nextwork request
  */
-export const addBook = data => dispatch => (
+export const addBook = data => () => (
   axios.post(`${API}/books`, data)
     .then((response) => {
-      Materialize.toast(response.data.message, 2500, 'teal darken-4');
+      notify.success(response.data.message);
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
+      notify.error(error.response.data.message);
     })
     .catch((error) => {
-      Materialize.toast(error, 2500, 'red darken-4');
+      notify.error(error);
+    })
+);
+
+
+/**
+ * action creator for borrowing books
+ * @param  {Integer} id book id
+ * @return {Object}    action object
+ */
+const deleteBookAction = id => ({
+  type: actionTypes.DELETE_BOOK,
+  id,
+});
+
+
+/**
+ * send request to borrow a book from library
+ * @param  {integer} bookId book id
+ * @return {any}    dispatches an action to store
+ */
+export const deleteBook = bookId => dispatch => (
+  axios.delete(`${API}/books/${bookId}`, { id: bookId })
+    .then((response) => {
+      dispatch(deleteBookAction(bookId));
+      return response;
+    }, (error) => {
+      notify.error(error.response.data.message);
     })
 );
 
@@ -93,18 +119,17 @@ export const addBook = data => dispatch => (
 /**
  * het book Detail
  * @param  {Object} category new book category
- * @return {Object}          dispatches an action to the redux store
+ * @return {Object}          sends nextwork request
  */
-export const addBookCategory = category => dispatch => (
+export const addBookCategory = category => () => (
   axios.post(`${API}/books/category`, { category })
     .then((response) => {
-      Materialize.toast(response.data.message, 2500, 'teal darken-4');
+      notify.success(response.data.message);
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
+      notify.error(error.response.data.message);
     })
     .catch(() => {
-      Materialize.toast(`Something went wrong. Ensure you're not adding
-        an existing category`, 2500, 'red darken-4'
-      );
+      notify.error('Something went wrong. Ensure you\'re not' +
+      'adding an existing category');
     })
 );

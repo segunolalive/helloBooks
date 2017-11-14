@@ -12,7 +12,7 @@ const Categories = (props) => {
     category ?
       <option
         key={category.id}
-        value={category.category}
+        value={category.id}
       >
         {category.category}
       </option>

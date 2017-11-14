@@ -2,8 +2,8 @@ import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
 import { setLoginStatus } from './login';
-
-const Materialize = window.Materialize;
+import notify from './notify';
+import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 /**
  * @param {any} user - user
@@ -32,21 +32,20 @@ export const signUp = data => (dispatch) => {
   dispatch(authLoading(true));
   return axios.post(`${API}/users/signup`, data)
     .then((response) => {
-      localStorage.setItem('token', response.data.token);
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      setAuthorizationToken(token);
       dispatch(signUpUser(response.data));
       dispatch(setLoginStatus(true));
       dispatch(authLoading(false));
+      notify.success(response.data.message);
       return response.data;
     }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-      dispatch(authLoading(false));
+      notify.error(error.response.data.message);
+      return dispatch(authLoading(false));
     })
     .catch(() => {
-      Materialize.toast(
-        'Something terrible happened. We\'ll fix that',
-        2500,
-        'red darken-4'
-      );
-      dispatch(authLoading(false));
+      notify.error('Something terrible happened. We\'ll fix that');
+      return dispatch(authLoading(false));
     });
 };

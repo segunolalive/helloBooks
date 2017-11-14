@@ -1,6 +1,6 @@
 let api = '/api/v1';
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === ('development' || 'test')) {
   api = 'http://localhost:4000/api/v1';
 }
 

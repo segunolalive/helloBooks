@@ -16,20 +16,11 @@ export const hashPassword = (user) => {
   return user;
 };
 
-/*
- * Signs a json web token with the supplied parameters
- * @param  {String}  - id
- * @param  {String}  - email
- * @param  {String}  - username
- * @param  {Boolean} - isAdmin
- * @return {String}
+/**
+ * signs a jsonwebtoken using credentials provided
+ * @param  {Object} options           object of key values to sign jsonwebtoken
+ * @param  {String} [expiresIn='24h'] expiration time
+ * @return {String}                   jsonwebtoken
  */
-export const getJWT = (id, email, username, isAdmin) =>
-  jwt.sign({
-    id,
-    email,
-    username,
-    isAdmin,
-  }, process.env.SECRET, {
-    expiresIn: '24h',
-  });
+export const getJWT = (options, expiresIn = '24h') =>
+  jwt.sign({ ...options }, process.env.SECRET, { expiresIn });

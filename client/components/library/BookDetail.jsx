@@ -4,8 +4,9 @@ import { Button } from 'react-materialize';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import Header from '../header/Header';
-import { borrowBook, deleteBook } from '../../actions/library';
+import Header from '../Header';
+import { borrowBook } from '../../actions/library';
+import { deleteBook } from '../../actions/adminActions';
 import { viewBookDetails } from '../../actions/viewBook';
 
 const Materialize = window.Materialize;
@@ -137,8 +138,8 @@ class BookDetail extends Component {
                   <div className="card">
                     <div className="card-image">
                       <img src={
-                        this.props.book && this.props.book.cover ||
-                    'https://segunolalive.github.io/helloBooks/templates/images/eloquentjs_cover.png'
+                        this.props.book && (this.props.book.cover ||
+                    'https://segunolalive.github.io/helloBooks/templates/images/eloquentjs_cover.png')
                       }
                       />
                     </div>
@@ -147,16 +148,11 @@ class BookDetail extends Component {
                 </div>
                 <div className="col s12 m6 offset-m1">
                   <div className="center">
-                    <h4>{this.props.book && this.props.book.title || ''}</h4>
-                    <h6>
-                      {this.props.book &&
-                      this.props.book.shortDescription ||
-                      ''}
-                    </h6>
+                    <h4>{this.props.book && (this.props.book.title || '')}</h4>
                   </div>
                   <div className="">
                     <p>
-                      {this.props.book && this.props.book.description || ''}
+                      {this.props.book && (this.props.book.description || '')}
                     </p>
                   </div>
                 </div>

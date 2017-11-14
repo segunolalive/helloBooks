@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row } from 'react-materialize';
 
-import { logout } from '../../actions/logout';
+import logout from '../../actions/logout';
+import notify from '../../actions/notify';
 
-const Materialize = window.Materialize;
 
 /**
  * handles logging a user out
@@ -19,7 +19,7 @@ class Logout extends Component {
    * @return {[type]} [description]
    */
   componentDidMount() {
-    Materialize.toast('Successfully logged out', 2500, 'teal darken-4');
+    notify.success('Successfully logged out');
     this.props.logout();
     this.props.history.push('/');
   }

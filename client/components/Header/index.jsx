@@ -57,7 +57,6 @@ class Header extends Component {
             <Navigation
               id="slide-out"
               activeLink={this.props.activeLink}
-
               className="side-nav right-aligned"
               navLinks={navLinks}
             />

@@ -3,17 +3,17 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 
 import Home from './Home';
-import History from './history/History';
+import History from './History';
 import notFound from './404';
-import Admin from './admin/Admin';
+import Admin from './Admin';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
-import Library from './library/Library';
-import BookDetail from './library/BookDetail';
-import Dashboard from './dashboard/Dashboard';
+import Library from './Library';
+import BookDetail from './Library/BookDetail';
+import Dashboard from './Dashboard';
 import Logout from './auth/Logout';
-// import ForgotPassword from './forgotPassword';
-import UpdateProfile from './dashboard/UpdateProfile';
+import Password from './auth/Password';
+import UpdateProfile from './Dashboard/UpdateProfile';
 
 import mock from './mock';
 
@@ -58,7 +58,8 @@ class App extends Component {
             <Route path='/admin/edit:id' component={Admin} />
             <Route path='/admin/add' component={Admin} />
             <Route path='/admin' component={Admin} />
-            {/* <Route path='/forgot-password' component={ForgotPassword} /> */}
+            <Route path='/forgot-password' component={Password} />
+            <Route path='/reset-password' component={Password} />
             <Route component={notFound} />
           </Switch>
         </div>

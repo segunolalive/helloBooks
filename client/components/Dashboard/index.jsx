@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Col, Row } from 'react-materialize';
 
-import Header from '../header/Header';
+import Header from '../Header';
 import Borrowed from './Borrowed';
 import ProfileInfo from './ProfileInfo';
 import SuggestedBooks from './SuggestedBooks';

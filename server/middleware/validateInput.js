@@ -1,35 +1,39 @@
-import { check } from 'express-validator/check';
-import { sanitize } from 'express-validator/filter';
+import deepClone from 'deepclonejs';
 import bcrypt from 'bcrypt';
 
 import { User } from '../models';
+import { isReset } from './authenticate';
 
 /**
  * deletes empty fields in object
- * @param  {Object} data
+ * @param  {Object} object
  * @return {Object}      Object with empty fields stripped out
  */
-const deleteEmptyFields = (data) => {
-  const fields = Object.keys(data);
+const deleteEmptyFields = (object) => {
+  const clonedObject = deepClone(object);
+  const fields = Object.keys(clonedObject);
   fields.forEach((field) => {
-    if (!data[field]) delete data[field];
+    if (clonedObject[field] === (null || undefined || '')) {
+      delete clonedObject[field];
+    }
   });
-  return data;
+  return clonedObject;
 };
 
 /**
  * trims string values in object
- * @param  {Object} data
+ * @param  {Object} object
  * @return {Object}      Object with strings trimmed
  */
-const trimFields = (data) => {
-  const fields = Object.keys(data);
+const trimFields = (object) => {
+  const clonedObject = deepClone(object);
+  const fields = Object.keys(clonedObject);
   fields.forEach((field) => {
-    if (typeof data[field] === 'string') {
-      data[field] = data[field].trim();
+    if (typeof clonedObject[field] === 'string') {
+      clonedObject[field] = clonedObject[field].trim();
     }
   });
-  return data;
+  return clonedObject;
 };
 
 /**
@@ -44,6 +48,17 @@ const passwordIsCorrect = (id, password) => (
 );
 
 
+/**
+ * checks if Password reset token has been unusedToken
+ * @param  {Integer} id    user id
+ * @param  {String} token  password reset unusedToken
+ * @return {Boolean}       true if token matches stored token
+ */
+const unusedToken = (id, token) =>
+  User.findById(id)
+    .then(user => user.passwordResetToken === token);
+
+
 export default {
   /**
    * validates fields on request to update user data
@@ -53,10 +68,7 @@ export default {
    * @return {Object|Function} express http object or call next
    */
   updateUser(req, res, next) {
-    trimFields(req.body);
-    deleteEmptyFields(req.body);
-    check(['firstName', 'lastName'], 'must contain alphabets only').isAlpha();
-    sanitize(['firstName', 'lastName', 'password']).escape();
+    req.body = deleteEmptyFields(trimFields(req.body));
     if (req.body.password && req.body.newPassword) {
       passwordIsCorrect(req.user.id, req.body.password)
         .then((correct) => {
@@ -70,9 +82,35 @@ export default {
         }).catch(() => res.status(500).send({
           message: 'an error occured while trying to update your information'
         }));
+    } else if (isReset(req)) {
+      unusedToken(req.user.id, req.params.token)
+        .then((tokenStatus) => {
+          if (!tokenStatus) {
+            return res.status(422).send({
+              message: 'This link has been used already',
+            });
+          }
+          next();
+        });
     } else {
       delete req.body.password;
       next();
     }
+  },
+
+  requestPasswordReset(req, res, next) {
+    req.body = deleteEmptyFields(trimFields(req.body));
+    if (!req.body.email) {
+      return res.status(400).send({ message: 'Email cannot be empty' });
+    }
+    next();
+  },
+
+  updateBook(req, res, next) {
+    req.body = deleteEmptyFields(trimFields(req.body));
+    if (!Object.keys(req.body).length) {
+      return res.status(400).send({ message: 'Nothing to update.' });
+    }
+    next();
   }
 };

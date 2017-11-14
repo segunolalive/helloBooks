@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Categories from '../library/Categories';
+import Categories from '../Library/Categories';
 
 /**
  * for for adding or editing books
@@ -56,7 +56,7 @@ const BookForm = (props) => {
             type="number"
             name="total"
             min="0"
-            value={props.book ? props.book.total : ''}
+            value={props.book && (props.book.total || 0)}
             placeholder="Number available"
             onChange={event => props.onChange(event)}
           />

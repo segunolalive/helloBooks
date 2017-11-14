@@ -59,7 +59,7 @@ describe('User', () => {
         .post('/api/v1/users/signin')
         .send(mock.nonExistentUsername)
         .end((err, res) => {
-          assert.equal(res.status, 400);
+          assert.equal(res.status, 403);
           assert.equal(res.body.message, 'user does not exist');
           done();
         });
@@ -70,7 +70,7 @@ describe('User', () => {
         .post('/api/v1/users/signin')
         .send(mock.wrongPassword)
         .end((err, res) => {
-          assert.equal(res.status, 400);
+          assert.equal(res.status, 403);
           assert.equal(res.body.message, 'wrong username and password combination');
           done();
         });

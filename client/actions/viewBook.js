@@ -1,8 +1,8 @@
 import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
+import notify from './notify';
 
-const Materialize = window.Materialize;
 
 /**
  * @param {Object} book - book
@@ -13,17 +13,6 @@ export const getBook = book => ({
   book,
 });
 
-
-/**
- * @param {Integer} id - book id
- * @returns {Object} - Object containing action type and book id
- */
-export const setBookId = id => ({
-  type: actionTypes.SET_BOOK_ID,
-  id,
-});
-
-
 /**
  * get book Detail
  * @param  {Integer} id book Id
@@ -31,9 +20,7 @@ export const setBookId = id => ({
  */
 export const viewBookDetails = id => dispatch => (
   axios.get(`${API}/books/${id}`)
-    .then((response) => {
-      dispatch(getBook(response.data.data));
-    }, (error) => {
-      Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-    })
+    .then(response => dispatch(getBook(response.data.book))
+      , error => notify.error(error.response.data.message)
+    )
 );
