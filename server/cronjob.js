@@ -1,9 +1,8 @@
-import sequelize from 'sequelize';
 import { BorrowedBook, User } from './models';
 import { borrowingDuration } from './helpers/borrowingLimits';
 import { transporter, mailOptions } from './config/mail';
 
-const Op = sequelize.Op;
+
 const timeLimit = borrowingDuration * 1000 * 60 * 60 * 24;
 
 const defaulters = () => (
@@ -11,7 +10,7 @@ const defaulters = () => (
     where: {
       returned: false,
       updatedAt: {
-        [Op.lt]: new Date(new Date() - timeLimit)
+        $lt: new Date(new Date() - timeLimit)
       }
     },
     attributes: ['userId']
@@ -20,7 +19,7 @@ const defaulters = () => (
       const ids = borrowedBooks.map(book => book.userId);
       return User.findAll({
         where: {
-          id: { [Op.in]: ids }
+          id: { $in: ids }
         },
         attributes: ['email']
       })

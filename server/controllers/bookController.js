@@ -1,30 +1,7 @@
 import { Book, BorrowedBook, BookCategory, Notification } from '../models';
 
-/**
- * Fetch all books that match a catagory from database
- * @private
- * @param  {object} req - express http request object
- * @param  {object} res - express http response object
- * @return {object}     - express http response object
- */
-const filterBooksByCategory = (req, res) => {
-  const categoryId = req.query.category;
-  Book.findAll({ where: { categoryId } })
-    .then((books) => {
-      const message = books.length ? '' :
-        'No books match the requested category';
-      return res.status(200).send({
-        books,
-        message,
-      });
-    })
-    .catch(error => res.status(500).send({
-      error
-    }));
-};
 
-
-export default {
+const bookController = {
   /**
    * Add new book category to library.
    * @public
@@ -130,7 +107,7 @@ export default {
    */
   getAllBooks(req, res) {
     if (req.query.category) {
-      return filterBooksByCategory(req, res);
+      return bookController.filterBooksByCategory(req, res);
     }
     Book.findAll()
       .then((books) => {
@@ -145,6 +122,29 @@ export default {
         });
       })
       .catch(error => res.status(500).send({ error }));
+  },
+
+  /**
+   * Fetch all books that match a catagory from database
+   * @private
+   * @param  {object} req - express http request object
+   * @param  {object} res - express http response object
+   * @return {object}     - express http response object
+   */
+  filterBooksByCategory(req, res) {
+    const categoryId = req.query.category;
+    Book.findAll({ where: { categoryId } })
+      .then((books) => {
+        const message = books.length ? '' :
+          'No books match the requested category';
+        return res.status(200).send({
+          books,
+          message,
+        });
+      })
+      .catch(error => res.status(500).send({
+        error
+      }));
   },
 
   /**
@@ -326,3 +326,5 @@ export default {
       }));
   }
 };
+
+export default bookController;

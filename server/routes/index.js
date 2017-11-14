@@ -1,8 +1,8 @@
 import express from 'express';
 
 
-import userController from '../controllers/users';
-import bookController from '../controllers/books';
+import userController from '../controllers/userController';
+import bookController from '../controllers/bookController';
 import transactionController from '../controllers/transactionController';
 
 import authenticate from '../middleware/authenticate';
