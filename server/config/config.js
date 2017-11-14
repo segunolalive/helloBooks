@@ -4,11 +4,11 @@ dotenv.config();
 
 module.exports = {
   development: {
-    username: 'segunolalive',
-    password: '',
-    database: 'hellobooks',
-    host: 'localhost',
-    dialect: 'postgres',
+    username: process.env.username,
+    password: process.env.password,
+    database: process.env.database,
+    host: process.env.host,
+    dialect: process.env.dialect,
   },
   test: {
     use_env_variable: 'DATABASE_URL_TEST',

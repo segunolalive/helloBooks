@@ -1,6 +1,6 @@
 import { hashPassword } from '../helpers/helpers';
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     firstName: {
       type: DataTypes.STRING,
@@ -33,6 +33,12 @@ module.exports = (sequelize, DataTypes) => {
       values: ['bronze', 'silver', 'gold'],
       defaultValue: 'bronze',
     },
+    passwordResetToken: {
+      type: DataTypes.STRING,
+    },
+    authId: {
+      type: DataTypes.STRING,
+    }
   });
 
   User.beforeCreate(user => hashPassword(user), { individualHooks: true });

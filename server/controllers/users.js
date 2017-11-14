@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 import { User, Book } from '../models';
 import { getJWT } from '../helpers/helpers';
+import { transporter, mailOptions } from '../config/mail';
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {mixed}      - sends an http response
+   * @return {Object}     - returns an http response object
    */
 
   createUser(req, res) {
@@ -26,39 +27,39 @@ export default {
       where: { $or: [{ username }, { email }] }
     }).then((existingUser) => {
       if (existingUser && existingUser.username === username) {
-        res.status(409).json({
-          success: false,
+        return res.status(409).json({
           message: 'username is taken',
         });
-        return;
       }
       if (existingUser && existingUser.email === email) {
-        res.status(409).json({
-          success: false,
+        return res.status(409).json({
           message: 'email is associated with an account',
         });
-        return;
       }
       User.create(req.body)
         .then((user) => {
-          const token = getJWT(
-            user.id,
-            user.email,
-            user.username,
-            user.isAdmin
-          );
-          const { id, firstName, lastName, isAdmin } = user;
-          res.status(201).json({
-            success: true, token, id, firstName, lastName, isAdmin
+          const {
+            id,
+            isAdmin,
+            membershipType,
+          } = user;
+          const jwtOptions = { id, email, username, isAdmin, membershipType };
+          const token = getJWT(jwtOptions);
+          const { firstName, lastName } = user;
+          return res.status(201).json({
+            token,
+            id,
+            firstName,
+            lastName,
+            isAdmin,
+            message: `Welcome ${firstName}. This is your dashboard`,
           });
         })
         .catch(error => res.status(400).send({
-          success: false,
           error
         }));
     })
       .catch(error => res.status(500).send({
-        success: false,
         error
       }));
   },
@@ -69,25 +70,40 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {mixed}      - sends an http response
+   * @return {Object}     - returns an http response object
    */
   updateUserInfo(req, res) {
-    User.findById(req.user.id)
+    const updateData = req.body;
+    updateData.passwordResetToken = null;
+    return User.findById(req.user.id)
       .then((user) => {
-        user.update(req.body, { returning: true, plain: true })
-          .then(() => res.status(200).send({
-            success: true,
-            user,
-            message: 'Your information was successfully updated',
-          }), (error) => {
+        user.update(updateData, { returning: true, plain: true })
+          .then(() => {
+            const {
+              id,
+              email,
+              username,
+              isAdmin,
+              membershipType,
+            } = user;
+            const jwtOptions = { id, email, username, isAdmin, membershipType };
+            const token = getJWT(jwtOptions);
+            const { firstName, lastName } = user;
+            return res.status(200).json({
+              token,
+              id,
+              firstName,
+              lastName,
+              isAdmin,
+              message: 'Your information was successfully updated',
+            });
+          }, (error) => {
             res.status(500).send({
-              success: false,
               error,
             });
           });
       })
       .catch(error => res.status(500).send({
-        success: false,
         error,
       }));
   },
@@ -100,7 +116,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {mixed}      - sends an http response
+   * @return {Object}     - returns an http response object
    */
 
   getUser(req, res) {
@@ -108,36 +124,37 @@ export default {
     const password = req.body.password;
     return User.findOne({ where: { username } }).then((user) => {
       if (!user) {
-        res.status(400).send({
-          success: false,
+        return res.status(403).send({
           message: 'user does not exist',
         });
-        return;
       }
       bcrypt.compare(password, user.password).then((result) => {
         if (!result) {
-          res.status(400).send({
-            success: false,
+          return res.status(403).send({
             message: 'wrong username and password combination',
           });
-        } else {
-          const token = getJWT(
-            user.id,
-            user.email,
-            user.username,
-            user.isAdmin
-          );
-          const { id, firstName, lastName, isAdmin } = user;
-          res.status(200).json({
-            success: true, token, id, firstName, lastName, isAdmin
-          });
         }
+        const {
+          id,
+          email,
+          isAdmin,
+          membershipType,
+        } = user;
+        const jwtOptions = { id, email, username, isAdmin, membershipType };
+        const token = getJWT(jwtOptions);
+        const { firstName, lastName } = user;
+        return res.status(200).json({
+          token,
+          id,
+          firstName,
+          lastName,
+          isAdmin,
+          message: `Welcome back ${firstName}`,
+        });
       }).catch(error => res.status(500).send({
-        success: false,
         error,
       }));
     }).catch(error => res.status(400).send({
-      success: false,
       error,
     }));
   },
@@ -151,7 +168,7 @@ export default {
    * @method
    * @param  {object} req - express http request object
    * @param  {object} res - express http response object
-   * @return {mixed}      - sends an http rresponse
+   * @return {Object}     - returns an http rresponse object
    */
   getBorrowedBooks(req, res) {
     const id = req.params.id;
@@ -171,15 +188,56 @@ export default {
       } else {
         books = user.Books;
       }
-      res.status(200).send({
-        success: true,
-        data: books
+      return res.status(200).send({
+        books
       });
     })
       .catch(error => res.status(500).send({
-        success: false,
         message: 'An error occured while fetching borrowing history',
         error,
       }));
   },
+
+  passwordResetMail(req, res) {
+    return User.findOne({
+      where: { email: req.body.email },
+      attributes: ['id', 'email'],
+      plain: true,
+    })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).send({
+            message: 'Email does not match any account in our records',
+          });
+        }
+        const BASE_URL = process.env.NODE_ENV === 'development' ?
+          'http://localhost:8080' :
+          'https://segunolalive-hellobooks.com';
+        const token = getJWT({ id: user.id }, '1h');
+        user.passwordResetToken = token;
+        user.save();
+        const to = user.email;
+        const bcc = null;
+        const subject = 'no-reply: Password reset link';
+        const html = `<h3>Use this link to reset your password.</h3>
+          ${BASE_URL}/reset-password?token=${token}}
+          <p>This link is valid only for an hour</p>`;
+        transporter.sendMail(mailOptions(to, bcc, subject, html),
+          (err) => {
+            if (err) {
+              return res.status(500).send({
+                message: 'An error occured while sending you a link. Try again',
+              });
+            }
+            return res.status(200).send({
+              message: 'An password reset link has been sent to your email',
+            });
+          });
+      })
+      .catch(() => (
+        res.status(500).send({
+          message: 'An error occured while sending you a link. Try again',
+        })
+      ));
+  }
 };

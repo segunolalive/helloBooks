@@ -3,7 +3,7 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
 
-import routes from './routes/index';
+import routes from './routes';
 
 // Set up the express app
 const app = express();
@@ -15,7 +15,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-if (process.env.NODE_ENV === 'development') {
+if (
+  process.env.NODE_ENV === 'development' ||
+  process.env.NODE_ENV === 'test'
+) {
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
@@ -24,7 +27,8 @@ if (process.env.NODE_ENV === 'development') {
     );
     res.header(
       'Access-Control-Allow-Headers',
-      'Authorization, X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept, x-access-token'
+      'Authorization, X-PINGOTHER, Origin, X-Requested-With,' +
+      'Content-Type, Accept, x-access-token'
     );
     next();
   });
@@ -32,7 +36,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.static(path.join(__dirname, 'client/static')));
 
-app.use(routes);
+app.use('/api/v1', routes);
 
 app.get('/bundle.js', (req, res) => res.sendFile(
   path.join(path.dirname(__dirname), 'client/bundle.js')
