@@ -70,7 +70,8 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       },
-      GOOGLE_CLIENT_ID: JSON.stringify('701806023399-vgqondt26qh10vcuei77r7nsbcd8oa8k.apps.googleusercontent.com')
+      GOOGLE_CLIENT_ID: JSON.stringify('701806023399-vgqondt26qh10vcuei77r7' +
+      'nsbcd8oa8k.apps.googleusercontent.com')
     })
   ],
 };
