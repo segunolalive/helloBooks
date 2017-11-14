@@ -13,7 +13,6 @@ describe('helpers', () => {
       const password = mock.newUser.password;
       const hashedUser = hashPassword(mock.newUser);
       expect(password).to.not.equal(hashedUser.password);
-      expect(password.length).toBeLessThan(hashedUser.password.length);
       // bcrypt hash (10 rounds) is 60 characters long
       expect(hashedUser.password.length).to.equal(60);
     });
