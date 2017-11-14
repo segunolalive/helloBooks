@@ -13,7 +13,7 @@
     "start:dev": "nodemon server/bin/www --exec babel-node",
     "start:dev:debug": "nodemon --inspect server/bin/www --exec babel-node",
     "start:server": "nodemon server/server --exec babel-node",
-    "test:travis": "cross-env NODE_ENV=test nyc mocha -t 5000 --compilers js:babel-register server/test/**/*.spec.js",
+    "test:travis": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text --reporter=text-lcov mocha -t 5000 --compilers js:babel-register server/test/**/*.spec.js",
     "pretest": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test && cross-env NODE_ENV=test npm run seed:tables",
     "test": "cross-env NODE_ENV=test npm run seed:join && npm run test:travis",
     "migrate:dev": "sequelize db:migrate:undo:all --env development && sequelize db:migrate --env development",
@@ -21,7 +21,7 @@
     "coverage": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls",
     "seed:tables": "cross-env NODE_ENV=test babel-node server/seeders/user.js && babel-node server/seeders/bookCategory.js && babel-node server/seeders/book.js",
     "seed:join": "cross-env NODE_ENV=test babel-node server/seeders/borrowedBook.js",
-    "build": "rm -rf dist && babel server -d dist/server && webpack --config ./webpack.prod.config.js --progress --colors && babel client/sw.js -d dist",
+    "build": "rm -rf dist && babel server -d dist/server && webpack --config ./webpack.prod.config.js --progress --colors && cp client/sw.js dist/client && cp client/manifest.json dist/client",
     "heroku-postbuild": "npm run build"
   },
   "nyc": {
