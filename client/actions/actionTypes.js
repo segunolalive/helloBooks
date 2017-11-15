@@ -28,6 +28,7 @@ const actionList = [
   'SAVE_STATE',
   'GET_SAVED_STATE',
   'GET_ADMIN_NOTIFICATIONS',
+  'SET_PAGINATION',
 ];
 
 /**

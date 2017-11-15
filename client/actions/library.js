@@ -17,17 +17,29 @@ export const getBooks = books => ({
 
 
 /**
+ * sets pagination metadata in store
+ * @param {Object}  paginationData  pagination metadata object
+ * @return {Object}                 action object
+ */
+export const setPagination = paginationData => ({
+  type: actionTypes.SET_PAGINATION,
+  pagination: paginationData
+});
+
+
+/**
  * fetch books in thhe Library
  * @return {any} dispatches an action
  */
 export const fetchBooks = () => dispatch => (
   axios.get(`${API}/books`)
-    .then(
-      response => dispatch(getBooks(response.data.books)),
-      error => notify.error(error.response.data.message)
-    )
-    .catch(error => notify.error(error.response.data.message))
+    .then((response) => {
+      dispatch(getBooks(response.data.books));
+      dispatch(setPagination(response.data.metadata));
+    }, error => notify.error(error.response.data.message))
+    .catch(error => notify.error(error))
 );
+
 
 /**
  * action creator for borrowing books
@@ -66,7 +78,7 @@ const getBookCategoriesAction = categories => ({
 });
 
 /**
- * get book cattegories
+ * get book categories
  * @return {any} dispatches an action to the redux store
  */
 export const getBookCategories = () => dispatch => (
@@ -74,11 +86,12 @@ export const getBookCategories = () => dispatch => (
     .then(response => (
       dispatch(getBookCategoriesAction(response.data.categories))
     ), error => notify.error(error.response.data.message))
+    .catch(error => notify.error(error))
 );
 
 
-export const filterBooksByCategory = category => dispatch => (
-  axios.get(`${API}/books?category=${category}`)
+export const filterBooksByCategory = categoryId => dispatch => (
+  axios.get(`${API}/books?categoryId=${categoryId}`)
     .then(response => dispatch(getBooks(response.data.books)))
     .catch(error => notify.error(error.response.data.message))
 );

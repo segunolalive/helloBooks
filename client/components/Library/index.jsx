@@ -111,6 +111,13 @@ class Library extends Component {
                 ]}
               />
               <Loading text="fetching more awesome books . . ." />
+              <button
+                className="btn teal waves-effect waves-light"
+                style={{ width: '100%' }}
+                onClick={(event) => { console.log('CLICK EVENT\n', event); }}
+              >
+                Load More
+              </button>
             </div>
           </Row>
         </main>
@@ -134,6 +141,7 @@ const mapStateToProps = ({ authReducer, bookReducer }) => {
   return {
     books: bookReducer.books,
     categories: bookReducer.categories,
+    pagination: bookReducer.pagination,
     userId,
   };
 };

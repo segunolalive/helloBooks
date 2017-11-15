@@ -41,6 +41,8 @@ const bookReducer = (state = {}, action = {}) => {
     case action.DELETE_BOOK:
       newState = state.filter(book => book.id !== action.id);
       return newState;
+    case actionTypes.SET_PAGINATION:
+      return { ...state, pagination: action.pagination };
     default:
       return state;
   }
