@@ -32,5 +32,6 @@ export const getOptions = (req) => {
 export const paginate = (total, pageSize, offset) => ({
   pageNumber: Math.floor(offset / pageSize) + 1,
   pageCount: Math.ceil(total / pageSize),
+  pageSize,
   total
 });

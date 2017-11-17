@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Col, Row } from 'react-materialize';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import Header from '../Header';
 import BooksTable from './BooksTable';
@@ -33,13 +34,17 @@ class Library extends Component {
     super(props);
     this.handleBorrowBook = this.handleBorrowBook.bind(this);
     this.handleSelectCategory = this.handleSelectCategory.bind(this);
+    this.handleFetchBooks = this.handleFetchBooks.bind(this);
+    this.state = {
+      hasMore: false
+    };
   }
 
   /**
    * lifecycle hook called when component is mounted to DOM
    *
    * @memberof Library
-   * @return {Undefined} fetches books and boo categories
+   * @return {undefined} fetches books and boo categories
    */
   componentDidMount() {
     this.props.fetchBooks();
@@ -47,11 +52,42 @@ class Library extends Component {
   }
 
   /**
+   * called when component receives new propTypes
+   * @param  {Object} nextProps
+   * @return {undefined}        calls set setState
+   */
+  componentWillReceiveProps(nextProps) {
+    if (this.props.pagination !== nextProps.pagination) {
+      const hasMore = nextProps.pagination.pageCount >=
+        nextProps.pagination.pageNumber;
+      this.setState({
+        hasMore
+      });
+    }
+  }
+
+  /**
+   * handles fetching of Books
+   * @return {Function} thunk
+   */
+  handleFetchBooks() {
+    const { pageSize, pageNumber } = this.props.pagination;
+    let offset = 0;
+    if (pageSize && pageNumber) {
+      offset = pageSize * pageNumber;
+    }
+    this.setState({
+      hasMore: false
+    });
+    return this.props.fetchBooks({ offset });
+  }
+
+  /**
    * handles borrowing book
    * @method
    * @param {Integer} bookId
    * @memberof Library
-   * @returns {Undefined} sends a request to borrow a book
+   * @returns {undefined} sends a request to borrow a book
    */
   handleBorrowBook(bookId) {
     this.props.borrowBook(this.props.userId, bookId);
@@ -62,7 +98,7 @@ class Library extends Component {
    *
    * @param {any} event
    * @memberof Library
-   * @returns {Undefined} send request to fetch books by specified category
+   * @returns {undefined} send request to fetch books by specified category
    */
   handleSelectCategory(event) {
     const category = event.target.value;
@@ -84,44 +120,47 @@ class Library extends Component {
         onChange={this.handleSelectCategory}
       /> : null;
     return (
-      <div>
-        <Header
-          activeLink='library'
-        />
-        <main className="white-area">
-          <Row>
-            <div className="container">
-              <Col s={12} className="center">
-                <h3 className="">All Books</h3>
-                <p>Click on a title to see book details</p>
-              </Col>
-              {categories}
-              <Search
-                className="col s12 m8 offset-m2 l6"
-              />
-              <BooksTable
-                borrowBook={this.handleBorrowBook}
-                bookList={this.props.books}
-                tableHeaders={[
-                  'Cover',
-                  'Title',
-                  'Author(s)',
-                  'Copies Available',
-                  'Action'
-                ]}
-              />
-              <Loading text="fetching more awesome books . . ." />
-              <button
-                className="btn teal waves-effect waves-light"
-                style={{ width: '100%' }}
-                onClick={(event) => { console.log('CLICK EVENT\n', event); }}
-              >
-                Load More
-              </button>
-            </div>
-          </Row>
-        </main>
-      </div>
+      <InfiniteScroll
+        pageStart={0}
+        loader={<Loading text="fetching more awesome books . . ." />}
+        loadMore={this.handleFetchBooks}
+        hasMore={this.state.hasMore}
+      >
+        <div>
+          <Header
+            activeLink='library'
+          />
+          <main className="white-area">
+            <Row>
+              <div className="container">
+                <Col s={12} className="center">
+                  <h3 className="">All Books</h3>
+                  <p>Click on a title to see book details</p>
+                </Col>
+                {categories}
+                <Search
+                  className="col s12 m8 offset-m2 l6"
+                />
+                <BooksTable
+                  borrowBook={this.handleBorrowBook}
+                  bookList={this.props.books}
+                  tableHeaders={[
+                    'Cover',
+                    'Title',
+                    'Author(s)',
+                    'Copies Available',
+                    'Action'
+                  ]}
+                />
+              </div>
+              {!this.state.hasMore &&
+                <p className="center" style={{ fontWeight: 900 }}>
+                  You&apos;ve seen it all
+                </p>}
+            </Row>
+          </main>
+        </div>
+      </InfiniteScroll>
     );
   }
 }
@@ -132,6 +171,7 @@ Library.propTypes = {
   categories: PropTypes.array.isRequired,
   borrowBook: PropTypes.func.isRequired,
   fetchBooks: PropTypes.func.isRequired,
+  pagination: PropTypes.object.isRequired,
   getBookCategories: PropTypes.func.isRequired,
   filterBooksByCategory: PropTypes.func.isRequired,
 };
