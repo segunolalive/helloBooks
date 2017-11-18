@@ -27,7 +27,7 @@ const BookForm = (props) => {
             id="title"
             type="text"
             name="title"
-            defaultValue={props.book ? props.book.title : ''}
+            value={props.book.title}
             placeholder="Book Title"
             onChange={event => props.onChange(event)}
           />
@@ -36,14 +36,14 @@ const BookForm = (props) => {
           <input
             type="text"
             name="authors"
-            defaultValue={props.book ? props.book.authors : ''}
+            value={props.book.authors}
             placeholder="Authors (comma separated for multiple)"
             onChange={event => props.onChange(event)}
           />
         </div>
         <div className="input-field">
           <textarea name="description"
-            defaultValue={props.book ? props.book.description : ''}
+            value={props.book.description}
             rows="20"
             placeholder="Book Description"
             onChange={event => props.onChange(event)}
@@ -104,8 +104,7 @@ const BookForm = (props) => {
             type="submit"
             className="btn center"
             onClick={props.onSubmit}
-          >
-          </input>
+          />
         </div>
       </form>
     </div>
