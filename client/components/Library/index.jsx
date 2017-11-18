@@ -37,9 +37,7 @@ class Library extends Component {
     this.handleFetchBooks = this.handleFetchBooks.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
-    this.state = {
-      hasMore: false
-    };
+    this.state = { hasMore: false };
   }
 
   /**
@@ -88,7 +86,9 @@ class Library extends Component {
    */
   handleSelectCategory(event) {
     const category = event.target.value;
-    this.props.filterBooksByCategory(category);
+    return Number(category) ?
+      this.props.filterBooksByCategory(category) :
+      this.props.fetchBooks({ offset: 0 });
   }
 
   /**
@@ -127,8 +127,13 @@ class Library extends Component {
    */
   handleSearch(event) {
     event.preventDefault();
+    if (!this.state.search) {
+      return;
+    }
     const search = this.state.search.trim();
-    return search && this.props.fetchBooks({ search, offset: 0 });
+    return search ?
+      this.props.fetchBooks({ search, offset: 0 }) :
+      this.props.fetchBooks({ offset: 0 });
   }
 
   /**
@@ -140,10 +145,11 @@ class Library extends Component {
   render() {
     const { pageCount, pageNumber } = this.props.pagination;
     const reachedEnd = pageNumber >= pageCount;
-    const endMessage = reachedEnd &&
+    const endMessage = reachedEnd ?
       <p className="center" style={{ fontWeight: 900 }}>
-        No more books
-      </p>;
+        That&apos;s all for now
+      </p> :
+      <Loading text="fetching more awesome books . . ." />;
     const categories = this.props.categories ?
       <Categories
         text="Filter By Category"
@@ -152,35 +158,34 @@ class Library extends Component {
         onChange={this.handleSelectCategory}
       /> : null;
     return (
-      <InfiniteScroll
-        pageStart={0}
-        loader={<Loading text="fetching more awesome books . . ." />}
-        loadMore={this.handleFetchBooks}
-        hasMore={this.state.hasMore}
-      >
-        <div>
-          <Header
-            activeLink='library'
-          />
-          <main className="white-area">
-            <Row>
-              <div className="container">
-                <Row>
-                  <Col s={12} className="center">
-                    <h2 className="bold-text">All Books</h2>
-                    <p>Click on a title to see book details</p>
-                  </Col>
-                  <Col s={12}>
-                    {categories}
-                    <Search
-                      className="col s12 m8 offset-m2 l6 offset-l1"
-                      onSubmit={this.handleSearch}
-                      onClick={this.handleSearch}
-                      onChange={this.handleSearchChange}
-                    />
-                  </Col>
-                </Row>
-                <Row>
+      <div>
+        <Header
+          activeLink='library'
+        />
+        <main className="white-area">
+          <Row>
+            <div className="container">
+              <Row>
+                <Col s={12} className="center">
+                  <h2 className="bold-text">All Books</h2>
+                  <p>Click on a title to see book details</p>
+                </Col>
+                <Col s={12}>
+                  {categories}
+                  <Search
+                    className="col s12 m8 offset-m2 l6 offset-l1"
+                    onSubmit={this.handleSearch}
+                    onClick={this.handleSearch}
+                    onChange={this.handleSearchChange}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <InfiniteScroll
+                  pageStart={0}
+                  loadMore={this.handleFetchBooks}
+                  hasMore={this.state.hasMore}
+                >
                   <BooksTable
                     borrowBook={this.handleBorrowBook}
                     bookList={this.props.books}
@@ -192,13 +197,13 @@ class Library extends Component {
                       'Action'
                     ]}
                   />
-                </Row>
-                {endMessage}
-              </div>
-            </Row>
-          </main>
-        </div>
-      </InfiniteScroll>
+                </InfiniteScroll>
+              </Row>
+              {endMessage}
+            </div>
+          </Row>
+        </main>
+      </div>
     );
   }
 }

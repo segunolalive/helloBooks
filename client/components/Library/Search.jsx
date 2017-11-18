@@ -19,11 +19,11 @@ const Search = props => (
         />
       </div>
       <div
-        className="col s3 search-btn-wrapper"
+        className="col s3 search-btn-wrapper waves-effect waves-light"
         onClick={e => props.onClick(e)}
       >
         <button
-          className="btn search-btn waves-effect waves-light"
+          className="btn search-btn"
           type="submit"
         >
           <i className="material-icons">search</i>

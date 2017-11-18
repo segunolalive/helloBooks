@@ -26,6 +26,7 @@ const Categories = (props) => {
         onChange={event => props.onChange(event)}
       >
         <option value='' disabled>{props.text}</option>
+        <option value='0'>no filter</option>
         {options}
       </Input>
     </div>
