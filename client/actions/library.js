@@ -18,7 +18,7 @@ export const getBooks = books => ({
 /**
  * action creator for getting books
  * @param  {Array} books array of book objects
- * @return {Object}       action objects
+ * @return {Object}       action object
  */
 export const getMoreBooks = books => ({
   type: actionTypes.GET_MORE_BOOKS,
@@ -42,28 +42,45 @@ const queryStringFromObject = (obj) => {
   if (obj) {
     const params = Object.keys(obj);
     params.forEach((param) => {
-      query += `${param}=${obj[param]}`;
+      query += `${param}=${obj[param]}&`;
     });
   }
   return query;
 };
 
+/**
+ * @param  {Bool} status
+ * @return {Object}      action object
+ */
+const fetchingBooks = status => ({
+  type: actionTypes.FETCH_MORE_BOOKS,
+  status,
+});
+
 
 /**
  * fetch books in the Library
  * @param {object} options
- * @return {any}   dispatches an action
+ * @return {Promise}   dispatches an action
  */
 export const fetchBooks = options => (dispatch) => {
   const query = queryStringFromObject(options);
-  const action = options && options.offset && options.offset > 0 ?
+  const bookAction = options && options.offset && options.offset > 0 ?
     getMoreBooks : getBooks;
+  dispatch(fetchingBooks(true));
   return axios.get(`${API}/books${query}`)
     .then((response) => {
-      dispatch(action(response.data.books));
+      dispatch(bookAction(response.data.books));
       dispatch(setPagination(response.data.metadata));
-    }, error => notify.error(error.response.data.message))
-    .catch(error => notify.error(error));
+      dispatch(fetchingBooks(false));
+    }, (error) => {
+      dispatch(fetchingBooks(false));
+      notify.error(error.response.data.message);
+    })
+    .catch((error) => {
+      dispatch(fetchingBooks(false));
+      notify.error(error);
+    });
 };
 
 

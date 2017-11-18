@@ -19,7 +19,7 @@ const Categories = (props) => {
       : null
   ));
   return (
-    <div className={props.className}>
+    <div className={`${props.className} z-depth-3 bottom-10 filter-dropdown`}>
       <Input s={12}
         type='select'
         defaultValue=''

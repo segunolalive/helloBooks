@@ -30,6 +30,8 @@ const bookReducer = (state = { pagination: {} }, action = {}) => {
         return book;
       });
       return { ...state, books };
+    case actionTypes.FETCH_MORE_BOOKS:
+      return { ...state, fetchingBooks: action.status };
     case actionTypes.GET_BOOK_CATEGORIES:
       return { ...state, categories: action.categories };
     case actionTypes.SEARCH_BOOKS:

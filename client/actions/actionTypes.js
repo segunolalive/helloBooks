@@ -23,6 +23,7 @@ const actionList = [
   'READ_BOOK',
   'EDIT_BOOK_INFO',
   'DELETE_BOOK',
+  'FETCH_MORE_BOOKS',
   'UPLOAD_BOOK_FILE',
   'UPLOAD_BOOK_COVER',
   'SAVE_STATE',

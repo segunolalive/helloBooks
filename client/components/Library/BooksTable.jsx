@@ -27,7 +27,7 @@ const BooksTable = (
     <th key={header}>{header}</th>
   );
   return (
-    <Table className="striped centered bordered">
+    <Table className="striped centered bordered z-depth-4 books-table">
       <thead>
         <tr>
           {headers}

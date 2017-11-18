@@ -35,6 +35,8 @@ class Library extends Component {
     this.handleBorrowBook = this.handleBorrowBook.bind(this);
     this.handleSelectCategory = this.handleSelectCategory.bind(this);
     this.handleFetchBooks = this.handleFetchBooks.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
     this.state = {
       hasMore: false
     };
@@ -67,22 +69,6 @@ class Library extends Component {
   }
 
   /**
-   * handles fetching of Books
-   * @return {Function} thunk
-   */
-  handleFetchBooks() {
-    const { pageSize, pageNumber } = this.props.pagination;
-    let offset = 0;
-    if (pageSize && pageNumber) {
-      offset = pageSize * pageNumber;
-    }
-    this.setState({
-      hasMore: false
-    });
-    return this.props.fetchBooks({ offset });
-  }
-
-  /**
    * handles borrowing book
    * @method
    * @param {Integer} bookId
@@ -106,16 +92,62 @@ class Library extends Component {
   }
 
   /**
+   * handles fetching of Books
+   * @return {Function} thunk
+   */
+  handleFetchBooks() {
+    const { pageSize, pageNumber } = this.props.pagination;
+    let offset = 0;
+    if (pageSize && pageNumber) {
+      offset = pageSize * pageNumber;
+    }
+    const search = this.state.search && this.state.search.trim();
+    const options = search ? { search, offset } : { offset };
+    this.setState({
+      hasMore: false
+    });
+    return this.props.fetchBooks(options);
+  }
+
+  /**
+   * updates state with value of search input
+   * @param  {object} event  form submission event
+   * @return {undefined}     calls setState
+   */
+  handleSearchChange(event) {
+    event.preventDefault();
+    const search = event.target.value;
+    this.setState(() => ({ search }));
+  }
+
+  /**
+   * searches for books matching input value
+   * @param  {object} event  form submission event
+   * @return {undefined}       sends a network request
+   */
+  handleSearch(event) {
+    event.preventDefault();
+    const search = this.state.search.trim();
+    return search && this.props.fetchBooks({ search, offset: 0 });
+  }
+
+  /**
    * renders library component to DOM
    *
    * @returns {JSX} JSX element representing library component
    * @memberof Library
    */
   render() {
+    const { pageCount, pageNumber } = this.props.pagination;
+    const reachedEnd = pageNumber >= pageCount;
+    const endMessage = reachedEnd &&
+      <p className="center" style={{ fontWeight: 900 }}>
+        No more books
+      </p>;
     const categories = this.props.categories ?
       <Categories
         text="Filter By Category"
-        className="col s12 m8 offset-m2 l6"
+        className="col s12 m8 offset-m2 l5"
         categories={this.props.categories}
         onChange={this.handleSelectCategory}
       /> : null;
@@ -133,30 +165,36 @@ class Library extends Component {
           <main className="white-area">
             <Row>
               <div className="container">
-                <Col s={12} className="center">
-                  <h3 className="">All Books</h3>
-                  <p>Click on a title to see book details</p>
-                </Col>
-                {categories}
-                <Search
-                  className="col s12 m8 offset-m2 l6"
-                />
-                <BooksTable
-                  borrowBook={this.handleBorrowBook}
-                  bookList={this.props.books}
-                  tableHeaders={[
-                    'Cover',
-                    'Title',
-                    'Author(s)',
-                    'Copies Available',
-                    'Action'
-                  ]}
-                />
+                <Row>
+                  <Col s={12} className="center">
+                    <h2 className="bold-text">All Books</h2>
+                    <p>Click on a title to see book details</p>
+                  </Col>
+                  <Col s={12}>
+                    {categories}
+                    <Search
+                      className="col s12 m8 offset-m2 l6 offset-l1"
+                      onSubmit={this.handleSearch}
+                      onClick={this.handleSearch}
+                      onChange={this.handleSearchChange}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <BooksTable
+                    borrowBook={this.handleBorrowBook}
+                    bookList={this.props.books}
+                    tableHeaders={[
+                      'Cover',
+                      'Title',
+                      'Author(s)',
+                      'Copies Available',
+                      'Action'
+                    ]}
+                  />
+                </Row>
+                {endMessage}
               </div>
-              {!this.state.hasMore &&
-                <p className="center" style={{ fontWeight: 900 }}>
-                  You&apos;ve seen it all
-                </p>}
             </Row>
           </main>
         </div>
