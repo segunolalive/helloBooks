@@ -3,6 +3,7 @@ import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
 import notify from './notify';
+import queryStringFromObject from '../utils/queryStringFromObject';
 
 
 /**
@@ -32,21 +33,10 @@ export const getMoreBooks = books => ({
  * @return {Object}                 action object
  */
 export const setPagination = paginationData => ({
-  type: actionTypes.SET_PAGINATION,
+  type: actionTypes.SET_LIBRARY_PAGINATION,
   pagination: paginationData
 });
 
-
-const queryStringFromObject = (obj) => {
-  let query = '?';
-  if (obj) {
-    const params = Object.keys(obj);
-    params.forEach((param) => {
-      query += `${param}=${obj[param]}&`;
-    });
-  }
-  return query;
-};
 
 /**
  * @param  {Bool} status
