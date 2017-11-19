@@ -13,7 +13,9 @@ import Header from '../Header';
 import BookForm from './BookForm';
 import Notifications from './Notifications';
 import AddCategoryForm from './CategoryForm';
-import Loading from '../utils/Loading';
+import Loading from '../common/Loading';
+
+import { hasMore, getOffset } from '../../utils/paginationUtils';
 
 /**
  * adds or edits book
@@ -71,13 +73,9 @@ class Admin extends Component {
    * @return {undefined}        calls set setState
    */
   componentWillReceiveProps(nextProps) {
-    if (this.props.pagination !== nextProps.pagination) {
-      const hasMore = nextProps.pagination.pageCount >=
-        nextProps.pagination.pageNumber;
-      this.setState({
-        hasMore
-      });
-    }
+    this.setState(() => ({
+      hasMore: hasMore(this.props.pagination, nextProps.pagination)
+    }));
   }
 
   /**
@@ -161,10 +159,7 @@ class Admin extends Component {
    */
   handleFetchNotifications() {
     const { pageSize, pageNumber } = this.props.pagination;
-    let offset = 0;
-    if (pageSize && pageNumber) {
-      offset = pageSize * pageNumber;
-    }
+    const offset = getOffset(pageNumber, pageSize);
     this.setState({
       hasMore: false
     });

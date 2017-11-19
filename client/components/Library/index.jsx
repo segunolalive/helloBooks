@@ -8,7 +8,9 @@ import Header from '../Header';
 import BooksTable from './BooksTable';
 import Categories from './Categories';
 import Search from './Search';
-import Loading from '../utils/Loading';
+import Loading from '../common/Loading';
+
+import { hasMore, getOffset } from '../../utils/paginationUtils';
 
 import {
   borrowBook,
@@ -57,13 +59,9 @@ class Library extends Component {
    * @return {undefined}        calls set setState
    */
   componentWillReceiveProps(nextProps) {
-    if (this.props.pagination !== nextProps.pagination) {
-      const hasMore = nextProps.pagination.pageCount >=
-        nextProps.pagination.pageNumber;
-      this.setState({
-        hasMore
-      });
-    }
+    this.setState(() => ({
+      hasMore: hasMore(this.props.pagination, nextProps.pagination)
+    }));
   }
 
   /**
@@ -97,10 +95,7 @@ class Library extends Component {
    */
   handleFetchBooks() {
     const { pageSize, pageNumber } = this.props.pagination;
-    let offset = 0;
-    if (pageSize && pageNumber) {
-      offset = pageSize * pageNumber;
-    }
+    const offset = getOffset(pageNumber, pageSize);
     const search = this.state.search && this.state.search.trim();
     const options = search ? { search, offset } : { offset };
     this.setState({

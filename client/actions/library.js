@@ -6,6 +6,7 @@ import notify from './notify';
 import queryStringFromObject from '../utils/queryStringFromObject';
 
 
+
 /**
  * action creator for getting books
  * @param  {Array} books array of book objects
@@ -60,9 +61,13 @@ export const fetchBooks = options => (dispatch) => {
   dispatch(fetchingBooks(true));
   return axios.get(`${API}/books${query}`)
     .then((response) => {
-      dispatch(bookAction(response.data.books));
-      dispatch(setPagination(response.data.metadata));
       dispatch(fetchingBooks(false));
+      if (response.data.books.length) {
+        dispatch(bookAction(response.data.books));
+        dispatch(setPagination(response.data.metadata));
+      } else {
+        notify.error(response.data.message);
+      }
     }, (error) => {
       dispatch(fetchingBooks(false));
       notify.error(error.response.data.message);
