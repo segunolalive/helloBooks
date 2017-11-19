@@ -45,8 +45,8 @@ class Header extends Component {
     }
 
     return (
-      <header className="header">
-        <nav className="transparent">
+      <header className="header navbar-fixed">
+        <nav className="transparent navbar-blue">
           <div className="nav-wrapper">
             <Logo />
             <Navigation

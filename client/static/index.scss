@@ -63,7 +63,8 @@ nav {
 }
 
 
-header {
+.navbar-blue {
+  background: $theme-blue !important;
   border-bottom: $cool-Blue-Border;
 }
 
@@ -197,8 +198,8 @@ main {
 
 
 // search
-.search-wrapper {
-  border-radius: 0 4px 4px 0;
+.search-wrapper, .filter-dropdown {
+  border-radius: 4px;
   padding: 0 !important;
 }
 
