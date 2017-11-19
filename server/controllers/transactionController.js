@@ -1,4 +1,5 @@
 import { Notification } from '../models';
+import { getOptions, paginate } from '../helpers/pagination';
 
 
 /**
@@ -12,17 +13,21 @@ import { Notification } from '../models';
  * @return {object}         - express http response object
  */
 export default (req, res, options) => {
-  const query = { order: [['id', 'DESC']] };
+  const paginationOptions = getOptions(req);
+  let query = { order: [['id', 'DESC']] };
   if (options.history) {
     query.where = { username: req.user.username };
   }
   if (options.admin) {
     delete query.where;
   }
-  Notification.findAll(query)
+  query = { ...query, ...paginationOptions };
+  Notification.findAndCountAll(query)
     .then(notifications => (
       res.status(200).send({
-        notifications
+        notifications: notifications.rows,
+        metadata: paginate(notifications.count,
+          Number(paginationOptions.limit), paginationOptions.offset)
       })
     ))
     .catch(error => (
