@@ -8,7 +8,7 @@ import Header from '../Header';
 import BooksTable from './BooksTable';
 import Categories from './Categories';
 import Search from './Search';
-import Loading from '../Loading';
+import Loading from '../utils/Loading';
 
 import {
   borrowBook,
@@ -85,9 +85,9 @@ class Library extends Component {
    * @returns {undefined} send request to fetch books by specified category
    */
   handleSelectCategory(event) {
-    const category = event.target.value;
-    return Number(category) ?
-      this.props.filterBooksByCategory(category) :
+    const categoryId = event.target.value;
+    return Number(categoryId) ?
+      this.props.filterBooksByCategory(categoryId) :
       this.props.fetchBooks({ offset: 0 });
   }
 

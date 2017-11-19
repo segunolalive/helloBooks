@@ -13,7 +13,7 @@ import Header from '../Header';
 import BookForm from './BookForm';
 import Notifications from './Notifications';
 import AddCategoryForm from './CategoryForm';
-import Loading from '../Loading';
+import Loading from '../utils/Loading';
 
 /**
  * adds or edits book
@@ -168,7 +168,7 @@ class Admin extends Component {
     this.setState({
       hasMore: false
     });
-    return this.props.fetchNotifications({ offset, limit: 12 });
+    return this.props.fetchNotifications({ offset, limit: 6 });
   }
 
   /**

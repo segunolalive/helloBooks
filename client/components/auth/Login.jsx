@@ -8,7 +8,7 @@ import FaGoogle from 'react-icons/lib/fa/google';
 
 import Header from '../Header';
 import { login } from '../../actions/login';
-import Loading from '../Loading';
+import Loading from '../common/Loading';
 
 
 /**
