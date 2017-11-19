@@ -56,20 +56,15 @@ const bookController = {
    * @return {Object}     - express http response object
    */
   createBook(req, res) {
-    if (req.user && req.user.isAdmin) {
-      return Book
-        .create(req.body)
-        .then(book => res.status(201).send({
-          message: `Successfully added ${book.title} to Library`,
-          book,
-        }))
-        .catch(error => res.status(500).send({
-          error
-        }));
-    }
-    res.status(401).send({
-      message: 'Unauthorized access',
-    });
+    return Book
+      .create(req.body)
+      .then(book => res.status(201).send({
+        message: `Successfully added ${book.title} to Library`,
+        book,
+      }))
+      .catch(error => res.status(500).send({
+        error
+      }));
   },
 
   /**
@@ -86,7 +81,7 @@ const bookController = {
       .then((book) => {
         if (!book) {
           return res.status(404).send({
-            message: 'Book does not exist',
+            message: 'Book not found',
           });
         }
         res.status(200).send({
@@ -125,7 +120,8 @@ const bookController = {
         }
         res.status(200).send({
           books: result.rows,
-          metadata: paginate(result.count, options.limit, options.offset)
+          metadata: paginate(result.count,
+            Number(options.limit), options.offset)
         });
       })
       .catch(error => res.status(500).send({ error }));
@@ -141,26 +137,20 @@ const bookController = {
    */
   editBookInfo(req, res) {
     const id = req.params.id;
-    if (req.user && req.user.isAdmin) {
-      Book.update(
-        req.body,
-        {
-          where: { id },
-          returning: true,
-          plain: true,
-        })
-        .then(book => res.status(200).send({
-          book: book[1],
-          message: `${book[1].title} was successfully updated`
-        }))
-        .catch(error => res.status(500).send({
-          error,
-        }));
-    } else {
-      return res.status(401).send({
-        message: 'Unauthorized access',
-      });
-    }
+    Book.update(
+      req.body,
+      {
+        where: { id },
+        returning: true,
+        plain: true,
+      })
+      .then(book => res.status(200).send({
+        book: book[1],
+        message: `${book[1].title} was successfully updated`
+      }))
+      .catch(error => res.status(500).send({
+        error,
+      }));
   },
 
   /**
@@ -173,19 +163,13 @@ const bookController = {
    */
   deleteBook(req, res) {
     const id = req.params.id;
-    if (req.user && req.user.isAdmin) {
-      Book.destroy({ where: { id } })
-        .then(() => res.status(200).send({
-          message: 'Successfully deleted book from database',
-        }))
-        .catch(error => res.status(500).send({
-          error,
-        }));
-    } else {
-      res.status(401).send({
-        message: 'Unauthorized access',
-      });
-    }
+    Book.destroy({ where: { id } })
+      .then(() => res.status(200).send({
+        message: 'Successfully deleted book from database',
+      }))
+      .catch(error => res.status(500).send({
+        error,
+      }));
   },
 
   /**
