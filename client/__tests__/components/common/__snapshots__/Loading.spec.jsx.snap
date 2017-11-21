@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loading renders properly with defaults 1`] = `
+<section
+  className="loading-wrapper center"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col s12"
+    >
+      <strong />
+      <div
+        className="progress lighten-5"
+      >
+        <div
+          className="indeterminate"
+          style={undefined}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`Loading renders text prop passed to it 1`] = `
+<section
+  className="loading-wrapper center"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col s12"
+    >
+      <strong>
+        fetching
+      </strong>
+      <div
+        className="progress lighten-5"
+      >
+        <div
+          className="indeterminate"
+          style={undefined}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+`;
