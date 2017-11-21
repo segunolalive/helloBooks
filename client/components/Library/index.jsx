@@ -95,12 +95,9 @@ class Library extends Component {
    */
   handleFetchBooks() {
     const { pageSize, pageNumber } = this.props.pagination;
-    const offset = getOffset(pageNumber, pageSize);
+    const offset = getOffset.bind(this)(pageNumber, pageSize);
     const search = this.state.search && this.state.search.trim();
     const options = search ? { search, offset } : { offset };
-    this.setState({
-      hasMore: false
-    });
     return this.props.fetchBooks(options);
   }
 
@@ -122,9 +119,6 @@ class Library extends Component {
    */
   handleSearch(event) {
     event.preventDefault();
-    if (!this.state.search) {
-      return;
-    }
     const search = this.state.search.trim();
     return search ?
       this.props.fetchBooks({ search, offset: 0 }) :

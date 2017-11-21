@@ -10,22 +10,13 @@ import toggleSidebar from './toggleSidebar';
  * @class Header
  * @extends {Component}
  */
-class Header extends Component {
+export class Header extends Component {
   /**
    * component lifecycle hook
    * @memberof Header
    * @return {Undefined} - initializes DOM manipulation utility(toggleSidebar)
    */
   componentDidMount() {
-    toggleSidebar();
-  }
-
-  /**
-   * component lifecycle hook
-   * @memberof Header
-   * @return {Undefined} - cleans up DOM manipulation utility(toggleSidebar)
-   */
-  componentWillUnMount() {
     toggleSidebar();
   }
 

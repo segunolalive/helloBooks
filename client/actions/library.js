@@ -6,7 +6,6 @@ import notify from './notify';
 import queryStringFromObject from '../utils/queryStringFromObject';
 
 
-
 /**
  * action creator for getting books
  * @param  {Array} books array of book objects
@@ -44,7 +43,7 @@ export const setPagination = paginationData => ({
  * @return {Object}      action object
  */
 const fetchingBooks = status => ({
-  type: actionTypes.FETCH_MORE_BOOKS,
+  type: actionTypes.FETCHING_MORE_BOOKS,
   status,
 });
 

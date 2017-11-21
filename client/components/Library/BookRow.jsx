@@ -11,7 +11,15 @@ import { Link } from 'react-router-dom';
  */
 const BookRow = props => (
   <tr>
-    <td>{props.cover || 'N/A'}</td>
+    <td>
+      <img
+        src={props.cover || 'https://segunolalive.github.io/helloBooks/' +
+          'templates/images/eloquentjs_cover.png'}
+        alt={`${props.title} book cover`}
+        style={{ width: '40px' }}
+      >
+      </img>
+    </td>
     <td>
       <Link to={`/library/book/${props.id}`}>
         {props.title}

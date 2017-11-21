@@ -159,10 +159,7 @@ class Admin extends Component {
    */
   handleFetchNotifications() {
     const { pageSize, pageNumber } = this.props.pagination;
-    const offset = getOffset(pageNumber, pageSize);
-    this.setState({
-      hasMore: false
-    });
+    const offset = getOffset.bind(this)(pageNumber, pageSize);
     return this.props.fetchNotifications({ offset, limit: 6 });
   }
 

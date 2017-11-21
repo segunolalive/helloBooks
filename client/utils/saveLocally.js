@@ -8,7 +8,6 @@ export const saveState = (state) => {
     const serializedState = JSON.stringify(state);
     localStorage.setItem('state', serializedState);
   } catch (e) {
-    console.log(e);
     return false;
   }
 };
@@ -25,7 +24,6 @@ export const loadState = () => {
     }
     return JSON.parse(serializedState);
   } catch (e) {
-    console.log(e);
     return false;
   }
 };
