@@ -58,10 +58,10 @@ History.propTypes = {
   fetchTransactionHistory: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ authReducer, bookReducer }) => ({
+const mapStateToProps = ({ authReducer, transactionReducer }) => ({
   id: authReducer.user && authReducer.user.id,
-  books: bookReducer.allBorrowed,
-  transactions: bookReducer.transactions,
+  books: transactionReducer.allBorrowed,
+  transactions: transactionReducer.transactions,
 });
 
 export default connect(

@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import bookReducer from './bookReducer';
 import notificationReducer from './notificationReducer';
+import transactionReducer from './transactionReducer';
 import actionTypes from '../actions/actionTypes';
 
 
@@ -16,7 +17,7 @@ const initialState = {
 
 
 const appReducer = combineReducers(
-  { authReducer, bookReducer, notificationReducer }
+  { authReducer, bookReducer, notificationReducer, transactionReducer }
 );
 
 const rootReducer = (state, action) => {
