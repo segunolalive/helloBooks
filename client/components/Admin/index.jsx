@@ -5,12 +5,8 @@ import { Redirect } from 'react-router-dom';
 import { Col, Row } from 'react-materialize';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import {
-  addBook,
-  addBookCategory,
-  editBook,
-  uploadImage
-} from '../../actions/adminActions';
+import { addBook, addBookCategory, editBook } from '../../actions/adminActions';
+import uploadFile from '../../actions/uploadFile';
 import { fetchNotifications } from '../../actions/notifications';
 import { getBookCategories } from '../../actions/library';
 
@@ -37,7 +33,7 @@ class Admin extends Component {
   constructor(props) {
     super(props);
     this.shouldEdit = this.props.location.pathname.match(/^\/admin\/edit/);
-    this.state = { hasMore: false };
+    this.state = { hasMore: false, errors: {} };
     this.state.book = this.shouldEdit ? {
       title: this.props.book.title || '',
       authors: this.props.book.authors || '',
@@ -61,6 +57,7 @@ class Admin extends Component {
     this.handleAddCategory = this.handleAddCategory.bind(this);
     this.handleFetchNotifications = this.handleFetchNotifications.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
+    this.handleFileChange = this.handleFileChange.bind(this);
   }
 
   /**
@@ -139,13 +136,51 @@ class Admin extends Component {
   handleImageChange(event) {
     event.preventDefault();
     const cover = event.target.files[0];
-    this.setState(() => ({ cover }))
-    this.props.uploadImage(event.target.files[0])
-      .then((response) => {
-        this.setState(() => ({
-          book: { ...this.state.book, cover: response.data.secure_url },
+    this.setState(() => ({ cover, book: { ...this.state.book, cover: '' } }));
+    this.props.uploadFile(cover)
+      .end((error, response) => {
+        if (error) {
+          return this.setState(() => ({
+            errors: {
+              ...this.state.errors,
+              cover: response.body.error.message
+            },
+            cover: null,
+            book: { ...this.state.book, cover: '' },
+          }));
+        }
+        this.setState({
+          book: { ...this.state.book, cover: response.body.secure_url },
           cover: null,
-        }));
+        });
+      });
+  }
+
+  /**
+   * [handleFileChange description]
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
+  handleFileChange(event) {
+    event.preventDefault();
+    const bookFile = event.target.files[0];
+    this.setState(() => ({ bookFile }));
+    this.props.uploadFile(bookFile)
+      .end((error, response) => {
+        if (error) {
+          return this.setState(() => ({
+            errors: {
+              ...this.state.errors,
+              bookFile: response.body.error.message
+            },
+            bookFile: null,
+            book: { ...this.state.book, bookFile: '' },
+          }));
+        }
+        this.setState({
+          book: { ...this.state.book, bookFile: response.body.secure_url },
+          bookFile: null,
+        });
       });
   }
 
@@ -197,7 +232,11 @@ class Admin extends Component {
    */
   render() {
     const imageUploading = this.state.cover && !this.state.book.cover;
+    console.log(imageUploading);
     const imageUploaded = this.state.cover === null && this.state.book.cover;
+    const bookFileUploading = this.state.bookFile && !this.state.book.bookFile;
+    const bookFileUploaded = this.state.bookFile === null &&
+      this.state.book.bookFile;
     const { pageCount, pageNumber } = this.props.pagination;
     const reachedEnd = pageNumber >= pageCount;
     const endMessage = reachedEnd ?
@@ -227,6 +266,11 @@ class Admin extends Component {
                       onSubmit={this.handleFormSubmission}
                       imageUploading={imageUploading}
                       imageUploaded={imageUploaded}
+                      imageError={this.state.errors.image}
+                      bookFileUploading={bookFileUploading}
+                      bookFileUploaded={bookFileUploaded}
+                      onBookFileChange={this.handleFileChange}
+                      bookFileError={this.state.errors.bookFile}
                     />
                   </div>
                   <div className="col s12 admin-form center">
@@ -268,6 +312,7 @@ Admin.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   pagination: PropTypes.object.isRequired,
+  uploadFile: PropTypes.func.isRequired,
 };
 
 
@@ -288,7 +333,7 @@ const mapDispatchToProps = {
   editBook,
   getBookCategories,
   fetchNotifications,
-  uploadImage,
+  uploadFile,
 };
 
 export default connect(
