@@ -9,6 +9,7 @@ import FaGoogle from 'react-icons/lib/fa/google';
 import Header from '../Header';
 import { login } from '../../actions/login';
 import Loading from '../common/Loading';
+import { validateLogin } from '../../utils/validation/auth';
 
 
 /**
@@ -52,8 +53,11 @@ class Login extends Component {
    */
   handleLogin(event) {
     event.preventDefault();
-    this.setState({ isLoading: true });
-    this.props.login(this.state);
+    const { errors, isValid } = validateLogin(this.state);
+    if (!isValid) {
+      return this.setState({ errors });
+    }
+    return this.props.login(this.state);
   }
 
   /**
@@ -67,9 +71,7 @@ class Login extends Component {
     event.preventDefault();
     const formField = event.target.name;
     const user = { ...this.state };
-    if (event.target.value.trim()) {
-      user[formField] = event.target.value.trim();
-    }
+    user[formField] = event.target.value.trim();
     this.setState(() => user);
   }
 
@@ -112,6 +114,10 @@ class Login extends Component {
                                 title="username is required for login"
                                 onChange={this.handleChange}
                               />
+                              <span className="red-text">
+                                {this.state.errors &&
+                                  this.state.errors.username}
+                              </span>
                             </div>
                             <div className="input-field">
                               <input type="password"
@@ -122,6 +128,10 @@ class Login extends Component {
                                 title="password is required for login"
                                 onChange={this.handleChange}
                               />
+                              <span className="red-text">
+                                {this.state.errors &&
+                                  this.state.errors.password}
+                              </span>
                             </div>
                             {loadingState}
                             <div className="input-field">
