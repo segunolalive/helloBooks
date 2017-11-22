@@ -49,8 +49,10 @@ class Library extends Component {
    * @return {undefined} fetches books and boo categories
    */
   componentDidMount() {
+    const { pageSize, pageNumber } = this.props.pagination;
+    const offset = getOffset.bind(this)(pageNumber, pageSize);
     this.props.fetchBooks();
-    this.props.getBookCategories();
+    this.props.getBookCategories({ offset });
   }
 
   /**

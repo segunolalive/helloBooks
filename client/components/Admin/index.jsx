@@ -5,7 +5,12 @@ import { Redirect } from 'react-router-dom';
 import { Col, Row } from 'react-materialize';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import { addBook, addBookCategory, editBook } from '../../actions/adminActions';
+import {
+  addBook,
+  addBookCategory,
+  editBook,
+  uploadImage
+} from '../../actions/adminActions';
 import { fetchNotifications } from '../../actions/notifications';
 import { getBookCategories } from '../../actions/library';
 
@@ -55,6 +60,7 @@ class Admin extends Component {
     this.handleSelectCategory = this.handleSelectCategory.bind(this);
     this.handleAddCategory = this.handleAddCategory.bind(this);
     this.handleFetchNotifications = this.handleFetchNotifications.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
   }
 
   /**
@@ -64,7 +70,9 @@ class Admin extends Component {
    */
   componentDidMount() {
     this.props.getBookCategories();
-    this.props.fetchNotifications({ limit: 12 });
+    const { pageSize, pageNumber } = this.props.pagination;
+    const offset = getOffset.bind(this)(pageNumber, pageSize);
+    return this.props.fetchNotifications({ limit: 12, offset });
   }
 
   /**
@@ -124,6 +132,24 @@ class Admin extends Component {
   }
 
   /**
+   * handles image Upload
+   * @param  {object} event
+   * @return {undefined}    sets state
+   */
+  handleImageChange(event) {
+    event.preventDefault();
+    const cover = event.target.files[0];
+    this.setState(() => ({ cover }))
+    this.props.uploadImage(event.target.files[0])
+      .then((response) => {
+        this.setState(() => ({
+          book: { ...this.state.book, cover: response.data.secure_url },
+          cover: null,
+        }));
+      });
+  }
+
+  /**
    * handles selection of book category
    *
    * @param {object} event
@@ -170,6 +196,8 @@ class Admin extends Component {
    * @memberof AddBook
    */
   render() {
+    const imageUploading = this.state.cover && !this.state.book.cover;
+    const imageUploaded = this.state.cover === null && this.state.book.cover;
     const { pageCount, pageNumber } = this.props.pagination;
     const reachedEnd = pageNumber >= pageCount;
     const endMessage = reachedEnd ?
@@ -195,7 +223,10 @@ class Admin extends Component {
                       categories={this.props.categories}
                       onSelectCategory={this.handleSelectCategory}
                       onChange={this.handleFieldChange}
+                      onBookConverChange={this.handleImageChange}
                       onSubmit={this.handleFormSubmission}
+                      imageUploading={imageUploading}
+                      imageUploaded={imageUploaded}
                     />
                   </div>
                   <div className="col s12 admin-form center">
@@ -251,7 +282,16 @@ const mapStateToProps = ({
   pagination: notificationReducer.pagination,
 });
 
+const mapDispatchToProps = {
+  addBook,
+  addBookCategory,
+  editBook,
+  getBookCategories,
+  fetchNotifications,
+  uploadImage,
+};
+
 export default connect(
   mapStateToProps,
-  { addBook, addBookCategory, editBook, getBookCategories, fetchNotifications }
+  mapDispatchToProps
 )(Admin);
