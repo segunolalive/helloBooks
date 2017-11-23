@@ -75,7 +75,10 @@ module.exports = {
       CLOUDINARY_API_BASE: JSON.stringify(
         'https://api.cloudinary.com/v1_1/hfdd5itnd/image/upload'
       ),
-      CLOUDINARY_UPLOAD_PRESET: JSON.stringify('pdtilqua')
+      CLOUDINARY_UPLOAD_PRESET: JSON.stringify('pdtilqua'),
+      CLOUDINARY_IMG_URL_STUB: JSON.stringify(
+        'https://res.cloudinary.com/hfdd5itnd/image/upload/'
+      )
     })
   ],
 };

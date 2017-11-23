@@ -232,7 +232,6 @@ class Admin extends Component {
    */
   render() {
     const imageUploading = this.state.cover && !this.state.book.cover;
-    console.log(imageUploading);
     const imageUploaded = this.state.cover === null && this.state.book.cover;
     const bookFileUploading = this.state.bookFile && !this.state.book.bookFile;
     const bookFileUploaded = this.state.bookFile === null &&

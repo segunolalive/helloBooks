@@ -1,18 +1,8 @@
 import axios from 'axios';
-import request from 'superagent';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
 import notify from './notify';
 
-
-export const uploadFile = file => (
-  () => (
-    request
-      .post(CLOUDINARY_API_BASE)
-      .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-      .field('file', file)
-  )
-);
 
 /**
  * @param {Object} book - book

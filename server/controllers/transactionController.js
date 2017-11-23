@@ -10,7 +10,7 @@ import { getOptions, paginate } from '../helpers/pagination';
  * admin
  * @param  {Bool} options.history   - return user transaction history if true
  * @param  {Bool} options.admin     - return site transactions if true
- * @return {object}         - express http response object
+ * @return {object}                 - express http response object
  */
 export default (req, res, options) => {
   const paginationOptions = getOptions(req);
