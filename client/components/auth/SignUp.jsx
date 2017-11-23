@@ -8,7 +8,8 @@ import FaGoogle from 'react-icons/lib/fa/google';
 
 import Header from '../Header';
 import { signUp } from '../../actions/signup';
-import Loading from '../Loading';
+import Loading from '../common/Loading';
+import { validateSignUp } from '../../utils/validation/auth';
 
 
 /**
@@ -45,8 +46,13 @@ class SignUp extends Component {
    */
   handleSignUp(event) {
     event.preventDefault();
-    this.props.signUp(this.state);
+    const { errors, isValid } = validateSignUp(this.state);
+    if (!isValid) {
+      return this.setState({ errors });
+    }
+    return this.props.signUp(this.state);
   }
+
 
   /**
    * google login handler
@@ -69,9 +75,7 @@ class SignUp extends Component {
     event.preventDefault();
     const formField = event.target.name;
     const user = Object.assign({}, this.state);
-    if (event.target.value.trim()) {
-      user[formField] = event.target.value.trim();
-    }
+    user[formField] = event.target.value.trim();
     this.setState(() => user);
   }
 
@@ -134,6 +138,9 @@ class SignUp extends Component {
                                 placeholder="Email"
                                 onChange={this.handleChange}
                               />
+                              <span className="red-text">
+                                {this.state.errors && this.state.errors.email}
+                              </span>
                             </div>
                             <div className="input-field">
                               <input
@@ -145,6 +152,10 @@ class SignUp extends Component {
                                 title="username is required"
                                 onChange={this.handleChange}
                               />
+                              <span className="red-text">
+                                {this.state.errors &&
+                                  this.state.errors.username}
+                              </span>
                             </div>
                             <div className="input-field">
                               <input
@@ -156,6 +167,10 @@ class SignUp extends Component {
                                 title="password is required"
                                 onChange={this.handleChange}
                               />
+                              <span className="red-text">
+                                {this.state.errors &&
+                                  this.state.errors.password}
+                              </span>
                             </div>
                             <div className="input-field">
                               <input
@@ -167,6 +182,10 @@ class SignUp extends Component {
                                 title="password confirmation is required"
                                 onChange={this.handleChange}
                               />
+                              <span className="red-text">
+                                {this.state.errors &&
+                                  this.state.errors.confirmPassword}
+                              </span>
                             </div>
                             {loadingState}
                             <div className="input-field">

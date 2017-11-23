@@ -7,7 +7,7 @@ import mock from '../mock/mock';
 const server = supertest.agent(app);
 let jwtToken;
 
-describe('Book', () => {
+describe('bookController', () => {
   before((done) => {
     server
       .post('/api/v1/users/signin')
@@ -17,7 +17,7 @@ describe('Book', () => {
         done();
       });
   });
-  describe('getAllBooks', () => {
+  describe('#getBooks', () => {
     it('should be allow users to view all books', (done) => {
       server
         .get('/api/v1/books')
@@ -39,7 +39,7 @@ describe('Book', () => {
         });
     });
   });
-  describe('getBook', () => {
+  describe('#getBook', () => {
     it('should allow users to view a book\'s information', (done) => {
       server
         .get('/api/v1/books/1')
@@ -55,6 +55,7 @@ describe('Book', () => {
         .expect(404)
         .end((err, res) => {
           assert.equal(res.status, 404);
+          assert.equal(res.body.message, 'Book not found');
           done();
         });
     });
@@ -172,6 +173,7 @@ describe('non-admin access', () => {
         .expect(401)
         .end((err, res) => {
           assert.equal(res.status, 401);
+          assert.equal(res.body.message, 'Unauthorized access');
           done();
         });
     });

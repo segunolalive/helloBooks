@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Categories from '../Library/Categories';
+import Loading from '../common/Loading';
 
 /**
  * for for adding or editing books
@@ -27,7 +28,7 @@ const BookForm = (props) => {
             id="title"
             type="text"
             name="title"
-            defaultValue={props.book ? props.book.title : ''}
+            value={props.book.title}
             placeholder="Book Title"
             onChange={event => props.onChange(event)}
           />
@@ -36,14 +37,14 @@ const BookForm = (props) => {
           <input
             type="text"
             name="authors"
-            defaultValue={props.book ? props.book.authors : ''}
+            value={props.book.authors}
             placeholder="Authors (comma separated for multiple)"
             onChange={event => props.onChange(event)}
           />
         </div>
         <div className="input-field">
           <textarea name="description"
-            defaultValue={props.book ? props.book.description : ''}
+            value={props.book.description}
             rows="20"
             placeholder="Book Description"
             onChange={event => props.onChange(event)}
@@ -67,17 +68,46 @@ const BookForm = (props) => {
               <span>Browse</span>
               <input
                 type="file"
-                name="cvover"
+                name="cover"
                 accept="image/jpeg image/x-png"
+                onChange={event => props.onBookConverChange(event)}
               />
             </div>
             <div className="file-path-wrapper">
               <input
                 className="file-path validate"
-                name="bookFile"
                 type="text"
                 placeholder="Upload Book Cover"
               />
+            </div>
+            <div>
+              <span>
+                <small className="green-text">
+                  {props.imageUploading &&
+                    <Loading text="uploading image . . ." />}
+                </small>
+              </span>
+              {props.imageUploaded &&
+                <span>
+                  <small className="green-text">
+                    book cover uploaded &nbsp;
+                  </small>
+                  <img
+                    src={`${props.book.cover}`}
+                    alt="image uploaded"
+                    style={{ width: '50px' }}
+                  />
+                </span>}
+              {(!props.imageUploaded && !props.imageUploading) &&
+                <img
+                  src={`${props.book.cover}`}
+                  alt="image uploaded"
+                  style={{ width: '50px' }}
+                />
+              }
+              <span className="red-text">
+                <small>{props.imageError}</small>
+              </span>
             </div>
           </div>
         </div>
@@ -87,7 +117,9 @@ const BookForm = (props) => {
               <span>Browse</span>
               <input
                 type="file"
+                name="bookFile"
                 accept="application/pdf"
+                onChange={event => props.onBookFileChange(event)}
               />
             </div>
             <div className="file-path-wrapper">
@@ -97,15 +129,36 @@ const BookForm = (props) => {
                 placeholder="Upload Book file"
               />
             </div>
+            <div>
+              <span>
+                <small className="green-text">
+                  {props.bookFileUploading &&
+                    <Loading text="uploading book file . . ." />}
+                </small>
+              </span>
+              {props.bookFileUploaded &&
+                <span>
+                  <small className="green-text">
+                    book file uploaded &nbsp;
+                  </small>
+                  <img
+                    src={props.book.bookFile}
+                    alt="image uploaded"
+                    style={{ width: '50px' }}
+                  />
+                </span>}
+              <span className="red-text">
+                <small>{props.bookFileError}</small>
+              </span>
+            </div>
           </div>
         </div>
-        <div style={ { paddingTop: '10px' } }>
+        <div style={{ paddingTop: '10px' }}>
           <input
             type="submit"
             className="btn center"
             onClick={props.onSubmit}
-          >
-          </input>
+          />
         </div>
       </form>
     </div>
@@ -119,6 +172,14 @@ BookForm.propTypes = {
   onSelectCategory: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  onBookConverChange: PropTypes.func.isRequired,
+  imageUploading: PropTypes.bool,
+  imageUploaded: PropTypes.bool,
+  imageError: PropTypes.string,
+  bookFileUploading: PropTypes.bool,
+  bookFileUploaded: PropTypes.bool,
+  onBookFileChange: PropTypes.func.isRequired,
+  bookFileError: PropTypes.string,
 };
 
 export default BookForm;

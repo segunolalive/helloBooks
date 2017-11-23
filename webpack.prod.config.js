@@ -71,7 +71,14 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       },
       GOOGLE_CLIENT_ID: JSON.stringify('701806023399-vgqondt26qh10vcuei77r7' +
-      'nsbcd8oa8k.apps.googleusercontent.com')
+      'nsbcd8oa8k.apps.googleusercontent.com'),
+      CLOUDINARY_API_BASE: JSON.stringify(
+        'https://api.cloudinary.com/v1_1/hfdd5itnd/image/upload'
+      ),
+      CLOUDINARY_UPLOAD_PRESET: JSON.stringify('pdtilqua'),
+      CLOUDINARY_IMG_URL_STUB: JSON.stringify(
+        'https://res.cloudinary.com/hfdd5itnd/image/upload/'
+      )
     })
   ],
 };

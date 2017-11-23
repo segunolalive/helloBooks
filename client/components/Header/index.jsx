@@ -10,22 +10,13 @@ import toggleSidebar from './toggleSidebar';
  * @class Header
  * @extends {Component}
  */
-class Header extends Component {
+export class Header extends Component {
   /**
    * component lifecycle hook
    * @memberof Header
    * @return {Undefined} - initializes DOM manipulation utility(toggleSidebar)
    */
   componentDidMount() {
-    toggleSidebar();
-  }
-
-  /**
-   * component lifecycle hook
-   * @memberof Header
-   * @return {Undefined} - cleans up DOM manipulation utility(toggleSidebar)
-   */
-  componentWillUnMount() {
     toggleSidebar();
   }
 
@@ -45,8 +36,8 @@ class Header extends Component {
     }
 
     return (
-      <header className="header">
-        <nav className="transparent">
+      <header className="header navbar-fixed">
+        <nav className="transparent navbar-blue">
           <div className="nav-wrapper">
             <Logo />
             <Navigation
@@ -57,7 +48,7 @@ class Header extends Component {
             <Navigation
               id="slide-out"
               activeLink={this.props.activeLink}
-              className="side-nav right-aligned"
+              className="side-nav right-aligned hide-on-med-and-up fixed"
               navLinks={navLinks}
             />
             <a href="#" data-activates="slide-out"

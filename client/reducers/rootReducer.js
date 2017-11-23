@@ -2,19 +2,28 @@ import { combineReducers } from 'redux';
 
 import authReducer from './authReducer';
 import bookReducer from './bookReducer';
-import notifications from './notificationReducer';
+import notificationReducer from './notificationReducer';
+import transactionReducer from './transactionReducer';
 import actionTypes from '../actions/actionTypes';
 
 
-const appReducer = combineReducers(
-  { authReducer, bookReducer, notifications }
-);
+const initialState = {
+  authReducer: {},
+  bookReducer: {
+    books: [],
+    pagination: {},
+  }
+};
 
+
+const appReducer = combineReducers(
+  { authReducer, bookReducer, notificationReducer, transactionReducer }
+);
 
 const rootReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.LOGOUT:
-      return { authReducer: {}, bookReducer: {} };
+      return initialState;
     default:
       return appReducer(state, action);
   }

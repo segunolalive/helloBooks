@@ -19,13 +19,14 @@ const Categories = (props) => {
       : null
   ));
   return (
-    <div className={props.className}>
+    <div className={`${props.className} z-depth-3 bottom-10 filter-dropdown`}>
       <Input s={12}
         type='select'
         defaultValue=''
         onChange={event => props.onChange(event)}
       >
         <option value='' disabled>{props.text}</option>
+        <option value='0'>no filter</option>
         {options}
       </Input>
     </div>

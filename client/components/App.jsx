@@ -15,8 +15,6 @@ import Logout from './auth/Logout';
 import Password from './auth/Password';
 import UpdateProfile from './Dashboard/UpdateProfile';
 
-import mock from './mock';
-
 
 /**
  * @public
@@ -25,16 +23,6 @@ import mock from './mock';
  * @extends {Component}
  */
 class App extends Component {
-  /**
-   * Creates an instance of App.
-   * @param {Object} props
-   * @memberof App
-   */
-  constructor(props) {
-    super(props);
-    this.categories = mock.categories;
-    this.books = mock.books;
-  }
   /**
    * renders app to DOM
    *

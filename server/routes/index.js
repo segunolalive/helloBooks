@@ -10,6 +10,7 @@ import shouldBorrow from '../middleware/maxBorrowed';
 import ensureIsAdmin from '../middleware/ensureIsAdmin';
 import validateInput from '../middleware/validateInput';
 import prepareGoogleAuth from '../middleware/prepareGoogleAuth';
+import validateLimitAndOffset from '../middleware/validateLimitAndOffset';
 
 
 const router = express.Router();
@@ -23,7 +24,7 @@ router.get('/', (req, res) => res.status(200).send({
   .post('/users/forgot-password', userController.passwordResetMail)
   .get('/books/category', bookController.getBookCategories)
   .get('/books/:id', bookController.getBook)
-  .get('/books', bookController.getAllBooks)
+  .get('/books', validateLimitAndOffset, bookController.getBooks)
   // Protected routes
   .put(
     '/users/reset-password/:token',
@@ -56,7 +57,7 @@ router.get('/', (req, res) => res.status(200).send({
   .get(
     '/users/:id/transactions',
     authenticate,
-    (req, res) => transactionController(req, res, true)
+    (req, res) => transactionController(req, res, { history: true })
   )
   .post(
     '/users/reset-password/:token',
@@ -93,7 +94,7 @@ router.get('/', (req, res) => res.status(200).send({
     '/admin-notifications',
     authenticate,
     ensureIsAdmin,
-    (req, res) => transactionController(req, res, false, true)
+    (req, res) => transactionController(req, res, { admin: true })
   )
   // Send a message if route does not exist
   .get('/api*', (req, res) => res.status(404).send({

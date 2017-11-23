@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Col, Row } from 'react-materialize';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import Header from '../Header';
 import BooksTable from './BooksTable';
 import Categories from './Categories';
 import Search from './Search';
-import Loading from '../Loading';
+import Loading from '../common/Loading';
+
+import { hasMore, getOffset } from '../../utils/paginationUtils';
 
 import {
   borrowBook,
@@ -33,17 +36,34 @@ class Library extends Component {
     super(props);
     this.handleBorrowBook = this.handleBorrowBook.bind(this);
     this.handleSelectCategory = this.handleSelectCategory.bind(this);
+    this.handleFetchBooks = this.handleFetchBooks.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.state = { hasMore: false };
   }
 
   /**
    * lifecycle hook called when component is mounted to DOM
    *
    * @memberof Library
-   * @return {Undefined} fetches books and boo categories
+   * @return {undefined} fetches books and boo categories
    */
   componentDidMount() {
+    const { pageSize, pageNumber } = this.props.pagination;
+    const offset = getOffset.bind(this)(pageNumber, pageSize);
     this.props.fetchBooks();
-    this.props.getBookCategories();
+    this.props.getBookCategories({ offset });
+  }
+
+  /**
+   * called when component receives new propTypes
+   * @param  {Object} nextProps
+   * @return {undefined}        calls set setState
+   */
+  componentWillReceiveProps(nextProps) {
+    this.setState(() => ({
+      hasMore: hasMore(this.props.pagination, nextProps.pagination)
+    }));
   }
 
   /**
@@ -51,7 +71,7 @@ class Library extends Component {
    * @method
    * @param {Integer} bookId
    * @memberof Library
-   * @returns {Undefined} sends a request to borrow a book
+   * @returns {undefined} sends a request to borrow a book
    */
   handleBorrowBook(bookId) {
     this.props.borrowBook(this.props.userId, bookId);
@@ -62,11 +82,49 @@ class Library extends Component {
    *
    * @param {any} event
    * @memberof Library
-   * @returns {Undefined} send request to fetch books by specified category
+   * @returns {undefined} send request to fetch books by specified category
    */
   handleSelectCategory(event) {
-    const category = event.target.value;
-    this.props.filterBooksByCategory(category);
+    const categoryId = event.target.value;
+    return Number(categoryId) ?
+      this.props.filterBooksByCategory(categoryId) :
+      this.props.fetchBooks({ offset: 0 });
+  }
+
+  /**
+   * handles fetching of Books
+   * @return {Function} thunk
+   */
+  handleFetchBooks() {
+    const { pageSize, pageNumber } = this.props.pagination;
+    const offset = getOffset.bind(this)(pageNumber, pageSize);
+    const search = this.state.search && this.state.search.trim();
+    const options = search ? { search, offset } : { offset };
+    return this.props.fetchBooks(options);
+  }
+
+  /**
+   * updates state with value of search input
+   * @param  {object} event  form submission event
+   * @return {undefined}     calls setState
+   */
+  handleSearchChange(event) {
+    event.preventDefault();
+    const search = event.target.value;
+    this.setState(() => ({ search }));
+  }
+
+  /**
+   * searches for books matching input value
+   * @param  {object} event  form submission event
+   * @return {undefined}       sends a network request
+   */
+  handleSearch(event) {
+    event.preventDefault();
+    const search = this.state.search.trim();
+    return search ?
+      this.props.fetchBooks({ search, offset: 0 }) :
+      this.props.fetchBooks({ offset: 0 });
   }
 
   /**
@@ -76,10 +134,17 @@ class Library extends Component {
    * @memberof Library
    */
   render() {
+    const { pageCount, pageNumber } = this.props.pagination;
+    const reachedEnd = pageNumber >= pageCount;
+    const endMessage = reachedEnd ?
+      <p className="center" style={{ fontWeight: 900 }}>
+        That&apos;s all for now
+      </p> :
+      <Loading text="fetching more awesome books . . ." />;
     const categories = this.props.categories ?
       <Categories
         text="Filter By Category"
-        className="col s12 m8 offset-m2 l6"
+        className="col s12 m8 offset-m2 l5"
         categories={this.props.categories}
         onChange={this.handleSelectCategory}
       /> : null;
@@ -91,26 +156,41 @@ class Library extends Component {
         <main className="white-area">
           <Row>
             <div className="container">
-              <Col s={12} className="center">
-                <h3 className="">All Books</h3>
-                <p>Click on a title to see book details</p>
-              </Col>
-              {categories}
-              <Search
-                className="col s12 m8 offset-m2 l6"
-              />
-              <BooksTable
-                borrowBook={this.handleBorrowBook}
-                bookList={this.props.books}
-                tableHeaders={[
-                  'Cover',
-                  'Title',
-                  'Author(s)',
-                  'Copies Available',
-                  'Action'
-                ]}
-              />
-              <Loading text="fetching more awesome books . . ." />
+              <Row>
+                <Col s={12} className="center">
+                  <h2 className="bold-text">All Books</h2>
+                  <p>Click on a title to see book details</p>
+                </Col>
+                <Col s={12}>
+                  {categories}
+                  <Search
+                    className="col s12 m8 offset-m2 l6 offset-l1"
+                    onSubmit={this.handleSearch}
+                    onClick={this.handleSearch}
+                    onChange={this.handleSearchChange}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <InfiniteScroll
+                  pageStart={0}
+                  loadMore={this.handleFetchBooks}
+                  hasMore={this.state.hasMore}
+                >
+                  <BooksTable
+                    borrowBook={this.handleBorrowBook}
+                    bookList={this.props.books}
+                    tableHeaders={[
+                      'Cover',
+                      'Title',
+                      'Author(s)',
+                      'Copies Available',
+                      'Action'
+                    ]}
+                  />
+                </InfiniteScroll>
+              </Row>
+              {endMessage}
             </div>
           </Row>
         </main>
@@ -125,6 +205,7 @@ Library.propTypes = {
   categories: PropTypes.array.isRequired,
   borrowBook: PropTypes.func.isRequired,
   fetchBooks: PropTypes.func.isRequired,
+  pagination: PropTypes.object.isRequired,
   getBookCategories: PropTypes.func.isRequired,
   filterBooksByCategory: PropTypes.func.isRequired,
 };
@@ -134,6 +215,7 @@ const mapStateToProps = ({ authReducer, bookReducer }) => {
   return {
     books: bookReducer.books,
     categories: bookReducer.categories,
+    pagination: bookReducer.pagination,
     userId,
   };
 };

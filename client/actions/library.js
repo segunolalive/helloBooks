@@ -3,6 +3,7 @@ import axios from 'axios';
 import actionTypes from '../actions/actionTypes';
 import API from './api';
 import notify from './notify';
+import queryStringFromObject from '../utils/queryStringFromObject';
 
 
 /**
@@ -15,19 +16,67 @@ export const getBooks = books => ({
   books,
 });
 
+/**
+ * action creator for getting books
+ * @param  {Array} books array of book objects
+ * @return {Object}       action object
+ */
+export const getMoreBooks = books => ({
+  type: actionTypes.GET_MORE_BOOKS,
+  books,
+});
+
 
 /**
- * fetch books in thhe Library
- * @return {any} dispatches an action
+ * sets pagination metadata in store
+ * @param {Object}  paginationData  pagination metadata object
+ * @return {Object}                 action object
  */
-export const fetchBooks = () => dispatch => (
-  axios.get(`${API}/books`)
-    .then(
-      response => dispatch(getBooks(response.data.books)),
-      error => notify.error(error.response.data.message)
-    )
-    .catch(error => notify.error(error.response.data.message))
-);
+export const setPagination = paginationData => ({
+  type: actionTypes.SET_LIBRARY_PAGINATION,
+  pagination: paginationData
+});
+
+
+/**
+ * @param  {Bool} status
+ * @return {Object}      action object
+ */
+const fetchingBooks = status => ({
+  type: actionTypes.FETCHING_MORE_BOOKS,
+  status,
+});
+
+
+/**
+ * fetch books in the Library
+ * @param {object} options
+ * @return {Promise}   dispatches an action
+ */
+export const fetchBooks = options => (dispatch) => {
+  const query = queryStringFromObject(options);
+  const bookAction = options && options.offset && options.offset > 0 ?
+    getMoreBooks : getBooks;
+  dispatch(fetchingBooks(true));
+  return axios.get(`${API}/books${query}`)
+    .then((response) => {
+      dispatch(fetchingBooks(false));
+      if (response.data.books.length) {
+        dispatch(bookAction(response.data.books));
+        dispatch(setPagination(response.data.metadata));
+      } else {
+        notify.error(response.data.message);
+      }
+    }, (error) => {
+      dispatch(fetchingBooks(false));
+      notify.error(error.response.data.message);
+    })
+    .catch((error) => {
+      dispatch(fetchingBooks(false));
+      notify.error(error);
+    });
+};
+
 
 /**
  * action creator for borrowing books
@@ -66,7 +115,7 @@ const getBookCategoriesAction = categories => ({
 });
 
 /**
- * get book cattegories
+ * get book categories
  * @return {any} dispatches an action to the redux store
  */
 export const getBookCategories = () => dispatch => (
@@ -74,11 +123,12 @@ export const getBookCategories = () => dispatch => (
     .then(response => (
       dispatch(getBookCategoriesAction(response.data.categories))
     ), error => notify.error(error.response.data.message))
+    .catch(error => notify.error(error))
 );
 
 
-export const filterBooksByCategory = category => dispatch => (
-  axios.get(`${API}/books?category=${category}`)
+export const filterBooksByCategory = categoryId => dispatch => (
+  axios.get(`${API}/books?categoryId=${categoryId}`)
     .then(response => dispatch(getBooks(response.data.books)))
     .catch(error => notify.error(error.response.data.message))
 );

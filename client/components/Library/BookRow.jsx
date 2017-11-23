@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-materialize';
 import { Link } from 'react-router-dom';
 
+import requestImageUrl from '../../utils/requestImageUrl';
+
 
 /**
  * displays a table row of books
@@ -11,7 +13,16 @@ import { Link } from 'react-router-dom';
  */
 const BookRow = props => (
   <tr>
-    <td>{props.cover || 'N/A'}</td>
+    <td>
+      <img
+        src={(props.cover && requestImageUrl(props.cover, { width: 50 })) ||
+          'https://segunolalive.github.io/helloBooks/' +
+          'templates/images/eloquentjs_cover.png'}
+        alt={`${props.title} book cover`}
+        style={{ width: '40px' }}
+      >
+      </img>
+    </td>
     <td>
       <Link to={`/library/book/${props.id}`}>
         {props.title}

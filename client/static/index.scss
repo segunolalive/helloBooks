@@ -63,7 +63,8 @@ nav {
 }
 
 
-header {
+.navbar-blue {
+  background: $theme-blue !important;
   border-bottom: $cool-Blue-Border;
 }
 
@@ -193,4 +194,81 @@ main {
 
 .progress .indeterminate {
     background-color: #001b33;
+}
+
+
+// search
+.search-wrapper, .filter-dropdown {
+  border-radius: 4px;
+  padding: 0 !important;
+}
+
+input[type=search]:not(.browser-default) {
+  border-bottom: none !important;
+  margin: 0px !important;
+  padding: 3px !important;
+}
+
+.search-btn {
+  background: transparent;
+  color: #aaaaaa;
+  box-shadow: none;
+  height: 3rem;
+
+  i {
+    font-size: 2.5rem !important;
+    vertical-align: middle;
+  }
+}
+
+.search-btn:hover {
+  background: transparent;
+  box-shadow: none;
+  i {
+    color: $theme-blue;
+  }
+}
+
+.search-btn:focus {
+  background: transparent;
+  box-shadow: none;
+  i {
+    color: $theme-blue;
+  }
+}
+
+.search-btn-wrapper {
+  margin: 5px auto;
+  border-left: 2px solid #e9e9e9;
+  margin: 0;
+  height: 4rem;
+  padding: .5rem 0 !important;
+  text-align: center;
+}
+
+.search-btn-wrapper:hover {
+  background: #eeeeee;
+}
+
+.bottom-10 {
+  margin-bottom: 10px;
+}
+
+.filter-dropdown {
+  input.select-dropdown{
+    margin-bottom: 0;
+    border: 0;
+  }
+}
+
+.books-table {
+  thead {
+    background-color: $theme-blue;
+    color: #ffffff;
+
+    th {
+      border-radius: 0;
+    }
+
+  }
 }

@@ -139,7 +139,8 @@ class BookDetail extends Component {
                     <div className="card-image">
                       <img src={
                         this.props.book && (this.props.book.cover ||
-                    'https://segunolalive.github.io/helloBooks/templates/images/eloquentjs_cover.png')
+                    'https://segunolalive.github.io/helloBooks/templates/' +
+                    'images/eloquentjs_cover.png')
                       }
                       />
                     </div>

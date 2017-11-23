@@ -1,2 +1,3 @@
 /server/test
 /dist
+#/client/__tests__
