@@ -36,7 +36,7 @@ class App extends Component {
           <Switch>
             <Route path='/' exact component={Home} />
             <Route path='/dashboard' component={Dashboard} />
-            <Route path='/update-profile'component={UpdateProfile} />
+            <Route path='/update-profile' component={UpdateProfile} />
             <Route path='/login' component={Login} />
             <Route path='/logout' component={Logout} />
             <Route path='/signup' component={SignUp} />
