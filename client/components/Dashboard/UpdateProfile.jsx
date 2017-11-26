@@ -5,13 +5,14 @@ import { Col, Row } from 'react-materialize';
 import { Redirect } from 'react-router-dom';
 
 import Header from '../Header';
-import { updateProfile } from '../../actions/updateProfile';
+import updateProfile from '../../actions/updateProfile';
+import notify from '../../actions/notify';
 
 /**
  * Component to update user profile
  * @type {Object}
  */
-class UpdateProfile extends Component {
+export class UpdateProfile extends Component {
   /**
    * constructs instance of Component
    * @param {Object} props
@@ -27,6 +28,7 @@ class UpdateProfile extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.loginRedirect = this.loginRedirect.bind(this);
   }
 
   /**
@@ -55,11 +57,20 @@ class UpdateProfile extends Component {
   }
 
   /**
+   * handles form submission
+   * @return {JSX}   react-router-dom redirect component
+   */
+  loginRedirect() {
+    notify.error('Login to proceed');
+    return <Redirect to='/login' />;
+  }
+
+  /**
    * class method that renders a component to the DOM
    * @return {Object} JSX element
    */
   render() {
-    return (this.state.redirect === true ?
+    const renderPage = this.state.redirect === true ?
       <Redirect to='/dashboard' /> :
       <div>
         <Header
@@ -80,7 +91,7 @@ class UpdateProfile extends Component {
                   <input
                     onChange={this.handleChange}
                     name="firstName"
-                    defaultValue={this.state.firstName || ''}
+                    value={this.state.firstName || ''}
                   />
                 </div>
                 <div className="input-field">
@@ -88,7 +99,7 @@ class UpdateProfile extends Component {
                   <input
                     onChange={this.handleChange}
                     name="lastName"
-                    defaultValue={this.state.lastName || ''}
+                    value={this.state.lastName || ''}
                   />
                 </div>
                 <h6 className="red-text darken-4" >
@@ -101,7 +112,7 @@ class UpdateProfile extends Component {
                     onChange={this.handleChange}
                     name="password"
                     type="password"
-                    defaultValue={this.state.currentPassword}
+                    value={this.state.currentPassword}
                   />
                 </div>
                 <div className="input-field">
@@ -110,7 +121,7 @@ class UpdateProfile extends Component {
                     onChange={this.handleChange}
                     type="password"
                     name="newPassword"
-                    defaultValue={this.state.newPassword}
+                    value={this.state.newPassword}
                   />
                 </div>
                 <div className="input-field">
@@ -125,18 +136,20 @@ class UpdateProfile extends Component {
             </Col>
           </Row>
         </main>
-      </div>
-    );
+      </div>;
+    return this.props.isLoggedIn ? renderPage : this.loginRedirect();
   }
 }
 
 UpdateProfile.propTypes = {
   user: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
   updateProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ authReducer }) => ({
   user: authReducer.user,
+  isLoggedIn: authReducer.isLoggedIn,
 });
 
 export default connect(mapStateToProps, { updateProfile })(UpdateProfile);

@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Home from './Home';
 import History from './History';
-import notFound from './404';
+import NotFound from './NotFound';
 import Admin from './Admin';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
@@ -48,7 +48,7 @@ class App extends Component {
             <Route path='/admin' component={Admin} />
             <Route path='/forgot-password' component={Password} />
             <Route path='/reset-password' component={Password} />
-            <Route component={notFound} />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </BrowserRouter>

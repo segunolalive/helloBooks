@@ -3,8 +3,9 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import requestResetPassword from '../../actions/requestResetPassword';
-import resetPassword from '../../actions/resetPassword';
+import requestResetPassword
+  from '../../actions/authActions/requestResetPassword';
+import resetPassword from '../../actions/authActions/resetPassword';
 
 import ForgotPasswordForm from './ForgotPasswordForm';
 import ResetPasswordForm from './ResetPasswordForm';
@@ -15,7 +16,7 @@ import ResetPasswordForm from './ResetPasswordForm';
  * @class Auth
  * @extends {Component}
  */
-class Password extends Component {
+export class Password extends Component {
   /**
    * Creates an instance of Password.
    * @param {any} props
@@ -39,7 +40,7 @@ class Password extends Component {
     event.preventDefault();
     const email = event.target.email.value.trim();
     this.setState(() => ({ loading: true }));
-    this.props.requestResetPassword(email)
+    return this.props.requestResetPassword(email)
       .then(() =>
         this.setState(() => ({ loading: false }))
       );
@@ -104,7 +105,7 @@ class Password extends Component {
    */
   render() {
     return this.props.isLoggedIn === true ?
-      <Redirect to='/dashboard'/> :
+      <Redirect to='/dashboard' /> :
       this.renderChild();
   }
 }

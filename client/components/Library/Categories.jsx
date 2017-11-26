@@ -26,7 +26,9 @@ const Categories = (props) => {
         onChange={event => props.onChange(event)}
       >
         <option value='' disabled>{props.text}</option>
-        <option value='0'>no filter</option>
+        <option value={props.indexVal || null}>
+          {props.indexText || 'none'}
+        </option>
         {options}
       </Input>
     </div>
@@ -38,6 +40,8 @@ Categories.propTypes = {
   text: PropTypes.string,
   categories: PropTypes.array,
   onChange: PropTypes.func,
+  indexVal: PropTypes.number,
+  indexText: PropTypes.string,
 };
 
 export default Categories;

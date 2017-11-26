@@ -5,10 +5,12 @@ import { Redirect } from 'react-router-dom';
 import { Col, Row } from 'react-materialize';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import { addBook, addBookCategory, editBook } from '../../actions/adminActions';
+import { addBook,
+  addBookCategory,
+  editBook } from '../../actions/adminActions/books';
 import uploadFile from '../../actions/uploadFile';
-import { fetchNotifications } from '../../actions/notifications';
-import { getBookCategories } from '../../actions/library';
+import { fetchNotifications } from '../../actions/adminActions/notifications';
+import { getBookCategories } from '../../actions/bookActions/library';
 
 import Header from '../Header';
 import BookForm from './BookForm';
@@ -24,11 +26,11 @@ import { hasMore, getOffset } from '../../utils/paginationUtils';
  * @class Admin
  * @extends {Component}
  */
-class Admin extends Component {
+export class Admin extends Component {
   /**
    * Creates an instance of AddBook.
    * @param {object} props
-   * @memberof AddBook
+   * @memberof Admin
    */
   constructor(props) {
     super(props);
@@ -62,7 +64,7 @@ class Admin extends Component {
 
   /**
    * lifecycle methods called after component mounts the DOM
-   * @memberof AddBook
+   * @memberof Admin
    * @returns {undefined} fetches book categories and admin notifications
    */
   componentDidMount() {
@@ -87,7 +89,7 @@ class Admin extends Component {
    * form submission handler
    *
    * @param {object} event
-   * @memberof AddBook
+   * @memberof Admin
    * @returns {undefined} submits form
    */
   handleFormSubmission(event) {
@@ -117,7 +119,7 @@ class Admin extends Component {
    * updates component state when form values (except select field) change
    *
    * @param {object} event
-   * @memberof AddBook
+   * @memberof Admin
    * @returns {undefined} calls setState
    */
   handleFieldChange(event) {
@@ -188,7 +190,7 @@ class Admin extends Component {
    * handles selection of book category
    *
    * @param {object} event
-   * @memberof AddBook
+   * @memberof Admin
    * @returns {Function} calls setState
    */
   handleSelectCategory(event) {
@@ -201,7 +203,7 @@ class Admin extends Component {
    * handles adding a new category
    *
    * @param {object} event
-   * @memberof AddBook
+   * @memberof Admin
    * @returns {undefined} updates list of categories
    */
   handleAddCategory(event) {
@@ -228,7 +230,7 @@ class Admin extends Component {
    * renders component to DOM
    *
    * @returns {JSX} JSX representation of component
-   * @memberof AddBook
+   * @memberof Admin
    */
   render() {
     const imageUploading = this.state.cover && !this.state.book.cover;
@@ -246,7 +248,7 @@ class Admin extends Component {
     const text = this.shouldEdit ?
       'Edit Book Information' :
       'Add Book To Library';
-    return (this.props.user && this.props.user.isAdmin ?
+    return (this.props.user.isAdmin ?
       <div>
         <Header activeLink='admin' />
         <main>
@@ -273,9 +275,7 @@ class Admin extends Component {
                     />
                   </div>
                   <div className="col s12 admin-form center">
-                    <AddCategoryForm
-                      onSubmit={this.handleAddCategory}
-                    />
+                    <AddCategoryForm onSubmit={this.handleAddCategory} />
                   </div>
                 </Col>
                 <div className="col s12 m5 offset-m1 admin-form">

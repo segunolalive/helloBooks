@@ -7,15 +7,15 @@
 ### A Library app
 Hello books is an application that provides users with access to books from wherever they are.
 Being a virtual library, users can borrow and read their favorite books using any device.
-HelloBooks exposes RESTful API endpoints such that anyone customize the method of consuming
+HelloBooks exposes RESTful API endpoints such that anyone can customize their method of consuming
 the resources.
 
 #### Built With
-* [NodeJS](https://nodejs.org/en/) - is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.
+* [NodeJS](https://nodejs.org/en/) - A JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.
 * [PostgreSQL](https://www.postgresql.org/) - A powerful, open source object-relational database system.
-* [Sequelize](http://docs.sequelizejs.com/) - is a promise-based ORM for Node.js v4 and up. It supports the dialects PostgreSQL, MySQL, SQLite and MSSQL and features solid transaction support, relations, read replication and more.
+* [Sequelize](http://docs.sequelizejs.com/) - A promise-based ORM for Node.js v4 and up. It supports the dialects PostgreSQL, MySQL, SQLite and MSSQL and features solid transaction support, relations, read replication and more.
 * [ExpressJS](http://expressjs.com/) - Fast, unopinionated, minimalist web framework for Node.js.
-* [Reactjs](https://reactjs.org/)A declarative component-based JavaScript library for building user interfaces
+* [Reactjs](https://reactjs.org/) - A declarative component-based JavaScript library for building user interfaces
 
 
 #### Getting Started
@@ -31,7 +31,7 @@ cd helloBooks
 npm install
 
 # Set up environment variables
-Follow the template in example.environment
+Follow the template in .env.example
 
 # Run database migrations
 npm run migrate:dev
@@ -44,7 +44,7 @@ npm run start:dev
 navigate to http://localhost:8080 in your browser
 
 - For production build, run:
-npm run building
+npm run build
 then
 npm run start
 ```
@@ -58,7 +58,7 @@ npm run start
 - Admin access to add and modify book details
 
 #### API Documentation
-- https://www.segunolalive-hellobooks.com/api/docs
+- <https://www.segunolalive-hellobooks.com.herokuapp/api-docs>
 
 
 #### Testing
@@ -75,7 +75,7 @@ If you would like to contribute, follow the instructions below.
 - Keep commit messages atomic.
 - Raise a pull request against development.
 
-**NB:** All Pull requests must be made against development branch. PRs against master would be rejected.
+**NB:** All Pull requests must be made against development branch. Pull Requests against master would be rejected.
 
 See project wiki for coding style guide, commit message, pull request and branch naming conventions.
 

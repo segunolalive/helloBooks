@@ -7,7 +7,7 @@ import GoogleLogin from 'react-google-login';
 import FaGoogle from 'react-icons/lib/fa/google';
 
 import Header from '../Header';
-import { login } from '../../actions/login';
+import { login } from '../../actions/authActions/login';
 import Loading from '../common/Loading';
 import { validateLogin } from '../../utils/validation/auth';
 
@@ -17,7 +17,7 @@ import { validateLogin } from '../../utils/validation/auth';
  * @class Login
  * @extends {Component}
  */
-class Login extends Component {
+export class Login extends Component {
   /**
    * Creates an instance of Login.
    * @param {any} props
@@ -54,10 +54,8 @@ class Login extends Component {
   handleLogin(event) {
     event.preventDefault();
     const { errors, isValid } = validateLogin(this.state);
-    if (!isValid) {
-      return this.setState({ errors });
-    }
-    return this.props.login(this.state);
+    return (isValid) ? this.props.login(this.state) :
+      this.setState({ errors });
   }
 
   /**

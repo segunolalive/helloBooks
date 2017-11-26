@@ -33,7 +33,8 @@ const BookRow = props => (
     <td>
       <Button
         disabled={!props.total}
-        waves='light'
+        waves="light"
+        className="borrow-book-btn"
         onClick={() => props.onButtonClick(props.id)}
       >
         Borrow

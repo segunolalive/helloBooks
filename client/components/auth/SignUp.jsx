@@ -7,7 +7,7 @@ import GoogleLogin from 'react-google-login';
 import FaGoogle from 'react-icons/lib/fa/google';
 
 import Header from '../Header';
-import { signUp } from '../../actions/signup';
+import { signUp } from '../../actions/authActions/signup';
 import Loading from '../common/Loading';
 import { validateSignUp } from '../../utils/validation/auth';
 
@@ -17,7 +17,7 @@ import { validateSignUp } from '../../utils/validation/auth';
  * @class SignUp
  * @extends {Component}
  */
-class SignUp extends Component {
+export class SignUp extends Component {
   /**
    * Creates an instance of SignUp.
    * @memberof SignUp
@@ -47,10 +47,8 @@ class SignUp extends Component {
   handleSignUp(event) {
     event.preventDefault();
     const { errors, isValid } = validateSignUp(this.state);
-    if (!isValid) {
-      return this.setState({ errors });
-    }
-    return this.props.signUp(this.state);
+    return isValid ? this.props.signUp(this.state) :
+      this.setState({ errors });
   }
 
 
@@ -74,7 +72,7 @@ class SignUp extends Component {
   handleChange(event) {
     event.preventDefault();
     const formField = event.target.name;
-    const user = Object.assign({}, this.state);
+    const user = { ...this.state };
     user[formField] = event.target.value.trim();
     this.setState(() => user);
   }

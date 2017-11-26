@@ -5,15 +5,7 @@ import bookReducer from './bookReducer';
 import notificationReducer from './notificationReducer';
 import transactionReducer from './transactionReducer';
 import actionTypes from '../actions/actionTypes';
-
-
-const initialState = {
-  authReducer: {},
-  bookReducer: {
-    books: [],
-    pagination: {},
-  }
-};
+import initialState from './initialState';
 
 
 const appReducer = combineReducers(

@@ -1,4 +1,4 @@
-const isEmpty = (item) => {
+export const isEmpty = (item) => {
   if (!(typeof item === 'object')) {
     throw new TypeError('invalid arguement type. Provide array or object');
   }
@@ -13,23 +13,23 @@ const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 
 export const validateSignUp = (state) => {
   const errors = {};
-  if (!state.username.trim()) {
-    errors.username = 'Username is required';
-  } else if (state.username.charAt(0) === ' ') {
+  if (state.username.charAt(0) === ' ') {
     errors.username = 'Username cannot begin with space characters';
   } else if (state.username.charAt(state.username.length - 1) === ' ') {
     errors.username = 'Username cannot end with space characters';
+  } else if (!state.username.trim()) {
+    errors.username = 'Username is required';
   }
-  if (!emailRegex.test(state.email.trim())) {
-    errors.email = 'Invalid email';
-  } else if (!state.email.trim()) {
+  if (!state.email.trim()) {
     errors.email = 'Email is required';
+  } else if (!emailRegex.test(state.email.trim())) {
+    errors.email = 'Invalid email';
   }
   if (!state.password.trim()) {
     errors.password = 'Password is required';
   }
   if (!state.confirmPassword.trim()) {
-    errors.confrimPassword = 'Password confirmation is required';
+    errors.confirmPassword = 'Password confirmation is required';
   } else if (!(state.password === state.confirmPassword)) {
     errors.confirmPassword = 'Passwords do not match';
   }

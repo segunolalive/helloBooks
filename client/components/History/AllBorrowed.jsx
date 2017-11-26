@@ -4,13 +4,15 @@ import { Link } from 'react-router-dom';
 import { Row } from 'react-materialize';
 
 import BorrowedTable from './BorrowedTable';
+import Loading from '../common/Loading';
 
 /**
  * shows all books borrowed by user
  * @param {Object} props - props object
  * @returns {JSX}        - JSX representation of all books borrowed by user
  */
-const AllBorrowed = props => (
+const AllBorrowed = props => (props.fetchingHistory ?
+  <Loading text="fetching your borrowing history" /> :
   <Row>
     <div className="">
       <div
@@ -20,7 +22,7 @@ const AllBorrowed = props => (
           to="/history/transactions"
           className="btn blue darken-4 right"
         >
-          View Transaction history
+          View Transaction History
         </Link>
       </div>
       <div className="col s12 center">
@@ -33,6 +35,7 @@ const AllBorrowed = props => (
 
 AllBorrowed.propTypes = {
   books: PropTypes.array.isRequired,
+  fetchingHistory: PropTypes.bool.isRequired,
 };
 
 export default AllBorrowed;

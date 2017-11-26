@@ -14,7 +14,7 @@ import BookRow from './BookRow';
 const BooksTable = (
   { bookList, tableHeaders, borrowBook }
 ) => {
-  const books = bookList ? bookList.map(book =>
+  const books = bookList.length ? bookList.map(book =>
     (
       <BookRow
         key={book.id}

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Row } from 'react-materialize';
 
-import logout from '../../actions/logout';
+import logout from '../../actions/authActions/logout';
 import notify from '../../actions/notify';
 
 

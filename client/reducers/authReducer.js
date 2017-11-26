@@ -1,6 +1,8 @@
 import actionTypes from '../actions/actionTypes';
+import initialState from './initialState';
 
-export default (state = {}, action) => {
+
+export default (state = initialState.authReducer, action) => {
   switch (action.type) {
     case actionTypes.AUTH_LOADING:
       return { ...state, authLoading: action.state };

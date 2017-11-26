@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import requestImageUrl from '../../utils/requestImageUrl';
 
 
 /**
@@ -9,11 +10,14 @@ import moment from 'moment';
  * @returns {JSX}        JSX representation of Books table
  */
 const BorrowedTable = (props) => {
-  const rows = props.books && props.books.length ? props.books.map((book) => {
+  const rows = props.books.length ? props.books.map((book) => {
     const returned = book.BorrowedBook.returned;
     return (
       <tr key={book.id}>
-        <td>{book.cover || 'N/A'}</td>
+        <td>{book.cover ?
+          <img src={requestImageUrl(book.cover, { width: 50 })}
+            alt={`${book.title} cover`}></img>
+          : 'N/A'}</td>
         <td>{book.title || 'N/A'}</td>
         <td>{book.authors || 'N/A'}</td>
         <td>{moment(book.createdAt).format('LLLL') || 'N/A'}</td>

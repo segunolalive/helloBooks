@@ -11,7 +11,7 @@ import Header from './Header';
  * @param {Object} props Object containing isLoggedIn key
  * @returns {JSX}        JSX representation of the the landing page
  */
-const Home = props => (
+export const Home = props => (
   props.isLoggedIn ? <Redirect to='/dashboard' /> :
     <div>
       <Header

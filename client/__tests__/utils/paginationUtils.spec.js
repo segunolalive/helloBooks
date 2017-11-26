@@ -26,6 +26,10 @@ const mock2 = {
   }
 };
 
+const mockComponent = {
+  setState(){}
+}
+
 describe('hasMore', () => {
   it('returns true if there is more data to be fetched', () => {
     const result = hasMore(mock1.oldPagination, mock1.newPagination);
@@ -40,7 +44,8 @@ describe('hasMore', () => {
 
 describe('getOffset', () => {
   it('returns offset', () => {
-    const result = getOffset(mock1.oldPagination.pageNumber, mock1.oldPagination.pageSize);
+    const result = getOffset.bind(mockComponent)(mock1.oldPagination.pageNumber,
+      mock1.oldPagination.pageSize);
     expect(result).toBe(10);
   });
 });

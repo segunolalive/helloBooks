@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col } from 'react-materialize';
+import Loading from '../common/Loading';
 
 /**
  * component for borrowed Books
@@ -8,7 +9,7 @@ import { Button, Col } from 'react-materialize';
  * @return {JSX}         JSX representation of component
  */
 const Borrowed = (props) => {
-  const books = props.borrowedBooks && props.borrowedBooks.length ?
+  const books = props.borrowedBooks.length ?
     props.borrowedBooks.map(book =>
       <Col key={book.title} s={12} className="book-info grey-text">
         <div className="card horizontal">
@@ -44,23 +45,29 @@ const Borrowed = (props) => {
           </div>
         </div>
       </Col>
-    )
-    : <h5 className="center">Nothing here</h5>;
+    ) :
+    <div className="center">
+      <h5>Nothing here</h5>
+      <p>Head over to the library to change that</p>
+    </div>;
+  const renderedContent = props.fetchingBorrowedBooks ?
+    <Loading text='fetching your books' /> : books;
   return (
     <section className="col s12 m6 borrowed">
       <Col s={12}>
         <h4 className="center">Recently Borrowed</h4>
       </Col>
-      {books}
+      {renderedContent}
     </section>
   );
 };
 
 
 Borrowed.propTypes = {
-  borrowedBooks: PropTypes.array,
-  readBook: PropTypes.func,
-  returnBook: PropTypes.func,
+  borrowedBooks: PropTypes.array.isRequired,
+  readBook: PropTypes.func.isRequired,
+  returnBook: PropTypes.func.isRequired,
+  fetchingBorrowedBooks: PropTypes.bool.isRequired,
 };
 
 

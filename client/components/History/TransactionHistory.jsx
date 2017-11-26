@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Col } from 'react-materialize';
 import { Link } from 'react-router-dom';
-
+import Loading from '../common/Loading';
 
 const TransactionHistory = (props) => {
-  const transactions = props.transactions && props.transactions.length ?
+  const transactions = props.transactions.length ?
     props.transactions.map(
       transaction => (
         <Col s={12}
@@ -25,14 +25,15 @@ const TransactionHistory = (props) => {
         Nothing to show. Head over to the library to borrow some books
       </p>
     </div>;
-  return (
+  return (props.fetchingTransactions ?
+    <Loading text="fetching your transactions" /> :
     <div className="center">
       <div className="col s12">
         <Link
           to="/history"
           className="btn blue darken-4 right"
         >
-          View Borrowing history
+          View Borrowing History
         </Link>
       </div>
       <div className="col s12">
@@ -47,6 +48,7 @@ const TransactionHistory = (props) => {
 
 TransactionHistory.propTypes = {
   transactions: PropTypes.array.isRequired,
+  fetchingTransactions: PropTypes.bool.isRequired,
 };
 
 export default TransactionHistory;
