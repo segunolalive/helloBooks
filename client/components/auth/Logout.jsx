@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Row } from 'react-materialize';
 
 import logout from '../../actions/authActions/logout';
 import notify from '../../actions/notify';
@@ -12,7 +11,7 @@ import notify from '../../actions/notify';
  * @class Logout
  * @extends {Component}
  */
-class Logout extends Component {
+export class Logout extends Component {
   /**
    * [componentDidMount description]
    * @memberof Logout
@@ -30,11 +29,11 @@ class Logout extends Component {
    */
   render() {
     return (
-      <Row className="center landing">
+      <div className="center landing">
         <h1 className="">
           Logging out...
         </h1>
-      </Row>
+      </div>
     );
   }
 }

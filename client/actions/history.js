@@ -48,17 +48,17 @@ export const fetchHistory = id => (dispatch) => {
  * @param  {array} transactions array of transacitons
  * @return {Thunk}              function that returns an action creator
  */
-const getTransactionHistory = transactions => ({
+export const getTransactionHistory = transactions => ({
   type: actionTypes.GET_TRANSACTION_HISTORY,
   transactions,
 });
 
-const getMoreTransactionHistory = books => ({
+export const getMoreTransactionHistory = transactions => ({
   type: actionTypes.GET_MORE_TRANSACTIONS,
-  books
+  transactions
 });
 
-const fetchingTransactions = status => ({
+export const fetchingTransactions = status => ({
   type: actionTypes.FETCHING_TRANSACTIONS,
   status,
 });

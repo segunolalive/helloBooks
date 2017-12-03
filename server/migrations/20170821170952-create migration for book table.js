@@ -31,6 +31,7 @@ module.exports = {
       },
       categoryId: {
         type: Sequelize.INTEGER,
+        defaultValue: 1,
         references: {
           model: 'BookCategories',
           key: 'id',

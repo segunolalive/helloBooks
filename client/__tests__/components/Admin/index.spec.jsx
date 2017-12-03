@@ -35,12 +35,12 @@ describe('Admin Component', () => {
     expect(wrapper.getElement().type).toBe('div');
   });
 
-  it('should redirect to dashboard page if not admin user', () => {
+  it('should redirect to login page if not admin user', () => {
     const notAdmin = { ...props, user: { ...props.user, isAdmin: false } };
     const wrapper = shallow(<Admin { ...notAdmin } />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('Redirect').length).toBe(1);
-    expect(wrapper.find('Redirect').props().to).toBe('/dashboard');
+    expect(wrapper.find('Redirect').props().to).toBe('/login');
   });
 
   it('should render one BookForm component', () => {

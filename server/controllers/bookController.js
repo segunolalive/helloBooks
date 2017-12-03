@@ -7,75 +7,84 @@ const bookController = {
    * Add new book category to library.
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - express http response object
+   * @param  {object}   req  - express http request object
+   * @param  {object}   res  - express http response object
+   * @param  {Function} next - calls th enect middleware in the stack
+   * @return {Object}        - express http response object
    */
-  addCategory(req, res) {
-    if (req.user && req.user.isAdmin) {
-      return BookCategory
-        .create(req.body)
-        .then(category => (res.status(201).send({
-          message:
-            `Successfully added new category, ${category.category}, to Library`,
-        })))
-        .catch(error => res.status(500).send({
-          error
-        }));
-    }
-    res.status(401).send({
-      message: 'Unauthorized access',
-    });
+  addCategory(req, res, next) {
+    return BookCategory
+      .findOrCreate({ where: req.body })
+      .spread((category, created) => (
+        created ?
+          res.status(201).send({
+            message:
+              `Successfully added new category, ${category.category}, to Library`,
+          }) :
+          res.status(409).send({
+            message:
+              `Category, ${category.category}, already exists`,
+          })
+      ))
+      .catch(error => next(error));
   },
   /**
    * Fetch Book Categories.
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - express http response object
+   * @param  {object} req    - express http request object
+   * @param  {object} res    - express http response object
+   * @param  {Function} next - calls th enect middleware in the stack
+   * @return {Object}        - express http response object
    */
-  getBookCategories(req, res) {
+  getBookCategories(req, res, next) {
     BookCategory.findAll({ attributes: ['id', 'category'] })
       .then(categories => (
         res.status(200).send({
           categories,
         })
       ))
-      .catch(error => res.status(500).send({
-        error
-      }));
+      .catch(error => next(error));
   },
 
   /**
    * Add new book to library.
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - express http response object
+   * @param  {object} req    - express http request object
+   * @param  {object} res    - express http response object
+   * @param  {Function} next - calls th enect middleware in the stack
+   * @return {Object}        - express http response object
    */
-  createBook(req, res) {
+  createBook(req, res, next) {
+    const bookData = req.body;
     return Book
-      .create(req.body)
-      .then(book => res.status(201).send({
-        message: `Successfully added ${book.title} to Library`,
-        book,
-      }))
-      .catch(error => res.status(500).send({
-        error
-      }));
+      .find({ where: { title: bookData.title } })
+      .then(existing => (
+        existing ?
+          res.status(409).send({
+            message: `Book with ${bookData.title} already exists`
+          }) :
+          Book.create(bookData)
+            .then(book => res.status(201).send({
+              message: `Successfully added ${book.title} to Library`,
+              book,
+            }))
+            .catch(error => next(error))
+      ))
+      .catch(error => next(error));
   },
 
   /**
    * Fetch a specific book
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - express http response object
+   * @param  {object} req    - express http request object
+   * @param  {object} res    - express http response object
+   * @param  {Function} next - calls th enect middleware in the stack
+   * @return {Object}        - express http response object
    */
-  getBook(req, res) {
+  getBook(req, res, next) {
     const id = Number(req.params.id);
     Book.findById(id)
       .then((book) => {
@@ -88,20 +97,19 @@ const bookController = {
           book,
         });
       })
-      .catch(error => res.status(500).send({
-        error
-      }));
+      .catch(error => next(error));
   },
 
   /**
    * Fetch all books present in database
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - express http response object
+   * @param  {object} req    - express http request object
+   * @param  {object} res    - express http response object
+   * @param  {Function} next - calls th enect middleware in the stack
+   * @return {Object}        - express http response object
    */
-  getBooks(req, res) {
+  getBooks(req, res, next) {
     const query = getQuery(req);
     const options = getOptions(req);
     Book.findAndCountAll({ where: query, ...options })
@@ -124,18 +132,19 @@ const bookController = {
             Number(options.limit), options.offset)
         });
       })
-      .catch(error => res.status(500).send({ error }));
+      .catch(error => next(error));
   },
 
   /**
    * Edit a book's metadata.
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - express http response object
+   * @param  {object} req    - express http request object
+   * @param  {object} res    - express http response object
+   * @param  {Function} next - calls th enect middleware in the stack
+   * @return {Object}        - express http response object
    */
-  editBookInfo(req, res) {
+  editBookInfo(req, res, next) {
     const id = req.params.id;
     Book.update(
       req.body,
@@ -148,39 +157,37 @@ const bookController = {
         book: book[1],
         message: `${book[1].title} was successfully updated`
       }))
-      .catch(error => res.status(500).send({
-        error,
-      }));
+      .catch(error => next(error));
   },
 
   /**
    * Delete a book from database.
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - express http response object
+   * @param  {object} req    - express http request object
+   * @param  {object} res    - express http response object
+   * @param  {Function} next - calls th enect middleware in the stack
+   * @return {Object}        - express http response object
    */
-  deleteBook(req, res) {
+  deleteBook(req, res, next) {
     const id = req.params.id;
     Book.destroy({ where: { id } })
       .then(() => res.status(200).send({
         message: 'Successfully deleted book from database',
       }))
-      .catch(error => res.status(500).send({
-        error,
-      }));
+      .catch(error => next(error));
   },
 
   /**
    * Allow user borrow book.
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - express http response object
+   * @param  {object} req    - express http request object
+   * @param  {object} res    - express http response object
+   * @param  {Function} next - calls th enect middleware in the stack
+   * @return {Object}        - express http response object
    */
-  borrowBook(req, res) {
+  borrowBook(req, res, next) {
     const userId = req.params.id;
     const bookId = req.body.id;
     Book.findById(bookId)
@@ -232,30 +239,25 @@ const bookController = {
                 notification.save();
               })
               .then(() => res.status(200).send({
-                message: `You have successfully borrowed ${book.title}` +
+                message: `You have successfully borrowed ${book.title} ` +
                 'again. Check your dashboard to read it',
               }))
-              .catch(error => (
-                res.status(500).send({
-                  error
-                })
-              ));
+              .catch(error => next(error));
           });
       })
-      .catch(error => res.status(500).send({
-        error,
-      }));
+      .catch(error => next(error));
   },
 
   /**
    * Allow user return borrowed book.
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - express http response object
+   * @param  {object} req    - express http request object
+   * @param  {object} res    - express http response object
+   * @param  {Function} next - calls th enect middleware in the stack
+   * @return {Object}        - express http response object
    */
-  returnBook(req, res) {
+  returnBook(req, res, next) {
     const bookId = req.body.id;
     const userId = req.params.id;
     BorrowedBook.findOne({ where: { userId, bookId, returned: false } })
@@ -285,14 +287,12 @@ const bookController = {
               });
           });
         }
-        return res.status(400).send({
+        return res.status(403).send({
           message: 'This book is currently not on your list.' +
           ' You have either returned it or never borrowed it'
         });
       })
-      .catch(error => res.status(500).send({
-        error,
-      }));
+      .catch(error => next(error));
   }
 };
 

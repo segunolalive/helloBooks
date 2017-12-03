@@ -39,11 +39,14 @@ nav {
   }
 
   a:hover {
-    border-width: 100%;
-    border-bottom: 4px solid blue;
+    background: transparent;
     font-weight: bold;
-    font-size: 16px;
-    transition: all 0.2s ease-out;
+    transform: scale(1.35);
+    transition: all 0.4s ease-out;
+  }
+
+  a.brand-logo:hover {
+    transform: scale(1.05);
   }
 }
 
@@ -216,7 +219,7 @@ input[type=search]:not(.browser-default) {
   height: 3rem;
 
   i {
-    font-size: 2.5rem !important;
+    font-size: 2.5rem;
     vertical-align: middle;
   }
 }
@@ -226,6 +229,9 @@ input[type=search]:not(.browser-default) {
   box-shadow: none;
   i {
     color: $theme-blue;
+    font-weight: bold;
+    transform: scale(1.35);
+    transition: all 0.4s ease-out;
   }
 }
 
@@ -248,6 +254,7 @@ input[type=search]:not(.browser-default) {
 
 .search-btn-wrapper:hover {
   background: #eeeeee;
+  border-left: 6px solid $theme-blue;
 }
 
 .bottom-10 {

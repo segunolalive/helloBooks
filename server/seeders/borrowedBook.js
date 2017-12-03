@@ -11,7 +11,7 @@ db.BorrowedBook.sync()
       userId: 1,
       bookId: 2,
       returned: true,
-    },
+    }
     ])
       .then(() => {
         process.stdout.write('Test borrowed Books created \n');

@@ -97,7 +97,7 @@ export class Login extends Component {
                       <h6>Welcome home avid reader</h6>
                     </div>
                     <div className="col l6 m8 s12">
-                      <form onSubmit={this.handleLogin}>
+                      <form id="login-form" onSubmit={this.handleLogin}>
                         <div className="col s12">
                           <h5>Login</h5>
                         </div>
@@ -108,11 +108,10 @@ export class Login extends Component {
                                 name="username"
                                 placeholder="Username"
                                 className="validate"
-                                required
                                 title="username is required for login"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-username" className="red-text">
                                 {this.state.errors &&
                                   this.state.errors.username}
                               </span>
@@ -122,11 +121,10 @@ export class Login extends Component {
                                 name="password"
                                 placeholder="password"
                                 className="validate"
-                                required
                                 title="password is required for login"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-password" className="red-text">
                                 {this.state.errors &&
                                   this.state.errors.password}
                               </span>

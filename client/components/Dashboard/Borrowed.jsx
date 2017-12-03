@@ -29,6 +29,7 @@ const Borrowed = (props) => {
             <div className="card-action center">
               <Button
                 waves='light'
+                id={`read-book-${book.id}-btn`}
                 onClick={() => props.readBook(book.id)}
               >
                 Read Book
@@ -37,6 +38,7 @@ const Borrowed = (props) => {
             <div className="card-action center">
               <Button
                 waves='light'
+                id={`return-book-${book.id}-btn`}
                 onClick={() => props.returnBook(book.id)}
               >
                 Return Book

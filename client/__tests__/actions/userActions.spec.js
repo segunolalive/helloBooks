@@ -114,7 +114,7 @@ describe('user Actions', () => {
       const expectedActions = [
         { type: actionTypes.FETCHING_TRANSACTIONS, status: true },
         { type: actionTypes.FETCHING_TRANSACTIONS, status: false },
-        { type: actionTypes.GET_MORE_TRANSACTIONS, books: transactions },
+        { type: actionTypes.GET_MORE_TRANSACTIONS, transactions },
         { type: actionTypes.SET_TRANSACTIONS_PAGINATION, pagination },
       ];
       const store = mockStore({});

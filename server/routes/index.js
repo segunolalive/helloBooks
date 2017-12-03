@@ -19,9 +19,21 @@ router.get('/', (req, res) => res.status(200).send({
   message: 'Welcome to the Hello Books API!'
 }))
   // Unprotected routes
-  .post('/users/signup', prepareGoogleAuth, userController.createUser)
-  .post('/users/signin', prepareGoogleAuth, userController.getUser)
-  .post('/users/forgot-password', userController.passwordResetMail)
+  .post(
+    '/users/signup',
+    prepareGoogleAuth,
+    validateInput.signup,
+    userController.createUser
+  )
+  .post(
+    '/users/signin',
+    prepareGoogleAuth,
+    validateInput.signin,
+    userController.getUser
+  )
+  .post('/users/forgot-password',
+    validateInput.requestPasswordReset,
+    userController.passwordResetMail)
   .get('/books/category', bookController.getBookCategories)
   .get('/books/:id', bookController.getBook)
   .get('/books', validateLimitAndOffset, bookController.getBooks)
@@ -75,6 +87,7 @@ router.get('/', (req, res) => res.status(200).send({
     '/books',
     authenticate,
     ensureIsAdmin,
+    validateInput.addBook,
     bookController.createBook
   )
   .delete(
@@ -97,8 +110,8 @@ router.get('/', (req, res) => res.status(200).send({
     (req, res) => transactionController(req, res, { admin: true })
   )
   // Send a message if route does not exist
-  .get('/api*', (req, res) => res.status(404).send({
-    message: 'Seems like you might be lost.',
+  .get('*', (req, res) => res.status(404).send({
+    message: 'Seems like you might be lost',
   }));
 
 export default router;

@@ -9,10 +9,7 @@ const initialState = loadState();
 
 
 const store = createStore(rootReducer, initialState,
-  compose(
-    applyMiddleware(thunkMiddleware),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
+  compose(applyMiddleware(thunkMiddleware))
 );
 
 store.subscribe(throttle(() => {

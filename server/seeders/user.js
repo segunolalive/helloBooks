@@ -1,4 +1,7 @@
 import db from '../models';
+import { getJWT } from '../helpers/helpers';
+
+const passwordResetToken = getJWT({ id: 2 }, '1h');
 
 db.User.sync()
   .then(() => {
@@ -16,7 +19,8 @@ db.User.sync()
       email: 'abcd@gmail.com',
       firstName: 'Debo',
       lastName: 'Ola',
-      isAdmin: false
+      isAdmin: false,
+      passwordResetToken
     },
     ], { individualHooks: true })
       .then(() => {

@@ -20,13 +20,14 @@ const AllBorrowed = props => (props.fetchingHistory ?
         style={{ marginRight: '10px' }}>
         <Link
           to="/history/transactions"
+          id="view-transactions-btn"
           className="btn blue darken-4 right"
         >
           View Transaction History
         </Link>
       </div>
       <div className="col s12 center">
-        <h4 className="bold-text">Your Borrowed Books</h4>
+        <h4 className="bold-text" id="page-message">Your Borrowed Books</h4>
       </div>
       <BorrowedTable books={props.books} />
     </div>

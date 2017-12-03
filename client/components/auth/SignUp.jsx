@@ -101,7 +101,7 @@ export class SignUp extends Component {
                       <h6>Welcome home avid reader</h6>
                     </div>
                     <div className="col l6 m8 s12">
-                      <form onSubmit={this.handleSignUp}>
+                      <form id="signup-form" onSubmit={this.handleSignUp}>
                         <div className="col s12">
                           <h5>Sign Up</h5>
                         </div>
@@ -130,13 +130,12 @@ export class SignUp extends Component {
                                 className="validate"
                                 type="email"
                                 name="email"
-                                required
                                 data-wrong="enter a valid email"
                                 title="email is required"
                                 placeholder="Email"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-email" className="red-text">
                                 {this.state.errors && this.state.errors.email}
                               </span>
                             </div>
@@ -146,11 +145,10 @@ export class SignUp extends Component {
                                 type="text"
                                 name="username"
                                 placeholder="Username"
-                                required
                                 title="username is required"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-username" className="red-text">
                                 {this.state.errors &&
                                   this.state.errors.username}
                               </span>
@@ -161,11 +159,10 @@ export class SignUp extends Component {
                                 type="password"
                                 name="password"
                                 placeholder="password"
-                                required
                                 title="password is required"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-password" className="red-text">
                                 {this.state.errors &&
                                   this.state.errors.password}
                               </span>
@@ -176,11 +173,10 @@ export class SignUp extends Component {
                                 type="password"
                                 name="confirmPassword"
                                 placeholder="retype password"
-                                required
                                 title="password confirmation is required"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-confirm-password" className="red-text">
                                 {this.state.errors &&
                                   this.state.errors.confirmPassword}
                               </span>

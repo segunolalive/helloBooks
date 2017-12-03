@@ -47,8 +47,9 @@ export const fetchNotifications = options => (dispatch) => {
       dispatch(setPagination(response.data.metadata));
       dispatch(notificationAction(response.data.notifications));
       dispatch(fetchingNotifications(false));
-    },
-    error => notify.error(error.response.data.message)
-    )
-    .catch(error => notify.error(error));
+    })
+    .catch((error) => {
+      dispatch(fetchingNotifications(false));
+      return notify.error(error.response.data.message);
+    });
 };

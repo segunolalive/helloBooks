@@ -20,7 +20,6 @@ export const getBook = book => ({
  */
 export const viewBookDetails = id => dispatch => (
   axios.get(`${API}/books/${id}`)
-    .then(response => dispatch(getBook(response.data.book))
-      , error => notify.error(error.response.data.message)
-    )
+    .then(response => dispatch(getBook(response.data.book)))
+    .catch(error => notify.error(error.response.data.message))
 );

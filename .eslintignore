@@ -1,3 +1,4 @@
+/server/docs
 /server/test
 /dist
-#/client/__tests__
+/client/__tests__

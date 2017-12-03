@@ -15,14 +15,16 @@ const userController = {
    * and a json web token or error
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - returns an http response object
+   * @param  {object}   req  - express http request object
+   * @param  {object}   res  - express http response object
+   * @param  {Function} next - calls the next middleware in the stack
+   * @return {Object}        - returns an http response object
    */
 
-  createUser(req, res) {
-    const username = req.body.username;
-    const email = req.body.email;
+  createUser(req, res, next) {
+    const userData = { ...req.body, isAdmin: undefined };
+    const username = userData.username;
+    const email = userData.email;
     return User.find({
       where: { $or: [{ username }, { email }] }
     }).then((existingUser) => {
@@ -36,7 +38,7 @@ const userController = {
           message: 'email is associated with an account',
         });
       }
-      User.create(req.body)
+      User.create(userData)
         .then((user) => {
           const {
             id,
@@ -55,25 +57,22 @@ const userController = {
             message: `Welcome ${firstName}. This is your dashboard`,
           });
         })
-        .catch(error => res.status(400).send({
-          error
-        }));
+        .catch(error => next(error));
     })
-      .catch(error => res.status(500).send({
-        error
-      }));
+      .catch(error => next(error));
   },
 
   /**
    * Edit user Information
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - returns an http response object
+   * @param  {object}   req  - express http request object
+   * @param  {object}   res  - express http response object
+   * @param  {Function} next - calls the next middleware in the stack
+   * @return {Object}        - returns an http response object
    */
-  updateUserInfo(req, res) {
-    const updateData = req.body;
+  updateUserInfo(req, res, next) {
+    const updateData = { ...req.body, isAdmin: undefined };
     updateData.passwordResetToken = null;
     return User.findById(req.user.id)
       .then((user) => {
@@ -97,15 +96,10 @@ const userController = {
               isAdmin,
               message: 'Your information was successfully updated',
             });
-          }, (error) => {
-            res.status(500).send({
-              error,
-            });
-          });
+          })
+          .catch(error => next(error));
       })
-      .catch(error => res.status(500).send({
-        error,
-      }));
+      .catch(error => next(error));
   },
 
   /**
@@ -114,12 +108,13 @@ const userController = {
    * and a json web token or error
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - returns an http response object
+   * @param  {object}   req  - express http request object
+   * @param  {object}   res  - express http response object
+   * @param  {Function} next - calls the next middleware in the stack
+   * @return {Object}        - returns an http response object
    */
 
-  getUser(req, res) {
+  getUser(req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
     return User.findOne({ where: { username } }).then((user) => {
@@ -154,12 +149,8 @@ const userController = {
           isAdmin,
           message: `Welcome back ${firstName}`,
         });
-      }).catch(error => res.status(500).send({
-        error,
-      }));
-    }).catch(error => res.status(400).send({
-      error
-    }));
+      }).catch(error => next(error));
+    }).catch(error => next(error));
   },
 
   /**
@@ -169,11 +160,12 @@ const userController = {
    * Response can be filtered by returned status
    * @public
    * @method
-   * @param  {object} req - express http request object
-   * @param  {object} res - express http response object
-   * @return {Object}     - returns an http rresponse object
+   * @param  {object}   req  - express http request object
+   * @param  {object}   res  - express http response object
+   * @param  {Function} next - calls the next middleware in the stack
+   * @return {Object}        - returns an http response object
    */
-  getBorrowedBooks(req, res) {
+  getBorrowedBooks(req, res, next) {
     const id = req.params.id;
     User.findOne({
       where: { id },
@@ -195,12 +187,18 @@ const userController = {
         books
       });
     })
-      .catch(error => res.status(500).send({
-        message: 'An error occured while fetching borrowing history',
-        error,
-      }));
+      .catch(error => next(error));
   },
 
+  /**
+   * sends a password reset email
+  * @public
+  * @method
+  * @param  {object}   req  - express http request object
+  * @param  {object}   res  - express http response object
+  * @param  {Function} next - calls the next middleware in the stack
+  * @return {Object}        - returns an http response object
+  */
   passwordResetMail(req, res) {
     return User.findOne({
       where: { email: req.body.email },
@@ -225,17 +223,16 @@ const userController = {
         const html = `<h3>Use this link to reset your password.</h3>
           ${BASE_URL}/reset-password?token=${token}}
           <p>This link is valid only for an hour</p>`;
-        transporter.sendMail(mailOptions(to, bcc, subject, html),
-          (err) => {
-            if (err) {
-              return res.status(500).send({
-                message: 'An error occured while sending you a link. Try again',
-              });
-            }
-            return res.status(200).send({
-              message: 'An password reset link has been sent to your email',
-            });
-          });
+        transporter.sendMail(mailOptions(to, bcc, subject, html))
+          .then(() => (
+            res.status(200).send({
+              message: 'A password reset link has been sent to your email',
+            })
+          ), () => (
+            res.status(500).send({
+              message: 'An error occured while sending you a link. Try again',
+            })
+          ));
       })
       .catch(() => (
         res.status(500).send({

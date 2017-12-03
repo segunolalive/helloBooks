@@ -98,6 +98,42 @@ export default {
     }
   },
 
+  signup(req, res, next) {
+    req.body = deleteEmptyFields(trimFields(req.body));
+    if (!req.body.username) {
+      return res.status(400).send({
+        message: 'Username is required'
+      });
+    } else if (!req.body.password) {
+      return res.status(400).send({
+        message: 'Password is required'
+      });
+    } else if (!req.body.email) {
+      return res.status(400).send({
+        message: 'Email is required'
+      });
+    } else if (!(req.body.password === req.body.confirmPassword)) {
+      return res.status(400).send({
+        message: 'Passwords do not match'
+      });
+    }
+    next();
+  },
+
+  signin(req, res, next) {
+    req.body = deleteEmptyFields(trimFields(req.body));
+    if (!req.body.username) {
+      return res.status(400).send({
+        message: 'Username is required'
+      });
+    } else if (!req.body.password) {
+      return res.status(400).send({
+        message: 'Password is required'
+      });
+    }
+    next();
+  },
+
   requestPasswordReset(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
     if (!req.body.email) {
@@ -106,10 +142,17 @@ export default {
     next();
   },
 
+  addBook(req, res, next) {
+    req.body = deleteEmptyFields(trimFields(req.body));
+    req.body.categoryId = (!Number.isNaN(req.body.categoryId) &&
+      Number(req.body.categoryId)) || undefined;
+    next();
+  },
+
   updateBook(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
     if (!Object.keys(req.body).length) {
-      return res.status(400).send({ message: 'Nothing to update.' });
+      return res.status(400).send({ message: 'Nothing to update' });
     }
     next();
   }

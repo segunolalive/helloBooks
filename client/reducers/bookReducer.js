@@ -9,7 +9,6 @@ const bookReducer = (state = initialState.bookReducer, action) => {
     case actionTypes.FETCHING_BORROWED_BOOKS:
       return { ...state, fetchingBorrowedBooks: action.status };
     case actionTypes.GET_BORROWED_BOOKS:
-      console.log('==getting borrowed books ===');
       return { ...state, borrowedBooks: action.borrowedBooks };
     case actionTypes.BORROW_BOOK:
       books = deepclone(state.books);

@@ -25,8 +25,8 @@ export const Home = props => (
                 <h2 style={ { fontWeight: 'bold' } }>Welcome To Hello Books</h2>
               </div>
               <div>
-                <Link to="/login" className="btn">login</Link>
-                <Link to="/signup" className="btn">signup</Link>
+                <Link to="/login" className="btn" id="login-btn">login</Link>
+                <Link to="/signup" className="btn" id="signup-btn">signup</Link>
               </div>
             </section>
           </div>

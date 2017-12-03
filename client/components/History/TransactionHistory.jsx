@@ -11,7 +11,6 @@ const TransactionHistory = (props) => {
       transaction => (
         <Col s={12}
           key={transaction.id}
-          className=""
         >
           <p>
            You {transaction.type}ed {transaction.bookTitle}
@@ -31,13 +30,14 @@ const TransactionHistory = (props) => {
       <div className="col s12">
         <Link
           to="/history"
+          id="view-history-btn"
           className="btn blue darken-4 right"
         >
           View Borrowing History
         </Link>
       </div>
       <div className="col s12">
-        <h4 className="center">All Transactions</h4>
+        <h4 className="center bold-text">All Transactions</h4>
         <div className="container borrowed-list">
           {transactions}
         </div>

@@ -49,7 +49,7 @@ export class History extends Component {
       this.props.isLoggedIn ?
         <div>
           <Header activeLink="history"/>
-          <main className="">
+          <main id="history">
             <Row>
               {historyDisplay}
             </Row>
