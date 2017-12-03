@@ -1,6 +1,5 @@
 import express from 'express';
 
-
 import userController from '../controllers/userController';
 import bookController from '../controllers/bookController';
 import transactionController from '../controllers/transactionController';
@@ -19,9 +18,21 @@ router.get('/', (req, res) => res.status(200).send({
   message: 'Welcome to the Hello Books API!'
 }))
   // Unprotected routes
-  .post('/users/signup', prepareGoogleAuth, userController.createUser)
-  .post('/users/signin', prepareGoogleAuth, userController.getUser)
-  .post('/users/forgot-password', userController.passwordResetMail)
+  .post(
+    '/users/signup',
+    prepareGoogleAuth,
+    validateInput.signup,
+    userController.createUser
+  )
+  .post(
+    '/users/signin',
+    prepareGoogleAuth,
+    validateInput.signin,
+    userController.getUser
+  )
+  .post('/users/forgot-password',
+    validateInput.requestPasswordReset,
+    userController.passwordResetMail)
   .get('/books/category', bookController.getBookCategories)
   .get('/books/:id', bookController.getBook)
   .get('/books', validateLimitAndOffset, bookController.getBooks)
@@ -41,22 +52,26 @@ router.get('/', (req, res) => res.status(200).send({
   .post(
     '/users/:id/books',
     authenticate,
+    validateInput.validateId,
     shouldBorrow,
     bookController.borrowBook
   )
   .put(
     '/users/:id/books',
     authenticate,
+    validateInput.validateId,
     bookController.returnBook
   )
   .get(
     '/users/:id/books',
     authenticate,
+    validateInput.validateId,
     userController.getBorrowedBooks
   )
   .get(
     '/users/:id/transactions',
     authenticate,
+    validateInput.validateId,
     (req, res) => transactionController(req, res, { history: true })
   )
   .post(
@@ -75,18 +90,21 @@ router.get('/', (req, res) => res.status(200).send({
     '/books',
     authenticate,
     ensureIsAdmin,
+    validateInput.addBook,
     bookController.createBook
   )
   .delete(
     '/books/:id',
     authenticate,
     ensureIsAdmin,
+    validateInput.validateId,
     bookController.deleteBook
   )
   .put(
     '/books/:id',
     authenticate,
     ensureIsAdmin,
+    validateInput.validateId,
     validateInput.updateBook,
     bookController.editBookInfo
   )
@@ -97,8 +115,8 @@ router.get('/', (req, res) => res.status(200).send({
     (req, res) => transactionController(req, res, { admin: true })
   )
   // Send a message if route does not exist
-  .get('/api*', (req, res) => res.status(404).send({
-    message: 'Seems like you might be lost.',
+  .get('*', (req, res) => res.status(404).send({
+    message: 'Seems like you might be lost',
   }));
 
 export default router;

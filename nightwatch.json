@@ -1,0 +1,40 @@
+{
+  "src_folders": [
+    "e2e-tests"
+  ],
+  "output_folder": "reports",
+  "custom_commands_path": "",
+  "custom_assertions_path": "",
+  "page_objects_path": "",
+  "globals_path": "",
+  "selenium": {
+    "start_process": false,
+    "server_path": "node_modules/selenium-standalone/.selenium/selenium-server/",
+    "log_path": "./reports",
+    "host": "127.0.0.1",
+    "port": 4444,
+    "cli_args": {
+      "webdriver.chrome.driver": ""
+    }
+  },
+  "test_settings": {
+    "default": {
+      "launch_url": "https://localhost",
+      "selenium_port": 4444,
+      "selenium_host": "localhost",
+      "silent": true,
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      },
+      "screenshots": {
+        "enabled": true,
+        "path": "./results/screenshots"
+      },
+      "globals": {
+        "waitForConditionTimeout": 10000
+      }
+    }
+  }
+}

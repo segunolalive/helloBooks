@@ -79,7 +79,7 @@ export class Dashboard extends Component {
           <Header
             activeLink='dashboard'
           />
-          <main>
+          <main id="dashboard">
             <Row>
               <Col s={12}>
                 <ProfileInfo

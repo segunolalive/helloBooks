@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Categories from '../../../components/Library/Categories';
+import Categories from '../../../components/common/Categories';
 import { mockStoreData } from '../../__mocks__/mockData';
 
 

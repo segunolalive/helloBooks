@@ -59,6 +59,9 @@ const unusedToken = (id, token) =>
     .then(user => user.passwordResetToken === token);
 
 
+/**
+ * input validation middleware
+ */
 export default {
   /**
    * validates fields on request to update user data
@@ -98,6 +101,63 @@ export default {
     }
   },
 
+  /**
+   * validates fields on request to signup user
+   * @param  {Object}   req    express http object
+   * @param  {Object}   res    express http object
+   * @param  {Function} next   calls the next middleware function
+   * @return {Object|Function} express http object or call next
+   */
+  signup(req, res, next) {
+    req.body = deleteEmptyFields(trimFields(req.body));
+    if (!req.body.username) {
+      return res.status(400).send({
+        message: 'Username is required'
+      });
+    } else if (!req.body.password) {
+      return res.status(400).send({
+        message: 'Password is required'
+      });
+    } else if (!req.body.email) {
+      return res.status(400).send({
+        message: 'Email is required'
+      });
+    } else if (!(req.body.password === req.body.confirmPassword)) {
+      return res.status(400).send({
+        message: 'Passwords do not match'
+      });
+    }
+    next();
+  },
+
+  /**
+   * validates fields on signin request
+   * @param  {Object}   req    express http object
+   * @param  {Object}   res    express http object
+   * @param  {Function} next   calls the next middleware function
+   * @return {Object|Function} express http object or call next
+   */
+  signin(req, res, next) {
+    req.body = deleteEmptyFields(trimFields(req.body));
+    if (!req.body.username) {
+      return res.status(400).send({
+        message: 'Username is required'
+      });
+    } else if (!req.body.password) {
+      return res.status(400).send({
+        message: 'Password is required'
+      });
+    }
+    next();
+  },
+
+  /**
+   * validates fields on requestPasswordReset
+   * @param  {Object}   req    express http object
+   * @param  {Object}   res    express http object
+   * @param  {Function} next   calls the next middleware function
+   * @return {Object|Function} express http object or call next
+   */
   requestPasswordReset(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
     if (!req.body.email) {
@@ -106,11 +166,48 @@ export default {
     next();
   },
 
+  /**
+   * validates fields on addBook
+   * @param  {Object}   req    express http object
+   * @param  {Object}   res    express http object
+   * @param  {Function} next   calls the next middleware function
+   * @return {Object|Function} express http object or call next
+   */
+  addBook(req, res, next) {
+    req.body = deleteEmptyFields(trimFields(req.body));
+    req.body.categoryId = (!Number.isNaN(req.body.categoryId) &&
+      Number.isInteger(Number(req.body.categoryId))) || undefined;
+    next();
+  },
+
+  /**
+   * validates fields on updateBook
+   * @param  {Object}   req    express http object
+   * @param  {Object}   res    express http object
+   * @param  {Function} next   calls the next middleware function
+   * @return {Object|Function} express http object or call next
+   */
   updateBook(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
     if (!Object.keys(req.body).length) {
-      return res.status(400).send({ message: 'Nothing to update.' });
+      return res.status(400).send({ message: 'Nothing to update' });
     }
     next();
+  },
+
+  /**
+   * validates id params
+   * @param  {Object}   req    express http object
+   * @param  {Object}   res    express http object
+   * @param  {Function} next   calls the next middleware function
+   * @return {Object|Function} express http object or call next
+   */
+  validateId(req, res, next) {
+    return Number.isInteger(Number(req.params.id)) &&
+      !Number.isNaN(req.params.id) ?
+      next() :
+      res.status(400).send({
+        message: 'Id must be an integer'
+      });
   }
 };

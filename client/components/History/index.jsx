@@ -19,13 +19,13 @@ export class History extends Component {
   /**
    * lifecycle hook called when component mounts
    * @memberof History
-   * @return {Undefined} - makes api calls to fetch a user's borrowed books
+   * @return {undefined} - makes api calls to fetch a user's borrowed books
    * and borrowing history
    */
   componentDidMount() {
     if (this.props.isLoggedIn) {
       this.props.fetchHistory(this.props.id);
-      this.props.fetchTransactionHistory(this.props.id);
+      this.props.fetchTransactionHistory(null, this.props.id);
     }
   }
 
@@ -49,7 +49,7 @@ export class History extends Component {
       this.props.isLoggedIn ?
         <div>
           <Header activeLink="history"/>
-          <main className="">
+          <main id="history">
             <Row>
               {historyDisplay}
             </Row>

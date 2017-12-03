@@ -1,3 +1,8 @@
+/**
+ * tells if an object or array is empty
+ * @param {Object|Array} item
+ * @returns {Bool}       boolean
+ */
 export const isEmpty = (item) => {
   if (!(typeof item === 'object')) {
     throw new TypeError('invalid arguement type. Provide array or object');
@@ -9,8 +14,13 @@ export const isEmpty = (item) => {
 };
 
 
-const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|z(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+/**
+ * validates sign up
+ * @param {Object} state
+ * @returns {Object}     object containing validity status
+ */
 export const validateSignUp = (state) => {
   const errors = {};
   if (state.username.charAt(0) === ' ') {
@@ -40,6 +50,11 @@ export const validateSignUp = (state) => {
 };
 
 
+/**
+ * validates login
+ * @param {Object} state
+ * @returns {Object}     object containing validity status
+ */
 export const validateLogin = (state) => {
   const errors = {};
   if (!state.username.trim()) {

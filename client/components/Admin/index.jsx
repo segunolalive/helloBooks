@@ -65,13 +65,13 @@ export class Admin extends Component {
   /**
    * lifecycle methods called after component mounts the DOM
    * @memberof Admin
-   * @returns {undefined} fetches book categories and admin notifications
+   * @returns {Promise} fetches book categories and admin notifications
    */
   componentDidMount() {
     this.props.getBookCategories();
     const { pageSize, pageNumber } = this.props.pagination;
     const offset = getOffset.bind(this)(pageNumber, pageSize);
-    return this.props.fetchNotifications({ limit: 12, offset });
+    return this.props.fetchNotifications({ limit: 0, offset });
   }
 
   /**
@@ -133,7 +133,7 @@ export class Admin extends Component {
   /**
    * handles image Upload
    * @param  {object} event
-   * @return {undefined}    sets state
+   * @return {Function}    calls sets state
    */
   handleImageChange(event) {
     event.preventDefault();
@@ -151,7 +151,7 @@ export class Admin extends Component {
             book: { ...this.state.book, cover: '' },
           }));
         }
-        this.setState({
+        return this.setState({
           book: { ...this.state.book, cover: response.body.secure_url },
           cover: null,
         });
@@ -251,12 +251,12 @@ export class Admin extends Component {
     return (this.props.user.isAdmin ?
       <div>
         <Header activeLink='admin' />
-        <main>
+        <main id="admin">
           <Row>
             <div className="container admin-container">
               <Row>
                 <Col s={12} m={6}>
-                  <div className="col s12 admin-form center">
+                  <div className="col s12 admin-form center" id="books-section">
                     <BookForm
                       heading={text}
                       book={this.state.book}
@@ -274,11 +274,11 @@ export class Admin extends Component {
                       bookFileError={this.state.errors.bookFile}
                     />
                   </div>
-                  <div className="col s12 admin-form center">
+                  <div className="col s12 admin-form center" id="categories-section">
                     <AddCategoryForm onSubmit={this.handleAddCategory} />
                   </div>
                 </Col>
-                <div className="col s12 m5 offset-m1 admin-form">
+                <div className="col s12 m5 offset-m1 admin-form" id="notifications-section">
                   <InfiniteScroll
                     pageStart={0}
                     loadMore={this.handleFetchNotifications}
@@ -293,7 +293,7 @@ export class Admin extends Component {
             </div>
           </Row>
         </main>
-      </div> : <Redirect to='/dashboard' />
+      </div> : <Redirect to='/login' />
     );
   }
 }

@@ -5,13 +5,18 @@ import { Col } from 'react-materialize';
 import { Link } from 'react-router-dom';
 import Loading from '../common/Loading';
 
+
+/**
+ * transaction history
+ * @param {Object} props
+ * @returns {JSX}        JSX representaion of component
+ */
 const TransactionHistory = (props) => {
   const transactions = props.transactions.length ?
     props.transactions.map(
       transaction => (
         <Col s={12}
           key={transaction.id}
-          className=""
         >
           <p>
            You {transaction.type}ed {transaction.bookTitle}
@@ -31,13 +36,14 @@ const TransactionHistory = (props) => {
       <div className="col s12">
         <Link
           to="/history"
+          id="view-history-btn"
           className="btn blue darken-4 right"
         >
           View Borrowing History
         </Link>
       </div>
       <div className="col s12">
-        <h4 className="center">All Transactions</h4>
+        <h4 className="center bold-text">All Transactions</h4>
         <div className="container borrowed-list">
           {transactions}
         </div>

@@ -4,7 +4,7 @@ import App from '../../components/App';
 
 jest.mock('react-router-dom');
 
-describe('', () => {
+describe('App', () => {
   it('renders without crashing', () => {
     const wrapper = shallow(<App />);
     expect(wrapper).toBeDefined();

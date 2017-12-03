@@ -35,12 +35,12 @@ describe('Admin Component', () => {
     expect(wrapper.getElement().type).toBe('div');
   });
 
-  it('should redirect to dashboard page if not admin user', () => {
+  it('should redirect to login page if not admin user', () => {
     const notAdmin = { ...props, user: { ...props.user, isAdmin: false } };
     const wrapper = shallow(<Admin { ...notAdmin } />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('Redirect').length).toBe(1);
-    expect(wrapper.find('Redirect').props().to).toBe('/dashboard');
+    expect(wrapper.find('Redirect').props().to).toBe('/login');
   });
 
   it('should render one BookForm component', () => {
@@ -164,29 +164,6 @@ describe('Admin Component', () => {
     expect(wrapper.state().book.bookFile).not.toBe(undefined);
     expect(wrapper.state().errors).toEqual({});
   });
-
-  // it('should set an error state if error occurs on handleFileChange', () => {
-  //   const handleFileChange = jest.fn(() => ({ end: Promise.reject(1) }));
-  //   const methodProps = { ...props, handleFileChange };
-  //   const wrapper = shallow(<Admin {...methodProps } />);
-  //   const handleFileChangeSpy = jest.spyOn(
-  //     wrapper.instance(), 'handleFileChange'
-  //   );
-  //   const event = {
-  //     preventDefault: jest.fn(),
-  //     target: {
-  //       files: ['Tolu', 'some other weird stuff'],
-  //       name: 'value'
-  //     }
-  //   };
-  //   expect(wrapper.state().bookFile).toBe(undefined);
-  //   expect(wrapper.state().book.bookFile).toBe('');
-  //
-  //   wrapper.instance().handleFileChange(event);
-  //   expect(handleFileChangeSpy).toHaveBeenCalledTimes(1);
-  //   expect(wrapper.state().book.bookFile).toBe('');
-  //   expect(wrapper.state().errors).not.toEqual({});
-  // });
 
   it('should call handleSelectCategory when a category is selected', () => {
     const wrapper = setUp();

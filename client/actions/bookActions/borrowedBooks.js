@@ -32,13 +32,10 @@ export const fetchBorrowedBooks = id => (dispatch) => {
     .then((response) => {
       dispatch(fetchingBorrowedBooks(false));
       dispatch(getBorrowedBooksAction(response.data.books));
-    }, (error) => {
-      dispatch(fetchingBorrowedBooks(false));
-      notify.error(error.response.data.message);
     })
     .catch((error) => {
       dispatch(fetchingBorrowedBooks(false));
-      notify.error(error);
+      notify.error(error.response.data.message);
     });
 };
 
@@ -50,9 +47,9 @@ export const fetchBorrowedBooks = id => (dispatch) => {
 export const fetchBorrowingHistory = id => dispatch => (
   axios.get(`${API}/users/${id}/books`)
     .then((response) => {
-      dispatch(getBorrowedBooksAction(response.data.data));
-    }, error => notify.error(error.response.data.message))
-    .catch(error => notify.error(error))
+      dispatch(getBorrowedBooksAction(response.data.books));
+    })
+    .catch(error => notify.error(error.response.data.message))
 );
 
 /**
@@ -76,8 +73,6 @@ export const returnBook = (userId, bookId) => dispatch => (
       (response) => {
         notify.success(response.data.message);
         return dispatch(returnBookAction(bookId));
-      },
-      error => notify.error(error.response.data.message)
-    )
+      })
     .catch(error => notify.error(error.response.data.message))
 );

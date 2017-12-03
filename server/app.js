@@ -34,9 +34,12 @@ if (
   });
 }
 
-app.use(express.static(path.join(__dirname, 'client/static')));
+app.use('/api-docs', express.static(path.join(__dirname, '/docs')));
+
+app.use('/', express.static(path.join(__dirname, 'client/static')));
 
 app.use('/api/v1', routes);
+
 
 app.get('/bundle.js', (req, res) => res.sendFile(
   path.join(path.dirname(__dirname), 'client/bundle.js')
@@ -53,6 +56,15 @@ app.get('/sw.js', (req, res) => res.sendFile(
 app.get('/*', (req, res) => res.sendFile(
   path.join(path.dirname(__dirname), 'client/index.html'))
 );
+
+/*
+eslint-disable
+*/
+app.use((err, req, res, next) => (
+  res.status(500).send({
+    message: 'Something went wrong. Internal server error'
+  })
+));
 
 
 export default app;

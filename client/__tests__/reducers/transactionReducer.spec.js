@@ -13,7 +13,8 @@ let action,
 
 const history = {
   allBorrowed: [{ id: 1 }, { id: 2 }],
-  transactions: [{}, {}]
+  transactions: [{}, {}],
+  pagination: { pageSize: 1, pageNumber: 2, total: 10 },
 };
 
 describe('Transaction Reducer', () => {
@@ -29,5 +30,42 @@ describe('Transaction Reducer', () => {
     newState = transactionReducer(initialState.transactionReducer, action);
     expect(newState).not.toEqual(initialState.transactionReducer);
     expect(newState.allBorrowed).toEqual(history.allBorrowed);
+  });
+
+  it('should handle actions of type FETCHING_HISTORY', () => {
+    action = fetchingHistory(true);
+    newState = transactionReducer(initialState.transactionReducer, action);
+    expect(newState).not.toEqual(initialState.transactionReducer);
+    expect(newState.fetchingHistory).toEqual(true);
+  });
+
+  it('should handle actions of type GET_TRANSACTION_HISTORY', () => {
+    action = getTransactionHistory(history.transactions);
+    newState = transactionReducer(initialState.transactionReducer, action);
+    expect(newState).not.toEqual(initialState.transactionReducer);
+    expect(newState.transactions).toEqual(history.transactions);
+  });
+
+  it('should handle actions of type GET_MORE_TRANSACTIONS', () => {
+    const moreTransactions = [{ userId: 1, bookId: 4 }];
+    action = getMoreTransactionHistory(moreTransactions);
+    initialState.transactionReducer.transactions = history.transactions;
+    newState = transactionReducer(initialState.transactionReducer, action);
+    expect(newState).not.toEqual(initialState.transactionReducer);
+    expect(newState.transactions).toEqual([...history.transactions, ...moreTransactions]);
+  });
+
+  it('should handle actions of type SET_TRANSACTIONS_PAGINATION', () => {
+    action = setTransactionPagination(history.pagination);
+    newState = transactionReducer(initialState.transactionReducer, action);
+    expect(newState).not.toEqual(initialState.transactionReducer);
+    expect(newState.pagination).toEqual(history.pagination);
+  });
+
+  it('should handle actions of type FETCHING_TRANSACTIONS', () => {
+    action = fetchingTransactions(true);
+    newState = transactionReducer(initialState.transactionReducer, action);
+    expect(newState).not.toEqual(initialState.transactionReducer);
+    expect(newState.fetchingTransactions).toEqual(true);
   });
 });

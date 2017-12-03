@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 import Header from '../Header';
 import BooksTable from './BooksTable';
-import Categories from './Categories';
+import Categories from '../common/Categories';
 import Search from './Search';
 import Loading from '../common/Loading';
 
@@ -136,10 +136,13 @@ export class Library extends Component {
   render() {
     const { pageCount, pageNumber } = this.props.pagination;
     const reachedEnd = pageNumber >= pageCount;
+    const endText = this.props.books.length ?
+      'You\'ve gotten to the bottom of the shelf' :
+      'Nothing found. Try something else';
     const endMessage = reachedEnd ?
       <div className="center">
         <p style={{ fontWeight: 900 }}>
-          You&apos;ve gotten to the bottom of the shelf
+          {endText}
         </p>
         <h4>☺</h4>
       </div> :

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Categories from '../Library/Categories';
+import Categories from '../common/Categories';
 import Loading from '../common/Loading';
 
 /**
@@ -19,7 +19,8 @@ const BookForm = (props) => {
   return (
     <div>
       <h5>{props.heading}</h5>
-      <form className="" action=""
+      <form id="book-form"
+        onSubmit={props.onSubmit}
         method="post"
         encType="multipart/form-data"
       >
@@ -101,7 +102,6 @@ const BookForm = (props) => {
               {(!props.imageUploaded && !props.imageUploading) &&
                 <img
                   src={`${props.book.cover}`}
-                  alt="image uploaded"
                   style={{ width: '50px' }}
                 />
               }
@@ -155,6 +155,7 @@ const BookForm = (props) => {
         </div>
         <div style={{ paddingTop: '10px' }}>
           <input
+            id="submit-book-form-btn"
             type="submit"
             className="btn center"
             onClick={props.onSubmit}
