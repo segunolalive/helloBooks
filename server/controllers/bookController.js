@@ -10,7 +10,7 @@ const bookController = {
    * @param  {object}   req  - express http request object
    * @param  {object}   res  - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
-   * 
+   *
    * @return {Object}        - express http response object
    */
   addCategory(req, res, next) {
@@ -20,7 +20,8 @@ const bookController = {
         created ?
           res.status(201).send({
             message:
-              `Successfully added new category, ${category.category}, to Library`,
+              'Successfully added new category, ' +
+              `${category.category}, to Library`,
           }) :
           res.status(409).send({
             message:
@@ -29,6 +30,7 @@ const bookController = {
       ))
       .catch(error => next(error));
   },
+
   /**
    * Fetch Book Categories.
    * @public
@@ -36,7 +38,7 @@ const bookController = {
    * @param  {object}    req - express http request object
    * @param  {object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
-   * 
+   *
    * @return {Object}        - express http response object
    */
   getBookCategories(req, res, next) {
@@ -56,7 +58,7 @@ const bookController = {
    * @param  {object}    req - express http request object
    * @param  {object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
-   * 
+   *
    * @return {Object}        - express http response object
    */
   createBook(req, res, next) {
@@ -85,7 +87,7 @@ const bookController = {
    * @param  {object}    req - express http request object
    * @param  {object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
-   * 
+   *
    * @return {Object}        - express http response object
    */
   getBook(req, res, next) {
@@ -111,7 +113,7 @@ const bookController = {
    * @param  {object}    req - express http request object
    * @param  {object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
-   * 
+   *
    * @return {Object}        - express http response object
    */
   getBooks(req, res, next) {
@@ -147,7 +149,7 @@ const bookController = {
    * @param  {object}    req - express http request object
    * @param  {object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
-   * 
+   *
    * @return {Object}        - express http response object
    */
   editBookInfo(req, res, next) {
@@ -173,7 +175,7 @@ const bookController = {
    * @param  {object} req    - express http request object
    * @param  {object} res    - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
-   * 
+   *
    * @return {Object}        - express http response object
    */
   deleteBook(req, res, next) {
@@ -192,7 +194,7 @@ const bookController = {
    * @param  {object}    req - express http request object
    * @param  {object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
-   * 
+   *
    * @return {Object}        - express http response object
    */
   borrowBook(req, res, next) {
@@ -263,7 +265,7 @@ const bookController = {
    * @param  {object} req    - express http request object
    * @param  {object} res    - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
-   * 
+   *
    * @return {Object}        - express http response object
    */
   returnBook(req, res, next) {

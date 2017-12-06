@@ -273,8 +273,16 @@
                   <li>
                     <a href="#get-book-categories" class="toc-h2 toc-link" data-title="Books">Get Book Categories</a>
                   </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#admin-notification" class="toc-h1 toc-link" data-title="Admin Notification">Admin Notification</a>
+              <ul class="toc-list-h2">
                   <li>
-                    <a href="#admin-notification" class="toc-h2 toc-link" data-title="Books">Admin Notification</a>
+                    <a href="#request" class="toc-h2 toc-link" data-title="Admin Notification">Request</a>
+                  </li>
+                  <li>
+                    <a href="#response" class="toc-h2 toc-link" data-title="Admin Notification">Response</a>
                   </li>
               </ul>
           </li>
@@ -290,16 +298,17 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Hello Books API!
-Hello Books is a library application that allows users borrow books and read books.
-You can use our API to access our API endpoints, which provide you with information
-on how to create accounts, login, view our library and checkout out book information,
+<p>Welcome to the Hello Books API!</p>
+
+<p>Hello Books is a library application that allows users borrow books and read books.
+With this guide, you&#39;d learn how to access our API endpoints in order to operations like
+account creation, login, querying library and checkout out book information,
 borrow books, return them, contribute books to the database and more.</p>
 
 <p>We have language bindings in Javascript! You can view code examples in the dark area to the right.</p>
 
 <aside class="notice">
-All api routes must be prepended with <code>/api/v1</code> where <code>v1</code> is the api version number.
+All api routes must be prepended with <code>/api/v1</code> where <code>v1</code> represents the api version number.
 </aside>
 <h1 id='authentication'>Authentication</h1>
 <p>Hello Books uses requires authentication with username and password for access to
@@ -340,12 +349,6 @@ and required for requests to protected routes.</p>
 <li>Status: <code>200: OK</code></li>
 <li>Body <code>(application/json)</code></li>
 </ul>
-
-<!-- `x-access-token: token`
-
-<aside class="notice">
-You must replace <code>token</code> with your token.
-</aside> -->
 <h1 id='users'>Users</h1><h2 id='create-a-user'>Create a user</h2>
 <blockquote>
 <p>Request:</p>
@@ -805,7 +808,7 @@ You must replace <code>token</code> with your token.
 <li>Status: <code>200 OK</code></li>
 <li>Body <code>(application/json)</code></li>
 </ul>
-<h2 id='admin-notification'>Admin Notification</h2>
+<h1 id='admin-notification'>Admin Notification</h1>
 <p>This endpoint notifies admin users of library transactions</p>
 
 <blockquote>
@@ -877,6 +880,10 @@ You must replace <code>token</code> with your token.
 <tr>
 <td>409</td>
 <td>Conflict -- Your request has a contains conflicting data.</td>
+</tr>
+<tr>
+<td>422</td>
+<td>Unprocessable Entity -- The request could not be processed with the data provided</td>
 </tr>
 <tr>
 <td>500</td>

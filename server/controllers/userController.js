@@ -18,7 +18,7 @@ const userController = {
    * @param  {object}   req  - express http request object
    * @param  {object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
-   * 
+   *
    * @return {Object}        - returns an http response object
    */
 
@@ -70,7 +70,7 @@ const userController = {
    * @param  {object}   req  - express http request object
    * @param  {object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
-   * 
+   *
    * @return {Object}        - returns an http response object
    */
   updateUserInfo(req, res, next) {
@@ -113,7 +113,7 @@ const userController = {
    * @param  {object}   req  - express http request object
    * @param  {object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
-   * 
+   *
    * @return {Object}        - returns an http response object
    */
 
@@ -166,7 +166,7 @@ const userController = {
    * @param  {object}   req  - express http request object
    * @param  {object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
-   * 
+   *
    * @return {Object}        - returns an http response object
    */
   getBorrowedBooks(req, res, next) {
@@ -201,7 +201,7 @@ const userController = {
   * @param  {object}   req  - express http request object
   * @param  {object}   res  - express http response object
   * @param  {Function} next - calls the next middleware in the stack
-  * 
+  *
   @return {Object}        - returns an http response object
   */
   passwordResetMail(req, res) {

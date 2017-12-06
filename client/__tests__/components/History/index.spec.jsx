@@ -53,7 +53,7 @@ describe('History Component', () => {
     const wrapper = shallow(<History {...methodProps } />);
     wrapper.instance().componentDidMount();
     expect(fetchTransactionHistory).toHaveBeenCalled();
-    expect(fetchTransactionHistory.mock.calls[0]).toEqual([2]);
+    expect(fetchTransactionHistory.mock.calls[0]).toEqual([null, 2]);
   });
 
   it('should call the fetchTransactionHistory method when mounted', () => {
