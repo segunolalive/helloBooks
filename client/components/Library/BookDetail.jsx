@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import Header from '../Header';
-import { borrowBook } from '../../actions/library';
-import { deleteBook } from '../../actions/adminActions';
-import { viewBookDetails } from '../../actions/viewBook';
-
-const Materialize = window.Materialize;
+import { borrowBook } from '../../actions/bookActions/library';
+import { deleteBook } from '../../actions/adminActions/books';
+import { viewBookDetails } from '../../actions/bookActions/viewBook';
+import notify from '../../actions/notify';
+import { loadavg } from 'os';
 
 /**
  * displays book details
@@ -17,7 +17,7 @@ const Materialize = window.Materialize;
  * @class BookDetail
  * @extends {Component}
  */
-class BookDetail extends Component {
+export class BookDetail extends Component {
   /**
    * Creates an instance of BookDetail.
    * @param {any} props
@@ -68,15 +68,7 @@ class BookDetail extends Component {
    */
   handleDelete() {
     this.props.deleteBook(this.props.book.id)
-      .then((response) => {
-        Materialize.toast(response.data.message, 2500, 'teal darken-4');
-        this.setState({ deleteRedirect: true });
-      }, (error) => {
-        Materialize.toast(error.response.data.message, 2500, 'red darken-4');
-      })
-      .catch((error) => {
-        Materialize.toast(error, 2500, 'red darken-4');
-      });
+      .then(() => this.setState({ deleteRedirect: true }));
   }
 
   /**
@@ -102,14 +94,14 @@ class BookDetail extends Component {
     const actionButtons = this.props.isAdmin ? (
       <div className="card-action">
         <Button
-          className="teal darken-4 action-btn"
+          className="teal darken-4 action-btn edit-btn"
           waves="light"
           onClick={this.handleEditClick}
         >
           Edit
         </Button>
         <Button
-          className="red darken-4 action-btn"
+          className="red darken-4 action-btn delete-btn"
           waves="light"
           onClick={this.handleDelete}
         >
@@ -117,7 +109,7 @@ class BookDetail extends Component {
         </Button>
       </div>
     ) : (
-      <div className="card-action">
+      <div className="card-action borrow-btn">
         <Button
           waves="light"
           onClick={this.handleBorrow}
@@ -166,7 +158,7 @@ class BookDetail extends Component {
 
 BookDetail.propTypes = {
   userId: PropTypes.number,
-  isAdmin: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool,
   book: PropTypes.object.isRequired,
   borrowBook: PropTypes.func.isRequired,
   deleteBook: PropTypes.func.isRequired,
@@ -175,8 +167,8 @@ BookDetail.propTypes = {
 };
 
 const mapStateToProps = ({ authReducer, bookReducer }) => ({
-  userId: authReducer.user && authReducer.user.id,
-  isAdmin: authReducer.user && authReducer.user.isAdmin,
+  userId: authReducer.user.id,
+  isAdmin: authReducer.user.isAdmin,
   book: bookReducer.currentBook,
 });
 

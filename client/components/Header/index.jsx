@@ -10,7 +10,7 @@ import toggleSidebar from './toggleSidebar';
  * @class Header
  * @extends {Component}
  */
-export class Header extends Component {
+export class HeaderComponent extends Component {
   /**
    * component lifecycle hook
    * @memberof Header
@@ -31,7 +31,7 @@ export class Header extends Component {
       ['dashboard', ...navLinks, 'history', 'logout'] :
       ['login', 'sign up', ...navLinks];
 
-    if (this.props.user && this.props.user.isAdmin) {
+    if (this.props.user.isAdmin) {
       navLinks = ['admin', ...navLinks];
     }
 
@@ -62,7 +62,7 @@ export class Header extends Component {
   }
 }
 
-Header.propTypes = {
+HeaderComponent.propTypes = {
   activeLink: PropTypes.string,
   isLoggedIn: PropTypes.bool,
   user: PropTypes.object,
@@ -73,4 +73,4 @@ const mapStateToProps = ({ authReducer }) => ({
   user: authReducer.user,
 });
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps, null)(HeaderComponent);

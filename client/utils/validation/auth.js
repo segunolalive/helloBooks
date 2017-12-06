@@ -1,4 +1,9 @@
-const isEmpty = (item) => {
+/**
+ * tells if an object or array is empty
+ * @param {Object|Array} item
+ * @returns {Bool}       boolean
+ */
+export const isEmpty = (item) => {
   if (!(typeof item === 'object')) {
     throw new TypeError('invalid arguement type. Provide array or object');
   }
@@ -9,27 +14,32 @@ const isEmpty = (item) => {
 };
 
 
-const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|z(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+/**
+ * validates sign up
+ * @param {Object} state
+ * @returns {Object}     object containing validity status
+ */
 export const validateSignUp = (state) => {
   const errors = {};
-  if (!state.username.trim()) {
-    errors.username = 'Username is required';
-  } else if (state.username.charAt(0) === ' ') {
+  if (state.username.charAt(0) === ' ') {
     errors.username = 'Username cannot begin with space characters';
   } else if (state.username.charAt(state.username.length - 1) === ' ') {
     errors.username = 'Username cannot end with space characters';
+  } else if (!state.username.trim()) {
+    errors.username = 'Username is required';
   }
-  if (!emailRegex.test(state.email.trim())) {
-    errors.email = 'Invalid email';
-  } else if (!state.email.trim()) {
+  if (!state.email.trim()) {
     errors.email = 'Email is required';
+  } else if (!emailRegex.test(state.email.trim())) {
+    errors.email = 'Invalid email';
   }
   if (!state.password.trim()) {
     errors.password = 'Password is required';
   }
   if (!state.confirmPassword.trim()) {
-    errors.confrimPassword = 'Password confirmation is required';
+    errors.confirmPassword = 'Password confirmation is required';
   } else if (!(state.password === state.confirmPassword)) {
     errors.confirmPassword = 'Passwords do not match';
   }
@@ -40,6 +50,11 @@ export const validateSignUp = (state) => {
 };
 
 
+/**
+ * validates login
+ * @param {Object} state
+ * @returns {Object}     object containing validity status
+ */
 export const validateLogin = (state) => {
   const errors = {};
   if (!state.username.trim()) {

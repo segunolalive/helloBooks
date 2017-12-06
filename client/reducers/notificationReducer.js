@@ -1,6 +1,8 @@
 import actionTypes from '../actions/actionTypes';
+import initialState from './initialState';
 
-export default (state = { pagination: {} }, action) => {
+
+export default (state = initialState.notificationReducer, action) => {
   switch (action.type) {
     case actionTypes.GET_ADMIN_NOTIFICATIONS:
       return { ...state, notifications: action.notifications };

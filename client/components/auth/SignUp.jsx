@@ -7,7 +7,7 @@ import GoogleLogin from 'react-google-login';
 import FaGoogle from 'react-icons/lib/fa/google';
 
 import Header from '../Header';
-import { signUp } from '../../actions/signup';
+import { signUp } from '../../actions/authActions/signup';
 import Loading from '../common/Loading';
 import { validateSignUp } from '../../utils/validation/auth';
 
@@ -17,7 +17,7 @@ import { validateSignUp } from '../../utils/validation/auth';
  * @class SignUp
  * @extends {Component}
  */
-class SignUp extends Component {
+export class SignUp extends Component {
   /**
    * Creates an instance of SignUp.
    * @memberof SignUp
@@ -47,10 +47,8 @@ class SignUp extends Component {
   handleSignUp(event) {
     event.preventDefault();
     const { errors, isValid } = validateSignUp(this.state);
-    if (!isValid) {
-      return this.setState({ errors });
-    }
-    return this.props.signUp(this.state);
+    return isValid ? this.props.signUp(this.state) :
+      this.setState({ errors });
   }
 
 
@@ -74,7 +72,7 @@ class SignUp extends Component {
   handleChange(event) {
     event.preventDefault();
     const formField = event.target.name;
-    const user = Object.assign({}, this.state);
+    const user = { ...this.state };
     user[formField] = event.target.value.trim();
     this.setState(() => user);
   }
@@ -103,7 +101,7 @@ class SignUp extends Component {
                       <h6>Welcome home avid reader</h6>
                     </div>
                     <div className="col l6 m8 s12">
-                      <form onSubmit={this.handleSignUp}>
+                      <form id="signup-form" onSubmit={this.handleSignUp}>
                         <div className="col s12">
                           <h5>Sign Up</h5>
                         </div>
@@ -132,13 +130,12 @@ class SignUp extends Component {
                                 className="validate"
                                 type="email"
                                 name="email"
-                                required
                                 data-wrong="enter a valid email"
                                 title="email is required"
                                 placeholder="Email"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-email" className="red-text">
                                 {this.state.errors && this.state.errors.email}
                               </span>
                             </div>
@@ -148,11 +145,10 @@ class SignUp extends Component {
                                 type="text"
                                 name="username"
                                 placeholder="Username"
-                                required
                                 title="username is required"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-username" className="red-text">
                                 {this.state.errors &&
                                   this.state.errors.username}
                               </span>
@@ -163,11 +159,10 @@ class SignUp extends Component {
                                 type="password"
                                 name="password"
                                 placeholder="password"
-                                required
                                 title="password is required"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-password" className="red-text">
                                 {this.state.errors &&
                                   this.state.errors.password}
                               </span>
@@ -178,11 +173,10 @@ class SignUp extends Component {
                                 type="password"
                                 name="confirmPassword"
                                 placeholder="retype password"
-                                required
                                 title="password confirmation is required"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-confirm-password" className="red-text">
                                 {this.state.errors &&
                                   this.state.errors.confirmPassword}
                               </span>

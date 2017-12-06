@@ -11,15 +11,15 @@ import { Button, Input } from 'react-materialize';
 const AddCategoryForm = props => (
   <div className={props.className}>
     <h5>Add New Category</h5>
-    <form onSubmit={props.onSubmit}>
+    <form id="category-form" onSubmit={props.onSubmit}>
       <Input s={12}
         name="category"
         type="text"
-        defaultValue=""
         placeholder="category"
+        id="category-input"
       >
       </Input>
-      <Button waves="light">Add</Button>
+      <Button waves="light" id="add-category-btn">Add</Button>
     </form>
   </div>
 );

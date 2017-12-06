@@ -13,7 +13,8 @@ describe('Loading', () => {
   });
 
   it('renders text prop passed to it', () => {
-    const LoadingComponent = renderer.create(<Loading text="fetching"/>).toJSON();
+    const LoadingComponent = renderer
+      .create(<Loading text="fetching"/>).toJSON();
     expect(LoadingComponent).toMatchSnapshot();
   });
   it('should render 1 ProgressBar component', () => {

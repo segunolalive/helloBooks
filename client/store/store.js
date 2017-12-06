@@ -9,11 +9,10 @@ const initialState = loadState();
 
 
 const store = createStore(rootReducer, initialState,
-  compose(
-    applyMiddleware(thunkMiddleware),
+  compose(applyMiddleware(thunkMiddleware),
+    process.env.NODE_ENV === 'development' &&
     window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
-);
+  ));
 
 store.subscribe(throttle(() => {
   saveState(store.getState());

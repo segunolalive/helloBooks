@@ -1,5 +1,3 @@
-import logout from './logout';
-
 const Materialize = window.Materialize;
 
 const success = (message) => {
@@ -7,9 +5,6 @@ const success = (message) => {
 };
 
 const error = (message) => {
-  if (message === 'Your session has expired. Please reauthenticate') {
-    logout();
-  }
   Materialize.toast(message, 2500, 'red darken-4');
 };
 

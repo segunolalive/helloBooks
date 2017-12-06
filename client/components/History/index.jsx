@@ -7,6 +7,7 @@ import Header from '../Header';
 import TransactionHistory from './TransactionHistory';
 import AllBorrowed from './AllBorrowed';
 import { fetchHistory, fetchTransactionHistory } from '../../actions/history';
+import LoginRedirect from '../auth/LoginRedirect';
 
 
 /**
@@ -14,17 +15,20 @@ import { fetchHistory, fetchTransactionHistory } from '../../actions/history';
  * @class History
  * @extends {Component}
  */
-class History extends Component {
+export class History extends Component {
   /**
    * lifecycle hook called when component mounts
    * @memberof History
-   * @return {Undefined} - makes api calls to fetch a user's borrowed books
+   * @return {undefined} - makes api calls to fetch a user's borrowed books
    * and borrowing history
    */
   componentDidMount() {
-    this.props.fetchHistory(this.props.id);
-    this.props.fetchTransactionHistory(this.props.id);
+    if (this.props.isLoggedIn) {
+      this.props.fetchHistory(this.props.id);
+      this.props.fetchTransactionHistory(null, this.props.id);
+    }
   }
+
   /**
    * renders  component to DOM
    * @return {JSX} JSX
@@ -32,18 +36,25 @@ class History extends Component {
   render() {
     const historyDisplay =
       this.props.location.pathname === '/history/transactions' ?
-        <TransactionHistory transactions={this.props.transactions}/> :
-        <AllBorrowed books={this.props.books}/>;
+        <TransactionHistory
+          transactions={this.props.transactions}
+          fetchingTransactions={this.props.fetchingTransactions}
+        /> :
+        <AllBorrowed
+          books={this.props.books}
+          fetchingHistory={this.props.fetchingHistory}
+        />;
 
     return (
-      <div>
-        <Header activeLink="history"/>
-        <main className="">
-          <Row>
-            {historyDisplay}
-          </Row>
-        </main>
-      </div>
+      this.props.isLoggedIn ?
+        <div>
+          <Header activeLink="history"/>
+          <main id="history">
+            <Row>
+              {historyDisplay}
+            </Row>
+          </main>
+        </div> : <LoginRedirect />
     );
   }
 }
@@ -51,17 +62,23 @@ class History extends Component {
 
 History.propTypes = {
   id: PropTypes.number.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   books: PropTypes.array.isRequired,
   fetchHistory: PropTypes.func.isRequired,
+  fetchingHistory: PropTypes.bool.isRequired,
   transactions: PropTypes.array.isRequired,
-  fetchTransactionHistory: PropTypes.func.isRequired
+  fetchTransactionHistory: PropTypes.func.isRequired,
+  fetchingTransactions: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ authReducer, transactionReducer }) => ({
-  id: authReducer.user && authReducer.user.id,
+  id: authReducer.user.id,
+  isLoggedIn: authReducer.isLoggedIn,
   books: transactionReducer.allBorrowed,
   transactions: transactionReducer.transactions,
+  fetchingHistory: transactionReducer.fetchingHistory,
+  fetchingTransactions: transactionReducer.fetchingTransactions
 });
 
 export default connect(

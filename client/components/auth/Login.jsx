@@ -7,7 +7,7 @@ import GoogleLogin from 'react-google-login';
 import FaGoogle from 'react-icons/lib/fa/google';
 
 import Header from '../Header';
-import { login } from '../../actions/login';
+import { login } from '../../actions/authActions/login';
 import Loading from '../common/Loading';
 import { validateLogin } from '../../utils/validation/auth';
 
@@ -17,7 +17,7 @@ import { validateLogin } from '../../utils/validation/auth';
  * @class Login
  * @extends {Component}
  */
-class Login extends Component {
+export class Login extends Component {
   /**
    * Creates an instance of Login.
    * @param {any} props
@@ -54,10 +54,8 @@ class Login extends Component {
   handleLogin(event) {
     event.preventDefault();
     const { errors, isValid } = validateLogin(this.state);
-    if (!isValid) {
-      return this.setState({ errors });
-    }
-    return this.props.login(this.state);
+    return (isValid) ? this.props.login(this.state) :
+      this.setState({ errors });
   }
 
   /**
@@ -99,7 +97,7 @@ class Login extends Component {
                       <h6>Welcome home avid reader</h6>
                     </div>
                     <div className="col l6 m8 s12">
-                      <form onSubmit={this.handleLogin}>
+                      <form id="login-form" onSubmit={this.handleLogin}>
                         <div className="col s12">
                           <h5>Login</h5>
                         </div>
@@ -110,11 +108,10 @@ class Login extends Component {
                                 name="username"
                                 placeholder="Username"
                                 className="validate"
-                                required
                                 title="username is required for login"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-username" className="red-text">
                                 {this.state.errors &&
                                   this.state.errors.username}
                               </span>
@@ -124,11 +121,10 @@ class Login extends Component {
                                 name="password"
                                 placeholder="password"
                                 className="validate"
-                                required
                                 title="password is required for login"
                                 onChange={this.handleChange}
                               />
-                              <span className="red-text">
+                              <span id="error-password" className="red-text">
                                 {this.state.errors &&
                                   this.state.errors.password}
                               </span>

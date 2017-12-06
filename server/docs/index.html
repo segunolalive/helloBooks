@@ -1,0 +1,902 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;javascript&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="javascript">javascript</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#login" class="toc-h2 toc-link" data-title="Authentication">Login</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#users" class="toc-h1 toc-link" data-title="Users">Users</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-a-user" class="toc-h2 toc-link" data-title="Users">Create a user</a>
+                  </li>
+                  <li>
+                    <a href="#borrowed-books" class="toc-h2 toc-link" data-title="Users">Borrowed Books</a>
+                  </li>
+                  <li>
+                    <a href="#update-user-info" class="toc-h2 toc-link" data-title="Users">Update User Info</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#books" class="toc-h1 toc-link" data-title="Books">Books</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-books" class="toc-h2 toc-link" data-title="Books">Get All Books</a>
+                  </li>
+                  <li>
+                    <a href="#get-book" class="toc-h2 toc-link" data-title="Books">Get Book</a>
+                  </li>
+                  <li>
+                    <a href="#borrow-book" class="toc-h2 toc-link" data-title="Books">Borrow Book</a>
+                  </li>
+                  <li>
+                    <a href="#return-book" class="toc-h2 toc-link" data-title="Books">Return Book</a>
+                  </li>
+                  <li>
+                    <a href="#add-book" class="toc-h2 toc-link" data-title="Books">Add Book</a>
+                  </li>
+                  <li>
+                    <a href="#update-book" class="toc-h2 toc-link" data-title="Books">Update Book</a>
+                  </li>
+                  <li>
+                    <a href="#delete-book" class="toc-h2 toc-link" data-title="Books">Delete Book</a>
+                  </li>
+                  <li>
+                    <a href="#add-book-category" class="toc-h2 toc-link" data-title="Books">Add Book Category</a>
+                  </li>
+                  <li>
+                    <a href="#get-book-categories" class="toc-h2 toc-link" data-title="Books">Get Book Categories</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#admin-notification" class="toc-h1 toc-link" data-title="Admin Notification">Admin Notification</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#request" class="toc-h2 toc-link" data-title="Admin Notification">Request</a>
+                  </li>
+                  <li>
+                    <a href="#response" class="toc-h2 toc-link" data-title="Admin Notification">Response</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p>Welcome to the Hello Books API!</p>
+
+<p>Hello Books is a library application that allows users borrow books and read books.
+With this guide, you&#39;d learn how to access our API endpoints in order to operations like
+account creation, login, querying library and checkout out book information,
+borrow books, return them, contribute books to the database and more.</p>
+
+<p>We have language bindings in Javascript! You can view code examples in the dark area to the right.</p>
+
+<aside class="notice">
+All api routes must be prepended with <code>/api/v1</code> where <code>v1</code> represents the api version number.
+</aside>
+<h1 id='authentication'>Authentication</h1>
+<p>Hello Books uses requires authentication with username and password for access to
+protected api routes. On signup and subsequent logins, a token is generated
+and required for requests to protected routes.</p>
+
+<p>The token is expected to be provided in the <code>x-access-token-header</code> request header.</p>
+<h2 id='login'>Login</h2>
+<blockquote>
+<p>Request:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"newuser"</span><span class="p">,</span>
+  <span class="s2">"password"</span><span class="p">:</span> <span class="s2">"supersecretpassword"</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"token"</span><span class="p">:</span> <span class="s2">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhYmNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJTZWd1biIsImlzQWRtaW4iOnRydWUsImlhdCI6MTUwODAwNjg5MSwiZXhwIjoxNTA4MDkzMjkxfQ.catTTd9DVZ4vDH_AAuSxZ6638D4INjx-j7PN-8Zlxa8"</span><span class="p">,</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"syndey"</span><span class="p">,</span>
+    <span class="s2">"lastName"</span><span class="p">:</span> <span class="s2">"caprice"</span><span class="p">,</span>
+    <span class="s2">"isAdmin"</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Make sure to include your token with subsequent requests</p>
+</blockquote>
+<h3 id='request'>Request</h3>
+<ul>
+<li>Endpoint: POST: <code>/users/signin</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h3 id='response'>Response</h3>
+<ul>
+<li>Status: <code>200: OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h1 id='users'>Users</h1><h2 id='create-a-user'>Create a user</h2>
+<blockquote>
+<p>Request:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"newuser"</span><span class="p">,</span>
+  <span class="s2">"eamil"</span><span class="p">:</span> <span class="s2">"useremail@cooldomain.com"</span><span class="p">,</span>
+  <span class="s2">"password"</span><span class="p">:</span> <span class="s2">"supersecretpassword"</span><span class="p">,</span>
+  <span class="s2">"confirmPassword"</span><span class="p">:</span> <span class="s2">"supersecretpassword"</span><span class="p">,</span>
+  <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"Philip"</span><span class="p">,</span>
+  <span class="s2">"lastName"</span><span class="p">:</span> <span class="s2">"Dean"</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"token"</span><span class="p">:</span> <span class="s2">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhYmNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJTZWd1biIsImlzQWRtaW4iOnRydWUsImlhdCI6MTUwODAwNjg5MSwiZXhwIjoxNTA4MDkzMjkxfQ.catTTd9DVZ4vDH_AAuSxZ6638D4INjx-j7PN-8Zlxa8"</span><span class="p">,</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"Philip"</span><span class="p">,</span>
+    <span class="s2">"lastName"</span><span class="p">:</span> <span class="s2">"Dean"</span><span class="p">,</span>
+    <span class="s2">"isAdmin"</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">}</span>
+</code></pre><h3 id='request'>Request</h3>
+<ul>
+<li>Endpoint: <strong>POST</strong>: <code>/users/signup</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h3 id='response'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h2 id='borrowed-books'>Borrowed Books</h2>
+<p>This endpoint gets a list of books a user, with id of 1, has borrowed.</p>
+
+<blockquote>
+<p>Sample JSON structured response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"books"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+            <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Learn Fish"</span><span class="p">,</span>
+            <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Segun Martins, Beau Dearmont"</span><span class="p">,</span>
+            <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Fish is an awesome shell scripting language.\n\nLearn from the masters"</span><span class="p">,</span>
+            <span class="s2">"total"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T01:05:00.856Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-14T21:39:33.088Z"</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="s2">"BorrowedBook"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"userId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">"bookId"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+                <span class="s2">"returned"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T04:25:58.463Z"</span><span class="p">,</span>
+                <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T04:25:58.463Z"</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+            <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Foonam"</span><span class="p">,</span>
+            <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"bo Dakes, low Fruity"</span><span class="p">,</span>
+            <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"GOo goo gooo"</span><span class="p">,</span>
+            <span class="s2">"total"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T01:10:30.754Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-14T11:57:31.798Z"</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="s2">"BorrowedBook"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"userId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">"bookId"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+                <span class="s2">"returned"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T04:25:59.682Z"</span><span class="p">,</span>
+                <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T04:25:59.682Z"</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"French"</span><span class="p">,</span>
+            <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"flo harrison"</span><span class="p">,</span>
+            <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"An ruby ruby programming language"</span><span class="p">,</span>
+            <span class="s2">"total"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-09T17:36:43.139Z"</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="s2">"BorrowedBook"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"userId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">"bookId"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s2">"returned"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:24.294Z"</span><span class="p">,</span>
+                <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-09T17:36:43.128Z"</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre><h3 id='request-2'>Request</h3>
+<ul>
+<li>Endpoint: <strong>GET</strong>: <code>/users/1/books</code></li>
+<li>Requires: Authentication</li>
+</ul>
+<h3 id='response-2'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h3 id='query-parameters'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>returned</td>
+<td>false</td>
+<td>If set to false, returns only unreturned books.</td>
+</tr>
+<tr>
+<td>returned</td>
+<td>true</td>
+<td>If set to true, returns only books a user has returned.</td>
+</tr>
+<tr>
+<td>returned</td>
+<td></td>
+<td>If unset, returns all books a user has ever borrowed.</td>
+</tr>
+</tbody></table>
+<h2 id='update-user-info'>Update User Info</h2>
+<p>This endpoint updates user data. In this case, the user with id of 1.</p>
+<h3 id='request-3'>Request</h3>
+<ul>
+<li>Endpoint: <strong>PUT</strong>: <code>/users/1/books</code></li>
+<li>Body <code>(application/json)</code></li>
+<li>Requires: Authentication</li>
+</ul>
+<h3 id='response-3'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h1 id='books'>Books</h1><h2 id='get-all-books'>Get All Books</h2>
+<p>This endpoint retrieves a list of all books in the library.</p>
+
+<blockquote>
+<p>Sample Structured JSON Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"books"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"eloquent ruby"</span><span class="p">,</span>
+            <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"flo harrison"</span><span class="p">,</span>
+            <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"ruby destruction"</span><span class="p">,</span>
+            <span class="s2">"total"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/book/cover"</span><span class="p">,</span>
+            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/book/file"</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"ruby"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"eloquent python"</span><span class="p">,</span>
+            <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"flo harrison, dan moss"</span><span class="p">,</span>
+            <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"feeel the snake"</span><span class="p">,</span>
+            <span class="s2">"total"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/book/cover"</span><span class="p">,</span>
+            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/book/file"</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"python"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Foonam"</span><span class="p">,</span>
+            <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"bo Dakes, low Fruity"</span><span class="p">,</span>
+            <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"GOo goo gooo"</span><span class="p">,</span>
+            <span class="s2">"total"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/book/file"</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T01:10:30.754Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-14T11:57:31.798Z"</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"/path/to/book/cover"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+            <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Learn Fish"</span><span class="p">,</span>
+            <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Segun Martins, Beau Dearmont"</span><span class="p">,</span>
+            <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Fish is an awesome shell scripting language.\n\nLearn from the masters"</span><span class="p">,</span>
+            <span class="s2">"total"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/book/file"</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T01:05:00.856Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-14T21:39:33.088Z"</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"shell"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre><h3 id='request'>Request</h3>
+<ul>
+<li>Endpoint: GET: <code>/books</code></li>
+</ul>
+<h3 id='response'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h3 id='query-parameters'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>category</td>
+<td>&quot;&quot;</td>
+<td>Filters books by category specified.</td>
+</tr>
+</tbody></table>
+<h2 id='get-book'>Get Book</h2>
+<p>The following endpoint retrieves a specific book. In this case, the  book with the id of <code>12</code></p>
+
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"book"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"id"</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+        <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"French"</span><span class="p">,</span>
+        <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"flo harrison"</span><span class="p">,</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"An ruby ruby programming language"</span><span class="p">,</span>
+        <span class="s2">"total"</span><span class="p">:</span> <span class="mi">21</span><span class="p">,</span>
+        <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
+        <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-15T14:21:51.773Z"</span><span class="p">,</span>
+        <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"ruby"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre><h3 id='request-2'>Request</h3>
+<ul>
+<li>Endpoint: GET: <code>/books/12</code></li>
+</ul>
+<h3 id='response-2'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h2 id='borrow-book'>Borrow Book</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">12</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"You have successfully borrowed French. Check your dashboard to read it"</span>
+<span class="p">}</span>
+</code></pre><h3 id='request-3'>Request</h3>
+<ul>
+<li>Endpoint: POST: <code>/users/1/books</code>. <code>1</code> here, is the user id.</li>
+<li>Requires: Authentication</li>
+</ul>
+<h3 id='response-3'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h2 id='return-book'>Return Book</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"You have successfully returned French"</span>
+<span class="p">}</span>
+</code></pre><h3 id='request-4'>Request</h3>
+<ul>
+<li>Endpoint: PUT: <code>/users/1/books</code> <code>1</code> here, is the user id.</li>
+<li>Requires: Authentication</li>
+</ul>
+<h3 id='response-4'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h2 id='add-book'>Add Book</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+   <span class="s2">"id"</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+   <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"FOSS"</span><span class="p">,</span>
+   <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Flo Harrison, Nick Hansel"</span><span class="p">,</span>
+   <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"A soft introduction to open source software development"</span><span class="p">,</span>
+   <span class="s2">"total"</span><span class="p">:</span> <span class="mi">21</span><span class="p">,</span>
+   <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/cover/image"</span><span class="p">,</span>
+   <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/file/"</span><span class="p">,</span>
+   <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"OSS"</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"book"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"FOSS"</span><span class="p">,</span>
+      <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Flo Harrison, Nick Hansel"</span><span class="p">,</span>
+      <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"A soft introduction to open source software development"</span><span class="p">,</span>
+      <span class="s2">"total"</span><span class="p">:</span> <span class="mi">21</span><span class="p">,</span>
+      <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/cover/image"</span><span class="p">,</span>
+      <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/file/"</span><span class="p">,</span>
+      <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"OSS"</span>
+      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
+      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Successfully added FOSS to Library"</span>
+<span class="p">}</span>
+</code></pre><h3 id='request-5'>Request</h3>
+<ul>
+<li>Endpoint: POST: <code>/books</code></li>
+<li>Requires: Authentication and Authorization</li>
+</ul>
+<h3 id='response-5'>Response</h3>
+<ul>
+<li>Status: <code>201: Created</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h2 id='update-book'>Update Book</h2>
+<p>The following updates the total number of copies of the book with <code>id</code>, <code>2</code>, to 30.</p>
+
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+   <span class="s2">"total"</span><span class="p">:</span> <span class="mi">30</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"book"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"FOSS"</span><span class="p">,</span>
+      <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Flo Harrison, Nick Hansel"</span><span class="p">,</span>
+      <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"A soft introduction to open source software development"</span><span class="p">,</span>
+      <span class="s2">"total"</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+      <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/cover/image"</span><span class="p">,</span>
+      <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/file/"</span><span class="p">,</span>
+      <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"OSS"</span>
+      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
+      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span>
+    <span class="p">},</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"FOSS was successfully updated"</span>
+<span class="p">}</span>
+</code></pre><h3 id='request-6'>Request</h3>
+<ul>
+<li>Endpoint: PUT: <code>/books/2</code></li>
+<li>Requires: Authentication and Authorization</li>
+</ul>
+<h3 id='response-6'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h2 id='delete-book'>Delete Book</h2>
+<p>This deletes the book with <code>id</code> of <code>2</code>.</p>
+
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Successfully deleted book from database"</span>
+<span class="p">}</span>
+</code></pre><h3 id='request-7'>Request</h3>
+<ul>
+<li>Endpoint: DELETE: <code>/books/2</code></li>
+<li>Requires: Authentication and Authorization</li>
+</ul>
+<h3 id='response-7'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h2 id='add-book-category'>Add Book Category</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"ruby"</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Successfully added new category, ruby, to Library"</span>
+<span class="p">}</span>
+</code></pre><h3 id='request-8'>Request</h3>
+<ul>
+<li>Endpoint: POST: <code>/books/category</code></li>
+<li>Requires: Authentication and Authorization</li>
+</ul>
+<h3 id='response-8'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h2 id='get-book-categories'>Get Book Categories</h2>
+<blockquote>
+<p>Sample JSON Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"categories"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"Python"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"Javascript"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"react"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre><h3 id='request-9'>Request</h3>
+<ul>
+<li>Endpoint: GET: <code>/books/category</code></li>
+<li>Requires: Authentication and Authorization</li>
+</ul>
+<h3 id='response-9'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h1 id='admin-notification'>Admin Notification</h1>
+<p>This endpoint notifies admin users of library transactions</p>
+
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"notifications"</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+          <span class="s2">"id"</span><span class="p">:</span> <span class="mi">77</span><span class="p">,</span>
+          <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"return"</span><span class="p">,</span>
+          <span class="s2">"bookTitle"</span><span class="p">:</span> <span class="s2">"eloquent javascript"</span><span class="p">,</span>
+          <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Segun"</span><span class="p">,</span>
+          <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-01T07:54:15.782Z"</span><span class="p">,</span>
+          <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-01T07:54:15.782Z"</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+          <span class="s2">"id"</span><span class="p">:</span> <span class="mi">76</span><span class="p">,</span>
+          <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"borrow"</span><span class="p">,</span>
+          <span class="s2">"bookTitle"</span><span class="p">:</span> <span class="s2">"eloquent ruby"</span><span class="p">,</span>
+          <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Segun"</span><span class="p">,</span>
+          <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:26.128Z"</span><span class="p">,</span>
+          <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:26.128Z"</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+          <span class="s2">"id"</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
+          <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"return"</span><span class="p">,</span>
+          <span class="s2">"bookTitle"</span><span class="p">:</span> <span class="s2">"eloquent javascript"</span><span class="p">,</span>
+          <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Segun"</span><span class="p">,</span>
+          <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:17.417Z"</span><span class="p">,</span>
+          <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:17.417Z"</span>
+      <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre><h3 id='request'>Request</h3>
+<ul>
+<li>Endpoint: GET: <code>//admin-notifications</code></li>
+<li>Requires: Authentication and Authorization</li>
+</ul>
+<h3 id='response'>Response</h3>
+<ul>
+<li>Status: <code>200: OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h1 id='errors'>Errors</h1>
+<p>The Hello Books api uses the following error codes</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request -- Invalid request syntax.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized -- Failed authorization.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden -- The request is not allowed.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found -- The specified resource could not be found.</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Conflict -- Your request has a contains conflicting data.</td>
+</tr>
+<tr>
+<td>422</td>
+<td>Unprocessable Entity -- The request could not be processed with the data provided</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="javascript">javascript</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -12,7 +12,9 @@ const Navigation = (props) => {
     (
       <li key={link}
         className={props.activeLink === link ? 'active' : ''}>
-        <NavLink to={`/${link.replace(' ', '')}`}
+        <NavLink
+          to={`/${link.replace(' ', '')}`}
+          id={`${link.replace(' ', '')}-nav-link`}
           activeClassName="active"
         >
           {link.toUpperCase()}

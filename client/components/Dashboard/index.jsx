@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { Col, Row } from 'react-materialize';
 
 import Header from '../Header';
@@ -9,16 +8,17 @@ import Borrowed from './Borrowed';
 import ProfileInfo from './ProfileInfo';
 import SuggestedBooks from './SuggestedBooks';
 
-import { fetchBorrowedBooks, returnBook } from '../../actions/borrowedBooks';
+import { fetchBorrowedBooks,
+  returnBook } from '../../actions/bookActions/borrowedBooks';
+import LoginRedirect from '../auth/LoginRedirect';
 
-const Materialize = window.Materialize;
 
 /**
  * dashboard component
  * @class Dashboard
  * @extends {Component}
  */
-class Dashboard extends Component {
+export class Dashboard extends Component {
   /**
    * Creates an instance of Dashboard.
    * @param {Object} props Object containing properties for dashboard
@@ -36,20 +36,9 @@ class Dashboard extends Component {
    * @returns {Undefined} fetches borrowed books
    */
   componentDidMount() {
-    if (this.props.user) {
+    if (this.props.user.id) {
       this.props.fetchBorrowedBooks(this.props.user.id);
     }
-  }
-
-  /**
-   * handles redirect
-   *
-   * @returns {Component} redirect component
-   * @memberof Dashboard
-   */
-  handleRedirect() {
-    Materialize.toast('Login to proceed', 3000, 'red darken-4');
-    return (<Redirect to='/login'/>);
   }
 
   /**
@@ -85,12 +74,12 @@ class Dashboard extends Component {
       `${this.props.user.firstName} ${this.props.user.lastName}` : null;
     return (
       this.props.isLoggedIn !== true ?
-        this.handleRedirect() :
+        <LoginRedirect /> :
         <div>
           <Header
             activeLink='dashboard'
           />
-          <main>
+          <main id="dashboard">
             <Row>
               <Col s={12}>
                 <ProfileInfo
@@ -100,6 +89,7 @@ class Dashboard extends Component {
                   borrowedBooks={this.props.borrowedBooks}
                   readBook={this.readBook}
                   returnBook={this.handleReturnBook}
+                  fetchingBorrowedBooks={this.props.fetchingBorrowedBooks}
                 />
                 <SuggestedBooks />
               </Col>
@@ -113,8 +103,9 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   borrowedBooks: PropTypes.array,
   user: PropTypes.object.isRequired,
-  isLoggedIn: PropTypes.bool,
+  isLoggedIn: PropTypes.bool.isRequired,
   fetchBorrowedBooks: PropTypes.func.isRequired,
+  fetchingBorrowedBooks: PropTypes.bool.isRequired,
   returnBook: PropTypes.func.isRequired,
 };
 
@@ -122,6 +113,7 @@ const mapStateToProps = ({ authReducer, bookReducer }) => ({
   isLoggedIn: authReducer.isLoggedIn,
   user: authReducer.user,
   borrowedBooks: bookReducer.borrowedBooks,
+  fetchingBorrowedBooks: bookReducer.fetchingBorrowedBooks,
 });
 
 export default connect(

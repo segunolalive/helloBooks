@@ -33,7 +33,7 @@ const ProfileInfo = props => (
 
 ProfileInfo.propTypes = {
   name: PropTypes.string,
-  image: PropTypes.array,
+  image: PropTypes.string,
   onClick: PropTypes.func,
 };
 

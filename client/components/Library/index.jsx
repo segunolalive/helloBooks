@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 import Header from '../Header';
 import BooksTable from './BooksTable';
-import Categories from './Categories';
+import Categories from '../common/Categories';
 import Search from './Search';
 import Loading from '../common/Loading';
 
@@ -17,7 +17,7 @@ import {
   fetchBooks,
   getBookCategories,
   filterBooksByCategory
-} from '../../actions/library';
+} from '../../actions/bookActions/library';
 
 
 /**
@@ -26,7 +26,7 @@ import {
  * @class Library
  * @extends {Component}
  */
-class Library extends Component {
+export class Library extends Component {
   /**
    * Creates an instance of Library.
    * @param {any} props
@@ -136,15 +136,23 @@ class Library extends Component {
   render() {
     const { pageCount, pageNumber } = this.props.pagination;
     const reachedEnd = pageNumber >= pageCount;
+    const endText = this.props.books.length ?
+      'You\'ve gotten to the bottom of the shelf' :
+      'Nothing found. Try something else';
     const endMessage = reachedEnd ?
-      <p className="center" style={{ fontWeight: 900 }}>
-        That&apos;s all for now
-      </p> :
+      <div className="center">
+        <p style={{ fontWeight: 900 }}>
+          {endText}
+        </p>
+        <h4>☺</h4>
+      </div> :
       <Loading text="fetching more awesome books . . ." />;
     const categories = this.props.categories ?
       <Categories
         text="Filter By Category"
         className="col s12 m8 offset-m2 l5"
+        indexVal={0}
+        indexText="clear filter"
         categories={this.props.categories}
         onChange={this.handleSelectCategory}
       /> : null;

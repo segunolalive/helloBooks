@@ -15,16 +15,16 @@ const BookRow = props => (
   <tr>
     <td>
       <img
-        src={(props.cover && requestImageUrl(props.cover, { width: 50 })) ||
+        src={(props.cover && requestImageUrl(props.cover, { width: 80 })) ||
           'https://segunolalive.github.io/helloBooks/' +
           'templates/images/eloquentjs_cover.png'}
         alt={`${props.title} book cover`}
-        style={{ width: '40px' }}
+        style={{ width: '80px' }}
       >
       </img>
     </td>
     <td>
-      <Link to={`/library/book/${props.id}`}>
+      <Link to={`/library/book/${props.id}`} id={`book-${props.id}-link`}>
         {props.title}
       </Link>
     </td>
@@ -33,7 +33,9 @@ const BookRow = props => (
     <td>
       <Button
         disabled={!props.total}
-        waves='light'
+        waves="light"
+        className="borrow-book-btn"
+        id={`borrow-book-${props.id}-btn`}
         onClick={() => props.onButtonClick(props.id)}
       >
         Borrow
