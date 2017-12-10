@@ -35,7 +35,8 @@ const bookReducer = (state = initialState.bookReducer, action) => {
     case actionTypes.GET_BOOK_CATEGORIES:
       return { ...state, categories: action.categories };
     case actionTypes.DELETE_BOOK:
-      return state.books.filter(book => book.id !== action.id);
+      books = state.books.filter(book => book.id !== action.id);
+      return { ...state, books };
     case actionTypes.SET_LIBRARY_PAGINATION:
       return { ...state, pagination: action.pagination };
     default:
