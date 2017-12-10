@@ -230,7 +230,7 @@ input[type=search]:not(.browser-default) {
 .select-wrapper:hover {
   .caret {
     color: #dddddd;
-    transform: scale(2) !important;
+    transform: scale(2);
     transition: all 0.5s ease-in-out;
   }
 }

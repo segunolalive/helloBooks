@@ -5,8 +5,13 @@ import configureMockStore from 'redux-mock-store';
 import mockData from '../__mocks__/mockData';
 import mockLocalStorage from '../__mocks__/mockLocalStorage';
 import { login } from '../../actions/authActions/login';
+import logout from '../../actions/authActions/logout';
 import { signUp } from '../../actions/authActions/signup';
+import requestResetPassword from '../../actions/authActions/requestResetPassword';
+import resetPassword from '../../actions/authActions/resetPassword';
 import actionTypes from '../../actions/actionTypes';
+import notify from '../__mocks__/notify';
+import { request } from 'https';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -76,7 +81,7 @@ describe('Auth Actions', () => {
     });
     it('creates AUTH_LOADING on signup failure', () => {
       const { authResponse } = mockData;
-      moxios.stubRequest('/api/v1/users/signin', {
+      moxios.stubRequest('/api/v1/users/signup', {
         status: 400,
         response: authResponse
       });
@@ -85,9 +90,67 @@ describe('Auth Actions', () => {
         { type: actionTypes.AUTH_LOADING, state: false }
       ];
       const store = mockStore({});
-      return store.dispatch(login({})).then(() => {
+      return store.dispatch(signUp({})).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
+    });
+  });
+
+  describe('logout', () => {
+    it('creates LOGOUT when logout action is successful', (done) => {
+      const store = mockStore({});
+      const expectedActions = [{ type: actionTypes.LOGOUT }];
+      store.dispatch(logout());
+      expect(store.getActions()).toEqual(expectedActions);
+      done();
+    });
+  });
+
+  describe('requestResetPassword', () => {
+    it('provides a notification on success', () => {
+      moxios.stubRequest('/api/v1/users/forgot-password', {
+        status: 200,
+        response: mockData.authResponse
+      });
+      expect(notify.success).toHaveBeenCalled();
+    });
+
+    it("provides a notification on success", () => {
+      window.requestResetPassword = () => () => Promise.resolve(1);
+      requestResetPassword("password", "token");
+      expect(notify.success).toHaveBeenCalled();
+    });
+
+    it('provides a notification on failure', () => {
+      moxios.stubRequest('/api/v1/users/forgot-password', {
+        status: 500,
+        response: mockData.authResponse
+      });
+      expect(notify.error).toHaveBeenCalled();
+    });
+  });
+
+  describe('resetPassword', () => {
+    it('provides a notification on success', () => {
+      moxios.stubRequest('/api/v1/users/reset-password/1234yyjhkopi123', {
+        status: 200,
+        response: mockData.authResponse
+      });
+      expect(notify.success).toHaveBeenCalled();
+    });
+
+    it('provides a notification on success', () => {
+      window.resetPassword = () => () => Promise.resolve(1);    
+      resetPassword('password', 'token');
+      expect(notify.success).toHaveBeenCalled();
+    });
+
+    it('provides a notification on failure', () => {
+      moxios.stubRequest('/api/v1/users/reset-password/1234yyjhkopi123', {
+        status: 500,
+        response: mockData.authResponse
+      });
+      expect(notify.error).toHaveBeenCalled();
     });
   });
 });

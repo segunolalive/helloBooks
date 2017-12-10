@@ -22,7 +22,7 @@ describe('Modal', () => {
   });
 
   it("calls modalAction prop function when a confirm button is clicked", () => {
-    const confirmButton = wrapper.find("button").at(1);
+    const confirmButton = wrapper.find("button").at(0);
     confirmButton.simulate("click");
     expect(wrapper.instance().props.modalAction).toHaveBeenCalled();
   });

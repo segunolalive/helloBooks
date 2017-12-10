@@ -10,9 +10,8 @@ import notify from '../notify';
 */
 const resetPassword = (password, token) => () => (
   axios.put(`${API}/users/reset-password/${token}`, { password })
-    .then(response => notify.success(response.data.message),
-      error => notify.error(error.response.data.message)
-    ).catch(err => notify.error(err.response.data.message))
+    .then(response => notify.success(response.data.message)
+    ).catch(error => notify.error(error.response.data.message))
 );
 
 export default resetPassword;

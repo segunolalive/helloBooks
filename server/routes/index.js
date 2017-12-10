@@ -5,7 +5,7 @@ import bookController from '../controllers/bookController';
 import transactionController from '../controllers/transactionController';
 
 import authenticate from '../middleware/authenticate';
-import shouldBorrow from '../middleware/maxBorrowed';
+import shouldBorrowBook from '../middleware/shouldBorrowBook';
 import ensureIsAdmin from '../middleware/ensureIsAdmin';
 import validateInput from '../middleware/validateInput';
 import prepareGoogleAuth from '../middleware/prepareGoogleAuth';
@@ -36,6 +36,7 @@ router.get('/', (req, res) => res.status(200).send({
   .get('/books/category', bookController.getBookCategories)
   .get('/books/:id', bookController.getBook)
   .get('/books', validateLimitAndOffset, bookController.getBooks)
+
   // Protected routes
   .put(
     '/users/reset-password/:token',
@@ -53,7 +54,7 @@ router.get('/', (req, res) => res.status(200).send({
     '/users/:id/books',
     authenticate,
     validateInput.validateId,
-    shouldBorrow,
+    shouldBorrowBook,
     bookController.borrowBook
   )
   .put(
@@ -79,6 +80,7 @@ router.get('/', (req, res) => res.status(200).send({
     authenticate,
     userController.updateUserInfo
   )
+
   // Admin-specific routes
   .post(
     '/books/category',

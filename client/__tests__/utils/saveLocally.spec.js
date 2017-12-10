@@ -16,6 +16,14 @@ describe('saveState', () => {
       expect(localStorage.getItem('state').id).toEqual(2);
     }, 1000);
   });
+
+  it('fails silently', () => {
+    localStorage.setItem = () => {throw new Error('something broke')};
+    saveState(state);
+    setTimeout(() => {
+      expect(localStorage.getItem("state").id).toEqual(false);
+    }, 1000);
+  })
 });
 
 describe('loadState', () => {
@@ -23,7 +31,14 @@ describe('loadState', () => {
     const loadedState = loadState();
     setTimeout(() => {
       expect(loadedState.id).toEqual(2);
-      console.log(localStorage);
+    }, 1000);
+  });
+
+  it('returns false if state is null', () => {
+    const nullState = null
+    saveState(nullState);
+    setTimeout(() => {
+      expect(loadState()).toEqual(false);
     }, 5000);
   });
 });

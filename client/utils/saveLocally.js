@@ -1,7 +1,8 @@
 /**
  * saves application state to disk
- * @param  {Object} state application state
- * @return {undefined}    wites to disk
+ * @param  {Object} state         application state
+ * 
+ * @return {undefined|Boolean}   writes to disk
  */
 export const saveState = (state) => {
   try {
@@ -14,15 +15,13 @@ export const saveState = (state) => {
 
 /**
  * loads state from disk
- * @return {Object} State Object
+ * @return {Object|Boolean}   State Object or false
  */
 export const loadState = () => {
   try {
     const serializedState = localStorage.getItem('state');
-    if (serializedState === null) {
-      return false;
-    }
-    return JSON.parse(serializedState);
+    return serializedState === null ?
+      false : JSON.parse(serializedState);
   } catch (e) {
     return false;
   }

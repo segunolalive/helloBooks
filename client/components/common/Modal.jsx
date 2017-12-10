@@ -30,23 +30,20 @@ class Modal extends Component {
         </p>
       </div>
       <div className="modal-footer admin-form center s12">
-        <div className="col s6 offset-s3">
-          <button
-            className={`modal-action btn darken-4 white-text modal-close
-              s6 action-btn waves-effect waves-red btn-flat
-              ${this.props.confirmColor}`}
-            onClick={() => this.props.modalAction()}
-          >
-            {this.props.confirmText}
-          </button>
-          <button
-            className={`modal-action action-btn btn darken-4
-            white-text modal-close waves-effect
-            waves-green btn-flat ${this.props.cancelColor}`}
-          >
-            {this.props.cancelText}
-          </button>
-        </div>
+        <button
+          className={`modal-action btn darken-4 white-text modal-close
+            action-btn waves-effect waves-red btn-flat
+            ${this.props.confirmColor}`}
+          onClick={() => this.props.modalAction()}
+        >
+          {this.props.confirmText}
+        </button>
+        <button
+          className={`modal-action darken-4 white-text waves-effect btn-flat
+            modal-close action-btn btn waves-green ${this.props.cancelColor}`}
+        >
+          {this.props.cancelText}
+        </button>
       </div>
     </div>;
   }
