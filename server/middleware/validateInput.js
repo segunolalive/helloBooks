@@ -176,7 +176,8 @@ export default {
   addBook(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
     req.body.categoryId = (!Number.isNaN(req.body.categoryId) &&
-      Number.isInteger(Number(req.body.categoryId))) || undefined;
+      Number.isInteger(Number(req.body.categoryId)) &&
+      Number(req.body.categoryId)) || undefined;
     next();
   },
 

@@ -15,9 +15,10 @@ const store = mockStore(mockStoreData);
 let props = {
   fetchBorrowedBooks: jest.fn(),
   returnBook: jest.fn(),
+  readBook: jest.fn(),
   ...mockStoreData.authReducer,
   ...mockStoreData.bookReducer.borrowedBooks,
-  fetchingBorrowedBooks: false,
+  fetchingBorrowedBooks: false
 };
 const setUp = () => (shallow(<Dashboard { ...props } />));
 
@@ -51,6 +52,20 @@ describe('Dashboard Component', () => {
     );
     wrapper.instance().componentDidMount();
     expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it("should call the handleReturnBook method", () => {
+    const wrapper = shallow(<Dashboard {...props} />);
+    const handleReturnBookSpy = jest.spyOn(wrapper.instance(), "handleReturnBook");
+    wrapper.instance().handleReturnBook(1);
+    expect(handleReturnBookSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it("should call the readBook method", () => {
+    const wrapper = shallow(<Dashboard {...props} />);
+    const readBookSpy = jest.spyOn(wrapper.instance(), "readBook");
+    wrapper.instance().readBook(1);
+    expect(readBookSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should redirect to login page if user is not logged in', () => {

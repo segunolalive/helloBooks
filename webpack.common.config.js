@@ -24,10 +24,11 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: ['node_modules', 'server', 'test', 'dist'],
+        exclude: ['node_modules', 'server', 'test', '__tests__', 'dist'],
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'env'],
+          presets: ['stage-2', 'react', 'env'],
+          plugins: ['transform-class-properties']
         },
       },
       {
@@ -61,9 +62,6 @@ module.exports = {
   plugins: [
     HtmlWebpackPluginConfig,
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('development')
-      },
       GOOGLE_CLIENT_ID: JSON.stringify('701806023399-vgqondt26qh10vcuei77r7' +
         'nsbcd8oa8k.apps.googleusercontent.com'),
       CLOUDINARY_API_BASE: JSON.stringify(

@@ -65,6 +65,9 @@ nav {
   }
 }
 
+.blue-border-bottom {
+  border-bottom: $cool-Blue-Border;
+}
 
 .navbar-blue {
   background: $theme-blue !important;
@@ -176,7 +179,7 @@ main {
 }
 
 .action-btn {
-  margin: 5px;
+  margin: 5px !important;
 }
 
 .borrowed-list {
@@ -224,7 +227,15 @@ input[type=search]:not(.browser-default) {
   }
 }
 
-.search-btn:hover {
+.select-wrapper:hover {
+  .caret {
+    color: #dddddd;
+    transform: scale(2);
+    transition: all 0.5s ease-in-out;
+  }
+}
+
+.search-btn:hover, .search-btn-wrapper:hover {
   background: transparent;
   box-shadow: none;
   i {
@@ -278,4 +289,8 @@ input[type=search]:not(.browser-default) {
     }
 
   }
+}
+
+.modal-footer {
+  background-color: transparent !important;
 }

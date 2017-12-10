@@ -126,8 +126,9 @@ describe('Book Reducer', () => {
 
   it('should handle actions of type DELETE_BOOK', () => {
     action = deleteBookAction(5);
+    expect(initialState.bookReducer.books.length).toBe(1);
     newState = bookReducer(initialState.bookReducer, action);
     expect(newState).not.toEqual(initialState.bookReducer);
-    expect(newState.length).toBe(0);
+    expect(newState.books.length).toBe(0);
   });
 });

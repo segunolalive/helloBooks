@@ -5,11 +5,10 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import Header from '../Header';
+import Modal from '../common/Modal';
 import { borrowBook } from '../../actions/bookActions/library';
 import { deleteBook } from '../../actions/adminActions/books';
 import { viewBookDetails } from '../../actions/bookActions/viewBook';
-import notify from '../../actions/notify';
-import { loadavg } from 'os';
 
 /**
  * displays book details
@@ -18,19 +17,7 @@ import { loadavg } from 'os';
  * @extends {Component}
  */
 export class BookDetail extends Component {
-  /**
-   * Creates an instance of BookDetail.
-   * @param {any} props
-   * @memberof BookDetail
-   */
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.handleBorrow = this.handleBorrow.bind(this);
-    this.handleEditClick = this.handleEditClick.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleRedirect = this.handleRedirect.bind(this);
-  }
+  state = {}
 
   /**
    * lifecycle hook invoked once component is mounted to DOM
@@ -48,7 +35,7 @@ export class BookDetail extends Component {
    * @memberof BookDetail
    * @returns {Undefined} sends request to borrow book
    */
-  handleBorrow() {
+  handleBorrow = () => {
     this.props.borrowBook(this.props.userId, this.props.book.id);
   }
 
@@ -58,7 +45,7 @@ export class BookDetail extends Component {
    * @memberof BookDetail
    * @returns {Undefined} redirects to edit book page
    */
-  handleEditClick() {
+  handleEditClick= () => {
     this.setState({ editRedirect: true });
   }
   /**
@@ -66,7 +53,7 @@ export class BookDetail extends Component {
    * @memberof BookDetail
    * @returns {Undefined} deletes a book from library
    */
-  handleDelete() {
+  handleDelete = () => {
     this.props.deleteBook(this.props.book.id)
       .then(() => this.setState({ deleteRedirect: true }));
   }
@@ -76,7 +63,7 @@ export class BookDetail extends Component {
    * @memberof BookDetail
    * @returns {JSX | null} react-router-dom redirect element or null
    */
-  handleRedirect() {
+  handleRedirect = () => {
     if (this.state.editRedirect) {
       return <Redirect to='/admin/edit' />;
     } else if (this.state.deleteRedirect) {
@@ -101,9 +88,10 @@ export class BookDetail extends Component {
           Edit
         </Button>
         <Button
+          data-target="confirm-modal"
           className="red darken-4 action-btn delete-btn"
           waves="light"
-          onClick={this.handleDelete}
+          // onClick={this.handleDelete}
         >
           Delete
         </Button>
@@ -151,6 +139,18 @@ export class BookDetail extends Component {
                 </div>
               </div>
             </section>
+            <Modal
+              title="Confirm Delete"
+              question={
+                `Are you sure you want to delete ${this.props.book &&
+                  this.props.book.title}?`}
+              subText='This action cannot be reversed'
+              confirmText="Yes, Delete"
+              cancelText="No, cancel"
+              confirmColor="red"
+              cancelColor="teal"
+              modalAction={this.handleDelete}
+            />
           </div>
     );
   }

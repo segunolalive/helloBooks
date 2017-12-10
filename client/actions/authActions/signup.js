@@ -40,12 +40,9 @@ export const signUp = data => (dispatch) => {
       dispatch(authLoading(false));
       notify.success(response.data.message);
       return response.data;
-    }, (error) => {
-      notify.error(error.response.data.message);
-      return dispatch(authLoading(false));
     })
-    .catch(() => {
-      notify.error('Something terrible happened. We\'ll fix that');
+    .catch((error) => {
+      notify.error(error.response.data.message);
       return dispatch(authLoading(false));
     });
 };

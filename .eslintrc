@@ -8,14 +8,15 @@
     "mocha": true,
     "jest": true
   },
+  "parser": "babel-eslint",
   "parserOptions": {
-    "ecmaVersion": 6,
-    "ecmaFeatures": { "jsx": true }
+    "ecmaVersion": 8,
+    "ecmaFeatures": { "jsx": true, "classes": true }
   },
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js",".jsx"]
+        "extensions": [".js", ".jsx"]
       }
     }
   },
@@ -34,19 +35,25 @@
     "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
-    "valid-jsdoc": ["error", {
-      "requireReturn": true,
-      "requireReturnType": true,
-      "requireParamDescription": false,
-      "requireReturnDescription": true
-    }],
+    "valid-jsdoc": [
+      "error",
+      {
+        "requireReturn": true,
+        "requireReturnType": true,
+        "requireParamDescription": false,
+        "requireReturnDescription": true
+      }
+    ],
     "class-methods-use-this": 0,
-    "require-jsdoc": ["error", {
+    "require-jsdoc": [
+      "error",
+      {
         "require": {
-            "FunctionDeclaration": true,
-            "MethodDefinition": true,
-            "ClassDeclaration": true
+          "FunctionDeclaration": true,
+          "MethodDefinition": true,
+          "ClassDeclaration": true
         }
-    }]
+      }
+    ]
   }
 }

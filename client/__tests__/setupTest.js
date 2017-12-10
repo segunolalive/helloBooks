@@ -6,6 +6,7 @@ global.$ = $;
 $.prototype.sideNav = () => { };
 $.prototype.material_select = () => { };
 $.prototype.modal = () => { };
+$.prototype.ready = fn => fn();
 
 global.Materialize = {
   toast: () => {}

@@ -1,8 +1,7 @@
 let api = '/api/v1';
 
-if (process.env.NODE_ENV === ('development' || 'test')) {
-  api = 'http://localhost:4000/api/v1';
-}
+api = process.env.NODE_ENV === ('development' || 'test') ?
+  `http://localhost:4000${api}` : api;
 
 /**
  * api url
