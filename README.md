@@ -1,8 +1,13 @@
 # helloBooks
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+
 [![Build Status](https://travis-ci.org/segunolalive/helloBooks.svg?branch=development)](https://travis-ci.org/segunolalive/helloBooks)
-[![Coverage Status](https://coveralls.io/repos/github/segunolalive/helloBooks/badge.svg?branch=development)](https://coveralls.io/github/segunolalive/helloBooks?branch=development)
+
+[![Test Coverage](https://codeclimate.com/github/segunolalive/helloBooks/badges/coverage.svg)](https://codeclimate.com/github/segunolalive/helloBooks/coverage)
+
+[![Coverage Status](https://coveralls.io/repos/github/segunolalive/helloBooks/badge.svg?branch=development)](https://coveralls.io/github/segunolalive/helloBooks)
+
 [![Code Climate](https://codeclimate.com/github/segunolalive/helloBooks/badges/gpa.svg)](https://codeclimate.com/github/segunolalive/helloBooks?branch=development)
 
 ## A Library app
@@ -63,7 +68,7 @@ npm run start
 
 #### API Documentation
 
-* <https://www.segunolalive-hellobooks.com.herokuapp/api-docs>
+* <https://www.segunolalive-hellobooks.herokuapp.com/api-docs>
 
 #### Testing
 

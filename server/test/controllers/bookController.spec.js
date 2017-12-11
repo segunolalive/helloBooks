@@ -46,23 +46,24 @@ describe('Book Controller', () => {
         .expect(200)
         .end((err, res) => {
           assert.equal(res.status, 200);
-          assert(Array.isArray(res.body.books))
-          assert(res.body.metadata)
+          assert(Array.isArray(res.body.books));
+          assert(res.body.metadata);
           done();
         });
     });
-    it('should return a message when search for books returns no match', (done) => {
-      server
-        .get('/api/v1/books?search=gibberish')
-        .expect(200)
-        .end((err, res) => {
-          assert.equal(res.status, 200);
-          assert(Array.isArray(res.body.books))
-          assert.equal(res.body.books.length, 0)
-          assert.equal(res.body.message, 'No book matched your request')
-          done();
-        });
-    });
+    it('should return a message when search for books returns no match',
+      (done) => {
+        server
+          .get('/api/v1/books?search=gibberish')
+          .expect(200)
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            assert(Array.isArray(res.body.books));
+            assert.equal(res.body.books.length, 0);
+            assert.equal(res.body.message, 'No book matched your request');
+            done();
+          });
+      });
   });
 
   describe('#getBook', () => {
@@ -98,7 +99,7 @@ describe('Book Controller', () => {
           assert.equal(res.body.message,
             'You have successfully borrowed eloquent fish ' +
             'again. Check your dashboard to read it'
-          )
+          );
           done();
         });
     });
@@ -113,7 +114,7 @@ describe('Book Controller', () => {
           assert.equal(res.body.message,
             'You have successfully borrowed eloquent ruby ' +
             'again. Check your dashboard to read it'
-          )
+          );
           done();
         });
     });
@@ -137,25 +138,29 @@ describe('Book Controller', () => {
         .expect(404)
         .end((err, res) => {
           assert.equal(res.status, 404);
-          assert.equal(res.body.message, 'There are no available copies of this book at this time');
+          assert.equal(
+            res.body.message,
+            'There are no available copies of this book at this time');
           done();
         });
     });
-    it('should prevent user from borrowing book multiple times unless previously returned',
-      (done) => {
-        server
-          .post('/api/v1/users/1/books')
-          .set('X-ACCESS-TOKEN', jwtToken)
-          .send({ id: 1 })
-          .expect(200)
-          .end((err, res) => {
-            assert.equal(res.status, 403);
-            assert.equal(res.body.message,
-              'You currently have this book. Return it before trying to borrow it again',
-            );
-            done();
-          });
-      });
+    it('should prevent user from borrowing book multiple ' +
+    'times unless previously returned',
+    (done) => {
+      server
+        .post('/api/v1/users/1/books')
+        .set('X-ACCESS-TOKEN', jwtToken)
+        .send({ id: 1 })
+        .expect(200)
+        .end((err, res) => {
+          assert.equal(res.status, 403);
+          assert.equal(res.body.message,
+            'You currently have this book. ' +
+              'Return it before trying to borrow it again',
+          );
+          done();
+        });
+    });
   });
   describe('#returnBook', () => {
     it('should allow logged in users return borrowed book', (done) => {
@@ -169,7 +174,8 @@ describe('Book Controller', () => {
           done();
         });
     });
-    it('should send an error message if user tries to return a book they don\'t currently have', (done) => {
+    it('should send an error message if user tries to return a book they ' +
+    'don\'t currently have', (done) => {
       server
         .put('/api/v1/users/1/books')
         .set('X-ACCESS-TOKEN', jwtToken)
@@ -177,8 +183,8 @@ describe('Book Controller', () => {
         .expect(403)
         .end((err, res) => {
           assert.equal(res.status, 403);
-          assert.equal(res.body.message, 'This book is currently not on your list.' +
-          ' You have either returned it or never borrowed it');
+          assert.equal(res.body.message, 'This book is currently not on ' +
+          'your list. You have either returned it or never borrowed it');
           done();
         });
     });
@@ -219,12 +225,13 @@ describe('Book Controller', () => {
         .expect(201)
         .end((err, res) => {
           assert.equal(res.status, 201);
-          assert.equal(res.body.message, 'Successfully added eloquent testing to Library');
-          assert(res.body.book.title, 'eloquent testing')
+          assert.equal(res.body.message,
+            'Successfully added eloquent testing to Library');
+          assert(res.body.book.title, 'eloquent testing');
           done();
         });
-      })
     });
+  });
 
   describe('#deleteBook', () => {
     it('should allow user delete book', (done) => {
@@ -234,11 +241,12 @@ describe('Book Controller', () => {
         .expect(200)
         .end((err, res) => {
           assert.equal(res.status, 200);
-          assert.equal(res.body.message, 'Successfully deleted book from database');
+          assert.equal(res.body.message,
+            'Successfully deleted book from database');
           done();
         });
-      });
     });
+  });
 
   describe('Book Category', () => {
     describe('#getBookCategories', () => {
@@ -273,12 +281,12 @@ describe('Book Controller', () => {
           .end((err, res) => {
             assert.equal(res.status, 201);
             assert.equal(res.body.message,
-              'Successfully added new category, Rust, to Library')
+              'Successfully added new category, Rust, to Library');
             done();
           });
-        });
       });
     });
+  });
 
   describe('Book Server Errors', () => {
     before((done) => {
@@ -290,74 +298,84 @@ describe('Book Controller', () => {
           done();
         });
     });
-  describe('borrowBook server errors', () => {
-    it('should send a message if an error occurs while looking up the book', (done) => {
-      Book.findOne = () => Promise.reject(1);
-      server
-        .post('/api/v1/users/1/books')
-        .set('X-ACCESS-TOKEN', jwtToken)
-        .send({ id: 4 })
-        .expect(500)
-        .end((err, res) => {
-          assert.equal(res.status, 500);
-          assert.equal(res.body.message, 'Something went wrong. Internal server error')
-          done();
+    describe('borrowBook server errors', () => {
+      it('should send a message if an error occurs while looking up the book',
+        (done) => {
+          Book.findOne = () => Promise.reject(1);
+          server
+            .post('/api/v1/users/1/books')
+            .set('X-ACCESS-TOKEN', jwtToken)
+            .send({ id: 4 })
+            .expect(500)
+            .end((err, res) => {
+              assert.equal(res.status, 500);
+              assert.equal(res.body.message,
+                'Something went wrong. Internal server error');
+              done();
+            });
         });
-      });
-    it('should send a message if an error occurs while creating the record', (done) => {
-      BorrowedBook.create = () => Promise.reject(1);
-      server
-        .post('/api/v1/users/1/books')
-        .set('X-ACCESS-TOKEN', jwtToken)
-        .send({ id: 4 })
-        .expect(500)
-        .end((err, res) => {
-          assert.equal(res.status, 500);
-          assert.equal(res.body.message, 'Something went wrong. Internal server error')
-          done();
+      it('should send a message if an error occurs while creating the record',
+        (done) => {
+          BorrowedBook.create = () => Promise.reject(1);
+          server
+            .post('/api/v1/users/1/books')
+            .set('X-ACCESS-TOKEN', jwtToken)
+            .send({ id: 4 })
+            .expect(500)
+            .end((err, res) => {
+              assert.equal(res.status, 500);
+              assert.equal(res.body.message,
+                'Something went wrong. Internal server error');
+              done();
+            });
         });
-      });
-    })
-  describe('deleteBook server error', () => {
-    it('should send a message if an error occurs while deleting book', (done) => {
-      Book.destroy = () => Promise.reject(1);
-      server
-        .delete('/api/v1/books/1')
-        .set('X-ACCESS-TOKEN', jwtToken)
-        .send({ id: 4 })
-        .expect(500)
-        .end((err, res) => {
-          assert.equal(res.status, 500);
-          assert.equal(res.body.message, 'Something went wrong. Internal server error')
-          done();
+    });
+    describe('deleteBook server error', () => {
+      it('should send a message if an error occurs while deleting book',
+        (done) => {
+          Book.destroy = () => Promise.reject(1);
+          server
+            .delete('/api/v1/books/1')
+            .set('X-ACCESS-TOKEN', jwtToken)
+            .send({ id: 4 })
+            .expect(500)
+            .end((err, res) => {
+              assert.equal(res.status, 500);
+              assert.equal(res.body.message,
+                'Something went wrong. Internal server error');
+              done();
+            });
         });
-      });
-    })
-  describe('createBook server error', () => {
-    it('should send a message if an error occurs while adding book', (done) => {
-      Book.create = () => Promise.reject(1);
-      server.post('/api/v1/books')
-        .set('X-ACCESS-TOKEN', jwtToken)
-        .send({ ...mock.addBook, title: 'failing' })
-        .expect(500)
-        .end((err, res) => {
-          assert.equal(res.status, 500);
-          assert.equal(res.body.message, 'Something went wrong. Internal server error')
-          done();
+    });
+    describe('createBook server error', () => {
+      it('should send a message if an error occurs while adding book',
+        (done) => {
+          Book.create = () => Promise.reject(1);
+          server.post('/api/v1/books')
+            .set('X-ACCESS-TOKEN', jwtToken)
+            .send({ ...mock.addBook, title: 'failing' })
+            .expect(500)
+            .end((err, res) => {
+              assert.equal(res.status, 500);
+              assert.equal(res.body.message,
+                'Something went wrong. Internal server error');
+              done();
+            });
         });
-      })
     });
     describe('getBook server error', () => {
-      it('should send a message if an error occurs while fetching book', (done) => {
-        Book.findById = () => Promise.reject(1);
-        server.get('/api/v1/books/1')
-          .expect(500)
-          .end((err, res) => {
-            assert.equal(res.status, 500);
-            assert.equal(res.body.message, 'Something went wrong. Internal server error')
-            done();
-          });
-        })
-      });
+      it('should send a message if an error occurs while fetching book',
+        (done) => {
+          Book.findById = () => Promise.reject(1);
+          server.get('/api/v1/books/1')
+            .expect(500)
+            .end((err, res) => {
+              assert.equal(res.status, 500);
+              assert.equal(res.body.message,
+                'Something went wrong. Internal server error');
+              done();
+            });
+        });
+    });
   });
 });

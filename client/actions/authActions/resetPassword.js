@@ -6,12 +6,12 @@ import notify from '../notify';
 * send request to reset password
 * @param {String} password  new password
 * @param {String} token     json web token
-* @returns {Undefined}      sends an http request
+*
+* @returns {undefined}      success or failure notification
 */
-const resetPassword = (password, token) => () => (
-  axios.put(`${API}/users/reset-password/${token}`, { password })
-    .then(response => notify.success(response.data.message)
-    ).catch(error => notify.error(error.response.data.message))
-);
-
+const resetPassword = (password, token) => () =>
+  axios
+    .put(`${API}/users/reset-password/${token}`, { password })
+    .then(response => notify.success(response.data.message))
+    .catch(error => notify.error(error.response.data.message));
 export default resetPassword;
