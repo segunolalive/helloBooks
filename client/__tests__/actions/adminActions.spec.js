@@ -10,9 +10,12 @@ import { addBook,
 } from '../../actions/adminActions/books';
 import { fetchNotifications } from '../../actions/adminActions/notifications';
 import actionTypes from '../../actions/actionTypes';
-
+import uploadFile from '../../actions/uploadFile';
 import notify from '../__mocks__/notify';
 
+
+window.CLOUDINARY_API_BASE = 'CLOUDINARY_API_BASE';
+window.CLOUDINARY_UPLOAD_PRESET = 'CLOUDINARY_UPLOAD_PRESET';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -193,6 +196,18 @@ describe('ADMIN ACTIONS', () => {
       return store.dispatch(fetchNotifications()).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         expect(notify.success).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('uploadFile', () => {
+    it('handles file upload success', (done) => {
+      const store = mockStore({});
+      return store.dispatch(uploadFile('file')).then((response) => {
+        expect(response.ok).toBe(true);
+        expect(response.status()).toBe(200);
+        expect(response.data.message).toBe('success');
+        done();
       });
     });
   });

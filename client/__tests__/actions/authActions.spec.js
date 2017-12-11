@@ -7,11 +7,11 @@ import mockLocalStorage from '../__mocks__/mockLocalStorage';
 import { login } from '../../actions/authActions/login';
 import logout from '../../actions/authActions/logout';
 import { signUp } from '../../actions/authActions/signup';
-import requestResetPassword from '../../actions/authActions/requestResetPassword';
+import requestResetPassword
+  from '../../actions/authActions/requestResetPassword';
 import resetPassword from '../../actions/authActions/resetPassword';
 import actionTypes from '../../actions/actionTypes';
 import notify from '../__mocks__/notify';
-import { request } from 'https';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -107,50 +107,55 @@ describe('Auth Actions', () => {
   });
 
   describe('requestResetPassword', () => {
-    it('provides a notification on success', () => {
+    it('provides a notification on success', (done) => {
       moxios.stubRequest('/api/v1/users/forgot-password', {
         status: 200,
         response: mockData.authResponse
       });
-      expect(notify.success).toHaveBeenCalled();
+      const store = mockStore({});
+      store.dispatch(requestResetPassword('email')).then(() => {
+        expect(notify.success).toHaveBeenCalled();
+        done();
+      });
     });
 
-    it("provides a notification on success", () => {
-      window.requestResetPassword = () => () => Promise.resolve(1);
-      requestResetPassword("password", "token");
-      expect(notify.success).toHaveBeenCalled();
-    });
-
-    it('provides a notification on failure', () => {
+    it('provides a notification on failure', (done) => {
       moxios.stubRequest('/api/v1/users/forgot-password', {
         status: 500,
         response: mockData.authResponse
       });
-      expect(notify.error).toHaveBeenCalled();
+      const store = mockStore({});
+      store.dispatch(requestResetPassword('email')).then(() => {
+        expect(notify.error).toHaveBeenCalled();
+
+        done();
+      });
     });
   });
 
   describe('resetPassword', () => {
-    it('provides a notification on success', () => {
+    it('provides a notification on success', (done) => {
       moxios.stubRequest('/api/v1/users/reset-password/1234yyjhkopi123', {
         status: 200,
         response: mockData.authResponse
       });
-      expect(notify.success).toHaveBeenCalled();
+      const store = mockStore({});
+      store.dispatch(resetPassword('password', '1234yyjhkopi123')).then(() => {
+        expect(notify.success).toHaveBeenCalled();
+        done();
+      });
     });
 
-    it('provides a notification on success', () => {
-      window.resetPassword = () => () => Promise.resolve(1);    
-      resetPassword('password', 'token');
-      expect(notify.success).toHaveBeenCalled();
-    });
-
-    it('provides a notification on failure', () => {
+    it('provides a notification on failure', (done) => {
       moxios.stubRequest('/api/v1/users/reset-password/1234yyjhkopi123', {
         status: 500,
         response: mockData.authResponse
       });
-      expect(notify.error).toHaveBeenCalled();
+      const store = mockStore({});
+      store.dispatch(resetPassword('password', '1234yyjhkopi123')).then(() => {
+        expect(notify.error).toHaveBeenCalled();
+        done();
+      });
     });
   });
 });

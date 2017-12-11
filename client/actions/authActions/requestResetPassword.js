@@ -4,8 +4,9 @@ import notify from '../notify';
 
 /**
  * send request to reset password
- * @param {String} email  user email
- * @returns {Undefined}   sends an http request
+ * @param {String}    email  user email
+ * 
+ * @returns {undefined}      success or failure notification
  */
 const requestResetPassword = email => () => (
   axios.post(`${API}/users/forgot-password`, { email })

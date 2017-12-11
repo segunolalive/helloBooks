@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Categories from '../common/Categories';
 import Loading from '../common/Loading';
-
+import requestImageUrl from '../../utils/requestImageUrl';
 /**
  * for for adding or editing books
  * @param {object} props
@@ -94,16 +94,12 @@ const BookForm = (props) => {
                     book cover uploaded &nbsp;
                   </small>
                   <img
-                    src={`${props.book.cover}`}
+                    src={requestImageUrl(props.book.cover, { width: 100 })}
                     alt="image uploaded"
-                    style={{ width: '50px' }}
                   />
                 </span>}
               {(!props.imageUploaded && !props.imageUploading) &&
-                <img
-                  src={`${props.book.cover}`}
-                  style={{ width: '50px' }}
-                />
+                <img src={requestImageUrl(props.book.cover, { width: 100 })} />
               }
               <span className="red-text">
                 <small>{props.imageError}</small>
@@ -142,9 +138,10 @@ const BookForm = (props) => {
                     book file uploaded &nbsp;
                   </small>
                   <img
-                    src={props.book.bookFile}
-                    alt="image uploaded"
-                    style={{ width: '50px' }}
+                    src={requestImageUrl(`${props
+                      .book.bookFile.slice(0, -3)}jpg`,
+                    { width: 100, fill: true })}
+                    alt="File uploaded"
                   />
                 </span>}
               <span className="red-text">

@@ -16,14 +16,14 @@ const props = {
   categories: mockStoreData.bookReducer.categories,
   notifications: mockStoreData.notificationReducer.notifications,
   pagination: mockStoreData.notificationReducer.pagination,
-  addBook: jest.fn(),
-  editBook: jest.fn(),
+  addBook: jest.fn(() => Promise.resolve(1)),
+  editBook: jest.fn(() => Promise.resolve(1)),
   getBookCategories: jest.fn(),
   fetchNotifications: jest.fn(),
   addBookCategory: jest.fn(),
   history: { push: jest.fn() },
   location: { pathname: '/admin/edit' },
-  uploadFile: jest.fn(() => ({ end: jest.fn(() => Promise.resolve(1)) })),
+  uploadFile: jest.fn(() => Promise.resolve(1)),
 };
 
 const setUp = () => (shallow(<Admin { ...props } />));
@@ -164,6 +164,43 @@ describe('Admin Component', () => {
     expect(wrapper.state().book.bookFile).not.toBe(undefined);
     expect(wrapper.state().errors).toEqual({});
   });
+
+  it('should call handleFormSubmission on form submission for editing book',
+    () => {
+      const wrapper = setUp();
+      const handleFormSubmissionSpy = jest.spyOn(
+        wrapper.instance(), 'handleFormSubmission'
+      );
+      const event = {
+        preventDefault: jest.fn(),
+      };
+      expect(wrapper.state().book.bookFile).toBe('');
+
+      wrapper.instance().handleFormSubmission(event);
+      expect(handleFormSubmissionSpy).toHaveBeenCalledTimes(1);
+      expect(wrapper.state().book.bookFile).toBe('');
+      expect(wrapper.state().book.total).toBe(props.book.total);
+      expect(wrapper.state().book.categoryId).toBe(0);
+    });
+
+  it('should call handleFormSubmission on form submission for adding book',
+    () => {
+      const addBookProps = { ...props, location: { pathname: '/admin' } };
+      const wrapper = shallow(<Admin {...addBookProps} />);
+      const handleFormSubmissionSpy = jest.spyOn(
+        wrapper.instance(), 'handleFormSubmission'
+      );
+      const event = {
+        preventDefault: jest.fn(),
+      };
+      expect(wrapper.state().book.bookFile).toBe('');
+
+      wrapper.instance().handleFormSubmission(event);
+      expect(handleFormSubmissionSpy).toHaveBeenCalledTimes(1);
+      expect(wrapper.state().book.bookFile).toBe('');
+      expect(wrapper.state().book.total).toBe(0);
+      expect(wrapper.state().book.categoryId).toBe(0);
+    });
 
   it('should call handleSelectCategory when a category is selected', () => {
     const wrapper = setUp();
