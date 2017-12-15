@@ -9,7 +9,9 @@ import ProfileInfo from './ProfileInfo';
 import SuggestedBooks from './SuggestedBooks';
 
 import { fetchBorrowedBooks,
-  returnBook } from '../../actions/bookActions/borrowedBooks';
+  returnBook,
+  getSuggestedBooks,
+} from '../../actions/bookActions/borrowedBooks';
 import LoginRedirect from '../auth/LoginRedirect';
 
 
@@ -21,7 +23,7 @@ import LoginRedirect from '../auth/LoginRedirect';
 export class Dashboard extends Component {
   /**
    * Creates an instance of Dashboard.
-   * @param {Object} props Object containing properties for dashboard
+   * @param {object} props Object containing properties for dashboard
    * @memberof Dashboard
    */
   constructor(props) {
@@ -33,12 +35,13 @@ export class Dashboard extends Component {
   /**
    * lifecycle hook called when component is mounted to DOM
    * @memberof Dashboard
-   * @returns {Undefined} fetches borrowed books
+   * @returns {undefined} fetches borrowed books
    */
   componentDidMount() {
     if (this.props.user.id) {
       this.props.fetchBorrowedBooks(this.props.user.id);
     }
+    this.props.getSuggestedBooks();
   }
 
   /**
@@ -46,7 +49,7 @@ export class Dashboard extends Component {
    *
    * @param {Integer} bookId book id
    * @memberof Dashboard
-   * @returns {Undefined}    calls return book api
+   * @returns {undefined}    calls return book api
    */
   handleReturnBook(bookId) {
     this.props.returnBook(this.props.user.id, bookId);
@@ -91,7 +94,7 @@ export class Dashboard extends Component {
                   returnBook={this.handleReturnBook}
                   fetchingBorrowedBooks={this.props.fetchingBorrowedBooks}
                 />
-                <SuggestedBooks />
+                <SuggestedBooks suggestedBooks={this.props.suggestedBooks}/>
               </Col>
             </Row>
           </main>
@@ -107,6 +110,8 @@ Dashboard.propTypes = {
   fetchBorrowedBooks: PropTypes.func.isRequired,
   fetchingBorrowedBooks: PropTypes.bool.isRequired,
   returnBook: PropTypes.func.isRequired,
+  suggestedBooks: PropTypes.array,
+  getSuggestedBooks: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ authReducer, bookReducer }) => ({
@@ -114,9 +119,10 @@ const mapStateToProps = ({ authReducer, bookReducer }) => ({
   user: authReducer.user,
   borrowedBooks: bookReducer.borrowedBooks,
   fetchingBorrowedBooks: bookReducer.fetchingBorrowedBooks,
+  suggestedBooks: bookReducer.suggestedBooks,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchBorrowedBooks, returnBook }
+  { fetchBorrowedBooks, returnBook, getSuggestedBooks }
 )(Dashboard);

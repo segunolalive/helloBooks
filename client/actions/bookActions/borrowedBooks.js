@@ -6,7 +6,8 @@ import notify from '../notify';
 
 /**
  * @param {Array} borrowedBooks - array of books borrowed by user
- * @returns {Object} - action object
+ *
+ * @returns {object}            - action object
  */
 export const getBorrowedBooksAction = borrowedBooks => ({
   type: actionTypes.GET_BORROWED_BOOKS,
@@ -15,7 +16,8 @@ export const getBorrowedBooksAction = borrowedBooks => ({
 
 /**
  * @param  {Bool} status
- * @return {Object}      action object
+ *
+ * @return {object}      action object
  */
 export const fetchingBorrowedBooks = status => ({
   type: actionTypes.FETCHING_BORROWED_BOOKS,
@@ -23,8 +25,9 @@ export const fetchingBorrowedBooks = status => ({
 });
 
 /**
-* @param {object} id - user id
-* @returns {any} - dispatches action with books user has not returned
+* @param {Integer} id - user id
+*
+* @returns {Promise}  - dispatches action with books user has not returned
 */
 export const fetchBorrowedBooks = id => (dispatch) => {
   dispatch(fetchingBorrowedBooks(true));
@@ -42,7 +45,8 @@ export const fetchBorrowedBooks = id => (dispatch) => {
 
 /**
 * @param {object} id - user id
-* @returns {any} - dispatches action with all books ever borrowed by user
+*
+* @returns {Promise} - dispatches action with all books ever borrowed by user
 */
 export const fetchBorrowingHistory = id => dispatch => (
   axios.get(`${API}/users/${id}/books`)
@@ -54,7 +58,8 @@ export const fetchBorrowingHistory = id => dispatch => (
 
 /**
  * @param  {integer} id book id
- * @return {Object}    action object
+ *
+ * @return {object}     action object
  */
 export const returnBookAction = id => ({
   type: actionTypes.RETURN_BOOK,
@@ -65,7 +70,8 @@ export const returnBookAction = id => ({
 /**
 * @param {object} userId - user id
 * @param {object} bookId - book id
-* @returns {any} - fetches array of unreturned borrowed books
+*
+* @returns {Array}       - fetches array of unreturned borrowed books
 */
 export const returnBook = (userId, bookId) => dispatch => (
   axios.put(`${API}/users/${userId}/books`, { id: bookId })
@@ -74,5 +80,21 @@ export const returnBook = (userId, bookId) => dispatch => (
         notify.success(response.data.message);
         return dispatch(returnBookAction(bookId));
       })
+    .catch(error => notify.error(error.response.data.message))
+);
+
+export const suggestedBooks = suggestions => ({
+  type: actionTypes.GET_BOOK_SUGGESTIONS,
+  suggestions
+});
+
+/**
+ * fetches book suggestions
+*
+* @returns {Promise}  - resolves with book suggestions
+*/
+export const getSuggestedBooks = () => dispatch => (
+  axios.get(`${API}/books/suggestions`)
+    .then(response => dispatch(suggestedBooks(response.data.suggestions)))
     .catch(error => notify.error(error.response.data.message))
 );
