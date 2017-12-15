@@ -8,12 +8,14 @@ import toggleSidebar from './toggleSidebar';
 /**
  * Component for header and navigation
  * @class Header
+ * 
  * @extends {Component}
  */
 export class HeaderComponent extends Component {
   /**
    * component lifecycle hook
    * @memberof Header
+   * 
    * @return {Undefined} - initializes DOM manipulation utility(toggleSidebar)
    */
   componentDidMount() {
@@ -23,6 +25,7 @@ export class HeaderComponent extends Component {
   /**
    * renders JSX representation of component
    * @memberof Header
+   * 
    * @return {JSX} JSX reoprresentation of header and navigation
    */
   render() {
@@ -36,27 +39,30 @@ export class HeaderComponent extends Component {
     }
 
     return (
-      <header className="header navbar-fixed">
-        <nav className="transparent navbar-blue">
-          <div className="nav-wrapper">
-            <Logo />
-            <Navigation
-              activeLink={this.props.activeLink}
-              className="right hide-on-small-and-down"
-              navLinks={navLinks}
-            />
-            <Navigation
-              id="slide-out"
-              activeLink={this.props.activeLink}
-              className="side-nav right-aligned hide-on-med-and-up fixed"
-              navLinks={navLinks}
-            />
-            <a href="#" data-activates="slide-out"
-              className="button-collapse hide-on-med-and-up right">
-              <i className="material-icons">more_vert</i>
-            </a>
-          </div>
-        </nav>
+      <header className="header">
+        <div className="navbar-fixed">
+          <nav className="transparent navbar-blue">
+            <div className="nav-wrapper">
+              <Logo />
+              <Navigation
+                activeLink={this.props.activeLink}
+                className="right hide-on-small-and-down"
+                navLinks={navLinks}
+              />
+              <a href="#" data-activates="slide-out"
+                className="button-collapse hide-on-med-and-up right">
+                <i className="material-icons">more_vert</i>
+              </a>
+            </div>
+          </nav>
+        </div>
+
+        <Navigation
+          id="slide-out"
+          activeLink={this.props.activeLink}
+          className="side-nav right-aligned hide-on-med-and-up"
+          navLinks={navLinks}
+        />
       </header>
     );
   }
