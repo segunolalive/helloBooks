@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 import Categories from '../common/Categories';
 import Loading from '../common/Loading';
 import requestImageUrl from '../../utils/requestImageUrl';
+
+
 /**
  * for for adding or editing books
+ *
  * @param {object} props
+ * 
  * @returns {JSX} JSX representation of component
  */
 const BookForm = (props) => {
@@ -15,6 +19,8 @@ const BookForm = (props) => {
       text='Select Book Category'
       categories={props.categories}
       onChange={props.onSelectCategory}
+      indexValue={1}
+      indexText="default category"
     /> : null;
   return (
     <div>
@@ -98,7 +104,9 @@ const BookForm = (props) => {
                     alt="image uploaded"
                   />
                 </span>}
-              {(!props.imageUploaded && !props.imageUploading) &&
+              {(props.book.cover &&
+                !props.imageUploaded &&
+                !props.imageUploading) &&
                 <img src={requestImageUrl(props.book.cover, { width: 100 })} />
               }
               <span className="red-text">
