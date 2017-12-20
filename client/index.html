@@ -64,17 +64,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script>
       function offLineNotification (event) {
-        const offlineDiv = document.getElementById('offline-notification')        
+        const offlineDiv = document.getElementById('offline-notification');
         offlineDiv.style.display = "block";
-        offlineDiv.classList.add('show-offline-notification')
+        offlineDiv.classList.add('show-offline-notification');
       }
       function removeOffLineNotification(event) {
-        const offlineDiv = document.getElementById('offline-notification')  
-        offlineDiv.classList.remove('show-offline-notification')      
+        const offlineDiv = document.getElementById('offline-notification');
+        offlineDiv.classList.remove('show-offline-notification');
         offlineDiv.style.display = "none";
         }
-      window.addEventListener('offline', offLineNotification)
-      window.addEventListener('online', removeOffLineNotification)
+      window.addEventListener('offline', offLineNotification);
+      window.addEventListener('online', removeOffLineNotification);
 
       var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
         var type = connection.type;

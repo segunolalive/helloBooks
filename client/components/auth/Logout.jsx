@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import logout from '../../actions/authActions/logout';
-import notify from '../../actions/notify';
+import Notify from '../../actions/Notify';
 
 
 /**
@@ -21,7 +21,7 @@ export class Logout extends Component {
    * @return {undefined} makes network requests
    */
   componentDidMount() {
-    notify.success('Successfully logged out');
+    Notify.success('Successfully logged out');
     this.props.logout();
     this.props.history.push('/');
   }

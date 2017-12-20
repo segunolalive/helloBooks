@@ -56,7 +56,7 @@ export const validateSignUp = (state) => {
 
 /**
  * validates login
- * 
+ *
  * @param {Object} state
  *
  * @returns {Object}     object containing validity status

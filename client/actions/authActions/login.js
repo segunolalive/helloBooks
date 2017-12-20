@@ -3,13 +3,13 @@ import actionTypes from '../actionTypes';
 import setAuthorizationToken from '../../utils/setAuthorizationToken';
 import { authLoading } from './signup';
 import API from '../api';
-import notify from '../notify';
+import Notify from '../Notify';
 import reportNetworkError from '../reportNetworkError';
 
 
 /**
  * Action creator that sets user data on login
- * 
+ *
  * @param {Object} user - user data
  *
  * @returns {Object}    - Object containing action type and user
@@ -22,7 +22,7 @@ export const loginUser = user => ({
 
 /**
  * Action creator that sets login status
- * 
+ *
  * @param {Boolean} status - status
  *
  * @returns {Object}       - Object containing action type and login status
@@ -35,9 +35,9 @@ export const setLoginStatus = status => ({
 
 /**
  * async action creator for user login
- * 
+ *
  * @param {object} data - user data
- * 
+ *
  * @returns {Promise}   - resolves with user data and authorization token
  */
 export const login = data => (dispatch) => {
@@ -50,7 +50,7 @@ export const login = data => (dispatch) => {
       dispatch(loginUser(response.data));
       dispatch(setLoginStatus(true));
       dispatch(authLoading(false));
-      notify.success(response.data.message);
+      Notify.success(response.data.message);
       return response.data;
     })
     .catch((error) => {

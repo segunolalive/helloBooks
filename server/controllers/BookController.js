@@ -2,10 +2,10 @@ import { Book, BorrowedBook, BookCategory, Notification } from '../models';
 import { getQuery, getOptions, paginate } from '../helpers/pagination';
 
 
-const bookController = {
+const BookController = {
   /**
    * Add new book category to library.
-   * 
+   *
    * @public
    *
    * @method
@@ -41,7 +41,7 @@ const bookController = {
 
   /**
    * Fetch Book Categories.
-   * 
+   *
    * @public
    *
    * @method
@@ -64,7 +64,7 @@ const bookController = {
 
   /**
    * Add new book to library.
-   * 
+   *
    * @public
    *
    * @method
@@ -379,4 +379,4 @@ const bookController = {
 };
 
 
-export default bookController;
+export default BookController;

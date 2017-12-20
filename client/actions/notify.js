@@ -2,9 +2,9 @@ const Materialize = window.Materialize;
 
 /**
  * Materialize.toast() wrapper for success notifications
- * 
- * @param {String} message 
- * 
+ *
+ * @param {String} message
+ *
  * @returns {undefined} toasts a success message
  */
 const success = (message) => {
@@ -13,9 +13,9 @@ const success = (message) => {
 
 /**
  * Materialize.toast() wrapper for error notifications
- * 
- * @param {String} message 
- * 
+ *
+ * @param {String} message
+ *
  * @returns {undefined} toasts an error message
  */
 const error = (message) => {

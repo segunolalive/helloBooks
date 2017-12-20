@@ -4,11 +4,11 @@ import initialState from './initialState';
 
 /**
  * Reducer that handles user authentication
- * 
- * @param {object} state   initial state for the notification 
+ *
+ * @param {object} state   initial state for the notification
  *                         section of the store
  * @param {object} action  the dispatched action
- * 
+ *
  * @returns {object}       new state of the notification section of the store
  */
 export default (state = initialState.notificationReducer, action) => {

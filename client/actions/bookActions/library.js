@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import actionTypes from '../actionTypes';
 import API from '../api';
-import notify from '../notify';
+import Notify from '../Notify';
 import reportNetworkError from '../reportNetworkError';
 import queryStringFromObject from '../../utils/queryStringFromObject';
 
@@ -75,7 +75,7 @@ export const fetchBooks = options => (dispatch) => {
         dispatch(bookAction(response.data.books));
         dispatch(setPagination(response.data.metadata));
       } else {
-        notify.error(response.data.message);
+        Notify.error(response.data.message);
       }
     })
     .catch((error) => {
@@ -109,7 +109,7 @@ export const borrowBookAction = id => ({
 export const borrowBook = (userId, bookId) => dispatch => (
   axios.post(`${API}/users/${userId}/books`, { id: bookId })
     .then((response) => {
-      notify.success(response.data.message);
+      Notify.success(response.data.message);
       return dispatch(borrowBookAction(bookId));
     })
     .catch(error => reportNetworkError(error))

@@ -6,9 +6,9 @@ import Loading from '../common/Loading';
 
 /**
  * component for borrowed Books
- * 
+ *
  * @param {Object} props  Object containing array of borrowed Books
- * 
+ *
  * @return {JSX}          JSX representation of component
  */
 const Borrowed = (props) => {

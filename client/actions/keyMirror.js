@@ -4,7 +4,7 @@
  * @example ['books'] becomes { books: 'books' }
  *
  * @param  {Array|Object} keys  array of keys or object with required keys
- * 
+ *
  * @returns {Object}      Object with keys and values mirrored
  */
 const keyMirror = (keys) => {

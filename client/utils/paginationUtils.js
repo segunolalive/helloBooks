@@ -18,7 +18,7 @@ export const hasMore = (oldPagination, newPagination) => {
  *
  * @param {Integer} pageNumber current page pageNumber
  * @param {Integer} pageSize   page size
- * 
+ *
  * @return {Integer}           offset for next fetch.
  */
 export function getOffset(pageNumber, pageSize) {

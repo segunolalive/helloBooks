@@ -1,6 +1,6 @@
-import notify from '../../actions/notify';
+import Notify from '../../actions/Notify';
 
-notify.success = jest.spyOn(notify, 'success');
-notify.error = jest.spyOn(notify, 'error');
+Notify.success = jest.spyOn(Notify, 'success');
+Notify.error = jest.spyOn(Notify, 'error');
 
-export default notify;
+export default Notify;

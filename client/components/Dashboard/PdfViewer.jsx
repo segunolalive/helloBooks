@@ -66,7 +66,7 @@ export class PdfViewer extends Component {
    * navigates to specific page
    *
    * @memberof PdfViewer
-   * 
+   *
    * @param {object} event
    *
    * @return {undefined}       sets state

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import actionTypes from '../actionTypes';
 import API from '../api';
-import notify from '../notify';
+import Notify from '../Notify';
 import reportNetworkError from '../reportNetworkError';
 
 /**
@@ -27,7 +27,7 @@ export const editBookAction = book => ({
 export const editBook = (id, data) => dispatch => (
   axios.put(`${API}/books/${id}`, data)
     .then((response) => {
-      notify.success(response.data.message);
+      Notify.success(response.data.message);
       return dispatch(editBookAction(response.data.book));
     })
     .catch(error => reportNetworkError(error))
@@ -56,7 +56,7 @@ export const createBook = book => ({
 export const addBook = data => dispatch => (
   axios.post(`${API}/books`, data)
     .then((response) => {
-      notify.success(response.data.message);
+      Notify.success(response.data.message);
       dispatch(createBook(response.data.book));
     })
     .catch(error => reportNetworkError(error))
@@ -87,7 +87,7 @@ export const deleteBook = bookId => dispatch => (
   axios.delete(`${API}/books/${bookId}`, { id: bookId })
     .then((response) => {
       dispatch(deleteBookAction(bookId));
-      notify.success(response.data.message);
+      Notify.success(response.data.message);
       return response;
     })
     .catch(error => reportNetworkError(error))
@@ -128,7 +128,7 @@ export const addBookCategory = category => dispatch => (
   axios.post(`${API}/books/category`, { category })
     .then((response) => {
       dispatch(addCategory(response.data.category));
-      notify.success(response.data.message);
+      Notify.success(response.data.message);
     })
     .catch((error) => {
       dispatch(addCategoryFailure(error.response.data.message));

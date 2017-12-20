@@ -11,7 +11,7 @@ import { addBook,
 import { fetchNotifications } from '../../actions/adminActions/notifications';
 import actionTypes from '../../actions/actionTypes';
 import uploadFile from '../../actions/uploadFile';
-import notify from '../__mocks__/notify';
+import Notify from '../__mocks__/Notify';
 
 
 window.CLOUDINARY_API_BASE = 'CLOUDINARY_API_BASE';
@@ -41,7 +41,7 @@ describe('ADMIN ACTIONS', () => {
       const store = mockStore({});
       return store.dispatch(addBook(book)).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.success).toHaveBeenCalled();
+        expect(Notify.success).toHaveBeenCalled();
       });
     });
 
@@ -54,8 +54,8 @@ describe('ADMIN ACTIONS', () => {
       const store = mockStore({});
       return store.dispatch(addBook(1)).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.error).toHaveBeenCalled();
-        expect(notify.error.mock.calls[0]).toEqual(['failure']);
+        expect(Notify.error).toHaveBeenCalled();
+        expect(Notify.error.mock.calls[0]).toEqual(['failure']);
       });
     });
   });
@@ -77,8 +77,8 @@ describe('ADMIN ACTIONS', () => {
       const store = mockStore({});
       return store.dispatch(editBook(1, {})).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.success).toHaveBeenCalled();
-        expect(notify.success.mock.calls[0]).toEqual(['success']);
+        expect(Notify.success).toHaveBeenCalled();
+        expect(Notify.success.mock.calls[0]).toEqual(['success']);
       });
     });
 
@@ -91,7 +91,7 @@ describe('ADMIN ACTIONS', () => {
       const store = mockStore({});
       return store.dispatch(editBook(1, {})).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.error).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
       });
     });
   });
@@ -106,7 +106,7 @@ describe('ADMIN ACTIONS', () => {
       const store = mockStore({});
       return store.dispatch(deleteBook(1)).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.success).toHaveBeenCalled();
+        expect(Notify.success).toHaveBeenCalled();
       });
     });
 
@@ -119,7 +119,7 @@ describe('ADMIN ACTIONS', () => {
       const store = mockStore({});
       return store.dispatch(deleteBook(1)).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.error).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
       });
     });
   });
@@ -136,7 +136,7 @@ describe('ADMIN ACTIONS', () => {
       const store = mockStore({});
       return store.dispatch(addBookCategory('category')).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.success).toHaveBeenCalled();
+        expect(Notify.success).toHaveBeenCalled();
       });
     });
 
@@ -152,7 +152,7 @@ describe('ADMIN ACTIONS', () => {
       const store = mockStore({});
       return store.dispatch(addBookCategory('category')).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.error).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
       });
     });
   });
@@ -174,7 +174,7 @@ describe('ADMIN ACTIONS', () => {
       const store = mockStore({});
       return store.dispatch(fetchNotifications()).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.success).toHaveBeenCalled();
+        expect(Notify.success).toHaveBeenCalled();
       });
     });
 
@@ -195,7 +195,7 @@ describe('ADMIN ACTIONS', () => {
         const store = mockStore({});
         return store.dispatch(fetchNotifications({ offset: 20 })).then(() => {
           expect(store.getActions()).toEqual(expectedActions);
-          expect(notify.success).toHaveBeenCalled();
+          expect(Notify.success).toHaveBeenCalled();
         });
       });
 
@@ -213,7 +213,7 @@ describe('ADMIN ACTIONS', () => {
       const store = mockStore({});
       return store.dispatch(fetchNotifications()).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.success).toHaveBeenCalled();
+        expect(Notify.success).toHaveBeenCalled();
       });
     });
   });

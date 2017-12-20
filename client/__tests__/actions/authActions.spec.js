@@ -11,7 +11,7 @@ import requestResetPassword
   from '../../actions/authActions/requestResetPassword';
 import resetPassword from '../../actions/authActions/resetPassword';
 import actionTypes from '../../actions/actionTypes';
-import notify from '../__mocks__/notify';
+import Notify from '../__mocks__/Notify';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -114,7 +114,7 @@ describe('Auth Actions', () => {
       });
       const store = mockStore({});
       store.dispatch(requestResetPassword('email')).then(() => {
-        expect(notify.success).toHaveBeenCalled();
+        expect(Notify.success).toHaveBeenCalled();
         done();
       });
     });
@@ -126,7 +126,7 @@ describe('Auth Actions', () => {
       });
       const store = mockStore({});
       store.dispatch(requestResetPassword('email')).then(() => {
-        expect(notify.error).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
         done();
       });
     });
@@ -140,7 +140,7 @@ describe('Auth Actions', () => {
       });
       const store = mockStore({});
       store.dispatch(resetPassword('password', '1234yyjhkopi123')).then(() => {
-        expect(notify.success).toHaveBeenCalled();
+        expect(Notify.success).toHaveBeenCalled();
         done();
       });
     });
@@ -152,7 +152,7 @@ describe('Auth Actions', () => {
       });
       const store = mockStore({});
       store.dispatch(resetPassword('password', '1234yyjhkopi123')).then(() => {
-        expect(notify.error).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
         done();
       });
     });

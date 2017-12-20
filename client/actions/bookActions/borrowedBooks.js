@@ -1,7 +1,7 @@
 import axios from 'axios';
 import actionTypes from '../actionTypes';
 import API from '../api';
-import notify from '../notify';
+import Notify from '../Notify';
 import reportNetworkError from '../reportNetworkError';
 
 
@@ -78,7 +78,7 @@ export const returnBook = (userId, bookId) => dispatch => (
   axios.put(`${API}/users/${userId}/books`, { id: bookId })
     .then(
       (response) => {
-        notify.success(response.data.message);
+        Notify.success(response.data.message);
         return dispatch(returnBookAction(bookId));
       })
     .catch(error => reportNetworkError(error))

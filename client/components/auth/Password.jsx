@@ -125,7 +125,7 @@ export class Password extends Component {
    * renders component to DOM
    *
    * @memberof Password
-   * 
+   *
    * @returns {JSX} JSX representation of component
    */
   render() {

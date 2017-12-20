@@ -1,6 +1,6 @@
 /**
  * transforms image url with width and height parameters
- * 
+ *
  * @param {String} url
  * @param {Object} options
  *

@@ -33,7 +33,7 @@ export class History extends Component {
 
   /**
    * renders  component to DOM
-   * 
+   *
    * @return {JSX} JSX
    */
   render() {

@@ -8,7 +8,7 @@ import reportNetworkError from '../reportNetworkError';
 
 /**
  * @param  {object} notifications
- * 
+ *
  * @return {Object}      action object
  */
 export const adminNotifications = notifications => ({
@@ -18,7 +18,7 @@ export const adminNotifications = notifications => ({
 
 /**
  * @param  {Array} notifications
- * 
+ *
  * @return {Object}      action object
  */
 export const moreAdminNotifications = notifications => ({
@@ -28,7 +28,7 @@ export const moreAdminNotifications = notifications => ({
 
 /**
  * @param  {object} pagination
- * 
+ *
  * @return {Object}      action object
  */
 export const setPagination = pagination => ({
@@ -38,7 +38,7 @@ export const setPagination = pagination => ({
 
 /**
  * @param  {Bool} status
- * 
+ *
  * @return {Object}      action object
  */
 export const fetchingNotifications = status => ({
@@ -49,9 +49,9 @@ export const fetchingNotifications = status => ({
 
 /**
  * get admin notifications from server
- * 
+ *
  * @param {object} options
- * 
+ *
  * @return {Function} dispatches an action creator
  */
 export const fetchNotifications = options => (dispatch) => {

@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 
 /**
  * book Suggestions
- * 
+ *
  * @param {Object} props Object containing array of suggestions
- * 
+ *
  * @returns {JSX}        JSX representation of component
  */
 const SuggestedBooks = (props) => {
@@ -16,9 +16,7 @@ const SuggestedBooks = (props) => {
       <div className="suggestion">
         <figure className="center bottom-20">
           <figcaption>
-            <h5 className="bold-text">
-              {book.title || ''}
-            </h5 >
+            <h5 className="bold-text">{book.title || ''}</h5 >
           </figcaption>
           <img src={book.cover || BOOK_IMAGE_FALLBACK}
             alt={book.title || 'book cover'} style={{ maxWidth: '100%' }}

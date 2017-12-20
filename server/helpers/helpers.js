@@ -20,7 +20,7 @@ export const hashPassword = (user) => {
 
 /**
  * signs a jsonwebtoken using credentials provided
- * 
+ *
  * @param  {Object} options           object of key values to sign jsonwebtoken
  * @param  {String} [expiresIn='24h'] expiration time
  *

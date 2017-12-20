@@ -5,7 +5,7 @@ api = process.env.NODE_ENV === ('development' || 'test') ?
 
 /**
  * api url
- * 
+ *
  * @type {String}
  */
 const API = api;

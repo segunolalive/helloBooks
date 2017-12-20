@@ -16,7 +16,7 @@ export const saveState = (state) => {
 
 /**
  * loads state from disk
- * 
+ *
  * @return {Object|Boolean}   State Object or false
  */
 export const loadState = () => {
