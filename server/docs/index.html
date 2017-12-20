@@ -287,6 +287,14 @@
               </ul>
           </li>
           <li>
+            <a href="#history" class="toc-h1 toc-link" data-title="History">History</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-transaction-history" class="toc-h2 toc-link" data-title="History">Get Transaction History</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </div>
@@ -301,9 +309,7 @@
 <p>Welcome to the Hello Books API!</p>
 
 <p>Hello Books is a library application that allows users borrow books and read books.
-With this guide, you&#39;d learn how to access our API endpoints in order to operations like
-account creation, login, querying library and checkout out book information,
-borrow books, return them, contribute books to the database and more.</p>
+With this guide, you&#39;d learn how to access our API endpoints in order to perform operations like account creation, login, querying library and checkout out book information, borrow books, return them, contribute books to the database and more.</p>
 
 <p>We have language bindings in Javascript! You can view code examples in the dark area to the right.</p>
 
@@ -311,7 +317,7 @@ borrow books, return them, contribute books to the database and more.</p>
 All api routes must be prepended with <code>/api/v1</code> where <code>v1</code> represents the api version number.
 </aside>
 <h1 id='authentication'>Authentication</h1>
-<p>Hello Books uses requires authentication with username and password for access to
+<p>Hello Books requires authentication with username and password for access to
 protected api routes. On signup and subsequent logins, a token is generated
 and required for requests to protected routes.</p>
 
@@ -321,7 +327,7 @@ and required for requests to protected routes.</p>
 <p>Request:</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"newuser"</span><span class="p">,</span>
+  <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"syndey"</span><span class="p">,</span>
   <span class="s2">"password"</span><span class="p">:</span> <span class="s2">"supersecretpassword"</span>
 <span class="p">}</span>
 </code></pre>
@@ -331,9 +337,10 @@ and required for requests to protected routes.</p>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
     <span class="s2">"token"</span><span class="p">:</span> <span class="s2">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhYmNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJTZWd1biIsImlzQWRtaW4iOnRydWUsImlhdCI6MTUwODAwNjg5MSwiZXhwIjoxNTA4MDkzMjkxfQ.catTTd9DVZ4vDH_AAuSxZ6638D4INjx-j7PN-8Zlxa8"</span><span class="p">,</span>
     <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"syndey"</span><span class="p">,</span>
+    <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"Syndey"</span><span class="p">,</span>
     <span class="s2">"lastName"</span><span class="p">:</span> <span class="s2">"caprice"</span><span class="p">,</span>
-    <span class="s2">"isAdmin"</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="s2">"isAdmin"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Welcome back Syndey"</span>
 <span class="p">}</span>
 </code></pre>
 <blockquote>
@@ -354,12 +361,12 @@ and required for requests to protected routes.</p>
 <p>Request:</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"newuser"</span><span class="p">,</span>
-  <span class="s2">"eamil"</span><span class="p">:</span> <span class="s2">"useremail@cooldomain.com"</span><span class="p">,</span>
-  <span class="s2">"password"</span><span class="p">:</span> <span class="s2">"supersecretpassword"</span><span class="p">,</span>
-  <span class="s2">"confirmPassword"</span><span class="p">:</span> <span class="s2">"supersecretpassword"</span><span class="p">,</span>
-  <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"Philip"</span><span class="p">,</span>
-  <span class="s2">"lastName"</span><span class="p">:</span> <span class="s2">"Dean"</span><span class="p">,</span>
+    <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"newuser"</span><span class="p">,</span>
+    <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"useremail@cooldomain.com"</span><span class="p">,</span>
+    <span class="s2">"password"</span><span class="p">:</span> <span class="s2">"supersecretpassword"</span><span class="p">,</span>
+    <span class="s2">"confirmPassword"</span><span class="p">:</span> <span class="s2">"supersecretpassword"</span><span class="p">,</span>
+    <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"Philip"</span><span class="p">,</span>
+    <span class="s2">"lastName"</span><span class="p">:</span> <span class="s2">"Dean"</span><span class="p">,</span>
 <span class="p">}</span>
 </code></pre>
 <blockquote>
@@ -367,10 +374,11 @@ and required for requests to protected routes.</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
     <span class="s2">"token"</span><span class="p">:</span> <span class="s2">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhYmNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJTZWd1biIsImlzQWRtaW4iOnRydWUsImlhdCI6MTUwODAwNjg5MSwiZXhwIjoxNTA4MDkzMjkxfQ.catTTd9DVZ4vDH_AAuSxZ6638D4INjx-j7PN-8Zlxa8"</span><span class="p">,</span>
-    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"Philip"</span><span class="p">,</span>
     <span class="s2">"lastName"</span><span class="p">:</span> <span class="s2">"Dean"</span><span class="p">,</span>
-    <span class="s2">"isAdmin"</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="s2">"isAdmin"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Welcome Philip. This is your dashboard"</span>
 <span class="p">}</span>
 </code></pre><h3 id='request'>Request</h3>
 <ul>
@@ -396,11 +404,11 @@ and required for requests to protected routes.</p>
             <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Segun Martins, Beau Dearmont"</span><span class="p">,</span>
             <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Fish is an awesome shell scripting language.\n\nLearn from the masters"</span><span class="p">,</span>
             <span class="s2">"total"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
-            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
             <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T01:05:00.856Z"</span><span class="p">,</span>
             <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-14T21:39:33.088Z"</span><span class="p">,</span>
-            <span class="s2">"category"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
             <span class="s2">"BorrowedBook"</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">"userId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
                 <span class="s2">"bookId"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
@@ -413,13 +421,13 @@ and required for requests to protected routes.</p>
             <span class="s2">"id"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
             <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Foonam"</span><span class="p">,</span>
             <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"bo Dakes, low Fruity"</span><span class="p">,</span>
-            <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"GOo goo gooo"</span><span class="p">,</span>
+            <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Goo goo gooo"</span><span class="p">,</span>
             <span class="s2">"total"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
-            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
-            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
             <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T01:10:30.754Z"</span><span class="p">,</span>
             <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-14T11:57:31.798Z"</span><span class="p">,</span>
-            <span class="s2">"category"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
             <span class="s2">"BorrowedBook"</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">"userId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
                 <span class="s2">"bookId"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
@@ -434,11 +442,11 @@ and required for requests to protected routes.</p>
             <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"flo harrison"</span><span class="p">,</span>
             <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"An ruby ruby programming language"</span><span class="p">,</span>
             <span class="s2">"total"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
-            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
-            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="s2">"bookFile"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
             <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
             <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-09T17:36:43.139Z"</span><span class="p">,</span>
-            <span class="s2">"category"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
             <span class="s2">"BorrowedBook"</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">"userId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
                 <span class="s2">"bookId"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
@@ -514,7 +522,7 @@ and required for requests to protected routes.</p>
             <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/book/file"</span><span class="p">,</span>
             <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
             <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
-            <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"ruby"</span>
+            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">1</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
@@ -526,7 +534,7 @@ and required for requests to protected routes.</p>
             <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/book/file"</span><span class="p">,</span>
             <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
             <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
-            <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"python"</span>
+            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">2</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="s2">"id"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -534,11 +542,11 @@ and required for requests to protected routes.</p>
             <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"bo Dakes, low Fruity"</span><span class="p">,</span>
             <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"GOo goo gooo"</span><span class="p">,</span>
             <span class="s2">"total"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
-            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
             <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/book/file"</span><span class="p">,</span>
             <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T01:10:30.754Z"</span><span class="p">,</span>
             <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-14T11:57:31.798Z"</span><span class="p">,</span>
-            <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"/path/to/book/cover"</span>
+            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">2</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="s2">"id"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
@@ -546,13 +554,19 @@ and required for requests to protected routes.</p>
             <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Segun Martins, Beau Dearmont"</span><span class="p">,</span>
             <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Fish is an awesome shell scripting language.\n\nLearn from the masters"</span><span class="p">,</span>
             <span class="s2">"total"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/book/cover"</span><span class="p">,</span>
             <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/book/file"</span><span class="p">,</span>
             <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T01:05:00.856Z"</span><span class="p">,</span>
             <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-14T21:39:33.088Z"</span><span class="p">,</span>
-            <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"shell"</span>
+            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">1</span>
         <span class="p">}</span>
-    <span class="p">]</span>
+    <span class="p">],</span>
+    <span class="s2">"metadata"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"pageNumber"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">"pageCount"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s2">"pageSize"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s2">"total"</span><span class="p">:</span> <span class="mi">16</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre><h3 id='request'>Request</h3>
 <ul>
@@ -572,9 +586,14 @@ and required for requests to protected routes.</p>
 </tr>
 </thead><tbody>
 <tr>
-<td>category</td>
+<td>categoryId</td>
 <td>&quot;&quot;</td>
-<td>Filters books by category specified.</td>
+<td>Filters books by category id specified.</td>
+</tr>
+<tr>
+<td>search</td>
+<td>&quot;&quot;</td>
+<td>Filters books by search parameter specified.</td>
 </tr>
 </tbody></table>
 <h2 id='get-book'>Get Book</h2>
@@ -588,10 +607,10 @@ and required for requests to protected routes.</p>
         <span class="s2">"id"</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
         <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"French"</span><span class="p">,</span>
         <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"flo harrison"</span><span class="p">,</span>
-        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"An ruby ruby programming language"</span><span class="p">,</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"A ruby programming language"</span><span class="p">,</span>
         <span class="s2">"total"</span><span class="p">:</span> <span class="mi">21</span><span class="p">,</span>
-        <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
-        <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="s2">"cover"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="s2">"bookFile"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
         <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
         <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-15T14:21:51.773Z"</span><span class="p">,</span>
         <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"ruby"</span>
@@ -611,7 +630,7 @@ and required for requests to protected routes.</p>
 <p>Request</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">12</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span>
 <span class="p">}</span>
 </code></pre>
 <blockquote>
@@ -659,14 +678,14 @@ and required for requests to protected routes.</p>
 <p>Request</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-   <span class="s2">"id"</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
-   <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"FOSS"</span><span class="p">,</span>
-   <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Flo Harrison, Nick Hansel"</span><span class="p">,</span>
-   <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"A soft introduction to open source software development"</span><span class="p">,</span>
-   <span class="s2">"total"</span><span class="p">:</span> <span class="mi">21</span><span class="p">,</span>
-   <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/cover/image"</span><span class="p">,</span>
-   <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/file/"</span><span class="p">,</span>
-   <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"OSS"</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"FOSS"</span><span class="p">,</span>
+    <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Flo Harrison, Nick Hansel"</span><span class="p">,</span>
+    <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"A soft introduction to open source software development"</span><span class="p">,</span>
+    <span class="s2">"total"</span><span class="p">:</span> <span class="mi">21</span><span class="p">,</span>
+    <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/cover/image"</span><span class="p">,</span>
+    <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/file/"</span><span class="p">,</span>
+    <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"OSS"</span>
 <span class="p">}</span>
 </code></pre>
 <blockquote>
@@ -674,16 +693,16 @@ and required for requests to protected routes.</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
     <span class="s2">"book"</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-      <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"FOSS"</span><span class="p">,</span>
-      <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Flo Harrison, Nick Hansel"</span><span class="p">,</span>
-      <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"A soft introduction to open source software development"</span><span class="p">,</span>
-      <span class="s2">"total"</span><span class="p">:</span> <span class="mi">21</span><span class="p">,</span>
-      <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/cover/image"</span><span class="p">,</span>
-      <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/file/"</span><span class="p">,</span>
-      <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"OSS"</span>
-      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
-      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
+        <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"FOSS"</span><span class="p">,</span>
+        <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Flo Harrison, Nick Hansel"</span><span class="p">,</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"A soft introduction to open source software development"</span><span class="p">,</span>
+        <span class="s2">"total"</span><span class="p">:</span> <span class="mi">21</span><span class="p">,</span>
+        <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/cover/image"</span><span class="p">,</span>
+        <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/file/"</span><span class="p">,</span>
+        <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"OSS"</span>
+        <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
+        <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
     <span class="p">},</span>
     <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Successfully added FOSS to Library"</span>
 <span class="p">}</span>
@@ -704,7 +723,7 @@ and required for requests to protected routes.</p>
 <p>Request</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-   <span class="s2">"total"</span><span class="p">:</span> <span class="mi">30</span>
+    <span class="s2">"total"</span><span class="p">:</span> <span class="mi">30</span>
 <span class="p">}</span>
 </code></pre>
 <blockquote>
@@ -712,16 +731,16 @@ and required for requests to protected routes.</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
     <span class="s2">"book"</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-      <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"FOSS"</span><span class="p">,</span>
-      <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Flo Harrison, Nick Hansel"</span><span class="p">,</span>
-      <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"A soft introduction to open source software development"</span><span class="p">,</span>
-      <span class="s2">"total"</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
-      <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/cover/image"</span><span class="p">,</span>
-      <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/file/"</span><span class="p">,</span>
-      <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"OSS"</span>
-      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
-      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span>
+        <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"FOSS"</span><span class="p">,</span>
+        <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Flo Harrison, Nick Hansel"</span><span class="p">,</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"A soft introduction to open source software development"</span><span class="p">,</span>
+        <span class="s2">"total"</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"/path/to/cover/image"</span><span class="p">,</span>
+        <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/file/"</span><span class="p">,</span>
+        <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"OSS"</span>
+        <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
+        <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span>
     <span class="p">},</span>
     <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"FOSS was successfully updated"</span>
 <span class="p">}</span>
@@ -742,7 +761,7 @@ and required for requests to protected routes.</p>
 <p>Response</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Successfully deleted book from database"</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Successfully deleted book from database"</span>
 <span class="p">}</span>
 </code></pre><h3 id='request-7'>Request</h3>
 <ul>
@@ -766,6 +785,7 @@ and required for requests to protected routes.</p>
 <p>Response</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"category"</span><span class="p">:</span> <span class="p">{</span> <span class="s2">"id"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"ruby"</span> <span class="p">},</span>
     <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Successfully added new category, ruby, to Library"</span>
 <span class="p">}</span>
 </code></pre><h3 id='request-8'>Request</h3>
@@ -809,7 +829,8 @@ and required for requests to protected routes.</p>
 <li>Body <code>(application/json)</code></li>
 </ul>
 <h1 id='admin-notification'>Admin Notification</h1>
-<p>This endpoint notifies admin users of library transactions</p>
+<p>This endpoint notifies admin users of library transactions starting from the
+most recent transactions</p>
 
 <blockquote>
 <p>Response</p>
@@ -828,7 +849,7 @@ and required for requests to protected routes.</p>
           <span class="s2">"id"</span><span class="p">:</span> <span class="mi">76</span><span class="p">,</span>
           <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"borrow"</span><span class="p">,</span>
           <span class="s2">"bookTitle"</span><span class="p">:</span> <span class="s2">"eloquent ruby"</span><span class="p">,</span>
-          <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Segun"</span><span class="p">,</span>
+          <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"deboX5690"</span><span class="p">,</span>
           <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:26.128Z"</span><span class="p">,</span>
           <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:26.128Z"</span>
       <span class="p">},</span>
@@ -836,16 +857,72 @@ and required for requests to protected routes.</p>
           <span class="s2">"id"</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
           <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"return"</span><span class="p">,</span>
           <span class="s2">"bookTitle"</span><span class="p">:</span> <span class="s2">"eloquent javascript"</span><span class="p">,</span>
-          <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Segun"</span><span class="p">,</span>
+          <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Tuf0_346"</span><span class="p">,</span>
           <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:17.417Z"</span><span class="p">,</span>
           <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:17.417Z"</span>
       <span class="p">}</span>
-  <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s2">"metadata"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"pageNumber"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">"pageCount"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">"pageSize"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">"total"</span><span class="p">:</span> <span class="mi">9</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre><h3 id='request'>Request</h3>
 <ul>
-<li>Endpoint: GET: <code>//admin-notifications</code></li>
+<li>Endpoint: GET: <code>/admin-notifications</code></li>
 <li>Requires: Authentication and Authorization</li>
+</ul>
+<h3 id='response'>Response</h3>
+<ul>
+<li>Status: <code>200: OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h1 id='history'>History</h1><h2 id='get-transaction-history'>Get Transaction History</h2>
+<p>This endpoint gets all of a users&#39; transactions</p>
+
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"notifications"</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">77</span><span class="p">,</span>
+            <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"return"</span><span class="p">,</span>
+            <span class="s2">"bookTitle"</span><span class="p">:</span> <span class="s2">"eloquent javascript"</span><span class="p">,</span>
+            <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Segun"</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-01T07:54:15.782Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-01T07:54:15.782Z"</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">76</span><span class="p">,</span>
+            <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"borrow"</span><span class="p">,</span>
+            <span class="s2">"bookTitle"</span><span class="p">:</span> <span class="s2">"eloquent ruby"</span><span class="p">,</span>
+            <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Segun"</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:26.128Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:26.128Z"</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
+            <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"return"</span><span class="p">,</span>
+            <span class="s2">"bookTitle"</span><span class="p">:</span> <span class="s2">"eloquent javascript"</span><span class="p">,</span>
+            <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Segun"</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:17.417Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-09-29T03:30:17.417Z"</span>
+      <span class="p">}</span>
+  <span class="p">],</span>
+    <span class="s2">"metadata"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"pageNumber"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">"pageCount"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">"pageSize"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s2">"total"</span><span class="p">:</span> <span class="mi">9</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre><h3 id='request'>Request</h3>
+<ul>
+<li>Endpoint: GET: <code>/users/1/transactions</code></li>
+<li>Requires: Authentication</li>
 </ul>
 <h3 id='response'>Response</h3>
 <ul>

@@ -14,20 +14,25 @@ import Dashboard from './Dashboard';
 import Logout from './auth/Logout';
 import Password from './auth/Password';
 import UpdateProfile from './Dashboard/UpdateProfile';
+import PdfViewer from './Dashboard/PdfViewer';
 
 
 /**
  * @public
+ *
  * @class App
+ *
  * @description React Component encapsulating application user interface
+ *
  * @extends {Component}
  */
 class App extends Component {
   /**
    * renders app to DOM
    *
-   * @returns {JSX} JSX representation of component
    * @memberof App
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     return (
@@ -42,6 +47,7 @@ class App extends Component {
             <Route path='/signup' component={SignUp} />
             <Route path='/library/book/:id' component={BookDetail} />
             <Route path='/library' exact component={Library} />
+            <Route path='/read' exact component={PdfViewer} />
             <Route path='/history' component={History} />
             <Route path='/admin/edit:id' component={Admin} />
             <Route path='/admin/add' component={Admin} />

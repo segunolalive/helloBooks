@@ -30,6 +30,11 @@ export default {
       .waitForElementVisible('#toast-container')
       .assert.containsText('.toast',
         'Successfully added new category, comedy, to Library')
+      .click('#library-nav-link')
+      .waitForElementVisible('.select-wrapper')
+      .click('.select-wrapper')
+      .waitForElementVisible('.dropdown-content li:nth-child(5)')
+      .assert.containsText('.dropdown-content li:nth-child(5) span', 'comedy')
       .end();
   },
 
@@ -45,11 +50,13 @@ export default {
       .click('.select-wrapper')
       .waitForElementVisible('.dropdown-content li:nth-child(4)')
       .click('.dropdown-content li:nth-child(4)')
-      // .click('ul.dropdown-content.select-dropdown > li:nth-child(4) > span')
       .click('#submit-book-form-btn')
       .waitForElementVisible('#toast-container')
       .assert.containsText('.toast',
         'Successfully added crud code to Library')
+      // .click('#library-nav-link')
+      // .waitForElementVisible('.books-table')
+      // .assert.containsText('#row-5 td:nth-child(2) a.innerHTML', 'crud code')
       .end();
   },
 

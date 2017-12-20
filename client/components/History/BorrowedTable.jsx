@@ -6,18 +6,21 @@ import requestImageUrl from '../../utils/requestImageUrl';
 
 /**
  * Table of borrowed books
+ *
  * @param {Object} props props object containing books
+ *
  * @returns {JSX}        JSX representation of Books table
  */
 const BorrowedTable = (props) => {
   const rows = props.books.length ? props.books.map((book) => {
     const returned = book.BorrowedBook.returned;
+    const bookImage = <img src={(book.cover &&
+      requestImageUrl(book.cover, { width: 50 })) || BOOK_IMAGE_FALLBACK}
+    alt={`${book.title} cover`} style={{ width: '50px' }}></img>;
     return (
       <tr key={book.id}>
-        <td>{book.cover ?
-          <img src={requestImageUrl(book.cover, { width: 50 })}
-            alt={`${book.title} cover`}></img>
-          : 'N/A'}</td>
+        <td>{bookImage}
+        </td>
         <td>{book.title || 'N/A'}</td>
         <td>{book.authors || 'N/A'}</td>
         <td>{moment(book.createdAt).format('LLLL') || 'N/A'}</td>

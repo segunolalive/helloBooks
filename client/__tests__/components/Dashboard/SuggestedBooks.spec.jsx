@@ -10,6 +10,8 @@ const props = {
   suggestedBooks: mockStoreData.bookReducer.borrowedBooks,
 };
 
+window.BOOK_IMAGE_FALLBACK = 'fallback';
+
 
 describe('SuggestedBooks component', () => {
   const wrapper = shallow(<SuggestedBooks { ...props } />);

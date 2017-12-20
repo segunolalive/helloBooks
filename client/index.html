@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#011b33">
-    <meta name="google-signin-client_id" content=`${GOOGLE_CLIENT_ID}.apps.googleusercontent.com`>
+    <meta name="google-signin-client_id" content="`${GOOGLE_CLIENT_ID}.apps.googleusercontent.com`">
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -30,6 +30,20 @@
         0% {color: #ffffff;}
         100% {color: #011b33;}
       }
+
+      .show-offline-notification {
+        margin: 0;
+        text-align: center;
+        padding: 5px;
+        display: none;
+        color: #ffffff;
+        background: #B71C1C;
+        display: block;
+        position: fixed;
+        bottom: 0;
+        left:0;
+        z-index: 1000;
+      }
     </style>
   </head>
   <body>
@@ -43,8 +57,44 @@
           </h5>
         </noscript>
     </div>
+    <div id="offline-notification" style="display: none; width: 100%">
+      <h5 class="bold-text">You are offline</h5>
+    </div>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script src="/sw.js"></script>
+    <script>
+      function offLineNotification (event) {
+        const offlineDiv = document.getElementById('offline-notification');
+        offlineDiv.style.display = "block";
+        offlineDiv.classList.add('show-offline-notification');
+      }
+      function removeOffLineNotification(event) {
+        const offlineDiv = document.getElementById('offline-notification');
+        offlineDiv.classList.remove('show-offline-notification');
+        offlineDiv.style.display = "none";
+        }
+      window.addEventListener('offline', offLineNotification);
+      window.addEventListener('online', removeOffLineNotification);
+
+      var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        var type = connection.type;
+
+        function updateConnectionStatus() {
+          console.log("Connection type is change from " + type + " to " + connection.type);
+        }
+
+        connection.addEventListener('typechange', updateConnectionStatus);
+    </script>
+    <script>
+      (function init() {
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then(registration => {
+              // registration.pushManager.subscribe({ userVisibleOnly: true });
+            }).catch(registrationError => {});
+          });
+        }
+      })();
+    </script>
   </body>
 </html>

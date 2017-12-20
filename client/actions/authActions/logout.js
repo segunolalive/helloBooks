@@ -4,8 +4,9 @@ import actionTypes from '../actionTypes';
 export const logoutUser = () => ({ type: actionTypes.LOGOUT });
 
 /**
- * @param {Function} dispatch
- * @returns {Object} Object containing action type
+ * action creator for logging a user out
+ *
+ * @returns {Function} function that dispatches a logout action
  */
 export default () => (dispatch) => {
   localStorage.removeItem('token');

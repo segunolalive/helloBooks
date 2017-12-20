@@ -1,6 +1,7 @@
 import keyMirror from './keyMirror';
 /**
  * array of action types
+ *
  * @type {Array}
  */
 const actionList = [
@@ -16,11 +17,15 @@ const actionList = [
   'GET_MORE_BOOKS',
   'GET_BORROWED_BOOKS',
   'GET_ALL_BORROWED',
+  'ADD_BOOK_CATEGORY',
+  'ADD_BOOK_CATEGORY_FAILURE',
   'GET_BOOK_CATEGORIES',
+  'GET_BOOK_SUGGESTIONS',
   'BORROW_BOOK',
   'RETURN_BOOK',
   'CREATE_BOOK',
   'READ_BOOK',
+  'SET_BOOK_TO_READ',
   'EDIT_BOOK_INFO',
   'DELETE_BOOK',
   'FETCHING_MORE_BOOKS',
@@ -42,6 +47,7 @@ const actionList = [
 
 /**
  * action types object
+ *
  * @type {Object}
  */
 const actionTypes = keyMirror(actionList);

@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import Borrowed from '../../../components/Dashboard/Borrowed';
 import { mockStoreData } from '../../__mocks__/mockData';
 
+window.BOOK_IMAGE_FALLBACK = 'fallback';
 
 const props = {
   borrowedBooks: mockStoreData.bookReducer.borrowedBooks,
