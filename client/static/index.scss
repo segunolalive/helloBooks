@@ -54,6 +54,9 @@ nav {
     a.brand-logo:hover {
       transform: scale(1.05);
     }
+    a[href="/logout"]:hover {
+      color: red;
+    }
   }
 }
 
@@ -164,6 +167,17 @@ main {
 @media only screen and (min-width: 993px) {
   .admin-container {
     width: 80%;
+  }
+}
+
+#notifications-section {
+  overflow-y: auto;
+  max-height: 70vh;
+  margin-top: 30px;
+
+  @media only screen and (min-width: 601px) {
+    max-height: 90vh;
+    margin-top: 0;
   }
 }
 
@@ -322,3 +336,35 @@ input[type=search]:not(.browser-default) {
 .fill-page-height {
   min-height: 90vh !important;
 }
+
+.pdf-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 0;
+
+  button {
+    background: black;
+    border: none;
+  }
+}
+
+.next-btn {
+  border-left: 1px solid #ffffff;
+}
+.prev-btn {
+  border-right: 1px solid #ffffff;
+}
+
+.pdf-container {
+  width: 100%;
+  text-align: center;
+  margin: 20px auto 70px;
+}
+
+.page-num {
+  width: 50px !important;
+  border: 2px solid #cccccc !important;
+  border-radius: 6px !important;
+}
+

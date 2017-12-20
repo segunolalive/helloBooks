@@ -34,7 +34,13 @@ router.get('/', (req, res) => res.status(200).send({
     validateInput.requestPasswordReset,
     userController.passwordResetMail)
   .get('/books/category', bookController.getBookCategories)
+
+  .get(
+    '/books/suggestions',
+    bookController.suggestedBooks
+  )
   .get('/books/:id', bookController.getBook)
+
   .get('/books', validateLimitAndOffset, bookController.getBooks)
 
   // Protected routes

@@ -4,11 +4,12 @@ import throttle from 'lodash/throttle';
 
 import rootReducer from '../reducers/rootReducer';
 import { loadState, saveState } from '../utils/saveLocally';
+import initialState from '../reducers/initialState';
 
-const initialState = loadState();
 
+const preloadedState = loadState() || initialState;
 
-const store = createStore(rootReducer, initialState,
+const store = createStore(rootReducer, preloadedState,
   compose(applyMiddleware(thunkMiddleware),
     process.env.NODE_ENV === 'development' &&
     window.devToolsExtension ? window.devToolsExtension() : f => f
