@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import { assert } from 'chai';
 import app from '../../app';
-import mock from '../mock/mock';
+import mock from '../mock';
 
 
 const server = supertest.agent(app);

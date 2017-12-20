@@ -1,9 +1,6 @@
-import supertest from 'supertest';
-import { assert, expect } from 'chai';
-import app from '../../app';
-import models from '../../models/index';
+import { expect } from 'chai';
 import { hashPassword, getJWT } from '../../helpers/helpers';
-import mock from '../mock/mock';
+import mock from '../mock';
 
 
 // const server = supertest.agent(app);
@@ -22,10 +19,10 @@ describe('helpers', () => {
       const options = {
         isAdmin: false,
         name: 'foo',
-      }
+      };
       const jwt = getJWT(options);
       // jsonwebtokens have two period characters
       expect(jwt.split('.').length - 1).to.equal(2);
-    })
+    });
   });
 });

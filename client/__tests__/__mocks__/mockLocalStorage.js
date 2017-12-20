@@ -1,17 +1,17 @@
-const localStorage = {
+const mockLocalStorage = {
   store: {},
   setItem(key, value) {
-    return ({ ...localStorage.store, [key]: value });
+    return ({ ...mockLocalStorage.store, [key]: value });
   },
   getItem(key) {
-    return localStorage.store[key];
+    return mockLocalStorage.store[key];
   },
   removeItem(key) {
-    delete localStorage.store[key];
+    delete mockLocalStorage.store[key];
   },
   clear() {
-    localStorage.store = {};
+    mockLocalStorage.store = {};
   }
 };
 
-export default localStorage;
+export default mockLocalStorage;

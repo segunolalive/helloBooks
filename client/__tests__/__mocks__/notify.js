@@ -1,7 +1,6 @@
 import notify from '../../actions/notify';
 
-jest.unmock('../../actions/notify');
-notify.success = jest.fn();
-notify.error = jest.fn();
+notify.success = jest.spyOn(notify, 'success');
+notify.error = jest.spyOn(notify, 'error');
 
 export default notify;

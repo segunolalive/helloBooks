@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import BooksTable from '../../../components/Library/BooksTable';
 import { mockStoreData } from '../../__mocks__/mockData';
 
+window.BOOK_IMAGE_FALLBACK = 'fallback';
 
 const props = {
   borrowBook: jest.fn(),

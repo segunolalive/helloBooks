@@ -61,6 +61,7 @@ describe('Admin Component', () => {
     };
     const wrapper = shallow(<Admin { ...methodProps } />);
     expect(wrapper.find('BookForm').props().book.title).toBe('');
+    expect(wrapper.find('BookForm').props().book.description).toBe('');
     expect(wrapper.find('BookForm').props().book.total).toBe(0);
   });
 
@@ -183,7 +184,7 @@ describe('Admin Component', () => {
       expect(wrapper.state().book.categoryId).toBe(0);
     });
 
-  it('should call handleFormSubmission on form submission for adding book',
+  it('should set error state if handleFormSubmission is called with invalid data',
     () => {
       const addBookProps = { ...props, location: { pathname: '/admin' } };
       const wrapper = shallow(<Admin {...addBookProps} />);
@@ -193,13 +194,38 @@ describe('Admin Component', () => {
       const event = {
         preventDefault: jest.fn(),
       };
-      expect(wrapper.state().book.bookFile).toBe('');
-
       wrapper.instance().handleFormSubmission(event);
       expect(handleFormSubmissionSpy).toHaveBeenCalledTimes(1);
-      expect(wrapper.state().book.bookFile).toBe('');
-      expect(wrapper.state().book.total).toBe(0);
+      expect(wrapper.state().errors.title).toBe('Book must have a title');
+      expect(wrapper.state().errors.authors)
+        .toBe('Book must have at least one author');
       expect(wrapper.state().book.categoryId).toBe(0);
+    });
+
+  it('should call handleFormSubmission on form submission for adding book',
+    () => {
+      const addBookProps = {
+        ...props,
+        book: { ...props.book, title: 'diffing algorithms' },
+        location: { pathname: '/admin' }
+      };
+      const wrapper = shallow(<Admin {...addBookProps} />);
+      wrapper.setState({
+        book: { ...wrapper.state().books, ...addBookProps.book }
+      });
+
+      const handleFormSubmissionSpy = jest.spyOn(
+        wrapper.instance(), 'handleFormSubmission'
+      );
+      const event = {
+        preventDefault: jest.fn(),
+      };
+      wrapper.instance().handleFormSubmission(event);
+      expect(handleFormSubmissionSpy).toHaveBeenCalledTimes(1);
+      expect(wrapper.state().book.total).toBe(10);
+      expect(wrapper.state().book.title).toBe('diffing algorithms');
+      expect(wrapper.state().book.cover)
+        .toBe('https://image/upload/cloudinary-stub/to2ila7jbe.jpg');
     });
 
   it('should call handleSelectCategory when a category is selected', () => {

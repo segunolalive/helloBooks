@@ -13,7 +13,8 @@ export default {
       .end();
   },
 
-  'user receives an error if username or password field is empty': (client) => {
+  'user receives an error if username or password field is empty':
+  (client) => {
     client
       .url('http://localhost:8080/login')
       .waitForElementVisible('body')

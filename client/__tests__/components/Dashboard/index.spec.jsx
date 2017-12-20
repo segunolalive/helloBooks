@@ -16,6 +16,8 @@ let props = {
   fetchBorrowedBooks: jest.fn(),
   returnBook: jest.fn(),
   readBook: jest.fn(),
+  suggestions: [],
+  getSuggestedBooks: jest.fn(),
   ...mockStoreData.authReducer,
   ...mockStoreData.bookReducer.borrowedBooks,
   fetchingBorrowedBooks: false
@@ -54,16 +56,16 @@ describe('Dashboard Component', () => {
     expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
   });
 
-  it("should call the handleReturnBook method", () => {
+  it('should call the handleReturnBook method', () => {
     const wrapper = shallow(<Dashboard {...props} />);
-    const handleReturnBookSpy = jest.spyOn(wrapper.instance(), "handleReturnBook");
+    const handleReturnBookSpy = jest.spyOn(wrapper.instance(), 'handleReturnBook');
     wrapper.instance().handleReturnBook(1);
     expect(handleReturnBookSpy).toHaveBeenCalledTimes(1);
   });
 
-  it("should call the readBook method", () => {
+  it('should call the readBook method', () => {
     const wrapper = shallow(<Dashboard {...props} />);
-    const readBookSpy = jest.spyOn(wrapper.instance(), "readBook");
+    const readBookSpy = jest.spyOn(wrapper.instance(), 'readBook');
     wrapper.instance().readBook(1);
     expect(readBookSpy).toHaveBeenCalledTimes(1);
   });

@@ -50,22 +50,22 @@ describe('user Actions', () => {
 
   describe('fetchHistory', () => {
     const { allBorrowed } = mockStoreData.transactionReducer;
-    it('dispatches FETCHING_HISTORY, GET_ALL_BORROWED and a success toast ' +
-      'on success', () => {
-      moxios.stubRequest('/api/v1/users/1/books', {
-        status: 200,
-        response: { books: allBorrowed }
+    it('dispatches FETCHING_HISTORY, GET_ALL_BORROWED and a success toast on success',
+      () => {
+        moxios.stubRequest('/api/v1/users/1/books', {
+          status: 200,
+          response: { books: allBorrowed }
+        });
+        const expectedActions = [
+          { type: actionTypes.FETCHING_HISTORY, status: true },
+          { type: actionTypes.FETCHING_HISTORY, status: false },
+          { type: actionTypes.GET_ALL_BORROWED, books: allBorrowed },
+        ];
+        const store = mockStore({});
+        return store.dispatch(fetchHistory(1)).then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
       });
-      const expectedActions = [
-        { type: actionTypes.FETCHING_HISTORY, status: true },
-        { type: actionTypes.FETCHING_HISTORY, status: false },
-        { type: actionTypes.GET_ALL_BORROWED, books: allBorrowed },
-      ];
-      const store = mockStore({});
-      return store.dispatch(fetchHistory(1)).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
-    });
 
     it('returns an error toast on failure', () => {
       moxios.stubRequest('/api/v1/users/1/books', {
@@ -87,42 +87,42 @@ describe('user Actions', () => {
 
   describe('fetchTransactionHistory', () => {
     const { transactions, pagination } = mockStoreData.transactionReducer;
-    it('dispatches FETCHING_HISTORY, GET_ALL_BORROWED  and ' +
-      'SET_TRANSACTIONS_PAGINATION on success', () => {
-      moxios.stubRequest('/api/v1/users/1/transactions', {
-        status: 200,
-        response: { notifications: transactions, metadata: pagination }
-      });
-      const expectedActions = [
-        { type: actionTypes.FETCHING_TRANSACTIONS, status: true },
-        { type: actionTypes.FETCHING_TRANSACTIONS, status: false },
-        { type: actionTypes.GET_TRANSACTION_HISTORY, transactions },
-        { type: actionTypes.SET_TRANSACTIONS_PAGINATION, pagination },
-      ];
-      const store = mockStore({});
-      return store.dispatch(fetchTransactionHistory(null, 1)).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
-    });
-
-    it('dispatches FETCHING_HISTORY, GET_ALL_BORROWED  and ' +
-      'SET_TRANSACTIONS_PAGINATION on success', () => {
-      moxios.stubRequest('/api/v1/users/1/transactions?offset=2&', {
-        status: 200,
-        response: { notifications: transactions, metadata: pagination }
-      });
-      const expectedActions = [
-        { type: actionTypes.FETCHING_TRANSACTIONS, status: true },
-        { type: actionTypes.FETCHING_TRANSACTIONS, status: false },
-        { type: actionTypes.GET_MORE_TRANSACTIONS, transactions },
-        { type: actionTypes.SET_TRANSACTIONS_PAGINATION, pagination },
-      ];
-      const store = mockStore({});
-      return store.dispatch(fetchTransactionHistory({ offset: 2 }, 1))
-        .then(() => {
+    it('dispatches FETCHING_HISTORY, GET_ALL_BORROWED  and SET_TRANSACTIONS_PAGINATION on success',
+      () => {
+        moxios.stubRequest('/api/v1/users/1/transactions', {
+          status: 200,
+          response: { notifications: transactions, metadata: pagination }
+        });
+        const expectedActions = [
+          { type: actionTypes.FETCHING_TRANSACTIONS, status: true },
+          { type: actionTypes.FETCHING_TRANSACTIONS, status: false },
+          { type: actionTypes.GET_TRANSACTION_HISTORY, transactions },
+          { type: actionTypes.SET_TRANSACTIONS_PAGINATION, pagination },
+        ];
+        const store = mockStore({});
+        return store.dispatch(fetchTransactionHistory(null, 1)).then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });
-    });
+      });
+
+    it('dispatches FETCHING_HISTORY, GET_ALL_BORROWED  and SET_TRANSACTIONS_PAGINATION on success',
+      () => {
+        moxios.stubRequest('/api/v1/users/1/transactions?offset=2&', {
+          status: 200,
+          response: { notifications: transactions, metadata: pagination }
+        });
+        const expectedActions = [
+          { type: actionTypes.FETCHING_TRANSACTIONS, status: true },
+          { type: actionTypes.FETCHING_TRANSACTIONS, status: false },
+          { type: actionTypes.GET_MORE_TRANSACTIONS, transactions },
+          { type: actionTypes.SET_TRANSACTIONS_PAGINATION, pagination },
+        ];
+        const store = mockStore({});
+        return store.dispatch(fetchTransactionHistory({ offset: 2 }, 1))
+          .then(() => {
+            expect(store.getActions()).toEqual(expectedActions);
+          });
+      });
 
     it('returns an error toast on failure', () => {
       moxios.stubRequest('/api/v1/users/1/transactions', {

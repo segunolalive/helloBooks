@@ -84,7 +84,7 @@ Then start the client by running `npm run start:client`.
 
 In another terminal window, run `npm run start:server:e2e` to start the application server in test-mode.
 
-In a third terminal window run `npm run e2e:server` to start the selenium server.
+In a third terminal window run `npm run e2e-server` to start the selenium server.
 
 In a fourth terminal window run `npm run test:e2e`
 
