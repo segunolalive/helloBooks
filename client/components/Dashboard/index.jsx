@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Col, Row } from 'react-materialize';
+import { Redirect } from 'react-router-dom';
 
 import Header from '../Header';
 import Borrowed from './Borrowed';
@@ -11,30 +12,25 @@ import SuggestedBooks from './SuggestedBooks';
 import { fetchBorrowedBooks,
   returnBook,
   getSuggestedBooks,
+  readBook,
 } from '../../actions/bookActions/borrowedBooks';
 import LoginRedirect from '../auth/LoginRedirect';
 
 
 /**
  * dashboard component
+ * 
  * @class Dashboard
+ * 
  * @extends {Component}
  */
 export class Dashboard extends Component {
-  /**
-   * Creates an instance of Dashboard.
-   * @param {object} props Object containing properties for dashboard
-   * @memberof Dashboard
-   */
-  constructor(props) {
-    super(props);
-    this.handleReturnBook = this.handleReturnBook.bind(this);
-    this.readBook = this.readBook.bind(this);
-  }
-
+  state = {}
   /**
    * lifecycle hook called when component is mounted to DOM
+   * 
    * @memberof Dashboard
+   * 
    * @returns {undefined} fetches borrowed books
    */
   componentDidMount() {
@@ -48,57 +44,67 @@ export class Dashboard extends Component {
    * handler for returning book
    *
    * @param {Integer} bookId book id
+   * 
    * @memberof Dashboard
-   * @returns {undefined}    calls return book api
+   * 
+   * @returns {undefined}    calls return book prop
    */
-  handleReturnBook(bookId) {
+  handleReturnBook = bookId =>
     this.props.returnBook(this.props.user.id, bookId);
-  }
 
   /**
    * handler for reading book
-   * @param {any} id book id
+   * 
+   * @param {string} bookUrl
+   * 
    * @memberof Dashboard
-   * @returns {any} book
+   * 
+   * @returns {undefined} calls readBook prop
    */
-  readBook(id) {
-    // TODO: implement readBook
+  readBook = (bookUrl) => {
+    this.props.readBook(bookUrl);
+    this.setState(() => ({ reading: true }));
   }
 
-  /**
-   * renders component to DOM
-   * @returns {JSX} JSX representation of component
-   * @memberof Dashboard
-   */
-  render() {
+  renderPage = () => {
     const fullname = this.props.user && (
       this.props.user.firstName || this.props.user.lastName
     ) ?
       `${this.props.user.firstName} ${this.props.user.lastName}` : null;
+    return this.state.reading ? <Redirect to="/read" /> :
+      <div>
+        <Header
+          activeLink='dashboard'
+        />
+        <main id="dashboard">
+          <Row>
+            <Col s={12}>
+              <ProfileInfo
+                name={fullname}
+              />
+              <Borrowed
+                borrowedBooks={this.props.borrowedBooks}
+                readBook={this.readBook}
+                returnBook={this.handleReturnBook}
+                fetchingBorrowedBooks={this.props.fetchingBorrowedBooks}
+              />
+              <SuggestedBooks suggestedBooks={this.props.suggestedBooks} />
+            </Col>
+          </Row>
+        </main>
+      </div>;
+  }
+  /**
+   * renders component to DOM
+   * 
+   * @returns {JSX} JSX representation of component
+   * 
+   * @memberof Dashboard
+   */
+  render() {
     return (
       this.props.isLoggedIn !== true ?
-        <LoginRedirect /> :
-        <div>
-          <Header
-            activeLink='dashboard'
-          />
-          <main id="dashboard">
-            <Row>
-              <Col s={12}>
-                <ProfileInfo
-                  name={fullname}
-                />
-                <Borrowed
-                  borrowedBooks={this.props.borrowedBooks}
-                  readBook={this.readBook}
-                  returnBook={this.handleReturnBook}
-                  fetchingBorrowedBooks={this.props.fetchingBorrowedBooks}
-                />
-                <SuggestedBooks suggestedBooks={this.props.suggestedBooks}/>
-              </Col>
-            </Row>
-          </main>
-        </div>
+        <LoginRedirect /> : this.renderPage()
     );
   }
 }
@@ -110,6 +116,7 @@ Dashboard.propTypes = {
   fetchBorrowedBooks: PropTypes.func.isRequired,
   fetchingBorrowedBooks: PropTypes.bool.isRequired,
   returnBook: PropTypes.func.isRequired,
+  readBook: PropTypes.func.isRequired,
   suggestedBooks: PropTypes.array,
   getSuggestedBooks: PropTypes.func.isRequired,
 };
@@ -124,5 +131,5 @@ const mapStateToProps = ({ authReducer, bookReducer }) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchBorrowedBooks, returnBook, getSuggestedBooks }
+  { fetchBorrowedBooks, returnBook, getSuggestedBooks, readBook }
 )(Dashboard);

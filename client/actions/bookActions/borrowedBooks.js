@@ -2,6 +2,7 @@ import axios from 'axios';
 import actionTypes from '../actionTypes';
 import API from '../api';
 import notify from '../notify';
+import reportNetworkError from '../reportNetworkError';
 
 
 /**
@@ -38,7 +39,7 @@ export const fetchBorrowedBooks = id => (dispatch) => {
     })
     .catch((error) => {
       dispatch(fetchingBorrowedBooks(false));
-      notify.error(error.response.data.message);
+      reportNetworkError(error);
     });
 };
 
@@ -53,7 +54,7 @@ export const fetchBorrowingHistory = id => dispatch => (
     .then((response) => {
       dispatch(getBorrowedBooksAction(response.data.books));
     })
-    .catch(error => notify.error(error.response.data.message))
+    .catch(error => reportNetworkError(error))
 );
 
 /**
@@ -71,7 +72,7 @@ export const returnBookAction = id => ({
 * @param {object} userId - user id
 * @param {object} bookId - book id
 *
-* @returns {Array}       - fetches array of unreturned borrowed books
+* @returns {Promise}     - resolves with an array of unreturned borrowed books
 */
 export const returnBook = (userId, bookId) => dispatch => (
   axios.put(`${API}/users/${userId}/books`, { id: bookId })
@@ -80,9 +81,14 @@ export const returnBook = (userId, bookId) => dispatch => (
         notify.success(response.data.message);
         return dispatch(returnBookAction(bookId));
       })
-    .catch(error => notify.error(error.response.data.message))
+    .catch(error => reportNetworkError(error))
 );
 
+/**
+ * @param {Array}    suggestions
+*
+* @returns {object}  action object
+*/
 export const suggestedBooks = suggestions => ({
   type: actionTypes.GET_BOOK_SUGGESTIONS,
   suggestions
@@ -91,10 +97,29 @@ export const suggestedBooks = suggestions => ({
 /**
  * fetches book suggestions
 *
-* @returns {Promise}  - resolves with book suggestions
+* @returns {Promise}  - resolves with an array ofbook suggestions
 */
 export const getSuggestedBooks = () => dispatch => (
   axios.get(`${API}/books/suggestions`)
     .then(response => dispatch(suggestedBooks(response.data.suggestions)))
-    .catch(error => notify.error(error.response.data.message))
+    .catch(error => reportNetworkError(error))
+);
+
+/**
+ * @param {string}    url
+*
+* @returns {object}   action object
+*/
+export const setBookToRead = url => ({
+  type: actionTypes.SET_BOOK_TO_READ,
+  url
+});
+
+/**
+ * @param {string}     url
+*
+* @returns {Function}  functions that dispatches an action
+*/
+export const readBook = url => dispatch => (
+  dispatch(setBookToRead(url))
 );
