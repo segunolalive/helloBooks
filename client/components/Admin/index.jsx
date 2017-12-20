@@ -15,21 +15,25 @@ import { getBookCategories } from '../../actions/bookActions/library';
 import Header from '../Header';
 import BookForm from './BookForm';
 import Notifications from './Notifications';
-import AddCategoryForm from './CategoryForm';
+import AddCategoryForm from './AddCategoryForm';
 import Loading from '../common/Loading';
 
 import { hasMore, getOffset } from '../../utils/paginationUtils';
+import validateBookData from '../../utils/validation/validateBookData';
 
 /**
  * adds or edits book
  *
  * @class Admin
+ *
  * @extends {Component}
  */
 export class Admin extends Component {
   /**
    * Creates an instance of AddBook.
+   *
    * @memberof Admin
+   *
    * @param {object} props
    */
   constructor(props) {
@@ -53,19 +57,13 @@ export class Admin extends Component {
       cover: '',
       bookFile: '',
     };
-    this.handleFormSubmission = this.handleFormSubmission.bind(this);
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleSelectCategory = this.handleSelectCategory.bind(this);
-    this.handleAddCategory = this.handleAddCategory.bind(this);
-    this.handleFetchNotifications = this.handleFetchNotifications.bind(this);
-    this.handleImageChange = this.handleImageChange.bind(this);
-    this.handleFileChange = this.handleFileChange.bind(this);
   }
 
   /**
    * lifecycle methods called after component mounts the DOM
+   *
    * @memberof Admin
-   * 
+   *
    * @returns {Promise} fetches book categories and admin notifications
    */
   componentDidMount() {
@@ -77,7 +75,9 @@ export class Admin extends Component {
 
   /**
    * called when component receives new propTypes
+   *
    * @param  {Object} nextProps
+   *
    * @return {undefined}        calls set setState
    */
   componentWillReceiveProps(nextProps) {
@@ -90,12 +90,17 @@ export class Admin extends Component {
    * form submission handler
    *
    * @param {object} event
+   *
    * @memberof Admin
-   * 
+   *
    * @returns {undefined} submits form
    */
-  handleFormSubmission(event) {
+  handleFormSubmission = (event) => {
     event.preventDefault();
+    const { errors, isValid } = validateBookData(this.state);
+    if (!isValid) {
+      return this.setState({ errors: { ...this.state.errors, ...errors } });
+    }
     if (this.shouldEdit) {
       this.props.editBook(this.props.book.id, this.state.book)
         .then(() => this.props.history.push('/library'));
@@ -121,11 +126,12 @@ export class Admin extends Component {
    * updates component state when form values (except select field) change
    *
    * @param {object} event
+   *
    * @memberof Admin
-   * 
+   *
    * @returns {undefined} calls setState
    */
-  handleFieldChange(event) {
+  handleFieldChange = (event) => {
     event.preventDefault();
     const formField = event.target.name;
     const data = { ...this.state.book };
@@ -135,11 +141,12 @@ export class Admin extends Component {
 
   /**
    * handles image Upload
+   *
    * @param  {object} event
-   * 
+   *
    * @return {Function}    calls sets state
    */
-  handleImageChange(event) {
+  handleImageChange = (event) => {
     event.preventDefault();
     const cover = event.target.files[0];
     this.setState(() => ({ cover, book: { ...this.state.book, cover: '' } }));
@@ -164,11 +171,12 @@ export class Admin extends Component {
 
   /**
    * handles book file upload
+   *
    * @param  {Object} event
-   * 
+   *
    * @return {Function}     calls setState
    */
-  handleFileChange(event) {
+  handleFileChange = (event) => {
     event.preventDefault();
     const bookFile = event.target.files[0];
     this.setState(() => ({ bookFile }));
@@ -199,39 +207,39 @@ export class Admin extends Component {
    * handles selection of book category
    *
    * @param {object} event
+   *
    * @memberof Admin
-   * 
+   *
    * @returns {Function} calls setState
    */
-  handleSelectCategory(event) {
-    return this.setState(() => ({
-      book: { ...this.state.book, categoryId: event.target.value }
-    }));
-  }
+  handleSelectCategory = event => this.setState(() => (
+    { book: { ...this.state.book, categoryId: event.target.value } })
+  )
 
   /**
    * handles adding a new category
    *
    * @memberof Admin
+   *
    * @param {object} event
-   * 
+   *
    * @returns {undefined} updates list of categories
    */
-  handleAddCategory(event) {
+  handleAddCategory = (event) => {
     event.preventDefault();
     const category = event.target.category.value.trim();
     if (category) {
       this.props.addBookCategory(category);
       event.target.category.value = '';
     }
-    this.props.getBookCategories();
   }
 
   /**
    * handles fetching of Notifications
+   *
    * @return {thunk} returns a redux thunk
    */
-  handleFetchNotifications() {
+  handleFetchNotifications = () => {
     const { pageSize, pageNumber } = this.props.pagination;
     const offset = getOffset.bind(this)(pageNumber, pageSize);
     return this.props.fetchNotifications({ offset, limit: 6 });
@@ -239,6 +247,7 @@ export class Admin extends Component {
 
   /**
    * renders component to DOM
+   *
    * @memberof Admin
    *
    * @returns {JSX} JSX representation of component
@@ -250,12 +259,14 @@ export class Admin extends Component {
     const bookFileUploaded = this.state.bookFile === null &&
       this.state.book.bookFile;
     const { pageCount, pageNumber } = this.props.pagination;
+
     const reachedEnd = pageNumber >= pageCount;
-    const endMessage = reachedEnd ?
+    const endMessage = !this.props.fetchingNotifications && reachedEnd ?
       <p className="center" style={{ fontWeight: 900, color: '#ffffff' }}>
         End of notifications
       </p> :
       <Loading text="fetching more notifications . . ." />;
+
     const text = this.shouldEdit ?
       'Edit Book Information' :
       'Add Book To Library';
@@ -279,11 +290,10 @@ export class Admin extends Component {
                       onSubmit={this.handleFormSubmission}
                       imageUploading={imageUploading}
                       imageUploaded={imageUploaded}
-                      imageError={this.state.errors.image}
                       bookFileUploading={bookFileUploading}
                       bookFileUploaded={bookFileUploaded}
                       onBookFileChange={this.handleFileChange}
-                      bookFileError={this.state.errors.bookFile}
+                      errors={this.state.errors}
                     />
                   </div>
                   <div className="col s12 admin-form center"
@@ -292,7 +302,8 @@ export class Admin extends Component {
                   </div>
                 </Col>
                 <div className="col s12 m5 offset-m1 admin-form"
-                  id="notifications-section">
+                  id="notifications-section"
+                >
                   <InfiniteScroll
                     pageStart={0}
                     loadMore={this.handleFetchNotifications}
@@ -321,6 +332,7 @@ Admin.propTypes = {
   editBook: PropTypes.func.isRequired,
   getBookCategories: PropTypes.func.isRequired,
   fetchNotifications: PropTypes.func.isRequired,
+  fetchingNotifications: PropTypes.bool.isRequired,
   addBookCategory: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
@@ -338,6 +350,7 @@ const mapStateToProps = ({
   categories: bookReducer.categories,
   notifications: notificationReducer.notifications,
   pagination: notificationReducer.pagination,
+  fetchingNotifications: notificationReducer.fetchingNotifications,
 });
 
 const mapDispatchToProps = {
