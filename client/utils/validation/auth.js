@@ -1,6 +1,8 @@
 /**
  * tells if an object or array is empty
+ *
  * @param {Object|Array} item
+ *
  * @returns {Bool}       boolean
  */
 export const isEmpty = (item) => {
@@ -14,11 +16,13 @@ export const isEmpty = (item) => {
 };
 
 
-const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|z(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|z(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}]),|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 /**
  * validates sign up
+ *
  * @param {Object} state
+ *
  * @returns {Object}     object containing validity status
  */
 export const validateSignUp = (state) => {
@@ -52,7 +56,9 @@ export const validateSignUp = (state) => {
 
 /**
  * validates login
+ * 
  * @param {Object} state
+ *
  * @returns {Object}     object containing validity status
  */
 export const validateLogin = (state) => {
@@ -62,6 +68,19 @@ export const validateLogin = (state) => {
   }
   if (!state.password.trim()) {
     errors.password = 'Password is required';
+  }
+  return {
+    errors,
+    isValid: isEmpty(errors),
+  };
+};
+
+export const validateForgotPassword = (state) => {
+  const errors = {};
+  if (!state.email.trim()) {
+    errors.email = 'Email is required';
+  } else if (!emailRegex.test(state.email.trim())) {
+    errors.email = 'Invalid email';
   }
   return {
     errors,
