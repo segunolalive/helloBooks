@@ -4,10 +4,10 @@ import { maximumBorrrow } from '../helpers/borrowingLimits';
 
 /**
  * checks if a user can borrow more books
- * 
- * @param {integer} numberBorrowed 
- * @param {string} membershipType 
- * 
+ *
+ * @param {integer} numberBorrowed
+ * @param {string} membershipType
+ *
  * @returns {boolean} true or false
  */
 export const canBorrowBook = (numberBorrowed, membershipType) => {
@@ -29,7 +29,7 @@ export const canBorrowBook = (numberBorrowed, membershipType) => {
  * @param  {Object}            req  express http request object
  * @param  {Object}            res  express http response object
  * @param  {Function}          next calls the next middleware in the stack
- * 
+ *
  * @return {Function|Object}   http response object or calls the next
  * middleware function
  */

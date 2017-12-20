@@ -15,7 +15,7 @@ import { fetchBooks,
   filterBooksByCategory } from '../../actions/bookActions/library';
 import { viewBookDetails } from '../../actions/bookActions/viewBook';
 import actionTypes from '../../actions/actionTypes';
-import notify from '../__mocks__/notify';
+import Notify from '../__mocks__/Notify';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -318,7 +318,7 @@ describe('Book Actions', () => {
       });
     });
 
-    it('it dispatches no actions but calls notify.error on failure', () => {
+    it('it dispatches no actions but calls Notify.error on failure', () => {
       moxios.stubRequest('/api/v1/books/suggestions', {
         status: 500,
         response: { message: 'failure' }
@@ -327,7 +327,7 @@ describe('Book Actions', () => {
       const store = mockStore({});
       return store.dispatch(getSuggestedBooks()).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.error).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
       });
     });
   });

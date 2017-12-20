@@ -10,7 +10,7 @@ import Loading from '../common/Loading';
  * transaction history
  *
  * @param {Object} props
- * 
+ *
  * @returns {JSX}        JSX representaion of component
  */
 const TransactionHistory = (props) => {

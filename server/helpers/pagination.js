@@ -1,4 +1,4 @@
-import constants from '../constants';
+import Constants from '../Constants';
 
 /**
  * extracts query from request object
@@ -30,11 +30,11 @@ export const getQuery = (req) => {
  * extracts limit and offset options from request query
  *
  * @param {Object} req
- * 
+ *
  * @returns {Object}   options for paginating database query
  */
 export const getOptions = (req) => {
-  const { DEFAULT_LIMIT: limit, DEFAULT_OFFSET: offset } = constants;
+  const { DEFAULT_LIMIT: limit, DEFAULT_OFFSET: offset } = Constants;
   const options = { limit, offset };
   options.limit = req.query.limit ? req.query.limit : options.limit;
   options.offset = req.query.offset ? req.query.offset : options.offset;
@@ -43,7 +43,7 @@ export const getOptions = (req) => {
 
 /**
  * formats pagination metadata
- * 
+ *
  * @param {integer} total
  * @param {integer} pageSize
  * @param {integer} offset

@@ -1,6 +1,6 @@
 /**
  * checks if user is admin
- * 
+ *
  * @param  {object}   req     HTTP request object
  * @param  {object}   res     HTTP response object
  * @param  {Function} next    calls the next middleware Function

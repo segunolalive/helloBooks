@@ -1,7 +1,7 @@
-import notify from './notify';
+import Notify from './Notify';
 
 const reportNetworkError = error => (error.response ?
-  notify.error(error.response.data.message) :
-  notify.error(`${error.message}. It appears you're offline`));
+  Notify.error(error.response.data.message) :
+  Notify.error(`${error.message}. It appears you're offline`));
 
 export default reportNetworkError;

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import notify from '../../actions/notify';
+import Notify from '../../actions/Notify';
 
 /**
  * redirects users to login page if unauthenticated
- * 
+ *
  * @returns {JSX}  react-router dom Redirect component
  */
 const LoginRedirect = () => {
-  notify.error('Login to proceed');
+  Notify.error('Login to proceed');
   return (<Redirect to='/login'/>);
 };
 

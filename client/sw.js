@@ -32,7 +32,9 @@ self.addEventListener('fetch', (event) => {
           .then((response) => {
             const fetchPromise = fetch(event.request)
               .then((networkResponse) => {
-                cache.put(event.request, networkResponse.clone());
+                if (event.request.method === 'GET') {
+                  cache.put(event.request, networkResponse.clone());
+                }
                 return networkResponse;
               });
             return response || fetchPromise;

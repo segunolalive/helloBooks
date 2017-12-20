@@ -7,16 +7,16 @@ import toggleSidebar from './toggleSidebar';
 
 /**
  * Component for header and navigation
- * 
+ *
  * @class Header
- * 
+ *
  * @extends {Component}
  */
 export class HeaderComponent extends Component {
   /**
    * component lifecycle hook called when component mounts the DOM
    * @memberof Header
-   * 
+   *
    * @return {undefined} - initializes DOM manipulation utility(toggleSidebar)
    */
   componentDidMount() {
@@ -25,9 +25,9 @@ export class HeaderComponent extends Component {
 
   /**
    * renders JSX representation of component
-   * 
+   *
    * @memberof Header
-   * 
+   *
    * @return {JSX} JSX reoprresentation of header and navigation
    */
   render() {

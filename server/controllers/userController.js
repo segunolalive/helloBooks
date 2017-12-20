@@ -8,16 +8,16 @@ import { transporter, mailOptions } from '../config/mail';
 dotenv.config();
 
 
-const userController = {
+const UserController = {
   /**
    * Create new user account.
    * It sends an object containing a success boolean
    * and a json web token or error
    *
    * @public
-   * 
+   *
    * @method
-   * 
+   *
    * @param  {object}   req  - express http request object
    * @param  {object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
@@ -132,7 +132,7 @@ const userController = {
     return User.findOne({ where: { username } }).then((user) => {
       if (!user) {
         if (req.body.authId) {
-          return userController.createUser(req, res);
+          return UserController.createUser(req, res);
         }
         return res.status(403).send({
           message: 'user does not exist',
@@ -263,4 +263,4 @@ const userController = {
 };
 
 
-export default userController;
+export default UserController;

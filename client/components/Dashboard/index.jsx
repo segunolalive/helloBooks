@@ -19,18 +19,18 @@ import LoginRedirect from '../auth/LoginRedirect';
 
 /**
  * dashboard component
- * 
+ *
  * @class Dashboard
- * 
+ *
  * @extends {Component}
  */
 export class Dashboard extends Component {
   state = {}
   /**
    * lifecycle hook called when component is mounted to DOM
-   * 
+   *
    * @memberof Dashboard
-   * 
+   *
    * @returns {undefined} fetches borrowed books
    */
   componentDidMount() {
@@ -44,9 +44,9 @@ export class Dashboard extends Component {
    * handler for returning book
    *
    * @param {Integer} bookId book id
-   * 
+   *
    * @memberof Dashboard
-   * 
+   *
    * @returns {undefined}    calls return book prop
    */
   handleReturnBook = bookId =>
@@ -54,11 +54,11 @@ export class Dashboard extends Component {
 
   /**
    * handler for reading book
-   * 
+   *
    * @param {string} bookUrl
-   * 
+   *
    * @memberof Dashboard
-   * 
+   *
    * @returns {undefined} calls readBook prop
    */
   readBook = (bookUrl) => {
@@ -96,9 +96,9 @@ export class Dashboard extends Component {
   }
   /**
    * renders component to DOM
-   * 
+   *
    * @returns {JSX} JSX representation of component
-   * 
+   *
    * @memberof Dashboard
    */
   render() {

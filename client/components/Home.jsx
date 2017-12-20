@@ -8,7 +8,7 @@ import Header from './Header';
 
 /**
  * Landing page
- * 
+ *
  * @param {Object} props Object containing isLoggedIn key
  *
  * @returns {JSX}        JSX representation of the the landing page

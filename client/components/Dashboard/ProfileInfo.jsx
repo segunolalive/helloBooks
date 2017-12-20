@@ -6,9 +6,9 @@ import imageFallback from '../../static/profile_image.png';
 
 /**
  * displays user profile data
- * 
+ *
  * @param {Object} props Object containing user data
- * 
+ *
  * @returns {JSX}        JSX representation of user profile
  */
 const ProfileInfo = props => (

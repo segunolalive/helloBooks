@@ -7,9 +7,9 @@ import Loading from '../common/Loading';
 
 /**
  * renders forgot password form
- * 
- * @param {object} props 
- * 
+ *
+ * @param {object} props
+ *
  * @returns {JSX}  JSX representation of commponent
  */
 const ForgotPasswordForm = props => (

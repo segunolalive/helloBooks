@@ -8,7 +8,7 @@ import actionTypes from '../../actions/actionTypes';
 import updateProfile from '../../actions/updateProfile';
 import { fetchHistory,
   fetchTransactionHistory } from '../../actions/history';
-import notify from '../__mocks__/notify';
+import Notify from '../__mocks__/Notify';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -29,7 +29,7 @@ describe('user Actions', () => {
       const store = mockStore({});
       return store.dispatch(updateProfile({ limit: 2 })).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.success).toHaveBeenCalled();
+        expect(Notify.success).toHaveBeenCalled();
       });
     });
 
@@ -43,7 +43,7 @@ describe('user Actions', () => {
       const store = mockStore({});
       return store.dispatch(updateProfile({})).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.error).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
       });
     });
   });
@@ -79,7 +79,7 @@ describe('user Actions', () => {
       const store = mockStore({});
       return store.dispatch(fetchHistory(1)).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.error).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
       });
     });
   });
@@ -136,7 +136,7 @@ describe('user Actions', () => {
       const store = mockStore({});
       return store.dispatch(fetchTransactionHistory(null, 1)).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
-        expect(notify.error).toHaveBeenCalled();
+        expect(Notify.error).toHaveBeenCalled();
       });
     });
   });

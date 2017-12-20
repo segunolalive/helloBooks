@@ -11,7 +11,7 @@ import LoginRedirect from '../auth/LoginRedirect';
 
 /**
  * Component to update user profile
- * 
+ *
  * @class UpdateProfile
  */
 export class UpdateProfile extends Component {
@@ -24,9 +24,9 @@ export class UpdateProfile extends Component {
 
   /**
    * updates component state with changes in the form fields
-   * 
+   *
    * @param  {any} event    DOM change event
-   * 
+   *
    * @return {Undefined }   updates component state
    */
   handleChange = (event) => {
@@ -39,9 +39,9 @@ export class UpdateProfile extends Component {
 
   /**
    * handles form submission
-   * 
+   *
    * @param {Object} event DOM onSubmit event
-   * 
+   *
    * @return {undefined}   sends a network request and sets state
    */
   handleSubmit = (event) => {
@@ -52,7 +52,7 @@ export class UpdateProfile extends Component {
 
   /**
    * class method that renders a component to the DOM
-   * 
+   *
    * @return {Object} JSX element
    */
   render() {

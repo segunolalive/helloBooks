@@ -4,7 +4,7 @@ import { getOptions, paginate } from '../helpers/pagination';
 
 /**
  * fetch all notifications for admin
- * 
+ *
  * @param  {object} req             - express http request object
  * @param  {object} res             - express http response object
  * @param  {Object} options         - optional arguement with keys history and

@@ -6,7 +6,7 @@ import requestImageUrl from '../../utils/requestImageUrl';
 
 /**
  * Table of borrowed books
- * 
+ *
  * @param {Object} props props object containing books
  *
  * @returns {JSX}        JSX representation of Books table
