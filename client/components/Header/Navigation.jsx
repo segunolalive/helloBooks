@@ -4,7 +4,9 @@ import { NavLink } from 'react-router-dom';
 
 /**
  * navigation links
+ * 
  * @param {Object} props properties that define the navigation links
+ * 
  * @returns {JSX}        JSX representation of navigation  
  */
 const Navigation = (props) => {

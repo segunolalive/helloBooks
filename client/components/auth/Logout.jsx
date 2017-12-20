@@ -8,14 +8,17 @@ import notify from '../../actions/notify';
 
 /**
  * handles logging a user out
+ *
  * @class Logout
+ *
  * @extends {Component}
  */
 export class Logout extends Component {
   /**
-   * [componentDidMount description]
+   * lifecycle method called on mounting the DOM
    * @memberof Logout
-   * @return {[type]} [description]
+   *
+   * @return {undefined} makes network requests
    */
   componentDidMount() {
     notify.success('Successfully logged out');
@@ -24,7 +27,9 @@ export class Logout extends Component {
   }
   /**
    * renders component to DOM
+   *
    * @memberof Logout
+   *
    * @return {JSX} JSX reprresentation of DOM
    */
   render() {

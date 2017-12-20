@@ -1,5 +1,6 @@
 /**
    * validates limits and offset
+   * 
    * @param  {Object}   req    express http object
    * @param  {Object}   res    express http object
    * @param  {Function} next   calls the next middleware function

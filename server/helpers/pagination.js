@@ -2,7 +2,9 @@ import constants from '../constants';
 
 /**
  * extracts query from request object
+ *
  * @param {Object} req
+ *
  * @returns {Object}   condition with which to query database
  */
 export const getQuery = (req) => {
@@ -26,7 +28,9 @@ export const getQuery = (req) => {
 
 /**
  * extracts limit and offset options from request query
+ *
  * @param {Object} req
+ * 
  * @returns {Object}   options for paginating database query
  */
 export const getOptions = (req) => {
@@ -39,10 +43,11 @@ export const getOptions = (req) => {
 
 /**
  * formats pagination metadata
- * @param {integer} total 
- * @param {integer} pageSize 
- * @param {integer} offset 
  * 
+ * @param {integer} total
+ * @param {integer} pageSize
+ * @param {integer} offset
+ *
  * @returns {Object}       pagination metadata
  */
 export const paginate = (total, pageSize, offset) => ({

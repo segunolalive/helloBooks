@@ -39,6 +39,9 @@ const BookForm = (props) => {
             placeholder="Book Title"
             onChange={event => props.onChange(event)}
           />
+          <span className="red-text">
+            <small>{props.errors.title}</small>
+          </span>
         </div>
         <div className="input-field">
           <input
@@ -48,6 +51,9 @@ const BookForm = (props) => {
             placeholder="Authors (comma separated for multiple)"
             onChange={event => props.onChange(event)}
           />
+          <span className="red-text">
+            <small>{props.errors.authors}</small>
+          </span>
         </div>
         <div className="input-field">
           <textarea name="description"
@@ -110,7 +116,7 @@ const BookForm = (props) => {
                 <img src={requestImageUrl(props.book.cover, { width: 100 })} />
               }
               <span className="red-text">
-                <small>{props.imageError}</small>
+                <small>{props.errors.image}</small>
               </span>
             </div>
           </div>
@@ -153,7 +159,7 @@ const BookForm = (props) => {
                   />
                 </span>}
               <span className="red-text">
-                <small>{props.bookFileError}</small>
+                <small>{props.errors.bookFile}</small>
               </span>
             </div>
           </div>
@@ -181,11 +187,10 @@ BookForm.propTypes = {
   onBookConverChange: PropTypes.func.isRequired,
   imageUploading: PropTypes.bool,
   imageUploaded: PropTypes.bool,
-  imageError: PropTypes.string,
   bookFileUploading: PropTypes.bool,
   bookFileUploaded: PropTypes.bool,
   onBookFileChange: PropTypes.func.isRequired,
-  bookFileError: PropTypes.string,
+  errors: PropTypes.object.isRequired,
 };
 
 export default BookForm;

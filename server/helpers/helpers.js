@@ -6,7 +6,9 @@ import jwt from 'jsonwebtoken';
 
 /**
  * Hashes the password of a given user
+ *
  * @param  {Object} user object
+ *
  * @return {Object} user object with hashed password
  */
 export const hashPassword = (user) => {
@@ -18,8 +20,10 @@ export const hashPassword = (user) => {
 
 /**
  * signs a jsonwebtoken using credentials provided
+ * 
  * @param  {Object} options           object of key values to sign jsonwebtoken
  * @param  {String} [expiresIn='24h'] expiration time
+ *
  * @return {String}                   jsonwebtoken
  */
 export const getJWT = (options, expiresIn = '24h') =>

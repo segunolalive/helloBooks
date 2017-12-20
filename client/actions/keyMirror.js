@@ -1,8 +1,11 @@
 /**
  * converts an array to Object with array items as keys and values
+ *
  * @example ['books'] becomes { books: 'books' }
+ *
  * @param  {Array|Object} keys  array of keys or object with required keys
- * @return {Object}      Object with keys and values mirrored
+ * 
+ * @returns {Object}      Object with keys and values mirrored
  */
 const keyMirror = (keys) => {
   keys = Array.isArray(keys) ? keys : Object.keys(keys);

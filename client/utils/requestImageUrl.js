@@ -1,8 +1,9 @@
 /**
  * transforms image url with width and height parameters
+ * 
  * @param {String} url
  * @param {Object} options
- * 
+ *
  * @returns {String} new image url
  */
 export default (url, options) => {

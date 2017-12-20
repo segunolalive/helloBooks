@@ -12,7 +12,9 @@ import LoginRedirect from '../auth/LoginRedirect';
 
 /**
  * component for borrowing hisstory
+ *
  * @class History
+ *
  * @extends {Component}
  */
 export class History extends Component {
@@ -31,6 +33,7 @@ export class History extends Component {
 
   /**
    * renders  component to DOM
+   * 
    * @return {JSX} JSX
    */
   render() {

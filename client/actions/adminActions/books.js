@@ -2,7 +2,19 @@ import axios from 'axios';
 import actionTypes from '../actionTypes';
 import API from '../api';
 import notify from '../notify';
+import reportNetworkError from '../reportNetworkError';
 
+/**
+ * action creator for editing book
+ *
+ * @param  {object} book
+ *
+ * @return {object}     action object
+ */
+export const editBookAction = book => ({
+  type: actionTypes.EDIT_BOOK_INFO,
+  book,
+});
 
 /**
  * edit book Detail
@@ -12,13 +24,26 @@ import notify from '../notify';
  *
  * @return {object}      dispatches an action to the redux store
  */
-export const editBook = (id, data) => () => (
+export const editBook = (id, data) => dispatch => (
   axios.put(`${API}/books/${id}`, data)
     .then((response) => {
       notify.success(response.data.message);
+      return dispatch(editBookAction(response.data.book));
     })
-    .catch(error => notify.error(error.response.data.message))
+    .catch(error => reportNetworkError(error))
 );
+
+/**
+ * action creator for adding new book
+ *
+ * @param  {object} book
+ *
+ * @return {object}     action object
+ */
+export const createBook = book => ({
+  type: actionTypes.CREATE_BOOK,
+  book,
+});
 
 
 /**
@@ -28,10 +53,13 @@ export const editBook = (id, data) => () => (
  *
  * @return {Promise}      resolves with success message
  */
-export const addBook = data => () => (
+export const addBook = data => dispatch => (
   axios.post(`${API}/books`, data)
-    .then(response => notify.success(response.data.message))
-    .catch(error => notify.error(error.response.data.message))
+    .then((response) => {
+      notify.success(response.data.message);
+      dispatch(createBook(response.data.book));
+    })
+    .catch(error => reportNetworkError(error))
 );
 
 
@@ -62,7 +90,7 @@ export const deleteBook = bookId => dispatch => (
       notify.success(response.data.message);
       return response;
     })
-    .catch(error => notify.error(error.response.data.message))
+    .catch(error => reportNetworkError(error))
 );
 
 /**
@@ -77,6 +105,17 @@ export const addCategory = category => ({
   category,
 });
 
+/**
+ * action creator for adding book category
+ *
+ * @param  {string} message
+ *
+ * @return {object}     action object
+ */
+export const addCategoryFailure = message => ({
+  type: actionTypes.ADD_BOOK_CATEGORY_FAILURE,
+  message,
+});
 
 /**
  * addds a new book category
@@ -91,5 +130,8 @@ export const addBookCategory = category => dispatch => (
       dispatch(addCategory(response.data.category));
       notify.success(response.data.message);
     })
-    .catch(error => notify.error(error.response.data.message))
+    .catch((error) => {
+      dispatch(addCategoryFailure(error.response.data.message));
+      reportNetworkError(error);
+    })
 );

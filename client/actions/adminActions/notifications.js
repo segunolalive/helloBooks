@@ -2,21 +2,35 @@ import axios from 'axios';
 
 import actionTypes from '../actionTypes';
 import API from '../api';
-import notify from '../notify';
 import queryStringFromObject from '../../utils/queryStringFromObject';
+import reportNetworkError from '../reportNetworkError';
 
 
+/**
+ * @param  {object} notifications
+ * 
+ * @return {Object}      action object
+ */
 export const adminNotifications = notifications => ({
   type: actionTypes.GET_ADMIN_NOTIFICATIONS,
   notifications,
 });
 
+/**
+ * @param  {Array} notifications
+ * 
+ * @return {Object}      action object
+ */
 export const moreAdminNotifications = notifications => ({
   type: actionTypes.GET_MORE_ADMIN_NOTIFICATIONS,
   notifications,
 });
 
-
+/**
+ * @param  {object} pagination
+ * 
+ * @return {Object}      action object
+ */
 export const setPagination = pagination => ({
   type: actionTypes.SET_NOTICATIONS_PAGINATION,
   pagination,
@@ -24,6 +38,7 @@ export const setPagination = pagination => ({
 
 /**
  * @param  {Bool} status
+ * 
  * @return {Object}      action object
  */
 export const fetchingNotifications = status => ({
@@ -34,7 +49,9 @@ export const fetchingNotifications = status => ({
 
 /**
  * get admin notifications from server
+ * 
  * @param {object} options
+ * 
  * @return {Function} dispatches an action creator
  */
 export const fetchNotifications = options => (dispatch) => {
@@ -50,6 +67,6 @@ export const fetchNotifications = options => (dispatch) => {
     })
     .catch((error) => {
       dispatch(fetchingNotifications(false));
-      return notify.error(error.response.data.message);
+      reportNetworkError(error);
     });
 };

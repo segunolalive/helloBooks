@@ -4,23 +4,25 @@ import PropTypes from 'prop-types';
 
 /**
  * displays a search Input
+ *
  * @param {Object} props react props
- * @returns {JSX} JSX element (search form)
+ *
+ * @returns {JSX} JSX representation of component
  */
 const Search = props => (
   <div className={`${props.className} z-depth-3 bottom-10 search-wrapper`}>
-    <form onSubmit={e => props.onSubmit(e)}>
+    <form onSubmit={event => props.onSubmit(event)}>
       <div className="input-field col s9">
         <input className="col s12"
           name="search"
           type="search"
           placeholder="Search Books"
-          onChange={e => props.onChange(e)}
+          onChange={event => props.onChange(event)}
         />
       </div>
       <div
         className="col s3 search-btn-wrapper waves-effect waves-light"
-        onClick={e => props.onClick(e)}
+        onClick={event => props.onClick(event)}
       >
         <button
           className="btn search-btn"

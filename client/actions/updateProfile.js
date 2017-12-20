@@ -3,11 +3,15 @@ import API from './api';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { loginUser } from './authActions/login';
 import notify from './notify';
+import reportNetworkError from './reportNetworkError';
+
 
 /**
  * action creator for updating user information
+ *
  * @param  {Object}  profile profile data
- * @return {Thunk}   function that dispatches an action
+ *
+ * @return {Promise}   resolves with updated user data
  */
 const updateProfile = profile => dispatch => (
   axios.put(`${API}/users`, profile)
@@ -18,7 +22,7 @@ const updateProfile = profile => dispatch => (
       notify.success(response.data.message);
       return dispatch(loginUser(response.data));
     })
-    .catch(error => notify.error(error.response.data.message))
+    .catch(error => reportNetworkError(error))
 );
 
 export default updateProfile;

@@ -3,10 +3,14 @@ import actionTypes from '../actionTypes';
 import API from '../api';
 import { setLoginStatus } from './login';
 import notify from '../notify';
+import reportNetworkError from '../reportNetworkError';
 import setAuthorizationToken from '../../utils/setAuthorizationToken';
 
 /**
+ * Action creator that sets user in state data on sign up
+ * 
  * @param {any} user - user
+ * 
  * @returns {Object} - Object containing action type and user
  */
 export const signUpUser = (user => ({
@@ -15,7 +19,10 @@ export const signUpUser = (user => ({
 }));
 
 /**
+ * Action creator that sets loading state
+ * 
  * @param {Bool} state - loading state
+ * 
  * @returns {Object}   - Object containing action type and loading state
  */
 export const authLoading = (state => ({
@@ -25,7 +32,10 @@ export const authLoading = (state => ({
 
 
 /**
+ * async action creator for user sign up
+ * 
  * @param {any} data - user data
+ * 
  * @returns {any} - dispatches login user action
  */
 export const signUp = data => (dispatch) => {
@@ -42,7 +52,7 @@ export const signUp = data => (dispatch) => {
       return response.data;
     })
     .catch((error) => {
-      notify.error(error.response.data.message);
+      reportNetworkError(error);
       return dispatch(authLoading(false));
     });
 };
