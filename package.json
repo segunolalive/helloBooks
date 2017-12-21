@@ -12,7 +12,7 @@
     "start:server": "nodemon server/bin/www --exec babel-node",
     "start:server:debug": "nodemon --inspect server/bin/www --exec babel-node",
     "coverage": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls",
-    "test": "npm run test:server && npm run test:client",
+    "test": "npm run test:client && npm run test:server",
     "migrate:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
     "seed:tables:test": "cross-env NODE_ENV=test babel-node server/seeders/user.js && babel-node server/seeders/bookCategory.js && babel-node server/seeders/book.js",
     "seed:join:test": "cross-env NODE_ENV=test babel-node server/seeders/borrowedBook.js",
