@@ -138,8 +138,8 @@ export class BookDetail extends Component {
                   <div className="center">
                     <h4>{this.props.book && (this.props.book.title || '')}</h4>
                   </div>
-                  <div className="">
-                    <p>
+                  <div>
+                    <p style={{ whiteSpace: 'pre-wrap' }}>
                       {this.props.book && (this.props.book.description || '')}
                     </p>
                   </div>

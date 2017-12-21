@@ -16,14 +16,6 @@ workbox.router.registerRoute('/api/v1/', workbox.strategies.networkFirst());
 workbox.router.registerRoute('/api-docs/', workbox.strategies.networkFirst());
 
 
-self.addEventListener('push', (event) => {
-  const title = 'Get started with Hello Books';
-  const options = {
-    body: event.data.text()
-  };
-  event.waitUntil(self.registration.showNotification(title, options));
-});
-
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.open('dynamic')
@@ -37,9 +29,12 @@ self.addEventListener('fetch', (event) => {
                 }
                 return networkResponse;
               });
+            if (event.request.url.match('/api/v1')) {
+              return fetchPromise || response;
+            }
             return response || fetchPromise;
           })
-      ))
+      )).catch(() => { })
   );
 });
 

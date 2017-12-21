@@ -137,22 +137,26 @@ export class Library extends Component {
    * @returns {JSX} JSX element representing library component
    */
   render() {
-    const fetching = Boolean(this.props.fetchingBooks) ||
-      Boolean(this.props.fetchingMoreBooks);
+    const loaderDisplay = this.props.fetchingBooks ?
+      <Loading text="fetching awesome books . . ." /> :
+      <div className="center">
+        <p style={{ fontWeight: 900 }}>
+          unable to fetch books
+        </p>
+        <h4>&#x1F61E;</h4>
+      </div>;
     const { pageCount, pageNumber } = this.props.pagination;
     const reachedEnd = pageNumber >= pageCount;
     const endText = this.props.books.length ?
       'You\'ve gotten to the bottom of the shelf' :
       'Nothing found. Try something else';
-    const display = reachedEnd || fetching ? 'block' : 'none';
-    const endMessage = (reachedEnd && fetching === false) ?
+    const endMessage = reachedEnd ?
       <div className="center">
         <p style={{ fontWeight: 900 }}>
           {endText}
         </p>
         <h4>☺</h4>
-      </div> :
-      <Loading text="fetching more awesome books . . ." />;
+      </div> : loaderDisplay;
     const categories = this.props.categories ?
       <Categories
         text="Filter By Category"
@@ -204,14 +208,8 @@ export class Library extends Component {
                   />
                 </InfiniteScroll>
               </Row>
-              <div style={{ display }}>
+              <div>
                 {endMessage}
-              </div>
-              <div className="center bold-text"
-                style={{ display: `${(!reachedEnd && !fetching) ?
-                  'block' : 'none'}` }}
-              >
-                <h5>Unable to fetch content</h5>
               </div>
             </div>
           </Row>
@@ -228,7 +226,6 @@ Library.propTypes = {
   borrowBook: PropTypes.func.isRequired,
   fetchBooks: PropTypes.func.isRequired,
   fetchingBooks: PropTypes.bool.isRequired,
-  fetchingMoreBooks: PropTypes.bool.isRequired,
   pagination: PropTypes.object.isRequired,
   getBookCategories: PropTypes.func.isRequired,
   filterBooksByCategory: PropTypes.func.isRequired,
@@ -238,8 +235,7 @@ const mapStateToProps = ({ authReducer, bookReducer }) => ({
   books: bookReducer.books,
   categories: bookReducer.categories,
   pagination: bookReducer.pagination,
-  fetchingBooks: bookReducer.fetchBooks,
-  fetchingMoreBooks: bookReducer.fetchingMoreBooks,
+  fetchingBooks: bookReducer.fetchingBooks,
   userId: authReducer.user.id,
 });
 
