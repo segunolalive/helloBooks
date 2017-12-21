@@ -190,23 +190,6 @@ export class SignUp extends Component {
                                 style={{ width: '100%' }}
                               />
                             </div>
-                            <div className="input-field">
-                              <GoogleLogin
-                                clientId={GOOGLE_CLIENT_ID}
-                                onSuccess={this.handleGoogleSignUp}
-                                onFailure={this.handleGoogleSignUp}
-                                className="btn red darken-4"
-                                style={{ width: '100%' }}
-                              >
-                                <FaGoogle
-                                  style={{
-                                    color: '#032442',
-                                    fontSize: '2rem',
-                                  }}
-                                />
-                                <span> Sign Up with Google</span>
-                              </GoogleLogin>
-                            </div>
                             <div className="">
                               <p>Already have an account?
                                 <Link to="/login"> Login</Link>
