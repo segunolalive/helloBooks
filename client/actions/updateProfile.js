@@ -2,16 +2,12 @@ import axios from 'axios';
 import API from './api';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import { loginUser } from './authActions/login';
-import Notify from './Notify';
-import reportNetworkError from './reportNetworkError';
-
+import notify from './notify';
 
 /**
  * action creator for updating user information
- *
  * @param  {Object}  profile profile data
- *
- * @return {Promise}   resolves with updated user data
+ * @return {Thunk}   function that dispatches an action
  */
 const updateProfile = profile => dispatch => (
   axios.put(`${API}/users`, profile)
@@ -19,10 +15,10 @@ const updateProfile = profile => dispatch => (
       const token = response.data.token;
       localStorage.setItem('token', token);
       setAuthorizationToken(token);
-      Notify.success(response.data.message);
+      notify.success(response.data.message);
       return dispatch(loginUser(response.data));
     })
-    .catch(error => reportNetworkError(error))
+    .catch(error => notify.error(error.response.data.message))
 );
 
 export default updateProfile;

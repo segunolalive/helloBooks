@@ -8,16 +8,13 @@ import { transporter, mailOptions } from '../config/mail';
 dotenv.config();
 
 
-const UserController = {
+const userController = {
   /**
    * Create new user account.
-   * It sends an object containing a success boolean
+   * It sends a an object containing a success boolean
    * and a json web token or error
-   *
    * @public
-   *
    * @method
-   *
    * @param  {object}   req  - express http request object
    * @param  {object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
@@ -26,9 +23,9 @@ const UserController = {
    */
 
   createUser(req, res, next) {
-    delete req.body.isAdmin;
-    const username = req.body.username;
-    const email = req.body.email;
+    const userData = { ...req.body, isAdmin: undefined };
+    const username = userData.username;
+    const email = userData.email;
     return User.find({
       where: { $or: [{ username }, { email }] }
     }).then((existingUser) => {
@@ -42,7 +39,7 @@ const UserController = {
           message: 'email is associated with an account',
         });
       }
-      User.create(req.body)
+      User.create(userData)
         .then((user) => {
           const {
             id,
@@ -68,11 +65,8 @@ const UserController = {
 
   /**
    * Edit user Information
-   *
    * @public
-   *
    * @method
-   *
    * @param  {object}   req  - express http request object
    * @param  {object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
@@ -80,11 +74,11 @@ const UserController = {
    * @return {Object}        - returns an http response object
    */
   updateUserInfo(req, res, next) {
-    delete req.body.isAdmin;
-    req.body.passwordResetToken = null;
+    const updateData = { ...req.body, isAdmin: undefined };
+    updateData.passwordResetToken = null;
     return User.findById(req.user.id)
       .then((user) => {
-        user.update(req.body, { returning: true, plain: true })
+        user.update(updateData, { returning: true, plain: true })
           .then(() => {
             const {
               id,
@@ -114,11 +108,8 @@ const UserController = {
    * Get user data on sign in.
    * It sends a an object containing a success boolean
    * and a json web token or error
-   *
    * @public
-   *
    * @method
-   *
    * @param  {object}   req  - express http request object
    * @param  {object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
@@ -132,7 +123,7 @@ const UserController = {
     return User.findOne({ where: { username } }).then((user) => {
       if (!user) {
         if (req.body.authId) {
-          return UserController.createUser(req, res);
+          return userController.createUser(req, res);
         }
         return res.status(403).send({
           message: 'user does not exist',
@@ -170,11 +161,8 @@ const UserController = {
    * It sends a an object containing a success boolean
    * and a data key, an array of borrowed books or an error
    * Response can be filtered by returned status
-   *
    * @public
-   *
    * @method
-   *
    * @param  {object}   req  - express http request object
    * @param  {object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
@@ -207,17 +195,14 @@ const UserController = {
   },
 
   /**
-  * sends a password reset email
-  *
+   * sends a password reset email
   * @public
-  *
   * @method
-  *
   * @param  {object}   req  - express http request object
   * @param  {object}   res  - express http response object
   * @param  {Function} next - calls the next middleware in the stack
   *
-  * @return {Object}        - returns an http response object
+  @return {Object}        - returns an http response object
   */
   passwordResetMail(req, res) {
     return User.findOne({
@@ -263,4 +248,4 @@ const UserController = {
 };
 
 
-export default UserController;
+export default userController;

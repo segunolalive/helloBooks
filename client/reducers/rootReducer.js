@@ -12,14 +12,6 @@ const appReducer = combineReducers(
   { authReducer, bookReducer, notificationReducer, transactionReducer }
 );
 
-/**
- * combines all reducers into one
- *
- * @param {object} state   initial state of the store
- * @param {object} action  the dispatched action
- *
- * @returns {object}       new state of the store
- */
 const rootReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.LOGOUT:

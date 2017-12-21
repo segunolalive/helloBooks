@@ -1,11 +1,6 @@
 import React from 'react';
 import Header from './Header';
 
-/**
- * 404 page
- *
- * @returns {JSX} JSX representation of component
- */
 const NotFound = () => (
   <div>
     <Header />

@@ -41,14 +41,14 @@ describe('Login Component', () => {
     expect(wrapper.find('form').length).toBe(1);
   });
 
-  it('renders three input fields of type text, password and submit respectivey',
-    () => {
-      const wrapper = setUp();
-      expect(wrapper.find('input').length).toBe(3);
-      expect(wrapper.find('input').at(0).props().type).toBe('text');
-      expect(wrapper.find('input').at(1).props().type).toBe('password');
-      expect(wrapper.find('input').at(2).props().type).toBe('submit');
-    });
+  it('renders three input fields of type text, password and ' +
+    'submit respectivey', () => {
+    const wrapper = setUp();
+    expect(wrapper.find('input').length).toBe(3);
+    expect(wrapper.find('input').at(0).props().type).toBe('text');
+    expect(wrapper.find('input').at(1).props().type).toBe('password');
+    expect(wrapper.find('input').at(2).props().type).toBe('submit');
+  });
 
   it('should redirect to Dashboard if user is logged in already', () => {
     const loggedinProps = { ...props, isLoggedIn: true };

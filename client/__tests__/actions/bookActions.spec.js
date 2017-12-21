@@ -5,17 +5,13 @@ import configureMockStore from 'redux-mock-store';
 import { mockStoreData } from '../__mocks__/mockData';
 import { fetchBorrowedBooks,
   returnBook,
-  fetchBorrowingHistory,
-  getSuggestedBooks,
-  readBook
-} from '../../actions/bookActions/borrowedBooks';
+  fetchBorrowingHistory } from '../../actions/bookActions/borrowedBooks';
 import { fetchBooks,
   borrowBook,
   getBookCategories,
   filterBooksByCategory } from '../../actions/bookActions/library';
 import { viewBookDetails } from '../../actions/bookActions/viewBook';
 import actionTypes from '../../actions/actionTypes';
-import Notify from '../__mocks__/Notify';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -144,77 +140,77 @@ describe('Book Actions', () => {
   });
 
   describe('fetchBooks', () => {
-    it('dispatches GET_BOOK, FETCHING_MORE_BOOKS and SET_LIBRARY_PAGINATION action',
-      () => {
-        const { books } = mockStoreData.bookReducer;
-        const { pagination } = mockStoreData.bookReducer;
-        moxios.stubRequest('/api/v1/books', {
-          status: 200,
-          response: { books, metadata: pagination }
-        });
-        const expectedActions = [
-          { type: actionTypes.FETCHING_MORE_BOOKS, status: true },
-          { type: actionTypes.FETCHING_MORE_BOOKS, status: false },
-          { type: actionTypes.GET_BOOKS, books },
-          { type: actionTypes.SET_LIBRARY_PAGINATION, pagination },
-        ];
-        const store = mockStore({});
-        return store.dispatch(fetchBooks()).then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
+    it('dispatches GET_BOOK, FETCHING_MORE_BOOKS and SET_LIBRARY_PAGINATION ' +
+      'action', () => {
+      const { books } = mockStoreData.bookReducer;
+      const { pagination } = mockStoreData.bookReducer;
+      moxios.stubRequest('/api/v1/books', {
+        status: 200,
+        response: { books, metadata: pagination }
       });
+      const expectedActions = [
+        { type: actionTypes.FETCHING_MORE_BOOKS, status: true },
+        { type: actionTypes.FETCHING_MORE_BOOKS, status: false },
+        { type: actionTypes.GET_BOOKS, books },
+        { type: actionTypes.SET_LIBRARY_PAGINATION, pagination },
+      ];
+      const store = mockStore({});
+      return store.dispatch(fetchBooks()).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
 
-    it('dispatches GET_MORE_BOOKS, FETCHING_MORE_BOOKS and SET_LIBRARY_PAGINATION actions if offset is greater than 0',
-      () => {
-        const { books } = mockStoreData.bookReducer;
-        const { pagination } = mockStoreData.bookReducer;
-        moxios.stubRequest('/api/v1/books?offset=4&', {
-          status: 200,
-          response: { books, metadata: pagination }
-        });
-        const expectedActions = [
-          { type: actionTypes.FETCHING_MORE_BOOKS, status: true },
-          { type: actionTypes.FETCHING_MORE_BOOKS, status: false },
-          { type: actionTypes.GET_MORE_BOOKS, books },
-          { type: actionTypes.SET_LIBRARY_PAGINATION, pagination },
-        ];
-        const store = mockStore({});
-        return store.dispatch(fetchBooks({ offset: 4 })).then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
+    it('dispatches GET_MORE_BOOKS, FETCHING_MORE_BOOKS and ' +
+      'SET_LIBRARY_PAGINATION actions if offset is greater than 0', () => {
+      const { books } = mockStoreData.bookReducer;
+      const { pagination } = mockStoreData.bookReducer;
+      moxios.stubRequest('/api/v1/books?offset=4&', {
+        status: 200,
+        response: { books, metadata: pagination }
       });
+      const expectedActions = [
+        { type: actionTypes.FETCHING_MORE_BOOKS, status: true },
+        { type: actionTypes.FETCHING_MORE_BOOKS, status: false },
+        { type: actionTypes.GET_MORE_BOOKS, books },
+        { type: actionTypes.SET_LIBRARY_PAGINATION, pagination },
+      ];
+      const store = mockStore({});
+      return store.dispatch(fetchBooks({ offset: 4 })).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
 
-    it('dispatches only FETCHING_MORE_BOOKS and SET_LIBRARY_PAGINATION actions if no books were found',
-      () => {
-        moxios.stubRequest('/api/v1/books', {
-          status: 200,
-          response: { books: [] }
-        });
-        const expectedActions = [
-          { type: actionTypes.FETCHING_MORE_BOOKS, status: true },
-          { type: actionTypes.FETCHING_MORE_BOOKS, status: false }
-        ];
-        const store = mockStore({});
-        return store.dispatch(fetchBooks()).then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
+    it('dispatches only FETCHING_MORE_BOOKS and SET_LIBRARY_PAGINATION ' +
+      'actions if no books were found', () => {
+      moxios.stubRequest('/api/v1/books', {
+        status: 200,
+        response: { books: [] }
       });
+      const expectedActions = [
+        { type: actionTypes.FETCHING_MORE_BOOKS, status: true },
+        { type: actionTypes.FETCHING_MORE_BOOKS, status: false }
+      ];
+      const store = mockStore({});
+      return store.dispatch(fetchBooks()).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
 
-    it('dispatches only FETCHING_MORE_BOOKS and SET_LIBRARY_PAGINATION actions on failure',
-      () => {
-        moxios.stubRequest('/api/v1/books?limit=2&', {
-          status: 400,
-          response: {}
-        });
-        const expectedActions = [
-          { type: actionTypes.FETCHING_MORE_BOOKS, status: true },
-          { type: actionTypes.FETCHING_MORE_BOOKS, status: false }
-        ];
-        const store = mockStore({});
-        return store.dispatch(fetchBooks({ limit: 2 })).then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
+    it('dispatches only FETCHING_MORE_BOOKS and SET_LIBRARY_PAGINATION ' +
+      'actions on failure', () => {
+      moxios.stubRequest('/api/v1/books?limit=2&', {
+        status: 400,
+        response: {}
       });
+      const expectedActions = [
+        { type: actionTypes.FETCHING_MORE_BOOKS, status: true },
+        { type: actionTypes.FETCHING_MORE_BOOKS, status: false }
+      ];
+      const store = mockStore({});
+      return store.dispatch(fetchBooks({ limit: 2 })).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
   });
 
   describe('borrowBook', () => {
@@ -299,47 +295,6 @@ describe('Book Actions', () => {
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });
-    });
-  });
-
-  describe('getSuggestedBooks', () => {
-    it('dispatches GET_BOOK_SUGGESTIONS on success', () => {
-      const suggestions = [{ cover: 'some cover', title: 'title' }];
-      moxios.stubRequest('/api/v1/books/suggestions', {
-        status: 200,
-        response: { suggestions }
-      });
-      const expectedActions = [
-        { type: actionTypes.GET_BOOK_SUGGESTIONS, suggestions }
-      ];
-      const store = mockStore({});
-      return store.dispatch(getSuggestedBooks()).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
-    });
-
-    it('it dispatches no actions but calls Notify.error on failure', () => {
-      moxios.stubRequest('/api/v1/books/suggestions', {
-        status: 500,
-        response: { message: 'failure' }
-      });
-      const expectedActions = [];
-      const store = mockStore({});
-      return store.dispatch(getSuggestedBooks()).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-        expect(Notify.error).toHaveBeenCalled();
-      });
-    });
-  });
-
-  describe('readBook', () => {
-    it('dispatches SET_BOOK_TO_READ', (done) => {
-      const url = 'something-made-up';
-      const expectedActions = [{ type: actionTypes.SET_BOOK_TO_READ, url }];
-      const store = mockStore({});
-      store.dispatch(readBook(url));
-      expect(store.getActions()).toEqual(expectedActions);
-      done();
     });
   });
 });

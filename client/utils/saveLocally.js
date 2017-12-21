@@ -1,8 +1,7 @@
 /**
  * saves application state to disk
- *
  * @param  {Object} state         application state
- *
+ * 
  * @return {undefined|Boolean}   writes to disk
  */
 export const saveState = (state) => {
@@ -16,7 +15,6 @@ export const saveState = (state) => {
 
 /**
  * loads state from disk
- *
  * @return {Object|Boolean}   State Object or false
  */
 export const loadState = () => {

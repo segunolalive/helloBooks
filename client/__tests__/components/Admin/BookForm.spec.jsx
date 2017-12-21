@@ -10,7 +10,8 @@ const props = {
   book: mockStoreData.bookReducer.books[0],
   imageUploading: false,
   imageUploaded: false,
-  errors: {},
+  imageError: '',
+  bookFileError: '',
   bookFileUploading: false,
   bookFileUploaded: false,
   onBookFileChange: jest.fn(),
@@ -33,33 +34,30 @@ describe('BookForm Component', () => {
     expect(wrapper.find('form').length).toBe(1);
   });
 
-  it('calls onSelectCategory prop function when a category is selected',
-    () => {
-      const submitBtn = wrapper.find('Categories').at(0);
-      submitBtn.simulate('change');
-      expect(props.onSelectCategory).toHaveBeenCalled();
-    });
+  it('calls onSelectCategory prop function when a category is selected', () => {
+    const submitBtn = wrapper.find('Categories').at(0);
+    submitBtn.simulate('change');
+    expect(props.onSelectCategory).toHaveBeenCalled();
+  });
 
-  it('calls onSubmit prop function when submit button is clicked',
-    () => {
-      const submitBtn = wrapper.find('input[type="submit"]').at(0);
-      submitBtn.simulate('click');
-      expect(props.onSubmit).toHaveBeenCalled();
-    });
+  it('calls onSubmit prop function when submit button is clicked', () => {
+    const submitBtn = wrapper.find('input[type="submit"]').at(0);
+    submitBtn.simulate('click');
+    expect(props.onSubmit).toHaveBeenCalled();
+  });
 
-  it('calls onBookFileChange prop function when book is loaded to form',
-    () => {
-      const bookFileInput = wrapper.find('input[name="bookFile"]').at(0);
-      bookFileInput.simulate('change');
-      expect(props.onBookFileChange).toHaveBeenCalled();
-    });
+  it('calls onBookFileChange prop function when book is loaded to form', () => {
+    const bookFileInput = wrapper.find('input[name="bookFile"]').at(0);
+    bookFileInput.simulate('change');
+    expect(props.onBookFileChange).toHaveBeenCalled();
+  });
 
-  it('calls onBookConverChange prop function when book cover is loaded to form',
-    () => {
-      const bookCoverInput = wrapper.find('input[name="cover"]').at(0);
-      bookCoverInput.simulate('change');
-      expect(props.onBookConverChange).toHaveBeenCalled();
-    });
+  it('calls onBookConverChange prop function when ' +
+    'book cover is loaded to form', () => {
+    const bookCoverInput = wrapper.find('input[name="cover"]').at(0);
+    bookCoverInput.simulate('change');
+    expect(props.onBookConverChange).toHaveBeenCalled();
+  });
 
   it('calls onChange prop function when form fields change value', () => {
     const textInput = wrapper.find('input[type="text"]').at(0);

@@ -3,15 +3,11 @@ import actionTypes from '../actionTypes';
 import setAuthorizationToken from '../../utils/setAuthorizationToken';
 import { authLoading } from './signup';
 import API from '../api';
-import Notify from '../Notify';
-import reportNetworkError from '../reportNetworkError';
+import notify from '../notify';
 
 
 /**
- * Action creator that sets user data on login
- *
  * @param {Object} user - user data
- *
  * @returns {Object}    - Object containing action type and user
  */
 export const loginUser = user => ({
@@ -21,11 +17,8 @@ export const loginUser = user => ({
 
 
 /**
- * Action creator that sets login status
- *
  * @param {Boolean} status - status
- *
- * @returns {Object}       - Object containing action type and login status
+ * @returns {Object} - Object containing action type and login status
  */
 export const setLoginStatus = status => ({
   type: actionTypes.SET_LOGIN_STATUS,
@@ -34,11 +27,8 @@ export const setLoginStatus = status => ({
 
 
 /**
- * async action creator for user login
- *
  * @param {object} data - user data
- *
- * @returns {Promise}   - resolves with user data and authorization token
+ * @returns {any} - dispatches login user action
  */
 export const login = data => (dispatch) => {
   dispatch(authLoading(true));
@@ -50,11 +40,11 @@ export const login = data => (dispatch) => {
       dispatch(loginUser(response.data));
       dispatch(setLoginStatus(true));
       dispatch(authLoading(false));
-      Notify.success(response.data.message);
+      notify.success(response.data.message);
       return response.data;
     })
     .catch((error) => {
-      reportNetworkError(error);
+      notify.error(error.response.data.message);
       return dispatch(authLoading(false));
     });
 };

@@ -24,18 +24,29 @@ import {
  * displays the content of the library
  *
  * @class Library
- *
  * @extends {Component}
  */
 export class Library extends Component {
-  state = { hasMore: false };
+  /**
+   * Creates an instance of Library.
+   * @param {any} props
+   * @memberof Library
+   */
+  constructor(props) {
+    super(props);
+    this.handleBorrowBook = this.handleBorrowBook.bind(this);
+    this.handleSelectCategory = this.handleSelectCategory.bind(this);
+    this.handleFetchBooks = this.handleFetchBooks.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.state = { hasMore: false };
+  }
 
   /**
    * lifecycle hook called when component is mounted to DOM
    *
    * @memberof Library
-   *
-   * @return {undefined} fetches books and book categories
+   * @return {undefined} fetches books and boo categories
    */
   componentDidMount() {
     const { pageSize, pageNumber } = this.props.pagination;
@@ -46,9 +57,7 @@ export class Library extends Component {
 
   /**
    * called when component receives new propTypes
-   *
    * @param  {Object} nextProps
-   *
    * @return {undefined}        calls set setState
    */
   componentWillReceiveProps(nextProps) {
@@ -59,16 +68,12 @@ export class Library extends Component {
 
   /**
    * handles borrowing book
-   *
    * @method
-   *
-   * @memberof Library
-   *
    * @param {Integer} bookId
-   *
+   * @memberof Library
    * @returns {undefined} sends a request to borrow a book
    */
-  handleBorrowBook = (bookId) => {
+  handleBorrowBook(bookId) {
     this.props.borrowBook(this.props.userId, bookId);
   }
 
@@ -76,12 +81,10 @@ export class Library extends Component {
    * selects a category to filter books by
    *
    * @param {any} event
-   *
    * @memberof Library
-   *
-   * @returns {object} books of specified category
+   * @returns {undefined} send request to fetch books by specified category
    */
-  handleSelectCategory = (event) => {
+  handleSelectCategory(event) {
     const categoryId = event.target.value;
     return Number(categoryId) ?
       this.props.filterBooksByCategory(categoryId) :
@@ -90,10 +93,9 @@ export class Library extends Component {
 
   /**
    * handles fetching of Books
-   *
    * @return {Function} thunk
    */
-  handleFetchBooks = () => {
+  handleFetchBooks() {
     const { pageSize, pageNumber } = this.props.pagination;
     const offset = getOffset.bind(this)(pageNumber, pageSize);
     const search = this.state.search && this.state.search.trim();
@@ -103,12 +105,10 @@ export class Library extends Component {
 
   /**
    * updates state with value of search input
-   *
    * @param  {object} event  form submission event
-   *
    * @return {undefined}     calls setState
    */
-  handleSearchChange = (event) => {
+  handleSearchChange(event) {
     event.preventDefault();
     const search = event.target.value;
     this.setState(() => ({ search }));
@@ -116,12 +116,10 @@ export class Library extends Component {
 
   /**
    * searches for books matching input value
-   *
    * @param  {object} event  form submission event
-   *
    * @return {undefined}       sends a network request
    */
-  handleSearch = (event) => {
+  handleSearch(event) {
     event.preventDefault();
     const search = this.state.search.trim();
     return search ?
@@ -132,20 +130,16 @@ export class Library extends Component {
   /**
    * renders library component to DOM
    *
-   * @memberof Library
-   *
    * @returns {JSX} JSX element representing library component
+   * @memberof Library
    */
   render() {
-    const fetching = Boolean(this.props.fetchingBooks) ||
-      Boolean(this.props.fetchingMoreBooks);
     const { pageCount, pageNumber } = this.props.pagination;
     const reachedEnd = pageNumber >= pageCount;
     const endText = this.props.books.length ?
       'You\'ve gotten to the bottom of the shelf' :
       'Nothing found. Try something else';
-    const display = reachedEnd || fetching ? 'block' : 'none';
-    const endMessage = (reachedEnd && fetching === false) ?
+    const endMessage = reachedEnd ?
       <div className="center">
         <p style={{ fontWeight: 900 }}>
           {endText}
@@ -204,15 +198,7 @@ export class Library extends Component {
                   />
                 </InfiniteScroll>
               </Row>
-              <div style={{ display }}>
-                {endMessage}
-              </div>
-              <div className="center bold-text"
-                style={{ display: `${(!reachedEnd && !fetching) ?
-                  'block' : 'none'}` }}
-              >
-                <h5>Unable to fetch content</h5>
-              </div>
+              {endMessage}
             </div>
           </Row>
         </main>
@@ -227,21 +213,20 @@ Library.propTypes = {
   categories: PropTypes.array.isRequired,
   borrowBook: PropTypes.func.isRequired,
   fetchBooks: PropTypes.func.isRequired,
-  fetchingBooks: PropTypes.bool.isRequired,
-  fetchingMoreBooks: PropTypes.bool.isRequired,
   pagination: PropTypes.object.isRequired,
   getBookCategories: PropTypes.func.isRequired,
   filterBooksByCategory: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ authReducer, bookReducer }) => ({
-  books: bookReducer.books,
-  categories: bookReducer.categories,
-  pagination: bookReducer.pagination,
-  fetchingBooks: bookReducer.fetchBooks,
-  fetchingMoreBooks: bookReducer.fetchingMoreBooks,
-  userId: authReducer.user.id,
-});
+const mapStateToProps = ({ authReducer, bookReducer }) => {
+  const userId = authReducer.user && authReducer.user.id;
+  return {
+    books: bookReducer.books,
+    categories: bookReducer.categories,
+    pagination: bookReducer.pagination,
+    userId,
+  };
+};
 
 export default connect(
   mapStateToProps,

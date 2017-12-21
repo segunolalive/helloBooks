@@ -2,15 +2,13 @@ import axios from 'axios';
 
 import actionTypes from '../actions/actionTypes';
 import API from './api';
-import reportNetworkError from './reportNetworkError';
+import notify from './notify';
 import queryStringFromObject from '../utils/queryStringFromObject';
 
 
 /**
  * Action creator for getting list of all books a userr has ever borrowed
- *
  * @param  {Array} books  array of books
- *
  * @return {Object}       redux action with type and books properties
  */
 export const fetchHistoryAction = books => ({
@@ -29,10 +27,8 @@ export const fetchingHistory = status => ({
 
 /**
  * fetch list of all books a user has ever borrowed
- *
  * @param  {Integer}    id user id
- *
- * @return {Promise}       resolves with borrowing history
+ * @return {Thunk}      a function that retuns a function (action creator)
  */
 export const fetchHistory = id => (dispatch) => {
   dispatch(fetchingHistory(true));
@@ -42,17 +38,15 @@ export const fetchHistory = id => (dispatch) => {
       dispatch(fetchHistoryAction(response.data.books));
     }).catch((error) => {
       dispatch(fetchingHistory(false));
-      return reportNetworkError(error);
+      return notify.error(error.response.data.message);
     });
 };
 
 
 /**
  * Action creator for getting full transactions history
- *
  * @param  {array} transactions array of transacitons
- *
- * @return {Promise}              function that returns an action creator
+ * @return {Thunk}              function that returns an action creator
  */
 export const getTransactionHistory = transactions => ({
   type: actionTypes.GET_TRANSACTION_HISTORY,
@@ -71,9 +65,7 @@ export const fetchingTransactions = status => ({
 
 /**
  * sets pagination metadata in store
- *
  * @param {Object}  pagination  pagination metadata object
- *
  * @return {Object}                 action object
  */
 export const setTransactionPagination = pagination => ({
@@ -81,14 +73,6 @@ export const setTransactionPagination = pagination => ({
   pagination
 });
 
-/**
- * fetch list of all books a user has ever borrowed
- *
- * @param  {pbject}   options
- * @param  {Integer}  id      user id
- *
- * @return {Promise}          resolves with transaction history
- */
 export const fetchTransactionHistory = (options, id) => (dispatch) => {
   dispatch(fetchingTransactions(true));
   const query = queryStringFromObject(options);
@@ -102,6 +86,6 @@ export const fetchTransactionHistory = (options, id) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(fetchingTransactions(false));
-      reportNetworkError(error);
+      notify.error(error.response.data.message);
     });
 };

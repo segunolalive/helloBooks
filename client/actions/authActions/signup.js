@@ -2,15 +2,11 @@ import axios from 'axios';
 import actionTypes from '../actionTypes';
 import API from '../api';
 import { setLoginStatus } from './login';
-import Notify from '../Notify';
-import reportNetworkError from '../reportNetworkError';
+import notify from '../notify';
 import setAuthorizationToken from '../../utils/setAuthorizationToken';
 
 /**
- * Action creator that sets user in state data on sign up
- *
  * @param {any} user - user
- *
  * @returns {Object} - Object containing action type and user
  */
 export const signUpUser = (user => ({
@@ -19,10 +15,7 @@ export const signUpUser = (user => ({
 }));
 
 /**
- * Action creator that sets loading state
- *
  * @param {Bool} state - loading state
- *
  * @returns {Object}   - Object containing action type and loading state
  */
 export const authLoading = (state => ({
@@ -32,10 +25,7 @@ export const authLoading = (state => ({
 
 
 /**
- * async action creator for user sign up
- *
  * @param {any} data - user data
- *
  * @returns {any} - dispatches login user action
  */
 export const signUp = data => (dispatch) => {
@@ -48,11 +38,11 @@ export const signUp = data => (dispatch) => {
       dispatch(signUpUser(response.data));
       dispatch(setLoginStatus(true));
       dispatch(authLoading(false));
-      Notify.success(response.data.message);
+      notify.success(response.data.message);
       return response.data;
     })
     .catch((error) => {
-      reportNetworkError(error);
+      notify.error(error.response.data.message);
       return dispatch(authLoading(false));
     });
 };

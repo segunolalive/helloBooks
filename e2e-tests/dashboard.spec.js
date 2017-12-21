@@ -28,8 +28,8 @@ export default {
       .waitForElementNotVisible('#toast-container')
       .click('#return-book-1-btn')
       .waitForElementVisible('#toast-container')
-      .assert.containsText('.toast',
-        'You have successfully returned eloquent javascript')
+      .assert.containsText('.toast', 'You have successfully returned ' +
+        'eloquent javascript')
       .end();
   },
 };

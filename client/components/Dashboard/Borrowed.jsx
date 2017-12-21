@@ -3,22 +3,20 @@ import PropTypes from 'prop-types';
 import { Button, Col } from 'react-materialize';
 import Loading from '../common/Loading';
 
-
 /**
  * component for borrowed Books
- *
- * @param {Object} props  Object containing array of borrowed Books
- *
- * @return {JSX}          JSX representation of component
+ * @param {Object} props Object containing array of borrowed Books
+ * @return {JSX}         JSX representation of component
  */
 const Borrowed = (props) => {
-  const books = props.borrowedBooks && props.borrowedBooks.length ?
+  const books = props.borrowedBooks.length ?
     props.borrowedBooks.map(book =>
-      <Col key={book.title} s={12} className="book-info grey-tex">
+      <Col key={book.title} s={12} className="book-info grey-text">
         <div className="card horizontal">
           <div className="card-image">
             <img
-              src={book.cover || BOOK_IMAGE_FALLBACK}
+              src={book.cover || 'https://segunolalive.github.io/helloBooks/' +
+              'templates/images/eloquentjs_cover.png'}
               alt={book.title || 'N/A'}
             />
           </div>
@@ -32,7 +30,7 @@ const Borrowed = (props) => {
               <Button
                 waves='light'
                 id={`read-book-${book.id}-btn`}
-                onClick={() => props.readBook(book.bookFile)}
+                onClick={() => props.readBook(book.id)}
               >
                 Read Book
               </Button>
@@ -57,7 +55,7 @@ const Borrowed = (props) => {
   const renderedContent = props.fetchingBorrowedBooks ?
     <Loading text='fetching your books' /> : books;
   return (
-    <section className="col s12 m6 borrowed fill-page-height">
+    <section className="col s12 m6 borrowed">
       <Col s={12}>
         <h4 className="center">Recently Borrowed</h4>
       </Col>

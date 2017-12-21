@@ -5,12 +5,7 @@ import { transporter, mailOptions } from './config/mail';
 
 const timeLimit = borrowingDuration * 1000 * 60 * 60 * 24;
 
-/**
- * function for sending emails to defaulters
- * 
- * @returns {Promise} sends emails on resolution
- */
-const cronJob = () => (
+const defaulters = () => (
   BorrowedBook.findAll({
     where: {
       returned: false,
@@ -33,9 +28,9 @@ const cronJob = () => (
           const to = emails;
           const bcc = null;
           const subject = 'Defaut on Returning Book';
-          const html = `<h3>Hello. This is to notify you that you have exceeded
-          the borrowing duration for one of our books and would start getting
-          billed for the book.</h3>`;
+          const html = '<h3>Hello. This is to notify you that you have' +
+           'exceeded the borrowing duration for one of our books and would' +
+           'start getting billed for the book.</h3>';
           transporter.sendMail(mailOptions(to, bcc, subject, html));
           process.exit(0);
         }, (error) => {
@@ -48,4 +43,4 @@ const cronJob = () => (
     })
 );
 
-cronJob();
+defaulters();

@@ -31,11 +31,12 @@ export default {
       .click('input[name="submit"]')
       .waitForElementVisible('#dashboard')
       .url('localhost:8080/library')
-      .waitForElementVisible('#borrow-book-2-btn')
+      .waitForElementVisible('main')
       .click('#borrow-book-2-btn')
       .waitForElementVisible('#toast-container')
       .assert.urlEquals('http://localhost:8080/library')
-      .assert.containsText('.toast', 'You have successfully borrowed eloquent ruby again. Check your dashboard to read it')
+      .assert.containsText('.toast', 'You have successfully borrowed ' +
+        'eloquent ruby again. Check your dashboard to read it')
       .end();
   },
 
@@ -48,11 +49,12 @@ export default {
       .click('input[name="submit"]')
       .waitForElementVisible('#dashboard')
       .url('localhost:8080/library')
-      .waitForElementVisible('#borrow-book-2-btn')
+      .waitForElementVisible('main')
       .click('#borrow-book-2-btn')
       .waitForElementVisible('#toast-container')
       .assert.urlEquals('http://localhost:8080/library')
-      .assert.containsText('.toast', 'You currently have this book. Return it before trying to borrow it again')
+      .assert.containsText('.toast', 'You currently have this book. Return ' +
+        'it before trying to borrow it again')
       .end();
   }
 };

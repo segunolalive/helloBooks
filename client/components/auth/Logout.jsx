@@ -3,33 +3,28 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import logout from '../../actions/authActions/logout';
-import Notify from '../../actions/Notify';
+import notify from '../../actions/notify';
 
 
 /**
  * handles logging a user out
- *
  * @class Logout
- *
  * @extends {Component}
  */
 export class Logout extends Component {
   /**
-   * lifecycle method called on mounting the DOM
+   * [componentDidMount description]
    * @memberof Logout
-   *
-   * @return {undefined} makes network requests
+   * @return {[type]} [description]
    */
   componentDidMount() {
-    Notify.success('Successfully logged out');
+    notify.success('Successfully logged out');
     this.props.logout();
     this.props.history.push('/');
   }
   /**
    * renders component to DOM
-   *
    * @memberof Logout
-   *
    * @return {JSX} JSX reprresentation of DOM
    */
   render() {

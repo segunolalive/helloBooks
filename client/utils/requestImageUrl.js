@@ -1,9 +1,7 @@
 /**
  * transforms image url with width and height parameters
- *
  * @param {String} url
  * @param {Object} options
- *
  * @returns {String} new image url
  */
 export default (url, options) => {
@@ -11,18 +9,12 @@ export default (url, options) => {
     return url;
   }
   const base = CLOUDINARY_IMG_URL_STUB;
-  const tail = url.split(base)[1];
-  let transformation = '';
+  let tail = url.split(base)[1];
   if (options.width) {
-    // tail = `w_${options.width}/${tail}`;
-    transformation += `w_${options.width},`;
+    tail = `w_${options.width}/${tail}`;
   }
   if (options.height) {
-    // tail = `h_${options.height}/${tail}`;
-    transformation += `h_${options.height},`;
+    tail = `h_${options.height}/${tail}`;
   }
-  if (options.fill) {
-    transformation += 'c_fill,';
-  }
-  return `${base}${transformation}/${tail}`;
+  return `${base}${tail}`;
 };
