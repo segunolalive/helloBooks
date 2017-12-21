@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 /**
  * app Logo
- *
  * @returns {JSX} - jsx representation of logo
  */
 const Logo = () => (

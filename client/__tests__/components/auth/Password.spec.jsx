@@ -26,11 +26,11 @@ describe('Password Component', () => {
     expect(wrapper.getElement().type).toBe('div');
   });
 
-  it('should render a ResetPasswordForm and not ForgotPasswordForm Component if url matches "/reset-password"',
-    () => {
-      expect(wrapper.find('ResetPasswordForm').length).toBe(1);
-      expect(wrapper.find('ForgotPasswordForm').length).toBe(0);
-    });
+  it('should render a ResetPasswordForm and not ForgotPasswordForm ' +
+    'Component if url matches "/reset-password"', () => {
+    expect(wrapper.find('ResetPasswordForm').length).toBe(1);
+    expect(wrapper.find('ForgotPasswordForm').length).toBe(0);
+  });
 
   it('should redirect to dashboard if user is logged in', () => {
     const wrongUrlProps = { ...props, isLoggedIn: true };
@@ -53,105 +53,74 @@ describe('Password Component', () => {
     expect(wrongUrlWrapper.find('Redirect').props().to).toBe('/');
   });
 
-  it('should call handleResetPassword when ForgotPasswordForm is submitted',
-    () => {
-      const forgotProps = {
-        ...props,
-        match: { ...props.match, url: '/reset-password' }
-      };
-      const renderReset = shallow(<Password { ...forgotProps } />);
-      const handleResetPasswordSpy = jest.spyOn(renderReset.instance(),
-        'handleResetPassword');
-      const event = {
-        preventDefault: jest.fn(),
-        target: {
-          password: { value: 'funny-secret' },
-          confirmPassword: { value: 'funny-secret' },
-        }
-      };
-      renderReset.instance().handleResetPassword(event);
-      expect(handleResetPasswordSpy).toHaveBeenCalledTimes(1);
-      expect(renderReset.state().loading).toBe(true);
-    });
+  it('should call handleResetPassword when ForgotPasswordForm ' +
+     'is submitted', () => {
+    const forgotProps = {
+      ...props,
+      match: { ...props.match, url: '/reset-password' }
+    };
+    const renderReset = shallow(<Password { ...forgotProps } />);
+    const handleResetPasswordSpy = jest.spyOn(renderReset.instance(),
+      'handleResetPassword');
+    const event = {
+      preventDefault: jest.fn(),
+      target: {
+        password: { value: 'funny-secret' },
+        confirmPassword: { value: 'funny-secret' },
+      }
+    };
+    renderReset.instance().handleResetPassword(event);
+    expect(handleResetPasswordSpy).toHaveBeenCalledTimes(1);
+    expect(renderReset.state().loading).toBe(true);
+  });
 
-  it('should call handleChange when form field values change',
-    () => {
-      const handleChangeSpy = jest.spyOn(wrapper.instance(), 'handleChange');
-      const event = {
-        preventDefault: jest.fn(),
-        target: { name: 'email', value: 'email' }
-      };
-      wrapper.instance().handleChange(event);
-      expect(handleChangeSpy).toHaveBeenCalledTimes(1);
-    });
+  it('should give an error message when ForgotPasswordForm ' +
+     'is submitted with m=non-matching passwords', () => {
+    const forgotProps = {
+      ...props,
+      match: { ...props.match, url: '/reset-password' }
+    };
+    const renderReset = shallow(<Password { ...forgotProps } />);
+    const event = {
+      preventDefault: jest.fn(),
+      target: {
+        password: { value: 'funny-secret' },
+        confirmPassword: { value: 'boring-secret' },
+      }
+    };
+    renderReset.instance().handleResetPassword(event);
+    expect(renderReset.state().loading).toBe(false);
+    expect(renderReset.state().errors.password).toBe('passwords don\'t match');
+  });
 
-  it('should give an error message when ForgotPasswordForm is submitted with m=non-matching passwords',
-    () => {
-      const forgotProps = {
-        ...props,
-        match: { ...props.match, url: '/reset-password' }
-      };
-      const renderReset = shallow(<Password { ...forgotProps } />);
-      const event = {
-        preventDefault: jest.fn(),
-        target: {
-          password: { value: 'funny-secret' },
-          confirmPassword: { value: 'boring-secret' },
-        }
-      };
-      renderReset.instance().handleResetPassword(event);
-      expect(renderReset.state().loading).toBe(false);
-      expect(renderReset.state().errors.password).toBe('passwords don\'t match');
-    });
+  it('should render a ForgotPasswordForm and not ResetPasswordForm ' +
+    'Component if url matches "/forgot-password"', () => {
+    const forgotProps = {
+      ...props,
+      match: { ...props.match, url: '/forgot-password' }
+    };
+    const renderForgot = shallow(<Password { ...forgotProps } />);
+    expect(renderForgot.find('ResetPasswordForm').length).toBe(0);
+    expect(renderForgot.find('ForgotPasswordForm').length).toBe(1);
+  });
 
-  it('should render a ForgotPasswordForm and not ResetPasswordForm Component if url matches "/forgot-password"',
-    () => {
-      const forgotProps = {
-        ...props,
-        match: { ...props.match, url: '/forgot-password' }
-      };
-      const renderForgot = shallow(<Password { ...forgotProps } />);
-      expect(renderForgot.find('ResetPasswordForm').length).toBe(0);
-      expect(renderForgot.find('ForgotPasswordForm').length).toBe(1);
-    });
-
-  it('should call handleForgotPassword when ForgotPasswordForm is submitted',
-    () => {
-      const forgotProps = {
-        ...props,
-        match: { ...props.match, url: '/forgot-password' }
-      };
-      const renderForgot = shallow(<Password { ...forgotProps } />);
-      const handleForgotPasswordSpy = jest.spyOn(
-        renderForgot.instance(), 'handleForgotPassword'
-      );
-      const event = {
-        preventDefault: jest.fn(),
-        target: { name: 'email', value: 'some@some.com' }
-      };
-      renderForgot.setState({ email: 'some@some.com' });
-      renderForgot.instance().handleForgotPassword(event);
-      expect(handleForgotPasswordSpy).toHaveBeenCalledTimes(1);
-    });
-
-  it('should set error state if  handleForgotPassword is called with invalid data',
-    () => {
-      const forgotProps = {
-        ...props,
-        match: { ...props.match, url: '/forgot-password' }
-      };
-      const renderForgot = shallow(<Password { ...forgotProps } />);
-      const handleForgotPasswordSpy = jest.spyOn(
-        renderForgot.instance(), 'handleForgotPassword'
-      );
-      const event = {
-        preventDefault: jest.fn(),
-        target: { name: 'email', value: 'some-email' }
-      };
-      renderForgot.instance().handleForgotPassword(event);
-      expect(handleForgotPasswordSpy).toHaveBeenCalledTimes(1);
-      expect(renderForgot.state().errors.email).toEqual('Email is required');
-    });
+  it('should call handleForgotPassword when ForgotPasswordForm ' +
+     'is submitted', () => {
+    const forgotProps = {
+      ...props,
+      match: { ...props.match, url: '/forgot-password' }
+    };
+    const renderForgot = shallow(<Password { ...forgotProps } />);
+    const handleForgotPasswordSpy = jest.spyOn(
+      renderForgot.instance(), 'handleForgotPassword'
+    );
+    const event = {
+      preventDefault: jest.fn(),
+      target: { email: { value: 'some-email' } }
+    };
+    renderForgot.instance().handleForgotPassword(event);
+    expect(handleForgotPasswordSpy).toHaveBeenCalledTimes(1);
+  });
 
   it('should render the connected component', () => {
     const connectedComponent = shallow(

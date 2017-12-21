@@ -5,13 +5,11 @@ import setupModal from './setupModal';
 
 /**
  * a modal Component
- *
  * @extends Component
  */
 class Modal extends Component {
   /**
    * lifecycle method called when component mounts the DOM
-   *
    * @returns {undefined} no return value
    */
   componentDidMount() {
@@ -20,9 +18,6 @@ class Modal extends Component {
 
   /**
    * renders a Modal to the DOM
-   *
-   * @member Modal
-   *
    * @return {JSX} JSX representation of the Component
    */
   render() {

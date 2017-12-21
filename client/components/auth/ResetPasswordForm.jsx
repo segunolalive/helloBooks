@@ -6,13 +6,6 @@ import Header from '../Header';
 import Loading from '../common/Loading';
 
 
-/**
- * renders reset password form
- *
- * @param {object} props
- *
- * @returns {JSX}  JSX representation of commponent
- */
 const ResetPasswordForm = props => (
   <div>
     <Header />
@@ -45,8 +38,7 @@ const ResetPasswordForm = props => (
               {props.loading && <Loading />}
               <input
                 type="submit"
-                value={props.loading ?
-                  'Resetting Password' : 'Change Password'}
+                value={props.loading ? 'Resetting Password' : 'Change Password'}
                 className="btn teal darken-4"
                 disabled={props.loading}
               />

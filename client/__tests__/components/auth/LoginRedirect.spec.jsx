@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import LoginRedirect from '../../../components/auth/LoginRedirect';
-import Notify from '../../__mocks__/Notify';
+import notify from '../../__mocks__/notify';
 
 jest.mock('react-router-dom');
 
@@ -12,6 +12,6 @@ describe('LoginRedirect', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.find('Redirect').length).toBe(1);
     expect(wrapper.find('Redirect').props().to).toBe('/login');
-    expect(Notify.error).toHaveBeenCalled();
+    expect(notify.error).toHaveBeenCalled();
   });
 });

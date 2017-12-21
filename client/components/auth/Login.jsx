@@ -14,40 +14,44 @@ import { validateLogin } from '../../utils/validation/auth';
 
 /**
  * login component
- *
  * @class Login
- *
  * @extends {Component}
  */
 export class Login extends Component {
-  state = {
-    username: '',
-    password: '',
+  /**
+   * Creates an instance of Login.
+   * @param {any} props
+   * @memberof Login
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+    };
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
   }
+
   /**
    * handler for google sign in
-   *
    * @param {any} response
-   *
    * @memberof Login
-   *
-   * @returns {undefined}  redirects to dashboard
+   * @returns {Undefined}  redirects to dashboard
    */
-  handleGoogleLogin = (response) => {
+  handleGoogleLogin(response) {
     const googleProfile = response.profileObj;
     this.props.login(googleProfile);
   }
 
   /**
    * login handler
-   *
    * @param {any} event
-   *
    * @memberof Login
-
-   * @returns {undefined} redirects to dashboard
+   * @returns {Undefined} redirects to dashboard
    */
-  handleLogin = (event) => {
+  handleLogin(event) {
     event.preventDefault();
     const { errors, isValid } = validateLogin(this.state);
     return (isValid) ? this.props.login(this.state) :
@@ -58,12 +62,10 @@ export class Login extends Component {
    * input field change event handler
    *
    * @param {any} event
-   *
    * @memberof Login
-   *
-   * @returns {undefined} sets user input in component state
+   * @returns {Undefined} sets user input in component state
    */
-  handleChange = (event) => {
+  handleChange(event) {
     event.preventDefault();
     const formField = event.target.name;
     const user = { ...this.state };
@@ -74,9 +76,8 @@ export class Login extends Component {
   /**
    * renders component to DOM
    *
-   * @memberof Login
-   *
    * @returns {JSX} JSX representation of component
+   * @memberof Login
    */
   render() {
     const loadingState = this.props.isLoading ?

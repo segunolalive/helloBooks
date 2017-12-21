@@ -1,8 +1,8 @@
 import express from 'express';
 
-import UserController from '../controllers/UserController';
-import BookController from '../controllers/BookController';
-import TransactionController from '../controllers/TransactionController';
+import userController from '../controllers/userController';
+import bookController from '../controllers/bookController';
+import transactionController from '../controllers/transactionController';
 
 import authenticate from '../middleware/authenticate';
 import shouldBorrowBook from '../middleware/shouldBorrowBook';
@@ -22,69 +22,63 @@ router.get('/', (req, res) => res.status(200).send({
     '/users/signup',
     prepareGoogleAuth,
     validateInput.signup,
-    UserController.createUser
+    userController.createUser
   )
   .post(
     '/users/signin',
     prepareGoogleAuth,
     validateInput.signin,
-    UserController.getUser
+    userController.getUser
   )
   .post('/users/forgot-password',
     validateInput.requestPasswordReset,
-    UserController.passwordResetMail)
-  .get('/books/category', BookController.getBookCategories)
-
-  .get(
-    '/books/suggestions',
-    BookController.suggestedBooks
-  )
-  .get('/books/:id', BookController.getBook)
-
-  .get('/books', validateLimitAndOffset, BookController.getBooks)
+    userController.passwordResetMail)
+  .get('/books/category', bookController.getBookCategories)
+  .get('/books/:id', bookController.getBook)
+  .get('/books', validateLimitAndOffset, bookController.getBooks)
 
   // Protected routes
   .put(
     '/users/reset-password/:token',
     authenticate,
     validateInput.updateUser,
-    UserController.updateUserInfo
+    userController.updateUserInfo
   )
   .put(
     '/users',
     authenticate,
     validateInput.updateUser,
-    UserController.updateUserInfo
+    userController.updateUserInfo
   )
   .post(
     '/users/:id/books',
     authenticate,
     validateInput.validateId,
     shouldBorrowBook,
-    BookController.borrowBook
+    bookController.borrowBook
   )
   .put(
     '/users/:id/books',
     authenticate,
     validateInput.validateId,
-    BookController.returnBook
+    bookController.returnBook
   )
   .get(
     '/users/:id/books',
     authenticate,
     validateInput.validateId,
-    UserController.getBorrowedBooks
+    userController.getBorrowedBooks
   )
   .get(
     '/users/:id/transactions',
     authenticate,
     validateInput.validateId,
-    (req, res) => TransactionController(req, res, { history: true })
+    (req, res) => transactionController(req, res, { history: true })
   )
   .post(
     '/users/reset-password/:token',
     authenticate,
-    UserController.updateUserInfo
+    userController.updateUserInfo
   )
 
   // Admin-specific routes
@@ -92,21 +86,21 @@ router.get('/', (req, res) => res.status(200).send({
     '/books/category',
     authenticate,
     ensureIsAdmin,
-    BookController.addCategory
+    bookController.addCategory
   )
   .post(
     '/books',
     authenticate,
     ensureIsAdmin,
     validateInput.addBook,
-    BookController.createBook
+    bookController.createBook
   )
   .delete(
     '/books/:id',
     authenticate,
     ensureIsAdmin,
     validateInput.validateId,
-    BookController.deleteBook
+    bookController.deleteBook
   )
   .put(
     '/books/:id',
@@ -114,13 +108,13 @@ router.get('/', (req, res) => res.status(200).send({
     ensureIsAdmin,
     validateInput.validateId,
     validateInput.updateBook,
-    BookController.editBookInfo
+    bookController.editBookInfo
   )
   .get(
     '/admin-notifications',
     authenticate,
     ensureIsAdmin,
-    (req, res) => TransactionController(req, res, { admin: true })
+    (req, res) => transactionController(req, res, { admin: true })
   )
   // Send a message if route does not exist
   .get('*', (req, res) => res.status(404).send({

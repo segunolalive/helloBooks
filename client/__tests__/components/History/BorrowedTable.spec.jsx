@@ -3,8 +3,6 @@ import { shallow } from 'enzyme';
 import BorrowedTable from '../../../components/History/BorrowedTable';
 import { mockStoreData } from '../../__mocks__/mockData';
 
-window.BOOK_IMAGE_FALLBACK = 'fallback';
-
 const props = { books: mockStoreData.transactionReducer.allBorrowed };
 
 describe('BorrowedTable Component', () => {

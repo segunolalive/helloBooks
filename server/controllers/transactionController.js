@@ -4,14 +4,13 @@ import { getOptions, paginate } from '../helpers/pagination';
 
 /**
  * fetch all notifications for admin
- *
  * @param  {object} req             - express http request object
  * @param  {object} res             - express http response object
  * @param  {Object} options         - optional arguement with keys history and
  * admin
  * @param  {Bool} options.history   - return user transaction history if true
  * @param  {Bool} options.admin     - return site transactions if true
- *
+ * 
  * @return {object}                 - express http response object
  */
 export default (req, res, options) => {

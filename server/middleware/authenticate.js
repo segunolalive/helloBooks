@@ -5,11 +5,8 @@ dotenv.config();
 
 /**
 * fetches json web token from request
-
 * @private
-*
 * @param {Object} req - express http request object
-*
 * @return {String}      json web token
 */
 const getToken = (req) => {
@@ -21,9 +18,7 @@ const getToken = (req) => {
 
 /**
  * checks if it is a password reset
- *
  * @param {Object} req http request object
- *
  * @returns {Boolean}  true for password reset. False otherwise.
  */
 export const isReset = req => (
@@ -33,16 +28,12 @@ export const isReset = req => (
 
 /**
 * authenticates a json web token from the http request object
-*
 * @public
-*
 * @param {Object} req - express http request object
 * @param {Object} res - express http response object
 * @param {Function} next - function that calls the next function
 * in the middleware stack
-*
-* @returns {Object|Function} sends an http response or calls the next
-* middleware function in stack
+* @return {mixed} sends an http response or calls the next middleware function
 */
 const authenticate = (req, res, next) => {
   const token = getToken(req);

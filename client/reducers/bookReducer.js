@@ -3,14 +3,6 @@ import actionTypes from '../actions/actionTypes';
 import initialState from './initialState';
 
 
-/**
- * Reducer that handles book actions
- *
- * @param {object} state   initial state for the auth section of the store
- * @param {object} action  the dispatched action
- *
- * @returns {object}       new state of the book section of the store
- */
 const bookReducer = (state = initialState.bookReducer, action) => {
   let books, borrowedBooks;
   switch (action.type) {
@@ -36,22 +28,10 @@ const bookReducer = (state = initialState.bookReducer, action) => {
       return { ...state, currentBook: action.book };
     case actionTypes.GET_BOOKS:
       return { ...state, books: action.books };
-    case actionTypes.CREATE_BOOK:
-      return { ...state, books: [...state.books, action.book] };
-    case actionTypes.EDIT_BOOK_INFO:
-      books = state.books.filter(book => book.id !== action.book.id);
-      return { ...state, books: [...books, action.book] };
-    case actionTypes.GET_BOOK_SUGGESTIONS:
-      return { ...state, suggestedBooks: action.suggestions };
     case actionTypes.GET_MORE_BOOKS:
       return { ...state, books: [...state.books, ...action.books] };
     case actionTypes.FETCHING_MORE_BOOKS:
       return { ...state, fetchingBooks: action.status };
-    case actionTypes.ADD_BOOK_CATEGORY:
-      return {
-        ...state,
-        categories: [...state.categories, action.category]
-      };
     case actionTypes.GET_BOOK_CATEGORIES:
       return { ...state, categories: action.categories };
     case actionTypes.DELETE_BOOK:
@@ -59,8 +39,6 @@ const bookReducer = (state = initialState.bookReducer, action) => {
       return { ...state, books };
     case actionTypes.SET_LIBRARY_PAGINATION:
       return { ...state, pagination: action.pagination };
-    case actionTypes.SET_BOOK_TO_READ:
-      return { ...state, bookToRead: action.url };
     default:
       return state;
   }

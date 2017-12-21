@@ -9,67 +9,48 @@ import resetPassword from '../../actions/authActions/resetPassword';
 
 import ForgotPasswordForm from './ForgotPasswordForm';
 import ResetPasswordForm from './ResetPasswordForm';
-import { validateForgotPassword } from '../../utils/validation/auth';
 
 
 /**
  * Parent component for authentication purposes
- *
  * @class Auth
- *
  * @extends {Component}
  */
 export class Password extends Component {
-    state = { loading: false, email: '', errors: {} };
-
+  /**
+   * Creates an instance of Password.
+   * @param {any} props
+   * @memberof Password
+   */
+  constructor(props) {
+    super(props);
+    this.state = { loading: false };
+    this.handleForgotPassword = this.handleForgotPassword.bind(this);
+    this.handleResetPassword = this.handleResetPassword.bind(this);
+    this.renderChild = this.renderChild.bind(this);
+  }
   /**
    * handler for forgot password form submission
    *
-   * @memberof Password
-   *
    * @param {any} event
-   *
+   * @memberof Password
    * @returns {Undefined} sends an http request
    */
-  handleForgotPassword = (event) => {
+  handleForgotPassword(event) {
     event.preventDefault();
-    const { errors, isValid } = validateForgotPassword(this.state);
-    if (isValid) {
-      return this.setState(() => ({ loading: true }), () => {
-        this.props.requestResetPassword(this.state.email.trim())
-          .then(() =>
-            this.setState(() => ({ email: '', loading: false }))
-          );
-      });
-    }
-    this.setState({ errors });
+    const email = event.target.email.value.trim();
+    this.setState(() => ({ loading: true }));
+    return this.props.requestResetPassword(email)
+      .then(() =>
+        this.setState(() => ({ loading: false }))
+      );
   }
-
-  /**
-   * input field change event handler
-   *
-   * @param {any} event
-   *
-   * @memberof Password
-   *
-   * @returns {undefined} sets user input in component state
-   */
-  handleChange = (event) => {
-    event.preventDefault();
-    const formField = event.target.name;
-    const state = { ...this.state };
-    state[formField] = event.target.value.trim();
-    this.setState(() => state);
-  }
-
   /**
    * handler for password ResetPasswordForm
-   *
    * @param {any} event DOM event
-   *
-   * @returns {Promise} resolves with http response data
+   * @returns {Undefined} sends an http requestResetPassword
    */
-  handleResetPassword = (event) => {
+  handleResetPassword(event) {
     event.preventDefault();
     const password = event.target.password.value;
     const confirmPassword = event.target.confirmPassword.value;
@@ -86,10 +67,9 @@ export class Password extends Component {
 
   /**
    * renders form
-   *
    * @return {JSX} react element
    */
-  renderChild = () => {
+  renderChild() {
     switch (this.props.match.url) {
       case '/reset-password':
         return (
@@ -107,8 +87,6 @@ export class Password extends Component {
         return (
           <div>
             <ForgotPasswordForm
-              email={this.state.email}
-              onChange={this.handleChange}
               onSubmit={this.handleForgotPassword}
               loading={this.state.loading}
               errors={this.state.errors}
@@ -120,13 +98,10 @@ export class Password extends Component {
         return <Redirect to='/'/>;
     }
   }
-
   /**
    * renders component to DOM
-   *
-   * @memberof Password
-   *
    * @returns {JSX} JSX representation of component
+   * @memberof Password
    */
   render() {
     return this.props.isLoggedIn === true ?

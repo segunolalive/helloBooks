@@ -27,7 +27,7 @@ describe('UpdateProfile Component', () => {
     props = { ...props, isLoggedIn: false };
     const wrapper = shallow(<UpdateProfile { ...props } />);
     expect(wrapper).toBeDefined();
-    expect(wrapper.find('LoginRedirect').length).toBe(1);
+    expect(wrapper.find('Redirect').length).toBe(1);
     expect(wrapper.find('div').length).toBe(0);
   });
 

@@ -37,26 +37,16 @@ nav {
   li.active {
     border-bottom: 4px solid blue;
   }
-}
 
-.header {
   a:hover {
-      background: transparent;
-      font-weight: bold;
-      transform: scale(1.15);
-      transition: all 0.4s ease-out;
-    }
-  @media screen and (min-width: 601px) {
-    a:hover {
-      transform: scale(1.35);
-    }
+    background: transparent;
+    font-weight: bold;
+    transform: scale(1.35);
+    transition: all 0.4s ease-out;
+  }
 
-    a.brand-logo:hover {
-      transform: scale(1.05);
-    }
-    a[href="/logout"]:hover {
-      color: red;
-    }
+  a.brand-logo:hover {
+    transform: scale(1.05);
   }
 }
 
@@ -135,10 +125,6 @@ main {
   }
 }
 
-.suggestion {
-  border-bottom: $cool-Blue-Border;
-}
-
 // admin page styles
 .admin-form {
   background-color: $admin-form-blue;
@@ -170,28 +156,16 @@ main {
   }
 }
 
-#notifications-section {
-  overflow-y: auto;
-  max-height: 70vh;
-  margin-top: 30px;
-
-  @media only screen and (min-width: 601px) {
-    max-height: 90vh;
-    margin-top: 0;
-  }
-}
-
 #toast-container {
-  top: 3rem !important;
-  left: 0;
-  height: 0;
+  left: 35px;
+  right: auto !important;
+  top: 10% !important;
 }
 
-@media only screen and (min-width: 601px) {
+@media only screen and (max-width: 601px) {
   #toast-container {
-    left: 35px;
-    right: auto !important;
-    top: 10% !important;
+    top: 3rem !important;
+    left: 0;
   }
 }
 
@@ -208,20 +182,12 @@ main {
   margin: 5px !important;
 }
 
-.books-table {
-  table-layout: fixed;
-
-  td {
-    overflow-x: scroll; 
-  }
-}
-
 .borrowed-list {
   font: small-caps 1.3rem sans-serif;
 }
 
 .history-table {
-  overflow-x: scroll !important;
+  overflow-x: scroll;
 }
 
 .top-30 {
@@ -306,10 +272,6 @@ input[type=search]:not(.browser-default) {
   margin-bottom: 10px;
 }
 
-.bottom-20 {
-  margin-bottom: 20px;
-}
-
 .filter-dropdown {
   input.select-dropdown{
     margin-bottom: 0;
@@ -332,39 +294,3 @@ input[type=search]:not(.browser-default) {
 .modal-footer {
   background-color: transparent !important;
 }
-
-.fill-page-height {
-  min-height: 90vh !important;
-}
-
-.pdf-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  margin-bottom: 0;
-
-  button {
-    background: black;
-    border: none;
-  }
-}
-
-.next-btn {
-  border-left: 1px solid #ffffff;
-}
-.prev-btn {
-  border-right: 1px solid #ffffff;
-}
-
-.pdf-container {
-  width: 100%;
-  text-align: center;
-  margin: 20px auto 70px;
-}
-
-.page-num {
-  width: 50px !important;
-  border: 2px solid #cccccc !important;
-  border-radius: 6px !important;
-}
-

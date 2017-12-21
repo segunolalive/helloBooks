@@ -8,7 +8,6 @@ const data = {
   adminUser: {
     username: 'Segun',
     password: 'password',
-    confirmPassword: 'password',
     email: 'abc@gmail.com',
     firstName: 'Segun',
     lastName: 'Ola',
@@ -76,19 +75,11 @@ const data = {
     username: 'Segunfly',
     password: 'password'
   },
-  funnyUser: {
-    username: faker.internet.userName(),
-    firstName: 'funny',
-    lastName: 'veryFunny',
-    email: faker.internet.email(),
-    password: 'password',
-    membershipType: 'gold',
-  },
   googleUser: {
     googleId: 'asdf1234',
     username: faker.internet.userName(),
-    firstName: 'funny',
-    lastName: 'veryFunny',
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     password: 'password',
     membershipType: 'gold',
@@ -99,24 +90,6 @@ const data = {
     total: 10,
     description: 'test destruction',
   },
-};
-
-export const modelMock = {
-  newUser: {
-    username: 'modelUser',
-    email: 'modelUser@email.com',
-    password: 'password',
-    confirmPassword: 'password',
-    firstName: 'firstName',
-    lastName: 'lastName'
-  },
-
-  newBook: {
-    title: 'modelBook',
-    description: 'modelBook description',
-    authors: 'Temilaj',
-    categoryId: 1,
-  }
 };
 
 export default data;

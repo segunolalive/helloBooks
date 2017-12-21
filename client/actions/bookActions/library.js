@@ -2,17 +2,14 @@ import axios from 'axios';
 
 import actionTypes from '../actionTypes';
 import API from '../api';
-import Notify from '../Notify';
-import reportNetworkError from '../reportNetworkError';
+import notify from '../notify';
 import queryStringFromObject from '../../utils/queryStringFromObject';
 
 
 /**
  * action creator for getting books
- *
  * @param  {Array} books array of book objects
- *
- * @return {Object}       action object
+ * @return {Object}       action objects
  */
 export const getBooks = books => ({
   type: actionTypes.GET_BOOKS,
@@ -21,9 +18,7 @@ export const getBooks = books => ({
 
 /**
  * action creator for getting books
- *
  * @param  {Array} books array of book objects
- *
  * @return {Object}       action object
  */
 export const getMoreBooks = books => ({
@@ -34,9 +29,7 @@ export const getMoreBooks = books => ({
 
 /**
  * sets pagination metadata in store
- *
  * @param {Object}  paginationData  pagination metadata object
- *
  * @return {Object}                 action object
  */
 export const setPagination = paginationData => ({
@@ -47,7 +40,6 @@ export const setPagination = paginationData => ({
 
 /**
  * @param  {Bool} status
- *
  * @return {Object}      action object
  */
 export const fetchingBooks = status => ({
@@ -58,10 +50,8 @@ export const fetchingBooks = status => ({
 
 /**
  * fetch books in the Library
- *
  * @param {object} options
- *
- * @return {Promise}   resolves with array of books
+ * @return {Promise}   dispatches an action
  */
 export const fetchBooks = options => (dispatch) => {
   const query = queryStringFromObject(options);
@@ -75,21 +65,19 @@ export const fetchBooks = options => (dispatch) => {
         dispatch(bookAction(response.data.books));
         dispatch(setPagination(response.data.metadata));
       } else {
-        Notify.error(response.data.message);
+        notify.error(response.data.message);
       }
     })
     .catch((error) => {
       dispatch(fetchingBooks(false));
-      reportNetworkError(error);
+      notify.error(error.response.data.message);
     });
 };
 
 
 /**
  * action creator for borrowing books
- *
  * @param  {Integer} id book id
- *
  * @return {Object}    action object
  */
 export const borrowBookAction = id => ({
@@ -100,25 +88,23 @@ export const borrowBookAction = id => ({
 
 /**
  * send request to borrow a book from library
- *
  * @param  {integer} userId user id
  * @param  {integer} bookId book id
- *
- * @return {Promise}        resolves with success message
+ * @return {any}    dispatches an action to store
  */
 export const borrowBook = (userId, bookId) => dispatch => (
   axios.post(`${API}/users/${userId}/books`, { id: bookId })
     .then((response) => {
-      Notify.success(response.data.message);
+      notify.success(response.data.message);
       return dispatch(borrowBookAction(bookId));
     })
-    .catch(error => reportNetworkError(error))
+    .catch(error => notify.error(error.response.data.message))
 );
 
 
 /**
  * @param  {Array} categories book categories
- * @return {Object}           dispatches an action to store
+ * @return {Object}    dispatches an action to store
  */
 export const getBookCategoriesAction = categories => ({
   type: actionTypes.GET_BOOK_CATEGORIES,
@@ -127,20 +113,19 @@ export const getBookCategoriesAction = categories => ({
 
 /**
  * get book categories
- *
- * @return {Promise} resolves with a list of book caategories
+ * @return {any} dispatches an action to the redux store
  */
 export const getBookCategories = () => dispatch => (
   axios.get(`${API}/books/category`)
     .then(response => (
       dispatch(getBookCategoriesAction(response.data.categories))
     ))
-    .catch(error => reportNetworkError(error))
+    .catch(error => notify.error(error.response.data.message))
 );
 
 
 export const filterBooksByCategory = categoryId => dispatch => (
   axios.get(`${API}/books?categoryId=${categoryId}`)
     .then(response => dispatch(getBooks(response.data.books)))
-    .catch(error => reportNetworkError(error))
+    .catch(error => notify.error(error.response.data.message))
 );

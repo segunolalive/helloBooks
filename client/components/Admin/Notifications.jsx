@@ -5,9 +5,7 @@ import moment from 'moment';
 
 /**
  * displays admin notifications
- *
  * @param {Object} props
- *
  * @returns {JSX} JSX representation of component
  */
 const Notifications = (props) => {

@@ -8,20 +8,18 @@ import requestImageUrl from '../../utils/requestImageUrl';
 
 /**
  * displays a table row of books
- *
  * @param {object} props
- *
  * @return {JSX} JSX element (table row)
  */
 const BookRow = props => (
-  <tr id={`row-${props.id}`}>
+  <tr>
     <td>
       <img
-        src={(props.cover &&
-          requestImageUrl(props.cover, { width: 80 })) ||
-          BOOK_IMAGE_FALLBACK }
+        src={(props.cover && requestImageUrl(props.cover, { width: 80 })) ||
+          'https://segunolalive.github.io/helloBooks/' +
+          'templates/images/eloquentjs_cover.png'}
         alt={`${props.title} book cover`}
-        style={{ maxWidth: '80px' }}
+        style={{ width: '80px' }}
       >
       </img>
     </td>
