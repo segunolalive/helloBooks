@@ -212,7 +212,7 @@ main {
   table-layout: fixed;
 
   td {
-    overflow-x: scroll; 
+    overflow-x: scroll;
   }
 }
 
@@ -247,6 +247,10 @@ input[type=search]:not(.browser-default) {
   border-bottom: none !important;
   margin: 0px !important;
   padding: 3px !important;
+}
+
+input[type=text], input[type=password] {
+  padding: 5px;
 }
 
 .search-btn {
@@ -368,3 +372,6 @@ input[type=search]:not(.browser-default) {
   border-radius: 6px !important;
 }
 
+.toast-error {
+  background: #B71C1C;
+}

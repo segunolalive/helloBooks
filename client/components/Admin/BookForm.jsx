@@ -82,7 +82,7 @@ const BookForm = (props) => {
               <input
                 type="file"
                 name="cover"
-                accept="image/jpeg image/x-png"
+                accept="image/*"
                 onChange={event => props.onBookConverChange(event)}
               />
             </div>

@@ -1,3 +1,8 @@
+import toastr from 'toastr';
+
+toastr.options.preventDuplicates = true;
+toastr.options.timeOut = 2500;
+
 const Materialize = window.Materialize;
 
 /**
@@ -19,7 +24,7 @@ const success = (message) => {
  * @returns {undefined} toasts an error message
  */
 const error = (message) => {
-  Materialize.toast(message, 2500, 'red darken-4');
+  toastr.error(message);
 };
 
 

@@ -125,6 +125,11 @@ export default {
    */
   signup(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
+    if (typeof username !== 'string' || typeof password !== 'string') {
+      return res.status(400).send({
+        message: 'Invalid username or password'
+      });
+    }
     if (!req.body.username) {
       return res.status(400).send({
         message: 'Username is required'
@@ -162,6 +167,12 @@ export default {
    */
   signin(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
+    const { username, password } = req.body;
+    if (typeof username !== 'string' || typeof password !== 'string') {
+      return res.status(400).send({
+        message: 'Invalid username or password'
+      });
+    }
     if (!req.body.username) {
       return res.status(400).send({
         message: 'Username is required'

@@ -123,6 +123,7 @@
     "sequelize-cli": "^2.8.0",
     "style-loader": "^0.18.2",
     "superagent": "^3.8.1",
+    "toastr": "^2.1.4",
     "url-loader": "^0.5.9",
     "webpack": "^3.5.5",
     "webpack-merge": "^4.1.1",

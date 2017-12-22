@@ -14,6 +14,7 @@ module.exports = {
   collectCoverageFrom: [
     'client/**/*.{js,jsx}',
     '!client/index.js',
+    '!client/utils/expireSession.js',
     '!client/store/**',
     '!client/sw.js',
   ],

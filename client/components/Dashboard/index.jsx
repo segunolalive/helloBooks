@@ -70,7 +70,8 @@ export class Dashboard extends Component {
     const fullname = this.props.user && (
       this.props.user.firstName || this.props.user.lastName
     ) ?
-      `${this.props.user.firstName} ${this.props.user.lastName}` : null;
+      `${this.props.user.firstName || ''} ${this.props.user.lastName || ''}` :
+      null;
     return this.state.reading ? <Redirect to="/read" /> :
       <div>
         <Header
