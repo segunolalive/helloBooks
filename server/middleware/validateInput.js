@@ -125,29 +125,25 @@ export default {
    */
   signup(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
-    if (typeof username !== 'string' || typeof password !== 'string') {
-      return res.status(400).send({
-        message: 'Invalid username or password'
-      });
-    }
-    if (!req.body.username) {
+    const { username, password, email, confirmPassword } = req.body;
+    if (!username || typeof username !== 'string') {
       return res.status(400).send({
         message: 'Username is required'
       });
-    } else if (!req.body.password) {
+    } else if (!password || typeof password !== 'string') {
       return res.status(400).send({
         message: 'Password is required'
       });
-    } else if (!req.body.email) {
+    } else if (!email) {
       return res.status(400).send({
         message: 'Email is required'
       });
-    } else if (!emailRegex.test(req.body.email)) {
+    } else if (!emailRegex.test(email)) {
       return res.status(400).send({
         message: 'Invalid Email'
       });
     } else if (
-      !(req.body.password === req.body.confirmPassword)
+      !(password === confirmPassword)
     ) {
       return res.status(400).send({
         message: 'Passwords do not match'
@@ -168,16 +164,11 @@ export default {
   signin(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
     const { username, password } = req.body;
-    if (typeof username !== 'string' || typeof password !== 'string') {
-      return res.status(400).send({
-        message: 'Invalid username or password'
-      });
-    }
-    if (!req.body.username) {
+    if (!username || typeof username !== 'string') {
       return res.status(400).send({
         message: 'Username is required'
       });
-    } else if (!req.body.password) {
+    } else if (!password || typeof password !== 'string') {
       return res.status(400).send({
         message: 'Password is required'
       });
