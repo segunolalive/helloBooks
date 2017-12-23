@@ -54,6 +54,16 @@ describe('PdfViewer Component', () => {
     expect(wrapper.state().page).toBe(1);
   });
 
+  it('should call onDocumentError if file load encounters an error', () => {
+    const wrapper = setUp();
+    const onPageCompleteSpy = jest.spyOn(
+      wrapper.instance(), 'onDocumentError'
+    );
+    wrapper.instance().onDocumentError(new Error('failed to load pdf'));
+    expect(onPageCompleteSpy).toHaveBeenCalledTimes(1);
+    expect(wrapper.state().fileError).toBe(true);
+  });
+
   it('should call setPage when page is manually inserted', () => {
     const wrapper = setUp();
     const setPageSpy = jest.spyOn(

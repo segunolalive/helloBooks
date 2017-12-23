@@ -22,7 +22,10 @@ const updateProfile = profile => dispatch => (
       Notify.success(response.data.message);
       return dispatch(loginUser(response.data));
     })
-    .catch(error => reportNetworkError(error))
+    .catch((error) => {
+      reportNetworkError(error);
+      return Promise.reject(error);
+    })
 );
 
 export default updateProfile;

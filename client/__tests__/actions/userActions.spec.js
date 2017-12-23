@@ -41,7 +41,7 @@ describe('user Actions', () => {
       });
       const expectedActions = [];
       const store = mockStore({});
-      return store.dispatch(updateProfile({})).then(() => {
+      return store.dispatch(updateProfile({})).catch(() => {
         expect(store.getActions()).toEqual(expectedActions);
         expect(Notify.error).toHaveBeenCalled();
       });

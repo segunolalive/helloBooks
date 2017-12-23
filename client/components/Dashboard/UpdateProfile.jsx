@@ -46,8 +46,10 @@ export class UpdateProfile extends Component {
    */
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.updateProfile(this.state);
-    this.setState(() => ({ redirect: true }));
+    this.props.updateProfile(this.state)
+      .then(() => this.setState(() => ({ redirect: true })))
+      .catch(() => {})
+    ;
   }
 
   /**
