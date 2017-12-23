@@ -27,6 +27,15 @@ const bookReducer = (state = initialState.bookReducer, action) => {
         return book;
       });
       return { ...state, books };
+    case actionTypes.SET_BOOK_QUANTITY_TO_ZERO:
+      books = deepclone(state.books);
+      books = books.map((book) => {
+        if (book.id === action.id) {
+          book.total = 0;
+        }
+        return book;
+      });
+      return { ...state, books };
     case actionTypes.RETURN_BOOK:
       borrowedBooks = state.borrowedBooks.filter(book =>
         book.id !== action.id
