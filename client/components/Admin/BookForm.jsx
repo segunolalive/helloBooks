@@ -91,6 +91,7 @@ const BookForm = (props) => {
                 className="file-path validate"
                 type="text"
                 placeholder="Upload Book Cover"
+                value={props.book.cover}
               />
             </div>
             <div>
@@ -137,6 +138,7 @@ const BookForm = (props) => {
                 className="file-path validate"
                 type="text"
                 placeholder="Upload Book file"
+                value={props.book.bookFile}
               />
             </div>
             <div>

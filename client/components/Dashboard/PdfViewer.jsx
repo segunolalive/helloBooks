@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PDF from 'react-pdf-js';
+import { Redirect } from 'react-router-dom';
 
 import Header from '../Header';
 import LoginRedirect from '../auth/LoginRedirect';
+import Loading from '../common/Loading';
+import Notify from '../../actions/Notify';
 
 /**
  * custom pdf viewer
@@ -17,7 +20,6 @@ import LoginRedirect from '../auth/LoginRedirect';
  */
 export class PdfViewer extends Component {
   state = {};
-
   /**
    * method called when pdf file is completely fetched
    *
@@ -38,6 +40,19 @@ export class PdfViewer extends Component {
    */
   onPageComplete = (page) => {
     this.setState({ page });
+  }
+
+  /**
+   * document error handler
+   *
+   * @param {object}  error
+   *
+   * @return {JSX}          react-router-dom rea=direct component
+   */
+  onDocumentError = (error) => {
+    Notify.error('An error occured while fetching book. Try again later');
+    this.setState(() => ({ fileError: true }));
+    return Promise.reject(new Error('Network error. Could not fetch book'));
   }
 
   /**
@@ -127,14 +142,12 @@ export class PdfViewer extends Component {
     );
   }
 
-  /**
-   * renders component to DOM
-   *
-   * @returns {JSX} JSX representation of component
-   *
-   * @memberof PdfViewer
-   */
-  render() {
+  renderPdf = () => {
+    const loader = <div className="row">
+      <div className="col m6 offset-m3">
+        <Loading text='loading pdf . . .' />
+      </div>
+    </div>;
     const pagination = (this.state.pages) ?
       this.renderPagination(this.state.page, this.state.pages) :
       null;
@@ -149,14 +162,30 @@ export class PdfViewer extends Component {
           <div className="pdf-container">
             <PDF
               file={this.props.bookUrl || BOOK_FALLBACK}
+              fillWidth
+              loading={loader}
               onDocumentComplete={this.onDocumentComplete}
               onPageComplete={this.onPageComplete}
               page={this.state.page}
+              onDocumentError={this.onDocumentError}
             />
             {pagination}
           </div>
         </div> : <LoginRedirect />
     );
+  }
+
+  /**
+   * renders component to DOM
+   *
+   * @returns {JSX} JSX representation of component
+   *
+   * @memberof PdfViewer
+   */
+  render() {
+    return this.state.fileError ?
+      <Redirect to="/dashboard" /> :
+      this.renderPdf();
   }
 }
 

@@ -214,7 +214,18 @@ main {
   td {
     overflow-x: scroll;
   }
+  @media screen and (max-width: 768px) {
+    .borrow-book-btn {
+      padding: 1px 7px 2px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .borrow-book-btn {
+      font-size: 0.65rem;
+    }
+  }
 }
+
 
 .borrowed-list {
   font: small-caps 1.3rem sans-serif;
