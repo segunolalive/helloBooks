@@ -20,8 +20,6 @@ describe('USER CONTROLLER', () => {
       .send({ ...mock.newUser })
       .expect(201)
       .end((err, res) => {
-        console.log('===========\n\n', res.body, '\n\n==========');
-
         assert.equal(res.status, 201);
         assert.isNotNull(res.body.token);
         assert.equal(res.body.token.split('.').length, 3);

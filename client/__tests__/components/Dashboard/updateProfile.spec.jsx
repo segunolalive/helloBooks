@@ -8,7 +8,7 @@ import { mockStoreData } from '../../__mocks__/mockData';
 
 let props = {
   ...mockStoreData.authReducer,
-  updateProfile: jest.fn(),
+  updateProfile: jest.fn(() => Promise.resolve(1)),
 };
 
 const middleware = [thunk];

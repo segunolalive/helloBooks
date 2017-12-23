@@ -275,6 +275,11 @@ describe('Book Controller', () => {
           assert.equal(res.status, 200);
           assert.equal(res.body.message,
             'Successfully deleted book from database');
+          server.get('/api/v1/books/3')
+            .end((err, res) => {
+              assert.equal(res.status, 404);
+              assert.equal(res.body.message, 'Book not found');
+            });
           done();
         });
     });
