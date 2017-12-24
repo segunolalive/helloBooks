@@ -9,7 +9,7 @@ import requestImageUrl from '../../utils/requestImageUrl';
 /**
  * for for adding or editing books
  *
- * @param {object} props
+ * @param {Object} props
  *
  * @returns {JSX} JSX representation of component
  */

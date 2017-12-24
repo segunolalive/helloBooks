@@ -5,7 +5,7 @@ import { Input } from 'react-materialize';
 /**
  * drop-down select for categories
  *
- * @param {object} props
+ * @param {Object} props
  *
  * @returns {JSX} JSX representation of component
  */

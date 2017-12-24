@@ -45,7 +45,7 @@ export class PdfViewer extends Component {
   /**
    * document error handler
    *
-   * @param {object}  error
+   * @param {Object}  error
    *
    * @return {JSX}          react-router-dom rea=direct component
    */
@@ -82,7 +82,7 @@ export class PdfViewer extends Component {
    *
    * @memberof PdfViewer
    *
-   * @param {object} event
+   * @param {Object} event
    *
    * @return {undefined}       sets state
    */

@@ -39,7 +39,7 @@ router.get('/', (req, res) => res.status(200).send({
     '/books/suggestions',
     BookController.suggestedBooks
   )
-  .get('/books/:id', BookController.getBook)
+  .get('/books/:id', validateInput.validateId, BookController.getBook)
 
   .get('/books', validateLimitAndOffset, BookController.getBooks)
 

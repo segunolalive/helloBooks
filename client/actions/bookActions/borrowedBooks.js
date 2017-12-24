@@ -8,7 +8,7 @@ import reportNetworkError from '../reportNetworkError';
 /**
  * @param {Array} borrowedBooks - array of books borrowed by user
  *
- * @returns {object}            - action object
+ * @returns {Object}            - action object
  */
 export const getBorrowedBooksAction = borrowedBooks => ({
   type: actionTypes.GET_BORROWED_BOOKS,
@@ -18,7 +18,7 @@ export const getBorrowedBooksAction = borrowedBooks => ({
 /**
  * @param  {Bool} status
  *
- * @return {object}      action object
+ * @return {Object}      action object
  */
 export const fetchingBorrowedBooks = status => ({
   type: actionTypes.FETCHING_BORROWED_BOOKS,
@@ -45,7 +45,7 @@ export const fetchBorrowedBooks = id => (dispatch) => {
 
 
 /**
-* @param {object} id - user id
+* @param {Object} id - user id
 *
 * @returns {Promise} - dispatches action with all books ever borrowed by user
 */
@@ -60,7 +60,7 @@ export const fetchBorrowingHistory = id => dispatch => (
 /**
  * @param  {integer} id book id
  *
- * @return {object}     action object
+ * @return {Object}     action object
  */
 export const returnBookAction = id => ({
   type: actionTypes.RETURN_BOOK,
@@ -69,8 +69,8 @@ export const returnBookAction = id => ({
 
 
 /**
-* @param {object} userId - user id
-* @param {object} bookId - book id
+* @param {Object} userId - user id
+* @param {Object} bookId - book id
 *
 * @returns {Promise}     - resolves with an array of unreturned borrowed books
 */
@@ -87,7 +87,7 @@ export const returnBook = (userId, bookId) => dispatch => (
 /**
  * @param {Array}    suggestions
 *
-* @returns {object}  action object
+* @returns {Object}  action object
 */
 export const suggestedBooks = suggestions => ({
   type: actionTypes.GET_BOOK_SUGGESTIONS,
@@ -108,7 +108,7 @@ export const getSuggestedBooks = () => dispatch => (
 /**
  * @param {string}    url
 *
-* @returns {object}   action object
+* @returns {Object}   action object
 */
 export const setBookToRead = url => ({
   type: actionTypes.SET_BOOK_TO_READ,

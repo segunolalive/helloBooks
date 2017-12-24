@@ -9,7 +9,7 @@ import requestImageUrl from '../../utils/requestImageUrl';
 /**
  * displays a table row of books
  *
- * @param {object} props
+ * @param {Object} props
  *
  * @return {JSX} JSX element (table row)
  */

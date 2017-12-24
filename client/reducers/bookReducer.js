@@ -6,10 +6,10 @@ import initialState from './initialState';
 /**
  * Reducer that handles book actions
  *
- * @param {object} state   initial state for the auth section of the store
- * @param {object} action  the dispatched action
+ * @param {Object} state   initial state for the auth section of the store
+ * @param {Object} action  the dispatched action
  *
- * @returns {object}       new state of the book section of the store
+ * @returns {Object}       new state of the book section of the store
  */
 const bookReducer = (state = initialState.bookReducer, action) => {
   let books, borrowedBooks;

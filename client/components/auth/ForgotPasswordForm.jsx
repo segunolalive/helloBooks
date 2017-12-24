@@ -8,7 +8,7 @@ import Loading from '../common/Loading';
 /**
  * renders forgot password form
  *
- * @param {object} props
+ * @param {Object} props
  *
  * @returns {JSX}  JSX representation of commponent
  */

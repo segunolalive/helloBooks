@@ -36,7 +36,7 @@ export const setLoginStatus = status => ({
 /**
  * async action creator for user login
  *
- * @param {object} data - user data
+ * @param {Object} data - user data
  *
  * @returns {Promise}   - resolves with user data and authorization token
  */

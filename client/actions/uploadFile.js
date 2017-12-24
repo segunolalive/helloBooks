@@ -3,7 +3,7 @@ import request from 'superagent';
 /**
  * utility function for uploading files
  *
- * @param {object} file  DOM file object
+ * @param {Object} file  DOM file object
  *
  * @returns {Promise} resolves with file metadata
  */

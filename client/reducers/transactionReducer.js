@@ -5,11 +5,11 @@ import initialState from './initialState';
 /**
  * Reducer that handles user authentication
  *
- * @param {object} state   initial state for the transactions
+ * @param {Object} state   initial state for the transactions
  *                         section of the store
- * @param {object} action  the dispatched action
+ * @param {Object} action  the dispatched action
  *
- * @returns {object}       new state of the transactions section of the store
+ * @returns {Object}       new state of the transactions section of the store
  */
 export default (state = initialState.transactionReducer, action) => {
   switch (action.type) {

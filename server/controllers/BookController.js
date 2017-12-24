@@ -10,8 +10,8 @@ const BookController = {
    *
    * @method
    *
-   * @param  {object}   req  - express http request object
-   * @param  {object}   res  - express http response object
+   * @param  {Object}   req  - express http request object
+   * @param  {Object}   res  - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
    *
    * @return {Object}        - express http response object
@@ -46,8 +46,8 @@ const BookController = {
    *
    * @method
    *
-   * @param  {object}    req - express http request object
-   * @param  {object}    res - express http response object
+   * @param  {Object}    req - express http request object
+   * @param  {Object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
    *
    * @return {Object}        - express http response object
@@ -69,8 +69,8 @@ const BookController = {
    *
    * @method
    *
-   * @param  {object}    req - express http request object
-   * @param  {object}    res - express http response object
+   * @param  {Object}    req - express http request object
+   * @param  {Object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
    *
    * @return {Object}        - express http response object
@@ -101,8 +101,8 @@ const BookController = {
    *
    * @method
    *
-   * @param  {object}    req - express http request object
-   * @param  {object}    res - express http response object
+   * @param  {Object}    req - express http request object
+   * @param  {Object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
    *
    * @return {Object}        - express http response object
@@ -130,8 +130,8 @@ const BookController = {
    *
    * @method
    *
-   * @param  {object}    req - express http request object
-   * @param  {object}    res - express http response object
+   * @param  {Object}    req - express http request object
+   * @param  {Object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
    *
    * @return {Object}        - express http response object
@@ -169,8 +169,8 @@ const BookController = {
    *
    * @method
    *
-   * @param  {object}    req - express http request object
-   * @param  {object}    res - express http response object
+   * @param  {Object}    req - express http request object
+   * @param  {Object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
    *
    * @return {Object}        - express http response object
@@ -208,8 +208,8 @@ const BookController = {
    *
    * @method
    *
-   * @param  {object} req    - express http request object
-   * @param  {object} res    - express http response object
+   * @param  {Object} req    - express http request object
+   * @param  {Object} res    - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
    *
    * @return {Object}        - express http response object
@@ -230,8 +230,8 @@ const BookController = {
    *
    * @method
    *
-   * @param  {object}    req - express http request object
-   * @param  {object}    res - express http response object
+   * @param  {Object}    req - express http request object
+   * @param  {Object}    res - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
    *
    * @return {Object}        - express http response object
@@ -304,8 +304,8 @@ const BookController = {
    *
    * @method
    *
-   * @param  {object} req    - express http request object
-   * @param  {object} res    - express http response object
+   * @param  {Object} req    - express http request object
+   * @param  {Object} res    - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
    *
    * @return {Object}        - express http response object
@@ -355,8 +355,8 @@ const BookController = {
    *
    * @method
    *
-   * @param  {object} req    - express http request object
-   * @param  {object} res    - express http response object
+   * @param  {Object} req    - express http request object
+   * @param  {Object} res    - express http response object
    * @param  {Function} next - calls th enect middleware in the stack
    *
    * @return {Object}        - express http response object

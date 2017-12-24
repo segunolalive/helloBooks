@@ -18,8 +18,8 @@ const UserController = {
    *
    * @method
    *
-   * @param  {object}   req  - express http request object
-   * @param  {object}   res  - express http response object
+   * @param  {Object}   req  - express http request object
+   * @param  {Object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
    *
    * @return {Object}        - returns an http response object
@@ -73,8 +73,8 @@ const UserController = {
    *
    * @method
    *
-   * @param  {object}   req  - express http request object
-   * @param  {object}   res  - express http response object
+   * @param  {Object}   req  - express http request object
+   * @param  {Object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
    *
    * @return {Object}        - returns an http response object
@@ -90,12 +90,13 @@ const UserController = {
               id,
               email,
               username,
+              firstName,
+              lastName,
               isAdmin,
               membershipType,
             } = user;
             const jwtOptions = { id, email, username, isAdmin, membershipType };
             const token = getJWT(jwtOptions);
-            const { firstName, lastName } = user;
             return res.status(200).json({
               token,
               id,
@@ -119,8 +120,8 @@ const UserController = {
    *
    * @method
    *
-   * @param  {object}   req  - express http request object
-   * @param  {object}   res  - express http response object
+   * @param  {Object}   req  - express http request object
+   * @param  {Object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
    *
    * @return {Object}        - returns an http response object
@@ -147,12 +148,13 @@ const UserController = {
         const {
           id,
           email,
+          firstName,
+          lastName,
           isAdmin,
           membershipType,
         } = user;
         const jwtOptions = { id, email, username, isAdmin, membershipType };
         const token = getJWT(jwtOptions);
-        const { firstName, lastName } = user;
         return res.status(200).json({
           token,
           id,
@@ -175,8 +177,8 @@ const UserController = {
    *
    * @method
    *
-   * @param  {object}   req  - express http request object
-   * @param  {object}   res  - express http response object
+   * @param  {Object}   req  - express http request object
+   * @param  {Object}   res  - express http response object
    * @param  {Function} next - calls the next middleware in the stack
    *
    * @return {Object}        - returns an http response object
@@ -213,8 +215,8 @@ const UserController = {
   *
   * @method
   *
-  * @param  {object}   req  - express http request object
-  * @param  {object}   res  - express http response object
+  * @param  {Object}   req  - express http request object
+  * @param  {Object}   res  - express http response object
   * @param  {Function} next - calls the next middleware in the stack
   *
   * @return {Object}        - returns an http response object

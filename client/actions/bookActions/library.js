@@ -59,7 +59,7 @@ export const fetchingBooks = status => ({
 /**
  * fetch books in the Library
  *
- * @param {object} options
+ * @param {Object} options
  *
  * @return {Promise}   resolves with array of books
  */

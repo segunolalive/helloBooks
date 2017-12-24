@@ -1,8 +1,8 @@
 {
   "name": "HelloBooks",
-  "shortname": "HelloBooks",
+  "short_name": "HelloBooks",
   "description": "A library application.",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#011b33",
   "theme_color": "#011b33",

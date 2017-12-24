@@ -79,7 +79,7 @@ export class Library extends Component {
    *
    * @memberof Library
    *
-   * @returns {object} books of specified category
+   * @returns {Object} books of specified category
    */
   handleSelectCategory = (event) => {
     const categoryId = event.target.value;
@@ -104,7 +104,7 @@ export class Library extends Component {
   /**
    * updates state with value of search input
    *
-   * @param  {object} event  form submission event
+   * @param  {Object} event  form submission event
    *
    * @return {undefined}     calls setState
    */
@@ -117,7 +117,7 @@ export class Library extends Component {
   /**
    * searches for books matching input value
    *
-   * @param  {object} event  form submission event
+   * @param  {Object} event  form submission event
    *
    * @return {undefined}       sends a network request
    */

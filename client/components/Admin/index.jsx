@@ -34,7 +34,7 @@ export class Admin extends Component {
    *
    * @memberof Admin
    *
-   * @param {object} props
+   * @param {Object} props
    */
   constructor(props) {
     super(props);
@@ -89,7 +89,7 @@ export class Admin extends Component {
   /**
    * form submission handler
    *
-   * @param {object} event
+   * @param {Object} event
    *
    * @memberof Admin
    *
@@ -125,7 +125,7 @@ export class Admin extends Component {
   /**
    * updates component state when form values (except select field) change
    *
-   * @param {object} event
+   * @param {Object} event
    *
    * @memberof Admin
    *
@@ -142,7 +142,7 @@ export class Admin extends Component {
   /**
    * handles image Upload
    *
-   * @param  {object} event
+   * @param  {Object} event
    *
    * @return {Function}    calls sets state
    */
@@ -206,7 +206,7 @@ export class Admin extends Component {
   /**
    * handles selection of book category
    *
-   * @param {object} event
+   * @param {Object} event
    *
    * @memberof Admin
    *
@@ -221,7 +221,7 @@ export class Admin extends Component {
    *
    * @memberof Admin
    *
-   * @param {object} event
+   * @param {Object} event
    *
    * @returns {undefined} updates list of categories
    */

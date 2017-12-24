@@ -5,7 +5,7 @@ import { Col, ProgressBar, Row } from 'react-materialize';
 /**
  * displays a loading progress bar
  *
- * @param {object} props object with property, text
+ * @param {Object} props object with property, text
  *
  * @returns {JSX} JSX element
  */

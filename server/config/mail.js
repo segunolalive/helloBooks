@@ -16,7 +16,7 @@ export const transporter = nodemailer.createTransport({
  * @param  {string} bcc
  * @param  {string} subject
  * @param  {string} html
- * @return {object}         mail options
+ * @return {Object}         mail options
  */
 export const mailOptions = (to, bcc, subject, html) => ({
   from: '"noreply: Hello Books" <zeusdynamic@gmail.com>',

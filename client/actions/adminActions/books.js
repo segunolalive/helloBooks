@@ -7,9 +7,9 @@ import reportNetworkError from '../reportNetworkError';
 /**
  * action creator for editing book
  *
- * @param  {object} book
+ * @param  {Object} book
  *
- * @return {object}     action object
+ * @return {Object}     action object
  */
 export const editBookAction = book => ({
   type: actionTypes.EDIT_BOOK_INFO,
@@ -22,7 +22,7 @@ export const editBookAction = book => ({
  * @param  {Integer} id book Id
  * @param  {Object} data book data with with to update database
  *
- * @return {object}      dispatches an action to the redux store
+ * @return {Object}      dispatches an action to the redux store
  */
 export const editBook = (id, data) => dispatch => (
   axios.put(`${API}/books/${id}`, data)
@@ -36,9 +36,9 @@ export const editBook = (id, data) => dispatch => (
 /**
  * action creator for adding new book
  *
- * @param  {object} book
+ * @param  {Object} book
  *
- * @return {object}     action object
+ * @return {Object}     action object
  */
 export const createBook = book => ({
   type: actionTypes.CREATE_BOOK,
@@ -49,7 +49,7 @@ export const createBook = book => ({
 /**
  * add new book to database
  *
- * @param  {object} data  book data
+ * @param  {Object} data  book data
  *
  * @return {Promise}      resolves with success message
  */
@@ -68,7 +68,7 @@ export const addBook = data => dispatch => (
  *
  * @param  {Integer} id book id
  *
- * @return {object}     action object
+ * @return {Object}     action object
  */
 export const deleteBookAction = id => ({
   type: actionTypes.DELETE_BOOK,
@@ -96,9 +96,9 @@ export const deleteBook = bookId => dispatch => (
 /**
  * action creator for adding book category
  *
- * @param  {object} category
+ * @param  {Object} category
  *
- * @return {object}     action object
+ * @return {Object}     action object
  */
 export const addCategory = category => ({
   type: actionTypes.ADD_BOOK_CATEGORY,
@@ -110,7 +110,7 @@ export const addCategory = category => ({
  *
  * @param  {string} message
  *
- * @return {object}     action object
+ * @return {Object}     action object
  */
 export const addCategoryFailure = message => ({
   type: actionTypes.ADD_BOOK_CATEGORY_FAILURE,
@@ -120,7 +120,7 @@ export const addCategoryFailure = message => ({
 /**
  * addds a new book category
  *
- * @param  {object} category new book category
+ * @param  {Object} category new book category
  *
  * @return {Promise}          resolves with success message
  */

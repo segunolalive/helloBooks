@@ -7,7 +7,7 @@ import reportNetworkError from '../reportNetworkError';
 
 
 /**
- * @param  {object} notifications
+ * @param  {Object} notifications
  *
  * @return {Object}      action object
  */
@@ -27,7 +27,7 @@ export const moreAdminNotifications = notifications => ({
 });
 
 /**
- * @param  {object} pagination
+ * @param  {Object} pagination
  *
  * @return {Object}      action object
  */
@@ -50,7 +50,7 @@ export const fetchingNotifications = status => ({
 /**
  * get admin notifications from server
  *
- * @param {object} options
+ * @param {Object} options
  *
  * @return {Function} dispatches an action creator
  */

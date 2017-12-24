@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import renderer from 'react-test-renderer';
 import Navigation from '../../../components/Header/Navigation';
 
 jest.mock('react-router-dom');

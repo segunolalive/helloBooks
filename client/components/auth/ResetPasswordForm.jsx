@@ -9,7 +9,7 @@ import Loading from '../common/Loading';
 /**
  * renders reset password form
  *
- * @param {object} props
+ * @param {Object} props
  *
  * @returns {JSX}  JSX representation of commponent
  */

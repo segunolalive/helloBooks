@@ -39,7 +39,8 @@ const ExtractTextConfig = new ExtractTextPlugin({ filename: 'style.css' });
 
 const CommonsChunkPlugin = new webpack.optimize.CommonsChunkPlugin({
   name: 'common',
-  filename: 'js/common.js',
+  filename: 'common.js',
+  minChunks: 2,
 });
 
 const WorkBoxConfig = new workboxPlugin({

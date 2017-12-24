@@ -35,7 +35,7 @@ export class SignUp extends Component {
    *
    * @memberof SignUp
    *
-   * @param {object} event
+   * @param {Object} event
    *
    * @returns {undefined} redirects to dashboard
    */
@@ -49,7 +49,7 @@ export class SignUp extends Component {
 
   /**
    * google login handler
-   * @param  {object} response google auth Object
+   * @param  {Object} response google auth Object
    *
    * @return {Undefined}       dispatches signup action action
    */
