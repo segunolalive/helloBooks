@@ -31,6 +31,7 @@ describe('Book Controller', () => {
           assert(res.body.books[0].authors, 'marijn haverbeke');
           assert(res.body.books[0].total, 20);
           assert(res.body.books[0].categoryId, 1);
+          assert(res.body.books.length, 4);
           done();
         });
     });
@@ -49,6 +50,7 @@ describe('Book Controller', () => {
           assert(res.body.books[1].categoryId, 1);
           assert(res.body.books[1].title, 'eloquent fish');
           assert(res.body.books[2].categoryId, 1);
+          assert(res.body.books.length, 3);
           done();
         });
     });
@@ -59,15 +61,9 @@ describe('Book Controller', () => {
         .end((err, res) => {
           assert.equal(res.status, 200);
           assert(Array.isArray(res.body.books));
-          assert(res.body.books[0].title, 'eloquent fish');
-          assert(res.body.books[0].authors, 'flo harrison, dan fish');
-          assert(res.body.books[0].description, 'feel the fish');
-          assert(res.body.books[0].total, 10);
-          assert(res.body.books[0].categoryId, 1);
-          assert(res.body.metadata);
-          assert(res.body.metadata.pageNumber, 1);
-          assert(res.body.metadata.pageCount, 1);
-          assert(res.body.metadata.total, 1);
+          assert.include(res.body.books[0].title, 'fish');
+          assert.include(res.body.books[0].authors, 'flo harrison, dan fish');
+          assert.include(res.body.books[0].description, 'feel the fish');
           done();
         });
     });
@@ -127,6 +123,7 @@ describe('Book Controller', () => {
           done();
         });
     });
+
     it('should allow users borrow book again after returning', (done) => {
       server
         .post('/api/v1/users/1/books')
@@ -185,14 +182,24 @@ describe('Book Controller', () => {
   });
   describe('#returnBook', () => {
     it('should allow logged in users return borrowed book', (done) => {
+      const id = 1;
       server
         .put('/api/v1/users/1/books')
         .set('X-ACCESS-TOKEN', jwtToken)
-        .send({ id: 1 })
+        .send({ id })
         .expect(200)
         .end((err, res) => {
           assert.equal(res.status, 200);
-          done();
+          assert.equal(res.body.message,
+            'You have successfully returned eloquent javascript');
+          server
+            .get('/api/v1/users/1/books?returned=false')
+            .set('X-ACCESS-TOKEN', jwtToken)
+            .end((err, res) => {
+              const ids = res.body.books.map(book => book.id);
+              assert.notInclude(ids, id);
+              done();
+            });
         });
     });
     it('should send an error message if user tries to return a book they don\'t currently have', (done) => {
@@ -340,7 +347,15 @@ describe('Book Controller', () => {
             assert.equal(res.body.message,
               'Successfully added new category, Rust, to Library');
             assert.equal(res.body.category.category, 'Rust');
-            done();
+            server
+              .get('/api/v1/books/category')
+              .expect(200)
+              .end((err, res) => {
+                const { categories } = res.body;
+                const newestCategory = categories[categories.length - 1];
+                assert.equal(newestCategory.category, 'Rust');
+                done();
+              });
           });
       });
     });
@@ -365,7 +380,7 @@ describe('Book Server Errors', () => {
   afterEach(() => {
     sandbox = sandbox.restore();
   });
-  describe('borrowBook', () => {
+  describe('#borrowBook', () => {
     it('should send a message if an error occurs while looking up the book',
       (done) => {
         const stub = sandbox.stub(BorrowedBook, 'findOne');
@@ -382,24 +397,8 @@ describe('Book Server Errors', () => {
             done();
           });
       });
-    it('should send a message if an error occurs while creating the record',
-      (done) => {
-        const stub = sandbox.stub(BorrowedBook, 'create');
-        stub.rejects();
-        server
-          .post('/api/v1/users/1/books')
-          .set('X-ACCESS-TOKEN', jwtToken)
-          .send({ id: 'invalid' })
-          .expect(500)
-          .end((err, res) => {
-            assert.equal(res.status, 500);
-            assert.equal(res.body.message,
-              'Something went wrong. Internal server error');
-            done();
-          });
-      });
   });
-  describe('deleteBook', () => {
+  describe('#deleteBook', () => {
     it('should send a message if an error occurs while deleting book',
       (done) => {
         const stub = sandbox.stub(Book, 'destroy');

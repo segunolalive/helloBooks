@@ -20,7 +20,9 @@ export default {
   (client) => {
     client
       .url('localhost:8080/history')
+      .waitForElementVisible('#toast-container')
       .assert.urlEquals('http://localhost:8080/login')
+      .assert.containsText('.toast', 'Login to proceed')
       .end();
   }
 };

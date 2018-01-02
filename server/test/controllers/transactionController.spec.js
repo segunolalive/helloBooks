@@ -44,7 +44,7 @@ describe('Transaction Controller', () => {
     before((done) => {
       server
         .post('/api/v1/users/signin')
-        .send(mock.googleUser)
+        .send(mock.adminUser)
         .end((err, res) => {
           jwtToken = res.body.token;
           done();
@@ -52,17 +52,17 @@ describe('Transaction Controller', () => {
     });
     it('should fetch user transaction history', (done) => {
       server
-        .get('/api/v1/users/2/transactions')
+        .get('/api/v1/users/1/transactions')
         .set('X-ACCESS-TOKEN', jwtToken)
         .expect(200)
         .end((err, res) => {
+          const { notifications, metadata } = res.body;
           assert.equal(res.status, 200);
-          assert(res.body.notifications);
-          assert(Array.isArray(res.body.notifications));
-          assert(res.body.metadata);
-          assert.equal(res.body.metadata.pageNumber, 1);
-          assert.equal(res.body.metadata.pageCount, 0);
-          assert.equal(res.body.metadata.total, 0);
+          assert.equal(notifications[0].type, 'return');
+          assert.equal(notifications[0].username, 'segun');
+          assert.equal(metadata.pageNumber, 1);
+          assert.equal(metadata.pageCount, 1);
+          assert.equal(metadata.total, 3);
           done();
         });
     });
@@ -77,7 +77,8 @@ describe('Transaction Controller', () => {
           .expect(500)
           .end((err, res) => {
             assert.equal(res.status, 500);
-            assert(res.body.error);
+            assert.equal(res.body.message,
+              'Something went wrong. Internal server error');
             sandbox = sandbox.restore();
             done();
           });

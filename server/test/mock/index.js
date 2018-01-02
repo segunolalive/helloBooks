@@ -14,6 +14,15 @@ const data = {
     lastName: 'Ola',
     isAdmin: true,
   },
+  user2: {
+    username: 'debo',
+    password: 'password',
+    email: 'abcd@gmail.com',
+    firstName: 'Debo',
+    lastName: 'Ola',
+    isAdmin: false,
+    passwordResetToken
+  },
   wrongPassword: {
     username: 'Segun',
     password: 'flyhigh',

@@ -20,24 +20,6 @@ export default {
       .end();
   },
 
-  'admin user can add new book category': (client) => {
-    client
-      .waitForElementVisible('#dashboard')
-      .url('http://localhost:8080/admin')
-      .waitForElementVisible('#admin')
-      .setValue('#category-input', 'comedy')
-      .submitForm('#category-form')
-      .waitForElementVisible('#toast-container')
-      .assert.containsText('.toast',
-        'Successfully added new category, comedy, to Library')
-      .click('#library-nav-link')
-      .waitForElementVisible('.select-wrapper')
-      .click('.select-wrapper')
-      .waitForElementVisible('.dropdown-content li:nth-child(5)')
-      .assert.containsText('.dropdown-content li:nth-child(5) span', 'comedy')
-      .end();
-  },
-
   'admin user can add new book': (client) => {
     client
       .waitForElementVisible('#dashboard')
@@ -54,9 +36,10 @@ export default {
       .waitForElementVisible('#toast-container')
       .assert.containsText('.toast',
         'Successfully added crud code to Library')
-      // .click('#library-nav-link')
-      // .waitForElementVisible('.books-table')
-      // .assert.containsText('#row-5 td:nth-child(2) a.innerHTML', 'crud code')
+      .url('localhost:8080/library')
+      .waitForElementVisible('.books-table')
+      .waitForElementVisible('#row-5')
+      .assert.containsText('#row-5 td:nth-child(2) a', 'crud code')
       .end();
   },
 
@@ -67,6 +50,26 @@ export default {
       .waitForElementVisible('body')
       .url('localhost:8080/admin')
       .assert.urlEquals('http://localhost:8080/login')
+      .waitForElementVisible('#toast-container')
+      .assert.containsText('.toast', 'Login to proceed')
       .end();
-  }
+  },
+
+  'admin user can add new book category': (client) => {
+    client
+      .waitForElementVisible('#dashboard')
+      .url('http://localhost:8080/admin')
+      .waitForElementVisible('#admin')
+      .setValue('#category-input', 'comedy')
+      .submitForm('#category-form')
+      .waitForElementVisible('#toast-container')
+      .assert.containsText('.toast',
+        'Successfully added new category, comedy, to Library')
+      .url('localhost:8080/library')
+      .waitForElementVisible('.select-dropdown')
+      .click('input.select-dropdown')
+      .waitForElementVisible('ul.dropdown-content')
+      .assert.containsText('ul.dropdown-content li:nth-child(5) span', 'comedy')
+      .end();
+  },
 };

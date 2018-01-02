@@ -5,16 +5,17 @@ import { getOptions, paginate } from '../helpers/pagination';
 /**
  * fetch all notifications for admin
  *
- * @param  {Object} req             - express http request object
- * @param  {Object} res             - express http response object
- * @param  {Object} options         - optional arguement with keys history and
+ * @param  {Object} req                - express http request object
+ * @param  {Object} res                - express http response object
+ * @param  {Object} next               - calls next middleware in the stack
+ * @param  {Object} options            - optional arguement with keys history and
  * admin
- * @param  {Bool} options.history   - return user transaction history if true
- * @param  {Bool} options.admin     - return site transactions if true
+ * @param  {boolean} options.history   - return user transaction history if true
+ * @param  {boolean} options.admin     - return site transactions if true
  *
  * @return {Object}                 - express http response object
  */
-export default (req, res, options) => {
+export default (req, res, next, options) => {
   const paginationOptions = getOptions(req);
   let query = { order: [['id', 'DESC']] };
   if (options.history) {
@@ -32,9 +33,5 @@ export default (req, res, options) => {
           Number(paginationOptions.limit), paginationOptions.offset)
       })
     ))
-    .catch(error => (
-      res.status(500).send({
-        error,
-      })
-    ));
+    .catch(error => next(error));
 };

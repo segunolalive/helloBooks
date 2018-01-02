@@ -79,7 +79,7 @@ router.get('/', (req, res) => res.status(200).send({
     '/users/:id/transactions',
     authenticate,
     validateInput.validateId,
-    (req, res) => TransactionController(req, res, { history: true })
+    (req, res, next) => TransactionController(req, res, next, { history: true })
   )
   .post(
     '/users/reset-password/:token',
@@ -120,7 +120,7 @@ router.get('/', (req, res) => res.status(200).send({
     '/admin-notifications',
     authenticate,
     ensureIsAdmin,
-    (req, res) => TransactionController(req, res, { admin: true })
+    (req, res, next) => TransactionController(req, res, next, { admin: true })
   )
   // Send a message if route does not exist
   .get('*', (req, res) => res.status(404).send({

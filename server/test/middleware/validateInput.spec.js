@@ -7,7 +7,7 @@ import mock from '../mock';
 const server = supertest.agent(app);
 
 describe('validateInput', () => {
-  describe('signup', () => {
+  describe('#signup', () => {
     it('returns an error message if username is not supplied', (done) => {
       server
         .post('/api/v1/users/signup')
@@ -57,7 +57,7 @@ describe('validateInput', () => {
     });
   });
 
-  describe('signup', () => {
+  describe('#signin', () => {
     it('returns an error message if username is not supplied', (done) => {
       server
         .post('/api/v1/users/signin')

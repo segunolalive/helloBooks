@@ -130,64 +130,62 @@ describe('USER CONTROLLER', () => {
           done();
         });
     });
-    describe('#getBorrowedBooks', () => {
-      before((done) => {
+  });
+
+  describe('#getBorrowedBooks', () => {
+    before((done) => {
+      server
+        .post('/api/v1/users/signin')
+        .send(mock.adminUser)
+        .end((err, res) => {
+          jwtToken = res.body.token;
+          done();
+        });
+    });
+    it('should allow users view all the books they have borrowed',
+      (done) => {
         server
-          .post('/api/v1/users/signin')
-          .send(mock.adminUser)
+          .get('/api/v1/users/1/books')
+          .set('X-ACCESS-TOKEN', jwtToken)
           .end((err, res) => {
-            jwtToken = res.body.token;
+            assert.equal(res.status, 200);
+            assert.equal(res.body.books[0].title, 'eloquent fish');
+            assert.equal(res.body.books[0].id, 4);
+            assert.equal(res.body.books[0].categoryId, 1);
             done();
           });
       });
-      it('should allow users view all the books they have borrowed',
-        (done) => {
-          server
-            .get('/api/v1/users/1/books')
-            .set('X-ACCESS-TOKEN', jwtToken)
-            .end((err, res) => {
-              assert.equal(res.status, 200);
-              assert.equal(res.body.books[0].title, 'eloquent fish');
-              assert.equal(res.body.books[0].id, 4);
-              assert.equal(res.body.books[0].categoryId, 1);
-              done();
-            });
-        });
-      it('should allow users view books they have not returned',
-        (done) => {
-          server
-            .get('/api/v1/users/1/books?returned=false')
-            .set('X-ACCESS-TOKEN', jwtToken)
-            .end((err, res) => {
-              assert.equal(res.status, 200);
-              assert(res.body.books);
-              assert(Array.isArray(res.body.books));
-              assert.equal(res.body.books[0].title, 'eloquent fish');
-              assert.equal(res.body.books[0].id, 4);
-              assert.equal(res.body.books[0].categoryId, 1);
-              assert.equal(res.body.books[1].title, 'eloquent ruby');
-              assert.equal(res.body.books[1].id, 2);
-              assert.equal(res.body.books[1].categoryId, 2);
-              done();
-            });
-        });
-      it('should allow users view books they have returned',
-        (done) => {
-          server
-            .get('/api/v1/users/1/books?returned=true')
-            .set('X-ACCESS-TOKEN', jwtToken)
-            .end((err, res) => {
-              assert.equal(res.status, 200);
-              assert(res.body.books);
-              assert(Array.isArray(res.body.books));
-              assert.equal(res.body.books[0].title, 'Learn Rust');
-              assert.equal(res.body.books[0].id, 1);
-              assert.equal(res.body.books[0].categoryId, 1);
+    it('should allow users view books they have not returned',
+      (done) => {
+        server
+          .get('/api/v1/users/1/books?returned=false')
+          .set('X-ACCESS-TOKEN', jwtToken)
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            assert(res.body.books);
+            assert(Array.isArray(res.body.books));
+            assert.equal(res.body.books[0].title, 'eloquent fish');
+            assert.equal(res.body.books[0].id, 4);
+            assert.equal(res.body.books[0].categoryId, 1);
+            done();
+          });
+      });
+    it('should allow users view books they have returned',
+      (done) => {
+        server
+          .get('/api/v1/users/1/books?returned=true')
+          .set('X-ACCESS-TOKEN', jwtToken)
+          .end((err, res) => {
+            assert.equal(res.status, 200);
+            assert(res.body.books);
+            assert(Array.isArray(res.body.books));
+            assert.equal(res.body.books[0].title, 'Learn Rust');
+            assert.equal(res.body.books[0].id, 1);
+            assert.equal(res.body.books[0].categoryId, 1);
 
-              done();
-            });
-        });
-    });
+            done();
+          });
+      });
   });
 
   describe('#passwordResetMail', () => {

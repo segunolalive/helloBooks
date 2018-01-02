@@ -6,7 +6,7 @@ const passwordResetToken = getJWT({ id: 2 }, '1h');
 db.User.sync()
   .then(() => {
     db.User.bulkCreate([{
-      username: 'Segun',
+      username: 'segun',
       password: 'password',
       email: 'abc@gmail.com',
       firstName: 'Segun',
