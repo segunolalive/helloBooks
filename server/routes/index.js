@@ -32,10 +32,16 @@ router.get('/', (req, res) => res.status(200).send({
   )
   .post('/users/forgot-password',
     validateInput.requestPasswordReset,
-    userController.passwordResetMail)
-  .get('/books/category', bookController.getBookCategories)
-  .get('/books/:id', bookController.getBook)
-  .get('/books', validateLimitAndOffset, bookController.getBooks)
+    UserController.passwordResetMail)
+  .get('/books/category', BookController.getBookCategories)
+
+  .get(
+    '/books/suggestions',
+    BookController.suggestedBooks
+  )
+  .get('/books/:id', validateInput.validateId, BookController.getBook)
+
+  .get('/books', validateLimitAndOffset, BookController.getBooks)
 
   // Protected routes
   .put(

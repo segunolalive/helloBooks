@@ -4,6 +4,14 @@ import PropTypes from 'prop-types';
 import Header from '../Header';
 import Loading from '../common/Loading';
 
+
+/**
+ * renders forgot password form
+ *
+ * @param {Object} props
+ *
+ * @returns {JSX}  JSX representation of commponent
+ */
 const ForgotPasswordForm = props => (
   <div>
     <Header />

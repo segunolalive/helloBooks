@@ -182,6 +182,25 @@ main {
   margin: 5px !important;
 }
 
+.books-table {
+  table-layout: fixed;
+
+  td {
+    overflow-x: scroll;
+  }
+  @media screen and (max-width: 768px) {
+    .borrow-book-btn {
+      padding: 1px 7px 2px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .borrow-book-btn {
+      font-size: 0.65rem;
+    }
+  }
+}
+
+
 .borrowed-list {
   font: small-caps 1.3rem sans-serif;
 }
@@ -213,6 +232,10 @@ input[type=search]:not(.browser-default) {
   border-bottom: none !important;
   margin: 0px !important;
   padding: 3px !important;
+}
+
+input[type=text], input[type=password] {
+  padding: 5px;
 }
 
 .search-btn {
@@ -293,4 +316,43 @@ input[type=search]:not(.browser-default) {
 
 .modal-footer {
   background-color: transparent !important;
+}
+
+.fill-page-height {
+  min-height: 90vh !important;
+}
+
+.pdf-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 0;
+
+  button {
+    background: black;
+    border: none;
+  }
+}
+
+.next-btn {
+  border-left: 1px solid #ffffff;
+}
+.prev-btn {
+  border-right: 1px solid #ffffff;
+}
+
+.pdf-container {
+  width: 100%;
+  text-align: center;
+  margin: 20px auto 70px;
+}
+
+.page-num {
+  width: 50px !important;
+  border: 2px solid #cccccc !important;
+  border-radius: 6px !important;
+}
+
+.toast-error {
+  background: #B71C1C;
 }

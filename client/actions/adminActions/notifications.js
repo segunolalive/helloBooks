@@ -6,6 +6,11 @@ import notify from '../notify';
 import queryStringFromObject from '../../utils/queryStringFromObject';
 
 
+/**
+ * @param  {Object} notifications
+ *
+ * @return {Object}      action object
+ */
 export const adminNotifications = notifications => ({
   type: actionTypes.GET_ADMIN_NOTIFICATIONS,
   notifications,
@@ -16,7 +21,11 @@ export const moreAdminNotifications = notifications => ({
   notifications,
 });
 
-
+/**
+ * @param  {Object} pagination
+ *
+ * @return {Object}      action object
+ */
 export const setPagination = pagination => ({
   type: actionTypes.SET_NOTICATIONS_PAGINATION,
   pagination,
@@ -34,7 +43,9 @@ export const fetchingNotifications = status => ({
 
 /**
  * get admin notifications from server
- * @param {object} options
+ *
+ * @param {Object} options
+ *
  * @return {Function} dispatches an action creator
  */
 export const fetchNotifications = options => (dispatch) => {

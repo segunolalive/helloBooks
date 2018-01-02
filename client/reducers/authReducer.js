@@ -2,6 +2,14 @@ import actionTypes from '../actions/actionTypes';
 import initialState from './initialState';
 
 
+/**
+ * Reducer that handles user authentication
+ *
+ * @param {Object} state   initial state for the auth section of the store
+ * @param {Object} action  the dispatched action
+ *
+ * @returns {Object}       new state of the auth section of the store
+ */
 export default (state = initialState.authReducer, action) => {
   switch (action.type) {
     case actionTypes.AUTH_LOADING:

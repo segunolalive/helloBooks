@@ -234,7 +234,29 @@ describe('Book Controller', () => {
         .expect(200)
         .end((err, res) => {
           assert.equal(res.status, 200);
-          assert.equal(res.body.message, 'Successfully deleted book from database');
+          assert.equal(res.body.message,
+            'Successfully deleted book from database');
+          server.get('/api/v1/books/3')
+            .end((err, res) => {
+              assert.equal(res.status, 404);
+              assert.equal(res.body.message, 'Book not found');
+            });
+          done();
+        });
+    });
+  });
+
+  describe('#suggestedBooks', () => {
+    it('should send an array of book suggestions', (done) => {
+      server
+        .get('/api/v1/books/suggestions')
+        .set('X-ACCESS-TOKEN', jwtToken)
+        .expect(200)
+        .end((err, res) => {
+          assert.equal(res.status, 200);
+          assert(Array.isArray(res.body.suggestions));
+          assert.containsAllKeys(res.body.suggestions[0],
+            ['id', 'title', 'cover']);
           done();
         });
       });

@@ -6,7 +6,9 @@ import Loading from '../common/Loading';
 
 /**
  * for for adding or editing books
- * @param {object} props
+ *
+ * @param {Object} props
+ *
  * @returns {JSX} JSX representation of component
  */
 const BookForm = (props) => {
@@ -70,7 +72,7 @@ const BookForm = (props) => {
               <input
                 type="file"
                 name="cover"
-                accept="image/jpeg image/x-png"
+                accept="image/*"
                 onChange={event => props.onBookConverChange(event)}
               />
             </div>
@@ -79,6 +81,7 @@ const BookForm = (props) => {
                 className="file-path validate"
                 type="text"
                 placeholder="Upload Book Cover"
+                value={props.book.cover}
               />
             </div>
             <div>
@@ -127,6 +130,7 @@ const BookForm = (props) => {
                 className="file-path validate"
                 type="text"
                 placeholder="Upload Book file"
+                value={props.book.bookFile}
               />
             </div>
             <div>

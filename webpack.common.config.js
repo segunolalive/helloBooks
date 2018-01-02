@@ -5,7 +5,43 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/index.html',
   filename: 'index.html',
-  inject: 'body'
+  inject: 'body',
+  minify: {
+    html5: true,
+    collapseWhitespace: true,
+    removeRedundantAttributes: true,
+    removeEmptyAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    keepClosingSlash: true,
+    minifyJS: true,
+    minifyCSS: true,
+    minifyURLs: true
+  }
+});
+
+const DefinePluginConfig = new webpack.DefinePlugin({
+  GOOGLE_CLIENT_ID: JSON.stringify(process.env.GOOGLE_CLIENT_ID),
+  CLOUDINARY_API_BASE: JSON.stringify(process.env.CLOUDINARY_API_BASE),
+  CLOUDINARY_UPLOAD_PRESET: JSON.stringify(process.env
+    .CLOUDINARY_UPLOAD_PRESET),
+  CLOUDINARY_IMG_URL_STUB: JSON.stringify(process.env.CLOUDINARY_IMG_URL_STUB),
+  BOOK_IMAGE_FALLBACK: JSON.stringify(process.env.BOOK_IMAGE_FALLBACK),
+  BOOK_FALLBACK: JSON.stringify(process.env.BOOK_FALLBACK),
+});
+
+const ExtractTextConfig = new ExtractTextPlugin({ filename: 'style.css' });
+
+const CommonsChunkPlugin = new webpack.optimize.CommonsChunkPlugin({
+  name: 'common',
+  filename: 'common.js',
+  minChunks: 2,
+});
+
+const WorkBoxConfig = new workboxPlugin({
+  globDirectory: 'dist',
+  globPatterns: ['./client/**/*'],
+  swDest: path.join('dist', 'client/sw.js'),
+  swSrc: './client/sw.js',
 });
 
 module.exports = {

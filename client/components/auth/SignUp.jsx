@@ -42,7 +42,10 @@ export class SignUp extends Component {
    * sign up handler
    * @param {any} event
    * @memberof SignUp
-   * @returns {Undefined} redirects to dashboard
+   *
+   * @param {Object} event
+   *
+   * @returns {undefined} redirects to dashboard
    */
   handleSignUp(event) {
     event.preventDefault();
@@ -55,6 +58,7 @@ export class SignUp extends Component {
   /**
    * google login handler
    * @param  {Object} response google auth Object
+   *
    * @return {Undefined}       dispatches signup action action
    */
   handleGoogleSignUp(response) {
@@ -189,23 +193,6 @@ export class SignUp extends Component {
                                 className="btn waves-effect waves-light"
                                 style={{ width: '100%' }}
                               />
-                            </div>
-                            <div className="input-field">
-                              <GoogleLogin
-                                clientId={GOOGLE_CLIENT_ID}
-                                onSuccess={this.handleGoogleSignUp}
-                                onFailure={this.handleGoogleSignUp}
-                                className="btn red darken-4"
-                                style={{ width: '100%' }}
-                              >
-                                <FaGoogle
-                                  style={{
-                                    color: '#032442',
-                                    fontSize: '2rem',
-                                  }}
-                                />
-                                <span> Sign Up with Google</span>
-                              </GoogleLogin>
                             </div>
                             <div className="">
                               <p>Already have an account?

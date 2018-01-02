@@ -6,7 +6,8 @@ import notify from '../notify';
 
 /**
  * @param {Object} book - book
- * @returns {Object} - Object containing action type and book
+ *
+ * @returns {Object}    - Object containing action type and book
  */
 export const getBook = book => ({
   type: actionTypes.GET_BOOK,

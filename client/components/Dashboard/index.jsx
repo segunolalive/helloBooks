@@ -62,6 +62,35 @@ export class Dashboard extends Component {
     // TODO: implement readBook
   }
 
+  renderPage = () => {
+    const fullname = this.props.user && (
+      this.props.user.firstName || this.props.user.lastName
+    ) ?
+      `${this.props.user.firstName || ''} ${this.props.user.lastName || ''}` :
+      null;
+    return this.state.reading ? <Redirect to="/read" /> :
+      <div>
+        <Header
+          activeLink='dashboard'
+        />
+        <main id="dashboard">
+          <Row>
+            <Col s={12}>
+              <ProfileInfo
+                name={fullname}
+              />
+              <Borrowed
+                borrowedBooks={this.props.borrowedBooks}
+                readBook={this.readBook}
+                returnBook={this.handleReturnBook}
+                fetchingBorrowedBooks={this.props.fetchingBorrowedBooks}
+              />
+              <SuggestedBooks suggestedBooks={this.props.suggestedBooks} />
+            </Col>
+          </Row>
+        </main>
+      </div>;
+  }
   /**
    * renders component to DOM
    * @returns {JSX} JSX representation of component

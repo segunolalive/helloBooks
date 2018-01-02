@@ -1,7 +1,8 @@
 /**
  * tells if an object or array is empty
  * @param {Object|Array} item
- * @returns {Bool}       boolean
+ *
+ * @returns {boolean}       boolean
  */
 export const isEmpty = (item) => {
   if (!(typeof item === 'object')) {

@@ -2,6 +2,15 @@ import actionTypes from '../actions/actionTypes';
 import initialState from './initialState';
 
 
+/**
+ * Reducer that handles user authentication
+ *
+ * @param {Object} state   initial state for the notification
+ *                         section of the store
+ * @param {Object} action  the dispatched action
+ *
+ * @returns {Object}       new state of the notification section of the store
+ */
 export default (state = initialState.notificationReducer, action) => {
   switch (action.type) {
     case actionTypes.GET_ADMIN_NOTIFICATIONS:

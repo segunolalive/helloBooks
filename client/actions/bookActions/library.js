@@ -50,8 +50,10 @@ export const fetchingBooks = status => ({
 
 /**
  * fetch books in the Library
- * @param {object} options
- * @return {Promise}   dispatches an action
+ *
+ * @param {Object} options
+ *
+ * @return {Promise}   resolves with array of books
  */
 export const fetchBooks = options => (dispatch) => {
   const query = queryStringFromObject(options);
@@ -87,6 +89,19 @@ export const borrowBookAction = id => ({
 
 
 /**
+ * sets quantity of selected book to zero
+ *
+ * @param  {Integer} id book id
+ *
+ * @return {Object}    action object
+ */
+export const setQuantityToZero = id => ({
+  type: actionTypes.SET_BOOK_QUANTITY_TO_ZERO,
+  id,
+});
+
+
+/**
  * send request to borrow a book from library
  * @param  {integer} userId user id
  * @param  {integer} bookId book id
@@ -98,7 +113,13 @@ export const borrowBook = (userId, bookId) => dispatch => (
       notify.success(response.data.message);
       return dispatch(borrowBookAction(bookId));
     })
-    .catch(error => notify.error(error.response.data.message))
+    .catch((error) => {
+      reportNetworkError(error);
+      if (error.response && error.response.data.message ===
+        'There are no available copies of this book at this time') {
+        return dispatch(setQuantityToZero(bookId));
+      }
+    })
 );
 
 

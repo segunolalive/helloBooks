@@ -27,8 +27,11 @@ export const setLoginStatus = status => ({
 
 
 /**
- * @param {object} data - user data
- * @returns {any} - dispatches login user action
+ * async action creator for user login
+ *
+ * @param {Object} data - user data
+ *
+ * @returns {Promise}   - resolves with user data and authorization token
  */
 export const login = data => (dispatch) => {
   dispatch(authLoading(true));

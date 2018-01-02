@@ -6,6 +6,13 @@ import Header from '../Header';
 import Loading from '../common/Loading';
 
 
+/**
+ * renders reset password form
+ *
+ * @param {Object} props
+ *
+ * @returns {JSX}  JSX representation of commponent
+ */
 const ResetPasswordForm = props => (
   <div>
     <Header />

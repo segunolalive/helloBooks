@@ -2,6 +2,15 @@ import actionTypes from '../actions/actionTypes';
 import initialState from './initialState';
 
 
+/**
+ * Reducer that handles user authentication
+ *
+ * @param {Object} state   initial state for the transactions
+ *                         section of the store
+ * @param {Object} action  the dispatched action
+ *
+ * @returns {Object}       new state of the transactions section of the store
+ */
 export default (state = initialState.transactionReducer, action) => {
   switch (action.type) {
     case actionTypes.GET_ALL_BORROWED:

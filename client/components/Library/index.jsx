@@ -82,7 +82,8 @@ export class Library extends Component {
    *
    * @param {any} event
    * @memberof Library
-   * @returns {undefined} send request to fetch books by specified category
+   *
+   * @returns {Object} books of specified category
    */
   handleSelectCategory(event) {
     const categoryId = event.target.value;
@@ -105,7 +106,9 @@ export class Library extends Component {
 
   /**
    * updates state with value of search input
-   * @param  {object} event  form submission event
+   *
+   * @param  {Object} event  form submission event
+   *
    * @return {undefined}     calls setState
    */
   handleSearchChange(event) {
@@ -116,7 +119,9 @@ export class Library extends Component {
 
   /**
    * searches for books matching input value
-   * @param  {object} event  form submission event
+   *
+   * @param  {Object} event  form submission event
+   *
    * @return {undefined}       sends a network request
    */
   handleSearch(event) {
@@ -134,6 +139,14 @@ export class Library extends Component {
    * @memberof Library
    */
   render() {
+    const loaderDisplay = this.props.fetchingBooks ?
+      <Loading text="fetching awesome books . . ." /> :
+      <div className="center">
+        <p style={{ fontWeight: 900 }}>
+          unable to fetch books
+        </p>
+        <h4>&#x1F61E;</h4>
+      </div>;
     const { pageCount, pageNumber } = this.props.pagination;
     const reachedEnd = pageNumber >= pageCount;
     const endText = this.props.books.length ?
@@ -145,8 +158,7 @@ export class Library extends Component {
           {endText}
         </p>
         <h4>☺</h4>
-      </div> :
-      <Loading text="fetching more awesome books . . ." />;
+      </div> : loaderDisplay;
     const categories = this.props.categories ?
       <Categories
         text="Filter By Category"
@@ -198,7 +210,9 @@ export class Library extends Component {
                   />
                 </InfiniteScroll>
               </Row>
-              {endMessage}
+              <div>
+                {endMessage}
+              </div>
             </div>
           </Row>
         </main>
@@ -213,20 +227,19 @@ Library.propTypes = {
   categories: PropTypes.array.isRequired,
   borrowBook: PropTypes.func.isRequired,
   fetchBooks: PropTypes.func.isRequired,
+  fetchingBooks: PropTypes.bool.isRequired,
   pagination: PropTypes.object.isRequired,
   getBookCategories: PropTypes.func.isRequired,
   filterBooksByCategory: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ authReducer, bookReducer }) => {
-  const userId = authReducer.user && authReducer.user.id;
-  return {
-    books: bookReducer.books,
-    categories: bookReducer.categories,
-    pagination: bookReducer.pagination,
-    userId,
-  };
-};
+const mapStateToProps = ({ authReducer, bookReducer }) => ({
+  books: bookReducer.books,
+  categories: bookReducer.categories,
+  pagination: bookReducer.pagination,
+  fetchingBooks: bookReducer.fetchingBooks,
+  userId: authReducer.user.id,
+});
 
 export default connect(
   mapStateToProps,

@@ -3,6 +3,14 @@ import actionTypes from '../actions/actionTypes';
 import initialState from './initialState';
 
 
+/**
+ * Reducer that handles book actions
+ *
+ * @param {Object} state   initial state for the auth section of the store
+ * @param {Object} action  the dispatched action
+ *
+ * @returns {Object}       new state of the book section of the store
+ */
 const bookReducer = (state = initialState.bookReducer, action) => {
   let books, borrowedBooks;
   switch (action.type) {
@@ -15,6 +23,15 @@ const bookReducer = (state = initialState.bookReducer, action) => {
       books = books.map((book) => {
         if (book.id === action.id) {
           book.total -= 1;
+        }
+        return book;
+      });
+      return { ...state, books };
+    case actionTypes.SET_BOOK_QUANTITY_TO_ZERO:
+      books = deepclone(state.books);
+      books = books.map((book) => {
+        if (book.id === action.id) {
+          book.total = 0;
         }
         return book;
       });

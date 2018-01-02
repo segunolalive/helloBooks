@@ -12,7 +12,7 @@ describe('Logo', () => {
   it('should render 1 <Link /> component', () => {
     expect(wrapper.find('Link')).toHaveLength(1);
   });
-  it('should render 1 icon tag', () => {
-    expect(wrapper.find('i')).toHaveLength(1);
+  it('should render 1 img tag', () => {
+    expect(wrapper.find('img')).toHaveLength(1);
   });
 });

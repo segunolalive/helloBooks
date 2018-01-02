@@ -29,8 +29,10 @@ import { hasMore, getOffset } from '../../utils/paginationUtils';
 export class Admin extends Component {
   /**
    * Creates an instance of AddBook.
-   * @param {object} props
+   *
    * @memberof Admin
+   *
+   * @param {Object} props
    */
   constructor(props) {
     super(props);
@@ -88,7 +90,8 @@ export class Admin extends Component {
   /**
    * form submission handler
    *
-   * @param {object} event
+   * @param {Object} event
+   *
    * @memberof Admin
    * @returns {undefined} submits form
    */
@@ -118,7 +121,8 @@ export class Admin extends Component {
   /**
    * updates component state when form values (except select field) change
    *
-   * @param {object} event
+   * @param {Object} event
+   *
    * @memberof Admin
    * @returns {undefined} calls setState
    */
@@ -132,7 +136,9 @@ export class Admin extends Component {
 
   /**
    * handles image Upload
-   * @param  {object} event
+   *
+   * @param  {Object} event
+   *
    * @return {Function}    calls sets state
    */
   handleImageChange(event) {
@@ -189,7 +195,8 @@ export class Admin extends Component {
   /**
    * handles selection of book category
    *
-   * @param {object} event
+   * @param {Object} event
+   *
    * @memberof Admin
    * @returns {Function} calls setState
    */
@@ -202,8 +209,10 @@ export class Admin extends Component {
   /**
    * handles adding a new category
    *
-   * @param {object} event
    * @memberof Admin
+   *
+   * @param {Object} event
+   *
    * @returns {undefined} updates list of categories
    */
   handleAddCategory(event) {
