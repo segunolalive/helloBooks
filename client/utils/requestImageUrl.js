@@ -14,11 +14,9 @@ export default (url, options) => {
   const tail = url.split(base)[1];
   let transformation = '';
   if (options.width) {
-    // tail = `w_${options.width}/${tail}`;
     transformation += `w_${options.width},`;
   }
   if (options.height) {
-    // tail = `h_${options.height}/${tail}`;
     transformation += `h_${options.height},`;
   }
   if (options.fill) {

@@ -49,10 +49,9 @@ export class PdfViewer extends Component {
    *
    * @return {JSX}          react-router-dom rea=direct component
    */
-  onDocumentError = (error) => {
+  onDocumentError = () => {
     Notify.error('An error occured while fetching book. Try again later');
     this.setState(() => ({ fileError: true }));
-    return Promise.reject(new Error('Network error. Could not fetch book'));
   }
 
   /**
