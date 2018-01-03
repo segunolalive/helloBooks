@@ -1,6 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const workboxPlugin = require('workbox-webpack-plugin');
+const dotEnv = require('dotenv');
+
+dotEnv.config();
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/index.html',
@@ -44,12 +50,19 @@ const WorkBoxConfig = new workboxPlugin({
   swSrc: './client/sw.js',
 });
 
+const CopyPlugin = new CopyWebpackPlugin([
+  { from: require.resolve('workbox-sw'), to: 'workbox-sw.prod.js' }
+]);
+
+
 module.exports = {
-  entry: [
-    path.resolve(__dirname, 'client/index.js')
-  ],
+  entry: {
+    app: path.resolve(__dirname, 'client/index.js'),
+    vendor: ['react', 'react-dom', 'react-router'],
+    pdf: ['react-pdf-js']
+  },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist/client'),
     publicPath: '/',
   },
@@ -68,26 +81,19 @@ module.exports = {
         },
       },
       {
-        test: /\.scss$/,
+        test: /\.(s*)css$/,
         exclude: ['node_modules', 'dist'],
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [{
             loader: 'css-loader',
-            options: { sourceMap: true }
+            options: { sourceMap: true, minimize: true }
           },
           {
             loader: 'sass-loader',
             options: { sourceMap: true },
-          }
-        ],
-      },
-      {
-        test: /\.css$/,
-        exclude: /node-modules/,
-        loader: ['style-loader', 'css-loader']
+          }],
+        })
       },
       {
         test: /\.(woff|png|jpg|gif)$/,
@@ -97,16 +103,10 @@ module.exports = {
   },
   plugins: [
     HtmlWebpackPluginConfig,
-    new webpack.DefinePlugin({
-      GOOGLE_CLIENT_ID: JSON.stringify('701806023399-vgqondt26qh10vcuei77r7' +
-        'nsbcd8oa8k.apps.googleusercontent.com'),
-      CLOUDINARY_API_BASE: JSON.stringify(
-        'https://api.cloudinary.com/v1_1/hfdd5itnd/image/upload'
-      ),
-      CLOUDINARY_UPLOAD_PRESET: JSON.stringify('pdtilqua'),
-      CLOUDINARY_IMG_URL_STUB: JSON.stringify(
-        'https://res.cloudinary.com/hfdd5itnd/image/upload/'
-      )
-    })
+    CommonsChunkPlugin,
+    ExtractTextConfig,
+    DefinePluginConfig,
+    CopyPlugin,
+    WorkBoxConfig
   ]
 };

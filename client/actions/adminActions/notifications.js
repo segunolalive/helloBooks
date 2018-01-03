@@ -2,8 +2,8 @@ import axios from 'axios';
 
 import actionTypes from '../actionTypes';
 import API from '../api';
-import notify from '../notify';
 import queryStringFromObject from '../../utils/queryStringFromObject';
+import reportNetworkError from '../reportNetworkError';
 
 
 /**
@@ -16,6 +16,11 @@ export const adminNotifications = notifications => ({
   notifications,
 });
 
+/**
+ * @param  {Array} notifications
+ *
+ * @return {Object}      action object
+ */
 export const moreAdminNotifications = notifications => ({
   type: actionTypes.GET_MORE_ADMIN_NOTIFICATIONS,
   notifications,
@@ -33,6 +38,7 @@ export const setPagination = pagination => ({
 
 /**
  * @param  {Bool} status
+ *
  * @return {Object}      action object
  */
 export const fetchingNotifications = status => ({
@@ -61,6 +67,6 @@ export const fetchNotifications = options => (dispatch) => {
     })
     .catch((error) => {
       dispatch(fetchingNotifications(false));
-      return notify.error(error.response.data.message);
+      reportNetworkError(error);
     });
 };

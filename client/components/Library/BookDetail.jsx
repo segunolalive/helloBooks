@@ -14,6 +14,7 @@ import { viewBookDetails } from '../../actions/bookActions/viewBook';
  * displays book details
  *
  * @class BookDetail
+ *
  * @extends {Component}
  */
 export class BookDetail extends Component {
@@ -23,7 +24,8 @@ export class BookDetail extends Component {
    * lifecycle hook invoked once component is mounted to DOM
    *
    * @memberof BookDetail
-   * @returns {Undefined} shows book details
+   *
+   * @returns {undefined} shows book details
    */
   componentDidMount() {
     this.props.viewBookDetails(this.props.match.params.id);
@@ -33,7 +35,8 @@ export class BookDetail extends Component {
    * handler for button click for borrowing books
    *
    * @memberof BookDetail
-   * @returns {Undefined} sends request to borrow book
+   *
+   * @returns {undefined} sends request to borrow book
    */
   handleBorrow = () => {
     this.props.borrowBook(this.props.userId, this.props.book.id);
@@ -43,15 +46,18 @@ export class BookDetail extends Component {
    * handler for edit button clcik
    *
    * @memberof BookDetail
-   * @returns {Undefined} redirects to edit book page
+   *
+   * @returns {undefined} redirects to edit book page
    */
   handleEditClick= () => {
     this.setState({ editRedirect: true });
   }
   /**
    * handler for delete book button click
+   *
    * @memberof BookDetail
-   * @returns {Undefined} deletes a book from library
+   *
+   * @returns {undefined} deletes a book from library
    */
   handleDelete = () => {
     this.props.deleteBook(this.props.book.id)
@@ -60,7 +66,9 @@ export class BookDetail extends Component {
 
   /**
    * handles redirect after button click
+   *
    * @memberof BookDetail
+   *
    * @returns {JSX | null} react-router-dom redirect element or null
    */
   handleRedirect = () => {
@@ -74,7 +82,9 @@ export class BookDetail extends Component {
 
   /**
    * renders component to DOM
+   *
    * @returns {JSX} JSX representation of DOM
+   *
    * @memberof BookDetail
    */
   render() {
@@ -91,7 +101,6 @@ export class BookDetail extends Component {
           data-target="confirm-modal"
           className="red darken-4 action-btn delete-btn"
           waves="light"
-          // onClick={this.handleDelete}
         >
           Delete
         </Button>
@@ -119,9 +128,7 @@ export class BookDetail extends Component {
                     <div className="card-image">
                       <img src={
                         this.props.book && (this.props.book.cover ||
-                    'https://segunolalive.github.io/helloBooks/templates/' +
-                    'images/eloquentjs_cover.png')
-                      }
+                        BOOK_IMAGE_FALLBACK)}
                       />
                     </div>
                     {actionButtons}

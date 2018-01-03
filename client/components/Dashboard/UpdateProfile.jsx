@@ -6,51 +6,45 @@ import { Redirect } from 'react-router-dom';
 
 import Header from '../Header';
 import updateProfile from '../../actions/updateProfile';
-import notify from '../../actions/notify';
+import LoginRedirect from '../auth/LoginRedirect';
+
 
 /**
  * Component to update user profile
- * @type {Object}
+ *
+ * @class UpdateProfile
  */
 export class UpdateProfile extends Component {
-  /**
-   * constructs instance of Component
-   * @param {Object} props
-   * @return {Object} JSX component
-   */
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: this.props.user.firstName,
-      lastName: this.props.user.lastName,
-      password: '',
-      newPassword: '',
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.loginRedirect = this.loginRedirect.bind(this);
+  state = {
+    firstName: this.props.user.firstName,
+    lastName: this.props.user.lastName,
+    password: '',
+    newPassword: '',
   }
 
   /**
    * updates component state with changes in the form fields
+   *
    * @param  {any} event    DOM change event
+   *
    * @return {Undefined }   updates component state
    */
-  handleChange(event) {
+  handleChange = (event) => {
     event.preventDefault();
     const formField = event.target.name;
     const user = { ...this.state };
-    if (event.target.value.trim()) {
-      user[formField] = event.target.value.trim();
-      this.setState(() => user);
-    }
+    user[formField] = event.target.value.trim();
+    this.setState(() => user);
   }
+
   /**
    * handles form submission
+   *
    * @param {Object} event DOM onSubmit event
-   * @return {Undefined}   sends a network request
+   *
+   * @return {undefined}   sends a network request and sets state
    */
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.props.updateProfile(this.state)
       .then(() => this.setState(() => ({ redirect: true })))
@@ -59,16 +53,8 @@ export class UpdateProfile extends Component {
   }
 
   /**
-   * handles form submission
-   * @return {JSX}   react-router-dom redirect component
-   */
-  loginRedirect() {
-    notify.error('Login to proceed');
-    return <Redirect to='/login' />;
-  }
-
-  /**
    * class method that renders a component to the DOM
+   *
    * @return {Object} JSX element
    */
   render() {
@@ -139,7 +125,7 @@ export class UpdateProfile extends Component {
           </Row>
         </main>
       </div>;
-    return this.props.isLoggedIn ? renderPage : this.loginRedirect();
+    return this.props.isLoggedIn ? renderPage : <LoginRedirect />;
   }
 }
 

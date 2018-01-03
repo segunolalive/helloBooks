@@ -4,6 +4,7 @@ import logo from '../../static/hello_icon_32.png';
 
 /**
  * app Logo
+ *
  * @returns {JSX} - jsx representation of logo
  */
 const Logo = () => (

@@ -1,4 +1,4 @@
-import { isEmpty, validateSignUp, validateLogin }
+import { isEmpty, validateSignUp, validateLogin, validateForgotPassword }
   from '../../../utils/validation/auth';
 
 describe('auth', () => {
@@ -73,6 +73,14 @@ describe('auth', () => {
         .toBe('Username is required');
       expect(validateLogin(userData).errors.password)
         .toBe('Password is required');
+    });
+  });
+
+  describe('validateForgotPassword', () => {
+    it('checks if email  provided is valid', () => {
+      const state = { email: '123@i.u' };
+      expect(validateForgotPassword(state).errors.email)
+        .toBe('Invalid email');
     });
   });
 });

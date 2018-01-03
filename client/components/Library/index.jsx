@@ -24,29 +24,18 @@ import {
  * displays the content of the library
  *
  * @class Library
+ *
  * @extends {Component}
  */
 export class Library extends Component {
-  /**
-   * Creates an instance of Library.
-   * @param {any} props
-   * @memberof Library
-   */
-  constructor(props) {
-    super(props);
-    this.handleBorrowBook = this.handleBorrowBook.bind(this);
-    this.handleSelectCategory = this.handleSelectCategory.bind(this);
-    this.handleFetchBooks = this.handleFetchBooks.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
-    this.state = { hasMore: false };
-  }
+  state = { hasMore: false };
 
   /**
    * lifecycle hook called when component is mounted to DOM
    *
    * @memberof Library
-   * @return {undefined} fetches books and boo categories
+   *
+   * @return {undefined} fetches books and book categories
    */
   componentDidMount() {
     const { pageSize, pageNumber } = this.props.pagination;
@@ -57,7 +46,9 @@ export class Library extends Component {
 
   /**
    * called when component receives new propTypes
+   *
    * @param  {Object} nextProps
+   *
    * @return {undefined}        calls set setState
    */
   componentWillReceiveProps(nextProps) {
@@ -68,12 +59,16 @@ export class Library extends Component {
 
   /**
    * handles borrowing book
+   *
    * @method
-   * @param {Integer} bookId
+   *
    * @memberof Library
+   *
+   * @param {Integer} bookId
+   *
    * @returns {undefined} sends a request to borrow a book
    */
-  handleBorrowBook(bookId) {
+  handleBorrowBook = (bookId) => {
     this.props.borrowBook(this.props.userId, bookId);
   }
 
@@ -81,11 +76,12 @@ export class Library extends Component {
    * selects a category to filter books by
    *
    * @param {any} event
+   *
    * @memberof Library
    *
    * @returns {Object} books of specified category
    */
-  handleSelectCategory(event) {
+  handleSelectCategory = (event) => {
     const categoryId = event.target.value;
     return Number(categoryId) ?
       this.props.filterBooksByCategory(categoryId) :
@@ -94,9 +90,10 @@ export class Library extends Component {
 
   /**
    * handles fetching of Books
+   *
    * @return {Function} thunk
    */
-  handleFetchBooks() {
+  handleFetchBooks = () => {
     const { pageSize, pageNumber } = this.props.pagination;
     const offset = getOffset.bind(this)(pageNumber, pageSize);
     const search = this.state.search && this.state.search.trim();
@@ -111,7 +108,7 @@ export class Library extends Component {
    *
    * @return {undefined}     calls setState
    */
-  handleSearchChange(event) {
+  handleSearchChange = (event) => {
     event.preventDefault();
     const search = event.target.value;
     this.setState(() => ({ search }));
@@ -124,7 +121,7 @@ export class Library extends Component {
    *
    * @return {undefined}       sends a network request
    */
-  handleSearch(event) {
+  handleSearch = (event) => {
     event.preventDefault();
     const search = this.state.search.trim();
     return search ?
@@ -135,8 +132,9 @@ export class Library extends Component {
   /**
    * renders library component to DOM
    *
-   * @returns {JSX} JSX element representing library component
    * @memberof Library
+   *
+   * @returns {JSX} JSX element representing library component
    */
   render() {
     const loaderDisplay = this.props.fetchingBooks ?

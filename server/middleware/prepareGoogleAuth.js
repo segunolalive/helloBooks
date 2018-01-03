@@ -16,7 +16,7 @@ export default (req, res, next) => {
       familyName: lastName,
     } = req.body;
 
-    const username = email.slice(0, email.indexOf('@')) + authId;
+    const username = `${email.slice(0, email.indexOf('@'))}${authId}`;
     const password = authId;
     req.body = {
       email,

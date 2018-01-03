@@ -1,7 +1,8 @@
 import axios from 'axios';
 import actionTypes from '../actionTypes';
 import API from '../api';
-import notify from '../notify';
+import Notify from '../Notify';
+import reportNetworkError from '../reportNetworkError';
 
 
 /**
@@ -25,8 +26,9 @@ export const fetchingBorrowedBooks = status => ({
 });
 
 /**
-* @param {object} id - user id
-* @returns {any} - dispatches action with books user has not returned
+* @param {Integer} id - user id
+*
+* @returns {Promise}  - dispatches action with books user has not returned
 */
 export const fetchBorrowedBooks = id => (dispatch) => {
   dispatch(fetchingBorrowedBooks(true));
@@ -37,7 +39,7 @@ export const fetchBorrowedBooks = id => (dispatch) => {
     })
     .catch((error) => {
       dispatch(fetchingBorrowedBooks(false));
-      notify.error(error.response.data.message);
+      reportNetworkError(error);
     });
 };
 
@@ -52,7 +54,7 @@ export const fetchBorrowingHistory = id => dispatch => (
     .then((response) => {
       dispatch(getBorrowedBooksAction(response.data.books));
     })
-    .catch(error => notify.error(error.response.data.message))
+    .catch(error => reportNetworkError(error))
 );
 
 /**
@@ -76,7 +78,7 @@ export const returnBook = (userId, bookId) => dispatch => (
   axios.put(`${API}/users/${userId}/books`, { id: bookId })
     .then(
       (response) => {
-        notify.success(response.data.message);
+        Notify.success(response.data.message);
         return dispatch(returnBookAction(bookId));
       })
     .catch(error => reportNetworkError(error))

@@ -16,7 +16,6 @@ export const transporter = nodemailer.createTransport({
  * @param  {string} bcc
  * @param  {string} subject
  * @param  {string} html
- * 
  * @return {Object}         mail options
  */
 export const mailOptions = (to, bcc, subject, html) => ({

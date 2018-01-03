@@ -37,16 +37,26 @@ nav {
   li.active {
     border-bottom: 4px solid blue;
   }
+}
 
+.header {
   a:hover {
-    background: transparent;
-    font-weight: bold;
-    transform: scale(1.35);
-    transition: all 0.4s ease-out;
-  }
+      background: transparent;
+      font-weight: bold;
+      transform: scale(1.15);
+      transition: all 0.4s ease-out;
+    }
+  @media screen and (min-width: 601px) {
+    a:hover {
+      transform: scale(1.35);
+    }
 
-  a.brand-logo:hover {
-    transform: scale(1.05);
+    a.brand-logo:hover {
+      transform: scale(1.05);
+    }
+    a[href="/logout"]:hover {
+      color: red;
+    }
   }
 }
 
@@ -125,6 +135,10 @@ main {
   }
 }
 
+.suggestion {
+  border-bottom: $cool-Blue-Border;
+}
+
 // admin page styles
 .admin-form {
   background-color: $admin-form-blue;
@@ -156,16 +170,28 @@ main {
   }
 }
 
-#toast-container {
-  left: 35px;
-  right: auto !important;
-  top: 10% !important;
+#notifications-section {
+  overflow-y: auto;
+  max-height: 70vh;
+  margin-top: 30px;
+
+  @media only screen and (min-width: 601px) {
+    max-height: 90vh;
+    margin-top: 0;
+  }
 }
 
-@media only screen and (max-width: 601px) {
+#toast-container {
+  top: 3rem !important;
+  left: 0;
+  height: 0;
+}
+
+@media only screen and (min-width: 601px) {
   #toast-container {
-    top: 3rem !important;
-    left: 0;
+    left: 35px;
+    right: auto !important;
+    top: 10% !important;
   }
 }
 
@@ -206,7 +232,7 @@ main {
 }
 
 .history-table {
-  overflow-x: scroll;
+  overflow-x: scroll !important;
 }
 
 .top-30 {
@@ -293,6 +319,10 @@ input[type=text], input[type=password] {
 
 .bottom-10 {
   margin-bottom: 10px;
+}
+
+.bottom-20 {
+  margin-bottom: 20px;
 }
 
 .filter-dropdown {

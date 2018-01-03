@@ -14,14 +14,14 @@ import requestImageUrl from '../../utils/requestImageUrl';
  * @return {JSX} JSX element (table row)
  */
 const BookRow = props => (
-  <tr>
+  <tr id={`row-${props.id}`}>
     <td>
       <img
-        src={(props.cover && requestImageUrl(props.cover, { width: 80 })) ||
-          'https://segunolalive.github.io/helloBooks/' +
-          'templates/images/eloquentjs_cover.png'}
+        src={(props.cover &&
+          requestImageUrl(props.cover, { width: 80 })) ||
+          BOOK_IMAGE_FALLBACK }
         alt={`${props.title} book cover`}
-        style={{ width: '80px' }}
+        style={{ maxWidth: '80px' }}
       >
       </img>
     </td>

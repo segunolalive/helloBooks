@@ -2,14 +2,17 @@ import axios from 'axios';
 
 import actionTypes from '../actionTypes';
 import API from '../api';
-import notify from '../notify';
+import Notify from '../Notify';
+import reportNetworkError from '../reportNetworkError';
 import queryStringFromObject from '../../utils/queryStringFromObject';
 
 
 /**
  * action creator for getting books
+ *
  * @param  {Array} books array of book objects
- * @return {Object}       action objects
+ *
+ * @return {Object}       action object
  */
 export const getBooks = books => ({
   type: actionTypes.GET_BOOKS,
@@ -18,7 +21,9 @@ export const getBooks = books => ({
 
 /**
  * action creator for getting books
+ *
  * @param  {Array} books array of book objects
+ *
  * @return {Object}       action object
  */
 export const getMoreBooks = books => ({
@@ -29,7 +34,9 @@ export const getMoreBooks = books => ({
 
 /**
  * sets pagination metadata in store
+ *
  * @param {Object}  paginationData  pagination metadata object
+ *
  * @return {Object}                 action object
  */
 export const setPagination = paginationData => ({
@@ -40,6 +47,7 @@ export const setPagination = paginationData => ({
 
 /**
  * @param  {Bool} status
+ *
  * @return {Object}      action object
  */
 export const fetchingBooks = status => ({
@@ -67,19 +75,21 @@ export const fetchBooks = options => (dispatch) => {
         dispatch(bookAction(response.data.books));
         dispatch(setPagination(response.data.metadata));
       } else {
-        notify.error(response.data.message);
+        Notify.error(response.data.message);
       }
     })
     .catch((error) => {
       dispatch(fetchingBooks(false));
-      notify.error(error.response.data.message);
+      reportNetworkError(error);
     });
 };
 
 
 /**
  * action creator for borrowing books
+ *
  * @param  {Integer} id book id
+ *
  * @return {Object}    action object
  */
 export const borrowBookAction = id => ({
@@ -103,14 +113,16 @@ export const setQuantityToZero = id => ({
 
 /**
  * send request to borrow a book from library
+ *
  * @param  {integer} userId user id
  * @param  {integer} bookId book id
- * @return {any}    dispatches an action to store
+ *
+ * @return {Promise}        resolves with success message
  */
 export const borrowBook = (userId, bookId) => dispatch => (
   axios.post(`${API}/users/${userId}/books`, { id: bookId })
     .then((response) => {
-      notify.success(response.data.message);
+      Notify.success(response.data.message);
       return dispatch(borrowBookAction(bookId));
     })
     .catch((error) => {
@@ -125,7 +137,7 @@ export const borrowBook = (userId, bookId) => dispatch => (
 
 /**
  * @param  {Array} categories book categories
- * @return {Object}    dispatches an action to store
+ * @return {Object}           dispatches an action to store
  */
 export const getBookCategoriesAction = categories => ({
   type: actionTypes.GET_BOOK_CATEGORIES,
@@ -134,19 +146,20 @@ export const getBookCategoriesAction = categories => ({
 
 /**
  * get book categories
- * @return {any} dispatches an action to the redux store
+ *
+ * @return {Promise} resolves with a list of book caategories
  */
 export const getBookCategories = () => dispatch => (
   axios.get(`${API}/books/category`)
     .then(response => (
       dispatch(getBookCategoriesAction(response.data.categories))
     ))
-    .catch(error => notify.error(error.response.data.message))
+    .catch(error => reportNetworkError(error))
 );
 
 
 export const filterBooksByCategory = categoryId => dispatch => (
   axios.get(`${API}/books?categoryId=${categoryId}`)
     .then(response => dispatch(getBooks(response.data.books)))
-    .catch(error => notify.error(error.response.data.message))
+    .catch(error => reportNetworkError(error))
 );

@@ -4,8 +4,8 @@
   "description": "A simple library app",
   "main": "dist/server/app.js",
   "scripts": {
-    "job": "babel-node server/cronjob",
-    "cron": "node dist/server/cronjob",
+    "job": "babel-node server/cronJob",
+    "cron": "node dist/server/cronJob",
     "start": "node dist/server/bin/www.js",
     "start:debug": "node --inspect dist/server/bin/www.js",
     "start:client": "webpack-dev-server --hot --config ./webpack.dev.config.js",
@@ -42,7 +42,7 @@
     ]
   },
   "engines": {
-    "node": 6,
+    "node": "8",
     "npm": "5.2.0"
   },
   "repository": {
@@ -60,12 +60,14 @@
   },
   "homepage": " https://segunolalive.github.io/helloBooks/templates/",
   "dependencies": {
+    "ajv": "^5.5.1",
     "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^8.0.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-constant-elements": "^6.23.0",
     "babel-plugin-transform-react-inline-elements": "^6.22.0",
@@ -77,12 +79,17 @@
     "babel-register": "^6.24.1",
     "bcrypt": "1.0.2",
     "body-parser": "^1.17.2",
+    "brotli-webpack-plugin": "^0.5.0",
+    "compression-webpack-plugin": "^1.1.0",
+    "copy-webpack-plugin": "^4.3.0",
     "css-loader": "^0.28.5",
     "deepclonejs": "^1.0.3",
     "dotenv": "^4.0.0",
     "dotenv-webpack": "^1.5.4",
     "express": "^4.15.3",
+    "express-static-gzip": "^0.3.1",
     "express-validator": "^4.2.1",
+    "extract-text-webpack-plugin": "^3.0.2",
     "faker": "^4.1.0",
     "file-loader": "^0.11.2",
     "firebase": "^4.6.2",
@@ -105,6 +112,8 @@
     "react-icons": "^2.2.5",
     "react-infinite-scroller": "^1.1.1",
     "react-materialize": "^1.0.10",
+    "react-pdf": "^2.4.2",
+    "react-pdf-js": "^3.0.3",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.0",
     "redux": "^3.7.2",
@@ -118,12 +127,13 @@
     "toastr": "^2.1.4",
     "url-loader": "^0.5.9",
     "webpack": "^3.5.5",
-    "webpack-merge": "^4.1.1"
+    "webpack-merge": "^4.1.1",
+    "workbox-sw": "^2.1.2",
+    "workbox-webpack-plugin": "^2.1.2"
   },
   "devDependencies": {
     "babel-jest": "^21.2.0",
     "babel-plugin-istanbul": "^4.1.4",
-    "babel-plugin-transform-class-properties": "^6.24.1",
     "chai": "^4.1.0",
     "coveralls": "^2.13.1",
     "cross-env": "^5.0.5",

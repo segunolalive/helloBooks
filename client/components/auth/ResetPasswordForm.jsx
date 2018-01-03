@@ -45,7 +45,8 @@ const ResetPasswordForm = props => (
               {props.loading && <Loading />}
               <input
                 type="submit"
-                value={props.loading ? 'Resetting Password' : 'Change Password'}
+                value={props.loading ?
+                  'Resetting Password' : 'Change Password'}
                 className="btn teal darken-4"
                 disabled={props.loading}
               />

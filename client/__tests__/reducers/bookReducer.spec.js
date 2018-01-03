@@ -4,7 +4,10 @@ import { getBook } from '../../actions/bookActions/viewBook';
 
 import { getBorrowedBooksAction,
   fetchingBorrowedBooks,
-  returnBookAction } from '../../actions/bookActions/borrowedBooks';
+  returnBookAction,
+  suggestedBooks,
+  setBookToRead,
+} from '../../actions/bookActions/borrowedBooks';
 import { fetchingBooks,
   getMoreBooks,
   getBooks,
@@ -13,7 +16,12 @@ import { fetchingBooks,
   getBookCategoriesAction
 } from '../../actions/bookActions/library';
 
-import { deleteBookAction } from '../../actions/adminActions/books';
+import {
+  deleteBookAction,
+  addCategory,
+  createBook,
+  editBookAction,
+} from '../../actions/adminActions/books';
 
 
 let action;
@@ -34,6 +42,8 @@ const pagination = {
   pageCount: 1,
   total: 1
 };
+
+const suggestions = [{ cover: 'foo', title: 'bar' }];
 
 
 describe('Book Reducer', () => {
@@ -75,6 +85,27 @@ describe('Book Reducer', () => {
     expect(newState.borrowedBooks.length).toBe(1);
   });
 
+  it('should handle actions of type CREATE_BOOK', () => {
+    const book = { id: 1, title: 'awesome book', authors: 'Flo, Yak' };
+    action = createBook(book);
+    newState = bookReducer(initialState.bookReducer, action);
+    expect(newState).not.toEqual(initialState.bookReducer);
+    expect(newState.books)
+      .toEqual([...initialState.bookReducer.books, book]);
+  });
+
+  it('should handle actions of type EDIT_BOOK_INFO', () => {
+    const edit = { id: 1, title: 'awesome book', authors: 'Flo, Yak' };
+    action = editBookAction(edit);
+    newState = bookReducer(initialState.bookReducer, action);
+    expect(newState).not.toEqual(initialState.bookReducer);
+    const filteredBooks = initialState.bookReducer.books.filter(book => (
+      book.id !== 1
+    ));
+    expect(newState.books)
+      .toEqual([...filteredBooks, edit]);
+  });
+
   it('should handle actions of type GET_BOOK', () => {
     const book = { id: 1, title: 'awesome book' };
     action = getBook(book);
@@ -90,6 +121,13 @@ describe('Book Reducer', () => {
     expect(newState).not.toEqual(initialState.bookReducer);
     expect(newState.books).toEqual(books);
     expect(JSON.stringify(newState.books)).toEqual(JSON.stringify(books));
+  });
+
+  it('should handle actions of type GET_SUGGESTED_BOOKS', () => {
+    action = suggestedBooks(suggestions);
+    newState = bookReducer(initialState.bookReducer, action);
+    expect(newState).not.toEqual(initialState.bookReducer);
+    expect(newState.suggestedBooks).toEqual(suggestions);
   });
 
   it('should handle actions of type GET_MORE_BOOKS', () => {
@@ -116,6 +154,17 @@ describe('Book Reducer', () => {
     expect(newState.categories[0].category).toBe('javascript');
   });
 
+
+  it('should handle actions of type ADD_BOOK_CATEGORY', () => {
+    action = addCategory({ id: 3, category: 'something new' });
+    expect(initialState.bookReducer.categories).toEqual([]);
+    newState = bookReducer(initialState.bookReducer, action);
+    expect(newState).not.toEqual(initialState.bookReducer);
+    expect(newState.categories).toEqual([
+      ...initialState.bookReducer.categories, action.category
+    ]);
+  });
+
   it('should handle actions of type SET_LIBRARY_PAGINATION', () => {
     action = setPagination(pagination);
     newState = bookReducer(initialState.bookReducer, action);
@@ -130,5 +179,13 @@ describe('Book Reducer', () => {
     newState = bookReducer(initialState.bookReducer, action);
     expect(newState).not.toEqual(initialState.bookReducer);
     expect(newState.books.length).toBe(0);
+  });
+
+  it('should handle actions of type SET_BOOK_TO_READ', () => {
+    action = setBookToRead('made-up-url');
+    expect(initialState.bookReducer.bookToRead).toBe(undefined);
+    newState = bookReducer(initialState.bookReducer, action);
+    expect(newState).not.toEqual(initialState.bookReducer);
+    expect(newState.bookToRead).toBe('made-up-url');
   });
 });

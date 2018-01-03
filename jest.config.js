@@ -16,9 +16,7 @@ module.exports = {
     '!client/index.js',
     '!client/utils/expireSession.js',
     '!client/store/**',
-    '!client/static/**',
     '!client/sw.js',
-    '!client/components/mock.js',
   ],
   moduleFileExtensions: ['js', 'jsx'],
   moduleNameMapper: {

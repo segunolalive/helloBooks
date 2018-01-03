@@ -70,12 +70,12 @@ describe('History Component', () => {
     expect(wrapper.find('AllBorrowed').length).toBe(1);
   });
 
-  it('renders one TransactionHistory Component when url changes to ' +
-    '/history/transactions', () => {
-    const viewTransactions = { ...props, location };
-    const wrapper = shallow(<History { ...viewTransactions }/>);
-    expect(wrapper.find('TransactionHistory').length).toBe(1);
-  });
+  it('renders one TransactionHistory Component when url changes to /history/transactions',
+    () => {
+      const viewTransactions = { ...props, location };
+      const wrapper = shallow(<History { ...viewTransactions }/>);
+      expect(wrapper.find('TransactionHistory').length).toBe(1);
+    });
 
   it('should render the connected component', () => {
     const connectedComponent = shallow(

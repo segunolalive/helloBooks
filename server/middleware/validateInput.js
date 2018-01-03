@@ -6,7 +6,9 @@ import { isReset } from './authenticate';
 
 /**
  * deletes empty fields in object
+ *
  * @param  {Object} object
+ *
  * @return {Object}      Object with empty fields stripped out
  */
 const deleteEmptyFields = (object) => {
@@ -22,7 +24,9 @@ const deleteEmptyFields = (object) => {
 
 /**
  * trims string values in object
+ *
  * @param  {Object} object
+ *
  * @return {Object}      Object with strings trimmed
  */
 const trimFields = (object) => {
@@ -38,8 +42,10 @@ const trimFields = (object) => {
 
 /**
  * checks if password matches that associated with user
+ *
  * @param  {Integer} id       user id
  * @param  {String} password  password supplied
+ *
  * @return {Promise}          Promise which resolve to Boolean type
  */
 const passwordIsCorrect = (id, password) => (
@@ -50,13 +56,18 @@ const passwordIsCorrect = (id, password) => (
 
 /**
  * checks if Password reset token has been unusedToken
+ *
  * @param  {Integer} id    user id
  * @param  {String} token  password reset unusedToken
+ *
  * @return {Boolean}       true if token matches stored token
  */
 const unusedToken = (id, token) =>
   User.findById(id)
     .then(user => user.passwordResetToken === token);
+
+
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|z(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}]),|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
 /**
@@ -65,9 +76,11 @@ const unusedToken = (id, token) =>
 export default {
   /**
    * validates fields on request to update user data
+   *
    * @param  {Object}   req    express http object
    * @param  {Object}   res    express http object
    * @param  {Function} next   calls the next middleware function
+   *
    * @return {Object|Function} express http object or call next
    */
   updateUser(req, res, next) {
@@ -106,9 +119,11 @@ export default {
 
   /**
    * validates fields on request to signup user
+   *
    * @param  {Object}   req    express http object
    * @param  {Object}   res    express http object
    * @param  {Function} next   calls the next middleware function
+   *
    * @return {Object|Function} express http object or call next
    */
   signup(req, res, next) {
@@ -145,9 +160,11 @@ export default {
 
   /**
    * validates fields on signin request
+   *
    * @param  {Object}   req    express http object
    * @param  {Object}   res    express http object
    * @param  {Function} next   calls the next middleware function
+   *
    * @return {Object|Function} express http object or call next
    */
   signin(req, res, next) {
@@ -168,9 +185,11 @@ export default {
 
   /**
    * validates fields on requestPasswordReset
+   *
    * @param  {Object}   req    express http object
    * @param  {Object}   res    express http object
    * @param  {Function} next   calls the next middleware function
+   *
    * @return {Object|Function} express http object or call next
    */
   requestPasswordReset(req, res, next) {
@@ -183,9 +202,11 @@ export default {
 
   /**
    * validates fields on addBook
+   *
    * @param  {Object}   req    express http object
    * @param  {Object}   res    express http object
    * @param  {Function} next   calls the next middleware function
+   *
    * @return {Object|Function} express http object or call next
    */
   addBook(req, res, next) {
@@ -193,14 +214,26 @@ export default {
     req.body.categoryId = (!Number.isNaN(req.body.categoryId) &&
       Number.isInteger(Number(req.body.categoryId)) &&
       Number(req.body.categoryId)) || undefined;
+    if (!req.body.title) {
+      return res.status(400).send({
+        message: 'Book must have a title'
+      });
+    }
+    if (!req.body.authors) {
+      return res.status(400).send({
+        message: 'Book must have an author'
+      });
+    }
     next();
   },
 
   /**
    * validates fields on updateBook
+   *
    * @param  {Object}   req    express http object
    * @param  {Object}   res    express http object
    * @param  {Function} next   calls the next middleware function
+   *
    * @return {Object|Function} express http object or call next
    */
   updateBook(req, res, next) {
@@ -213,9 +246,11 @@ export default {
 
   /**
    * validates id params
+   *
    * @param  {Object}   req    express http object
    * @param  {Object}   res    express http object
    * @param  {Function} next   calls the next middleware function
+   *
    * @return {Object|Function} express http object or call next
    */
   validateId(req, res, next) {

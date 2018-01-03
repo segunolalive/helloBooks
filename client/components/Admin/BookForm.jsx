@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import Categories from '../common/Categories';
 import Loading from '../common/Loading';
+import requestImageUrl from '../../utils/requestImageUrl';
+
 
 /**
  * for for adding or editing books
@@ -17,6 +19,8 @@ const BookForm = (props) => {
       text='Select Book Category'
       categories={props.categories}
       onChange={props.onSelectCategory}
+      indexValue={1}
+      indexText="default category"
     /> : null;
   return (
     <div>
@@ -35,6 +39,9 @@ const BookForm = (props) => {
             placeholder="Book Title"
             onChange={event => props.onChange(event)}
           />
+          <span className="red-text">
+            <small>{props.errors.title}</small>
+          </span>
         </div>
         <div className="input-field">
           <input
@@ -44,6 +51,9 @@ const BookForm = (props) => {
             placeholder="Authors (comma separated for multiple)"
             onChange={event => props.onChange(event)}
           />
+          <span className="red-text">
+            <small>{props.errors.authors}</small>
+          </span>
         </div>
         <div className="input-field">
           <textarea name="description"
@@ -97,19 +107,17 @@ const BookForm = (props) => {
                     book cover uploaded &nbsp;
                   </small>
                   <img
-                    src={`${props.book.cover}`}
+                    src={requestImageUrl(props.book.cover, { width: 100 })}
                     alt="image uploaded"
-                    style={{ width: '50px' }}
                   />
                 </span>}
-              {(!props.imageUploaded && !props.imageUploading) &&
-                <img
-                  src={`${props.book.cover}`}
-                  style={{ width: '50px' }}
-                />
+              {(props.book.cover &&
+                !props.imageUploaded &&
+                !props.imageUploading) &&
+                <img src={requestImageUrl(props.book.cover, { width: 100 })} />
               }
               <span className="red-text">
-                <small>{props.imageError}</small>
+                <small>{props.errors.image}</small>
               </span>
             </div>
           </div>
@@ -146,13 +154,14 @@ const BookForm = (props) => {
                     book file uploaded &nbsp;
                   </small>
                   <img
-                    src={props.book.bookFile}
-                    alt="image uploaded"
-                    style={{ width: '50px' }}
+                    src={requestImageUrl(`${props
+                      .book.bookFile.slice(0, -3)}jpg`,
+                    { width: 100, fill: true })}
+                    alt="File uploaded"
                   />
                 </span>}
               <span className="red-text">
-                <small>{props.bookFileError}</small>
+                <small>{props.errors.bookFile}</small>
               </span>
             </div>
           </div>
@@ -180,11 +189,10 @@ BookForm.propTypes = {
   onBookConverChange: PropTypes.func.isRequired,
   imageUploading: PropTypes.bool,
   imageUploaded: PropTypes.bool,
-  imageError: PropTypes.string,
   bookFileUploading: PropTypes.bool,
   bookFileUploaded: PropTypes.bool,
   onBookFileChange: PropTypes.func.isRequired,
-  bookFileError: PropTypes.string,
+  errors: PropTypes.object.isRequired,
 };
 
 export default BookForm;

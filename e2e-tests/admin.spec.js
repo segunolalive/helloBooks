@@ -44,16 +44,16 @@ export default {
   },
 
   'non-admin users do not have access to admin page. Redirects to login':
-    (client) => {
-      client
-        .url('localhost:8080/logout')
-        .waitForElementVisible('body')
-        .url('localhost:8080/admin')
-        .assert.urlEquals('http://localhost:8080/login')
-        .waitForElementVisible('#toast-container')
-        .assert.containsText('.toast', 'Login to proceed')
-        .end();
-    },
+  (client) => {
+    client
+      .url('localhost:8080/logout')
+      .waitForElementVisible('body')
+      .url('localhost:8080/admin')
+      .assert.urlEquals('http://localhost:8080/login')
+      .waitForElementVisible('#toast-container')
+      .assert.containsText('.toast', 'Login to proceed')
+      .end();
+  },
 
   'admin user can add new book category': (client) => {
     client

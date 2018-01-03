@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CategoryForm from '../../../components/Admin/CategoryForm';
+import AddCategoryForm from '../../../components/Admin/AddCategoryForm';
 
 const props = {
   className: 'foo',
   onSubmit: jest.fn(),
 };
 
-const setUp = () => (shallow(<CategoryForm { ...props } />));
+const setUp = () => (shallow(<AddCategoryForm { ...props } />));
 
 
-describe('Category Form Component', () => {
+describe('AddCategoryForm Component', () => {
   const wrapper = setUp();
   it('renders without crashing', () => {
     expect(wrapper).toBeDefined();

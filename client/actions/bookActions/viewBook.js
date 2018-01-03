@@ -1,7 +1,7 @@
 import axios from 'axios';
 import actionTypes from '../actionTypes';
 import API from '../api';
-import notify from '../notify';
+import reportNetworkError from '../reportNetworkError';
 
 
 /**
@@ -16,11 +16,13 @@ export const getBook = book => ({
 
 /**
  * get book Detail
- * @param  {Integer} id book Id
- * @return {any}    dispatches an action to the redux store
+ *
+ * @param  {Integer} id  book Id
+ *
+ * @return {Promise}     resolves with book information
  */
 export const viewBookDetails = id => dispatch => (
   axios.get(`${API}/books/${id}`)
     .then(response => dispatch(getBook(response.data.book)))
-    .catch(error => notify.error(error.response.data.message))
+    .catch(error => reportNetworkError(error))
 );

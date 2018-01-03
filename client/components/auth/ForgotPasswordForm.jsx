@@ -24,16 +24,18 @@ const ForgotPasswordForm = props => (
                 Enter your email address and we&apos;ll send you a link
                 to reset your password
               </h6>
-              <div
-                className="input-field"
-              >
+              <div className="input-field">
                 <input
                   type="email"
                   name="email"
-                  required="true"
                   placeholder="your email here"
                   title="input is not a valid email"
+                  value={props.email}
+                  onChange={props.onChange}
                 />
+                <span className="red-text">
+                  {props.errors && props.errors.email}
+                </span>
               </div>
               {props.loading && <Loading />}
               <div
@@ -55,6 +57,9 @@ const ForgotPasswordForm = props => (
 );
 
 ForgotPasswordForm.propTypes = {
+  email: PropTypes.string.isRequired,
+  errors: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   buttonText: PropTypes.string.isRequired,

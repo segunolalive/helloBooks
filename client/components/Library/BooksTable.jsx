@@ -6,9 +6,11 @@ import BookRow from './BookRow';
 
 /**
  * displays a table of books
+ *
  * @param {array} bookList        Array of books
  * @param {array} tableHeaders    array of table headers
  * @param {Function} borrowBook   callback function to borrow a book
+ *
  * @return {JSX}                  JSX representation of component
  */
 const BooksTable = (
@@ -27,7 +29,9 @@ const BooksTable = (
     <th key={header}>{header}</th>
   );
   return (
-    <Table className="striped centered bordered z-depth-4 books-table">
+    <Table
+      className="striped centered bordered z-depth-4 books-table"
+    >
       <thead>
         <tr>
           {headers}

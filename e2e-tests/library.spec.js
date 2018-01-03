@@ -13,16 +13,16 @@ export default {
   },
 
   'user cannot borrow books without logging in.':
-    (client) => {
-      client
-        .url('localhost:8080/library')
-        .waitForElementVisible('main')
-        .click('#borrow-book-1-btn')
-        .waitForElementVisible('#toast-container')
-        .assert.urlEquals('http://localhost:8080/library')
-        .assert.containsText('.toast', 'Login to proceed')
-        .end();
-    },
+  (client) => {
+    client
+      .url('localhost:8080/library')
+      .waitForElementVisible('main')
+      .click('#borrow-book-1-btn')
+      .waitForElementVisible('#toast-container')
+      .assert.urlEquals('http://localhost:8080/library')
+      .assert.containsText('.toast', 'Login to proceed')
+      .end();
+  },
 
   'user can borrow books when logged in': (client) => {
     client

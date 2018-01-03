@@ -14,40 +14,32 @@ import { validateSignUp } from '../../utils/validation/auth';
 
 /**
  * Sign up component
+ *
  * @class SignUp
+ *
  * @extends {Component}
  */
 export class SignUp extends Component {
-  /**
-   * Creates an instance of SignUp.
-   * @memberof SignUp
-   */
-  constructor() {
-    super();
-    this.state = {
-      surname: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      username: '',
-      password: '',
-      confirmPassword: '',
-    };
-    this.handleSignUp = this.handleSignUp.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleGoogleSignUp = this.handleGoogleSignUp.bind(this);
-  }
+  state = {
+    surname: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+  };
 
   /**
    * sign up handler
-   * @param {any} event
+   *
    * @memberof SignUp
    *
    * @param {Object} event
    *
    * @returns {undefined} redirects to dashboard
    */
-  handleSignUp(event) {
+  handleSignUp = (event) => {
     event.preventDefault();
     const { errors, isValid } = validateSignUp(this.state);
     return isValid ? this.props.signUp(this.state) :
@@ -61,7 +53,7 @@ export class SignUp extends Component {
    *
    * @return {Undefined}       dispatches signup action action
    */
-  handleGoogleSignUp(response) {
+  handleGoogleSignUp = (response) => {
     const googleProfile = response.profileObj;
     this.props.signUp(googleProfile);
   }
@@ -70,10 +62,12 @@ export class SignUp extends Component {
    * form input change event handler
    *
    * @param {any} event
+   *
    * @memberof SignUp
-   * @returns {Undefined} sets form input values in the component state
+   *
+   * @returns {undefined} sets form input values in the component state
    */
-  handleChange(event) {
+  handleChange = (event) => {
     event.preventDefault();
     const formField = event.target.name;
     const user = { ...this.state };
@@ -84,8 +78,9 @@ export class SignUp extends Component {
   /**
    * renders component to DOM
    *
-   * @returns {JSX} JSX representation of component
    * @memberof SignUp
+   *
+   * @returns {JSX} JSX representation of component
    */
   render() {
     const loadingState = this.props.isLoading ?
@@ -180,7 +175,8 @@ export class SignUp extends Component {
                                 title="password confirmation is required"
                                 onChange={this.handleChange}
                               />
-                              <span id="error-confirm-password" className="red-text">
+                              <span id="error-confirm-password"
+                                className="red-text">
                                 {this.state.errors &&
                                   this.state.errors.confirmPassword}
                               </span>
