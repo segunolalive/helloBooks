@@ -72,6 +72,9 @@ export default {
    */
   updateUser(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
+    delete req.body.id;
+    delete req.body.isAdmin;
+    delete req.body.username;
     if (req.body.password && req.body.newPassword) {
       passwordIsCorrect(req.user.id, req.body.password)
         .then((correct) => {
@@ -110,6 +113,9 @@ export default {
    */
   signup(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
+    delete req.body.id;
+    delete req.body.isAdmin;
+    req.body.username = req.body.username && req.body.username.toLowerCase();
     const { username, password, email, confirmPassword } = req.body;
     if (!username || typeof username !== 'string') {
       return res.status(400).send({
@@ -146,6 +152,7 @@ export default {
    */
   signin(req, res, next) {
     req.body = deleteEmptyFields(trimFields(req.body));
+    req.body.username = req.body.username && req.body.username.toLowerCase();
     const { username, password } = req.body;
     if (!username || typeof username !== 'string') {
       return res.status(400).send({
@@ -212,11 +219,16 @@ export default {
    * @return {Object|Function} express http object or call next
    */
   validateId(req, res, next) {
-    return Number.isInteger(Number(req.params.id)) &&
-      !Number.isNaN(req.params.id) ?
-      next() :
-      res.status(400).send({
+    if (req.body.id && !Number.isInteger(Number(req.body.id))) {
+      return res.status(400).send({
         message: 'Id must be an integer'
       });
+    }
+    if (req.params.id && !Number.isInteger(Number(req.params.id))) {
+      return res.status(400).send({
+        message: 'Id must be an integer'
+      });
+    }
+    next();
   }
 };

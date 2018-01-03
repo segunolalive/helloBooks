@@ -46,10 +46,11 @@ const userController = {
             id,
             isAdmin,
             membershipType,
+            firstName,
+            lastName,
           } = user;
           const jwtOptions = { id, email, username, isAdmin, membershipType };
           const token = getJWT(jwtOptions);
-          const { firstName, lastName } = user;
           return res.status(201).json({
             token,
             id,

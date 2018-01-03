@@ -32,7 +32,7 @@
     "e2e-setup": "selenium-standalone install",
     "e2e-server": "selenium-standalone start",
     "start:server:e2e": "NODE_ENV=test nodemon server/bin/www --exec babel-node",
-    "pretest:e2e": "npm run migrate:dev && npm run seed:tables:dev &&  npm run seed:join:dev",
+    "pretest:e2e": "npm run pretest:server",
     "test:e2e": "nightwatch"
   },
   "nyc": {

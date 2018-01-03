@@ -60,11 +60,12 @@ app.get('/*', (req, res) => res.sendFile(
 /*
 eslint-disable
 */
-app.use((err, req, res, next) => (
+app.use((err, req, res, next) => {
+  process.stderr.write(err.stack)
   res.status(500).send({
     message: 'Something went wrong. Internal server error'
   })
-));
+});
 
 
 export default app;

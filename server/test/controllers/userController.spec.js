@@ -1,16 +1,19 @@
 import supertest from 'supertest';
 import { assert } from 'chai';
+import bcrypt from 'bcrypt';
+import sinon from 'sinon';
 
 import app from '../../app';
-import '../../models/index';
-import mock, { passwordResetToken } from '../mock/mock';
+import { User } from '../../models/index';
+import mock, { modelMock } from '../mock';
 import { transporter } from '../../config/mail';
 
 
 const server = supertest.agent(app);
 let jwtToken;
 
-describe('userController', () => {
+
+describe('USER CONTROLLER', () => {
   it('should sign up user', (done) => {
     server
       .post('/api/v1/users/signup')
@@ -19,22 +22,29 @@ describe('userController', () => {
       .end((err, res) => {
         assert.equal(res.status, 201);
         assert.isNotNull(res.body.token);
-        assert.equal(res.body.message, 'Welcome newUser. This is your dashboard');
+        assert.equal(res.body.token.split('.').length, 3);
+        assert.equal(res.body.message,
+          'Welcome newUser. This is your dashboard');
+        assert.equal(res.body.firstName, mock.newUser.firstName);
+        assert.equal(res.body.lastName, mock.newUser.lastName);
         done();
       });
-    })
+  });
   it('should sign in user', (done) => {
+    const user = { ...mock.newUser };
     server
       .post('/api/v1/users/signin')
-      .send({ ...mock.googleUser })
+      .send({ ...user })
       .expect(200)
       .end((err, res) => {
         assert.equal(res.status, 200);
         assert.isNotNull(res.body.token);
-        assert.equal(res.body.token.split('.').length, 3)
+        assert.equal(res.body.token.split('.').length, 3);
+        assert.equal(res.body.firstName, user.firstName);
+        assert.equal(res.body.lastName, user.lastName);
         done();
       });
-    })
+  });
   it('should respond with a message when trying to signup with existing email',
     (done) => {
       server
@@ -75,7 +85,8 @@ describe('userController', () => {
         .send(mock.wrongPassword)
         .end((err, res) => {
           assert.equal(res.status, 403);
-          assert.equal(res.body.message, 'wrong username and password combination');
+          assert.equal(res.body.message,
+            'wrong username and password combination');
           done();
         });
     });
@@ -97,24 +108,30 @@ describe('userController', () => {
         .expect(200)
         .end((err, res) => {
           assert.equal(res.status, 200);
+          assert.equal(res.body.lastName, mock.newUser.lastName);
+          assert.notEqual(res.body.firstName, mock.newUser.firstName);
           assert.equal(res.body.firstName, 'Tolu');
-          assert.equal(res.body.message, 'Your information was successfully updated');
+          assert.equal(res.body.message,
+            'Your information was successfully updated');
           done();
-    })
+        });
+    });
+    it('should update password', (done) => {
+      server
+        .put('/api/v1/users')
+        .send({ ...mock.updatenewUser })
+        .set('X-ACCESS-TOKEN', jwtToken)
+        .expect(200)
+        .end((err, res) => {
+          assert.equal(res.status, 200);
+          assert.equal(res.body.firstName, 'Tolu');
+          assert.equal(res.body.message,
+            'Your information was successfully updated');
+          done();
+        });
+    });
   });
-  it('should update password', (done) => {
-    server
-      .put('/api/v1/users')
-      .send({ ...mock.updatenewUser })
-      .set('X-ACCESS-TOKEN', jwtToken)
-      .expect(200)
-      .end((err, res) => {
-        assert.equal(res.status, 200);
-        assert.equal(res.body.firstName, 'Tolu');
-        assert.equal(res.body.message, 'Your information was successfully updated');
-        done();
-    })
-  });
+
   describe('#getBorrowedBooks', () => {
     before((done) => {
       server
@@ -132,6 +149,9 @@ describe('userController', () => {
           .set('X-ACCESS-TOKEN', jwtToken)
           .end((err, res) => {
             assert.equal(res.status, 200);
+            assert.equal(res.body.books[0].title, 'eloquent fish');
+            assert.equal(res.body.books[0].id, 4);
+            assert.equal(res.body.books[0].categoryId, 1);
             done();
           });
       });
@@ -144,6 +164,9 @@ describe('userController', () => {
             assert.equal(res.status, 200);
             assert(res.body.books);
             assert(Array.isArray(res.body.books));
+            assert.equal(res.body.books[0].title, 'eloquent fish');
+            assert.equal(res.body.books[0].id, 4);
+            assert.equal(res.body.books[0].categoryId, 1);
             done();
           });
       });
@@ -156,10 +179,13 @@ describe('userController', () => {
             assert.equal(res.status, 200);
             assert(res.body.books);
             assert(Array.isArray(res.body.books));
+            assert.equal(res.body.books[0].title, 'Learn Rust');
+            assert.equal(res.body.books[0].id, 1);
+            assert.equal(res.body.books[0].categoryId, 1);
+
             done();
           });
       });
-    });
   });
 
   describe('#passwordResetMail', () => {
@@ -169,10 +195,10 @@ describe('userController', () => {
         .send({})
         .end((err, res) => {
           assert.equal(res.status, 400);
-          assert.equal(res.body.message, 'Email cannot be empty')
+          assert.equal(res.body.message, 'Email cannot be empty');
           done();
-        })
-    })
+        });
+    });
     it('should send password reset mail to user', (done) => {
       transporter.sendMail = () => Promise.resolve(1);
       server
@@ -181,32 +207,115 @@ describe('userController', () => {
         .end((err, res) => {
           assert.equal(res.status, 200);
           assert.equal(res.body.message,
-            'A password reset link has been sent to your email')
-        })
-        done();
-    })
-    it('should send an error message if email provided is not associated with an account', (done) => {
-      server
-        .post('/api/v1/users/forgot-password')
-        .send({ email: 'someMade@up.email' })
-        .end((err, res) => {
-          assert.equal(res.status, 404);
-          assert.equal(res.body.message,
-            'Email does not match any account in our records')
-          done();
-        })
-    })
-    it('should send an error message if an error occured while sending email', (done) => {
-      transporter.sendMail = () => Promise.reject(1);
-      server
-        .post('/api/v1/users/forgot-password')
-        .send({ email: 'newUser@newuser.newuser' })
-        .end((err, res) => {
-          assert.equal(res.status, 500);
-          assert.equal(res.body.message,
-            'An error occured while sending you a link. Try again')
+            'A password reset link has been sent to your email');
+        });
+      done();
+    });
+    it('should send an error message if email provided is not associated with an account',
+      (done) => {
+        server
+          .post('/api/v1/users/forgot-password')
+          .send({ email: 'someMade@up.email' })
+          .end((err, res) => {
+            assert.equal(res.status, 404);
+            assert.equal(res.body.message,
+              'Email does not match any account in our records');
             done();
-        })
-    })
-  })
+          });
+      });
+    it('should send an error message if an error occured while sending email',
+      (done) => {
+        transporter.sendMail = () => Promise.reject(1);
+        server
+          .post('/api/v1/users/forgot-password')
+          .send({ email: 'newUser@newuser.newuser' })
+          .end((err, res) => {
+            assert.equal(res.status, 500);
+            assert.equal(res.body.message,
+              'An error occured while sending you a link. Try again');
+            done();
+          });
+      });
+  });
+});
+
+describe('USER SERVER ERRORS', () => {
+  let sandbox;
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
+  });
+  afterEach(() => {
+    sandbox = sandbox.restore();
+  });
+  describe('CREATE USER ERRORS', () => {
+    it('should send a message if an error occurs while creating an account',
+      (done) => {
+        const stub = sandbox.stub(User, 'create');
+        stub.rejects();
+        server
+          .post('/api/v1/users/signup')
+          .send(modelMock.newUser)
+          .expect(500)
+          .end((err, res) => {
+            assert.equal(res.status, 500);
+            assert.equal(res.body.message,
+              'Something went wrong. Internal server error');
+            done();
+          });
+      });
+
+    it('should send a message if an error occurs while verifying an account',
+      (done) => {
+        const stub = sandbox.stub(User, 'find');
+        stub.rejects();
+        server
+          .post('/api/v1/users/signup')
+          .send(modelMock.newUser)
+          .expect(500)
+          .end((err, res) => {
+            assert.equal(res.status, 500);
+            assert.equal(res.body.message,
+              'Something went wrong. Internal server error');
+            done();
+          });
+      });
+  });
+
+  describe('GET USER ERRORS', () => {
+    it('should send a message if an error occurs while creating an account',
+      (done) => {
+        const stub = sandbox.stub(User, 'findOne');
+        stub.rejects();
+        server
+          .post('/api/v1/users/signin')
+          .send({
+            ...modelMock.newUser,
+            username: 'something-else',
+            email: 'anewOne@newone.com'
+          })
+          .expect(500)
+          .end((err, res) => {
+            assert.equal(res.status, 500);
+            assert.equal(res.body.message,
+              'Something went wrong. Internal server error');
+            done();
+          });
+      });
+
+    it('should send a message if an error occurs while verifying an account',
+      (done) => {
+        const stub = sandbox.stub(bcrypt, 'compare');
+        stub.rejects();
+        server
+          .post('/api/v1/users/signin')
+          .send(mock.adminUser)
+          .expect(500)
+          .end((err, res) => {
+            assert.equal(res.status, 500);
+            assert.equal(res.body.message,
+              'Something went wrong. Internal server error');
+            done();
+          });
+      });
+  });
 });
