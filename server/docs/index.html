@@ -273,16 +273,16 @@
                   <li>
                     <a href="#get-book-categories" class="toc-h2 toc-link" data-title="Books">Get Book Categories</a>
                   </li>
+                  <li>
+                    <a href="#get-book-suggestions" class="toc-h2 toc-link" data-title="Books">Get Book Suggestions</a>
+                  </li>
               </ul>
           </li>
           <li>
-            <a href="#admin-notification" class="toc-h1 toc-link" data-title="Admin Notification">Admin Notification</a>
+            <a href="#notification" class="toc-h1 toc-link" data-title="Notification">Notification</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#request" class="toc-h2 toc-link" data-title="Admin Notification">Request</a>
-                  </li>
-                  <li>
-                    <a href="#response" class="toc-h2 toc-link" data-title="Admin Notification">Response</a>
+                    <a href="#admin-notifications" class="toc-h2 toc-link" data-title="Notification">Admin notifications</a>
                   </li>
               </ul>
           </li>
@@ -504,7 +504,26 @@ and required for requests to protected routes.</p>
 <li>Status: <code>200 OK</code></li>
 <li>Body <code>(application/json)</code></li>
 </ul>
-<h1 id='books'>Books</h1><h2 id='get-all-books'>Get All Books</h2>
+
+<blockquote>
+<p>Request:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"light"</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"token"</span><span class="p">:</span> <span class="s2">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhYmNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJTZWd1biIsImlzQWRtaW4iOnRydWUsIm1lbWJlcnNoaXBUeXBlIjoiYnJvbnplIiwiaWF0IjoxNTE0OTEzODcyLCJleHAiOjE1MTQ5NDM4NzJ9.vQ6oOOJI4dy0plJCNY6BaUEP9YPrR0bUcY1R26d3Km4"</span><span class="p">,</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"light"</span><span class="p">,</span>
+    <span class="s2">"lastName"</span><span class="p">:</span> <span class="s2">"Ola"</span><span class="p">,</span>
+    <span class="s2">"isAdmin"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Your information was successfully updated"</span>
+<span class="p">}</span>
+</code></pre><h1 id='books'>Books</h1><h2 id='get-all-books'>Get All Books</h2>
 <p>This endpoint retrieves a list of all books in the library.</p>
 
 <blockquote>
@@ -522,7 +541,9 @@ and required for requests to protected routes.</p>
             <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/book/file"</span><span class="p">,</span>
             <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
             <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
-            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2018-01-02T07:38:25.304Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2018-01-02T07:38:25.304Z"</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
@@ -535,6 +556,8 @@ and required for requests to protected routes.</p>
             <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
             <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T12:14:51.510Z"</span><span class="p">,</span>
             <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">2</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2018-01-02T07:38:25.304Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2018-01-02T07:38:25.304Z"</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="s2">"id"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -546,7 +569,9 @@ and required for requests to protected routes.</p>
             <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/book/file"</span><span class="p">,</span>
             <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T01:10:30.754Z"</span><span class="p">,</span>
             <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-14T11:57:31.798Z"</span><span class="p">,</span>
-            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">2</span>
+            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2018-01-02T07:38:25.304Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2018-01-02T07:38:25.304Z"</span>
         <span class="p">},</span>
         <span class="p">{</span>
             <span class="s2">"id"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
@@ -558,7 +583,9 @@ and required for requests to protected routes.</p>
             <span class="s2">"bookFile"</span><span class="p">:</span> <span class="s2">"/path/to/book/file"</span><span class="p">,</span>
             <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-10-04T01:05:00.856Z"</span><span class="p">,</span>
             <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-14T21:39:33.088Z"</span><span class="p">,</span>
-            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="s2">"categoryId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2018-01-02T07:38:25.304Z"</span><span class="p">,</span>
+            <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2018-01-02T07:38:25.304Z"</span>
         <span class="p">}</span>
     <span class="p">],</span>
     <span class="s2">"metadata"</span><span class="p">:</span> <span class="p">{</span>
@@ -613,7 +640,9 @@ and required for requests to protected routes.</p>
         <span class="s2">"bookFile"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
         <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2017-09-16T12:10:22.085Z"</span><span class="p">,</span>
         <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2017-10-15T14:21:51.773Z"</span><span class="p">,</span>
-        <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"ruby"</span>
+        <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"ruby"</span><span class="p">,</span>
+        <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2018-01-02T07:38:25.304Z"</span><span class="p">,</span>
+        <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2018-01-02T07:38:25.304Z"</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre><h3 id='request-2'>Request</h3>
@@ -678,7 +707,6 @@ and required for requests to protected routes.</p>
 <p>Request</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
     <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"FOSS"</span><span class="p">,</span>
     <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Flo Harrison, Nick Hansel"</span><span class="p">,</span>
     <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"A soft introduction to open source software development"</span><span class="p">,</span>
@@ -821,14 +849,40 @@ and required for requests to protected routes.</p>
 </code></pre><h3 id='request-9'>Request</h3>
 <ul>
 <li>Endpoint: GET: <code>/books/category</code></li>
-<li>Requires: Authentication and Authorization</li>
 </ul>
 <h3 id='response-9'>Response</h3>
 <ul>
 <li>Status: <code>200 OK</code></li>
 <li>Body <code>(application/json)</code></li>
 </ul>
-<h1 id='admin-notification'>Admin Notification</h1>
+<h2 id='get-book-suggestions'>Get Book Suggestions</h2>
+<blockquote>
+<p>Sample JSON Response</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"suggestions"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"eloquent python"</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="kc">null</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"fluency in haskell"</span><span class="p">,</span>
+            <span class="s2">"cover"</span><span class="p">:</span> <span class="s2">"path/to/book/cover"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre><h3 id='request-10'>Request</h3>
+<ul>
+<li>Endpoint: GET: <code>/books/suggestions</code></li>
+</ul>
+<h3 id='response-10'>Response</h3>
+<ul>
+<li>Status: <code>200 OK</code></li>
+<li>Body <code>(application/json)</code></li>
+</ul>
+<h1 id='notification'>Notification</h1><h2 id='admin-notifications'>Admin notifications</h2>
 <p>This endpoint notifies admin users of library transactions starting from the
 most recent transactions</p>
 
