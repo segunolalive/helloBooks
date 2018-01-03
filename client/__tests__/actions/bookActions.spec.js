@@ -12,7 +12,8 @@ import { fetchBorrowedBooks,
 import { fetchBooks,
   borrowBook,
   getBookCategories,
-  filterBooksByCategory } from '../../actions/bookActions/library';
+  filterBooksByCategory,
+} from '../../actions/bookActions/library';
 import { viewBookDetails } from '../../actions/bookActions/viewBook';
 import actionTypes from '../../actions/actionTypes';
 import Notify from '../__mocks__/Notify';
@@ -236,6 +237,23 @@ describe('Book Actions', () => {
         response: { message: 'failure' }
       });
       const expectedActions = [];
+      const store = mockStore({});
+      return store.dispatch(borrowBook(1, 1)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
+
+    it('it dispatches SET_BOOK_QUANTITY_TO_ZERO when book quantity is zer0',
+    () => {
+      moxios.stubRequest('/api/v1/users/1/books', {
+        status: 404,
+        response: {
+          message: 'There are no available copies of this book at this time'
+        }
+      });
+      const expectedActions = [
+        { type: 'SET_BOOK_QUANTITY_TO_ZERO', id: 1 }
+      ];
       const store = mockStore({});
       return store.dispatch(borrowBook(1, 1)).then(() => {
         expect(store.getActions()).toEqual(expectedActions);

@@ -13,7 +13,8 @@ import { fetchingBooks,
   getBooks,
   setPagination,
   borrowBookAction,
-  getBookCategoriesAction
+  getBookCategoriesAction,
+  setQuantityToZero,
 } from '../../actions/bookActions/library';
 
 import {
@@ -181,11 +182,20 @@ describe('Book Reducer', () => {
     expect(newState.books.length).toBe(0);
   });
 
-  it('should handle actions of type SET_BOOK_TO_READ', () => {
+  it('should handle actions of type SET_BOOK_QUANTITY_TO_ZERO', () => {
     action = setBookToRead('made-up-url');
     expect(initialState.bookReducer.bookToRead).toBe(undefined);
     newState = bookReducer(initialState.bookReducer, action);
     expect(newState).not.toEqual(initialState.bookReducer);
     expect(newState.bookToRead).toBe('made-up-url');
+  });
+
+  it('should handle actions of type SET_BOOK_TO_READ', () => {
+    action = setQuantityToZero(1);
+    initialState.bookReducer.books = books;
+    expect(initialState.bookReducer.books[0].total).toBe(10);
+    newState = bookReducer(initialState.bookReducer, action);
+    expect(newState).not.toEqual(initialState.bookReducer);
+    expect(newState.books[0].total).toBe(0);
   });
 });
