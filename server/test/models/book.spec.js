@@ -23,17 +23,6 @@ describe('Book Model', () => {
       });
   });
 
-  it('should raise validation error if title field is missing',
-    (done) => {
-      Book.create({ ...modelMock.newBook, title: null })
-        .catch((error) => {
-          expect(error.errors[0].message).to.equal('title cannot be null');
-          expect(error.errors[0].type).to.equal('notNull Violation');
-          expect(error.errors[0].path).to.equal('title');
-          done();
-        });
-    });
-
   it('should raise validation error if title already exists',
     (done) => {
       Book.create({ ...modelMock.newBook, username: 'somethingMadeUp' })

@@ -15,27 +15,6 @@ describe('User Model', () => {
       });
   });
 
-  it('should raise validation error if username field is missing',
-    (done) => {
-      User.create({ ...modelMock.newUser, username: null })
-        .catch((error) => {
-          expect(error.errors[0].message).to.equal('username cannot be null');
-          expect(error.errors[0].type).to.equal('notNull Violation');
-          done();
-        });
-    });
-
-  it('should raise validation error if email field is missing',
-    (done) => {
-      User.create({ ...modelMock.newUser, email: null })
-        .catch((error) => {
-          expect(error.errors[0].message).to.equal('email cannot be null');
-          expect(error.errors[0].type).to.equal('notNull Violation');
-          expect(error.errors[0].path).to.equal('email');
-          done();
-        });
-    });
-
   it('should raise validation error if email already exists',
     (done) => {
       User.create({ ...modelMock.newUser, username: 'somethingMadeUp' })
