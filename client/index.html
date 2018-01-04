@@ -36,14 +36,15 @@
       .show-offline-notification {
         margin: 0;
         text-align: center;
-        padding: 5px;
+        bottom: 4rem;
+        padding: 10px;
+        border-radius: 4px;
         display: none;
         color: #ffffff;
         background: #B71C1C;
         display: block;
         position: fixed;
-        bottom: 0;
-        left:0;
+        left:5px;
         z-index: 1000;
       }
     </style>
@@ -59,7 +60,7 @@
           </h5>
         </noscript>
     </div>
-    <div id="offline-notification" style="display: none; width: 100%">
+    <div id="offline-notification" style="display: none;">
       <h5 class="bold-text">You are offline</h5>
     </div>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
