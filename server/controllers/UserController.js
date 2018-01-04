@@ -136,13 +136,13 @@ const UserController = {
         if (req.body.authId) {
           return UserController.createUser(req, res);
         }
-        return res.status(403).send({
+        return res.status(401).send({
           message: 'user does not exist',
         });
       }
       bcrypt.compare(password, user.password).then((result) => {
         if (!result) {
-          return res.status(403).send({
+          return res.status(401).send({
             message: 'wrong username and password combination',
           });
         }
