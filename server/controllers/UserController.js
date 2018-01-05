@@ -188,16 +188,22 @@ const UserController = {
     const id = req.params.id;
     User.findOne({
       where: { id },
-      include: [{ model: Book }]
+      include: [
+        { model: Book,
+          through: {
+            as: 'borrowedBook'
+          }
+        }
+      ]
     }).then((user) => {
       let books;
       if (req.query && req.query.returned === 'false') {
         books = user.Books.filter(
-          book => book.BorrowedBook.returned === false
+          book => book.borrowedBook.returned === false
         );
       } else if (req.query && req.query.returned === 'true') {
         books = user.Books.filter(
-          book => book.BorrowedBook.returned === true
+          book => book.borrowedBook.returned === true
         );
       } else {
         books = user.Books;

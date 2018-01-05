@@ -72,7 +72,7 @@ export const mockStoreData = {
     allBorrowed: [
       {
         id: 1,
-        BorrowedBook: {
+        borrowedBook: {
           userId: 1,
           bookId: 1,
           returned: true,

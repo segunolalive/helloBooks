@@ -13,7 +13,7 @@ import requestImageUrl from '../../utils/requestImageUrl';
  */
 const BorrowedTable = (props) => {
   const rows = props.books.length ? props.books.map((book) => {
-    const returned = book.BorrowedBook.returned;
+    const returned = book.borrowedBook.returned;
     const bookImage = <img src={(book.cover &&
       requestImageUrl(book.cover, { width: 50 })) || BOOK_IMAGE_FALLBACK}
     alt={`${book.title} cover`} style={{ width: '50px' }}></img>;
