@@ -110,4 +110,4 @@ See project wiki for coding style guide, commit message, pull request and branch
 
 #### License
 
-MIT License
+This project is published under the MIT License. Ckeck the License.md for details.
